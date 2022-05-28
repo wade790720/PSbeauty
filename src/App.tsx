@@ -1,26 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Suspense } from "react"
+import { HashRouter } from "react-router-dom"
+import { Container, Row } from "react-grid-system"
+import Router from "components/Router"
+import styled from "./App.module.scss"
+import QueryStatus from "components/QueryStatus"
 
-function App() {
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <HashRouter>
+      <Container fluid className={styled.container}>
+        <Row direction="column" style={{ flex: 1 }}>
+          <Suspense fallback={<QueryStatus.Loading />}>
+            <Router />
+          </Suspense>
+        </Row>
+      </Container>
+    </HashRouter>
+  )
 }
-
-export default App;

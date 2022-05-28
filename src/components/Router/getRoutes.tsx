@@ -1,0 +1,265 @@
+import { lazy, Suspense as ReactSuspense } from "react"
+import { RouteObject } from "react-router-dom"
+import QueryStatus from "components/QueryStatus"
+
+const NotFound = lazy(() => import("pages/NotFound"))
+const SignIn = lazy(() => import("pages/SignIn"))
+const Home = lazy(() => import("pages/Home"))
+const Register = lazy(() => import("pages/Register"))
+const ForgotPassword = lazy(() => import("pages/ForgotPassword"))
+const Survey = lazy(() => import("pages/Survey"))
+const Search = lazy(() => import("pages/Search"))
+const SearchList = lazy(() => import("pages/SearchList"))
+const Chatroom = lazy(() => import("pages/Chatroom"))
+const ClinicalCaseList = lazy(() => import("pages/ClinicalCaseList"))
+const ClinicalCase = lazy(() => import("pages/ClinicalCase"))
+const Clinic = lazy(() => import("pages/Clinic"))
+const ClinicIntroduction = lazy(() => import("pages/ClinicIntroduction"))
+const ClinicMedicalTeam = lazy(() => import("pages/ClinicMedicalTeam"))
+const ClinicActivities = lazy(() => import("pages/ClinicActivities"))
+const Member = lazy(() => import("pages/Member"))
+const MemberConsultationRecord = lazy(() => import("pages/MemberConsultationRecord"))
+const MemberCollectClinicalCase = lazy(() => import("pages/MemberCollectClinicalCase"))
+const MemberUpdatePassword = lazy(() => import("pages/MemberUpdatePassword"))
+const MemberQuestions = lazy(() => import("pages/MemberQuestions"))
+const Doctor = lazy(() => import("pages/Doctor"))
+const DoctorInbox = lazy(() => import("pages/DoctorInbox"))
+const DoctorInformation = lazy(() => import("pages/DoctorInformation"))
+
+const Suspense = (props: ReactProps.Component) => {
+  return <ReactSuspense fallback={<QueryStatus.Loading />}>{props.children}</ReactSuspense>
+}
+
+const getRoutes = (): RouteObject[] => {
+  return [
+    /* 首頁 */
+    {
+      path: "/",
+      element: (
+        <Suspense>
+          <Home />
+        </Suspense>
+      ),
+    },
+    /* 登入頁 */
+    {
+      path: "sign-in",
+      element: (
+        <Suspense>
+          <SignIn />
+        </Suspense>
+      ),
+    },
+    /* 註冊 */
+    {
+      path: "register",
+      element: (
+        <Suspense>
+          <Register />
+        </Suspense>
+      ),
+    },
+    /* 忘記密碼 */
+    {
+      path: "forgot-password",
+      element: (
+        <Suspense>
+          <ForgotPassword />
+        </Suspense>
+      ),
+    },
+    /* 問卷 */
+    {
+      path: "survey",
+      element: (
+        <Suspense>
+          <Survey />
+        </Suspense>
+      ),
+    },
+    /* 搜尋 */
+    {
+      path: "search",
+      element: (
+        <Suspense>
+          <Search />
+        </Suspense>
+      ),
+    },
+    /* 搜尋列表 */
+    {
+      path: "search/:id",
+      element: (
+        <Suspense>
+          <SearchList />
+        </Suspense>
+      ),
+    },
+    /* 聊天室 */
+    {
+      path: "chatroom",
+      element: (
+        <Suspense>
+          <Chatroom />
+        </Suspense>
+      ),
+    },
+    {
+      path: "clinical-case-list",
+      children: [
+        /* 臨床案例頁 */
+        {
+          index: true,
+          element: (
+            <Suspense>
+              <ClinicalCaseList />
+            </Suspense>
+          ),
+        },
+        /* 臨床案例內頁 */
+        {
+          path: ":id",
+          element: (
+            <Suspense>
+              <ClinicalCase />
+            </Suspense>
+          ),
+        },
+      ],
+    },
+    {
+      path: "member",
+      children: [
+        /* 會員頁 */
+        {
+          index: true,
+          element: (
+            <Suspense>
+              <Member />
+            </Suspense>
+          ),
+        },
+        /* 諮詢歷史紀錄 */
+        {
+          path: "consultation-record",
+          element: (
+            <Suspense>
+              <MemberConsultationRecord />
+            </Suspense>
+          ),
+        },
+        /* 收藏案例紀錄頁 */
+        {
+          path: "collect-clinical-case",
+          element: (
+            <Suspense>
+              <MemberCollectClinicalCase />
+            </Suspense>
+          ),
+        },
+        /* 修改密碼 */
+        {
+          path: "update-password",
+          element: (
+            <Suspense>
+              <MemberUpdatePassword />
+            </Suspense>
+          ),
+        },
+        /* 常見問題 */
+        {
+          path: "questions",
+          element: (
+            <Suspense>
+              <MemberQuestions />
+            </Suspense>
+          ),
+        },
+      ],
+    },
+    {
+      path: "doctor",
+      children: [
+        /* 診所醫生 */
+        {
+          index: true,
+          element: (
+            <Suspense>
+              <Doctor />
+            </Suspense>
+          ),
+        },
+        /* 即時訊息收件夾 */
+        {
+          path: "inbox",
+          element: (
+            <Suspense>
+              <DoctorInbox />
+            </Suspense>
+          ),
+        },
+        /* 個人資訊頁 */
+        {
+          path: "information",
+          element: (
+            <Suspense>
+              <DoctorInformation />
+            </Suspense>
+          ),
+        },
+      ],
+    },
+    {
+      path: "clinic",
+      children: [
+        /* 診所頁 */
+        {
+          index: true,
+          element: (
+            <Suspense>
+              <Clinic />
+            </Suspense>
+          ),
+        },
+        /* 診所內頁 */
+        {
+          path: ":id",
+          element: (
+            <Suspense>
+              <ClinicIntroduction />
+            </Suspense>
+          ),
+        },
+        /* 醫師團隊 */
+        {
+          path: "medical-team",
+          element: (
+            <Suspense>
+              <ClinicMedicalTeam />
+            </Suspense>
+          ),
+        },
+        /* 診所活動 */
+        {
+          path: "activities",
+          element: (
+            <Suspense>
+              <ClinicActivities />
+            </Suspense>
+          ),
+        },
+      ],
+    },
+    /* 404 not found */
+    {
+      path: "*",
+      element: (
+        <Suspense>
+          <NotFound />
+        </Suspense>
+      ),
+    },
+  ]
+}
+
+export default getRoutes

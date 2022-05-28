@@ -1,0 +1,29 @@
+.wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  .http-404 {
+    padding-bottom: 100px;
+
+    .title {
+      font-size: 200px;
+      line-height: 1;
+      font-weight: bold;
+      letter-spacing: 10px;
+    }
+
+    .sub-title {
+      font-size: 20px;
+      font-weight: normal;
+      letter-spacing: 3px;
+      margin: 14px 0;
+    }
+
+    .description {
+    }
+  }
+}

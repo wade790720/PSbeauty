@@ -1,4 +1,10 @@
+import Backdrop from "components/Layout/Backdrop"
+
 const ForgotPassword = () => {
-  return <div>Forgot Password</div>
+  return (
+    <div style={{ background: "red", position: "relative", height: "100%" }}>
+      <Backdrop />
+    </div>
+  )
 }
 export default ForgotPassword

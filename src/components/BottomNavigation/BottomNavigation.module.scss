@@ -1,0 +1,38 @@
+.wrapper {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  padding: 8px 0 10px;
+
+  &.chat {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cell {
+    display: grid;
+    grid-gap: 4px 0;
+    grid-template-rows: 23px 10px;
+
+    .icon {
+      text-align: center;
+    }
+
+    .title {
+      font-size: 10px;
+    }
+
+    &.active {
+      .icon path {
+        fill: #7873E5;
+      }
+
+      .title {
+        color: #7873E5;
+      }
+    }
+  }
+}

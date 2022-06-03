@@ -1,15 +1,8 @@
-import styled from "./BottomNavigation.module.scss"
-import cx from "classnames"
+import Clinic from "./Clinic"
+import Chat from "./Chat"
 
-import { ReactComponent as Home } from "./svg/home.svg"
-
-const BottomNavigation = () => {
-  return (
-    <div style={{ background: "red" }}>
-      Navigation
-      <Home />
-    </div>
-  )
-}
+const BottomNavigation = Object.assign(Clinic, {
+  Chat,
+})
 
 export default BottomNavigation

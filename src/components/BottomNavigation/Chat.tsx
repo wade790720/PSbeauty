@@ -15,16 +15,16 @@ const BottomNavigation = () => {
   return (
     <div className={cx(styled.wrapper, styled.chat)}>
       <div className={cx(styled.cell, active === "house" && styled.active)}>
-        <div className={cx(styled.icon)}>{active === "house" ? <HouseFill /> : <House />}</div>
-        <div className={cx(styled.title)}>首頁</div>
+        <div className={styled.icon}>{active === "house" ? <HouseFill /> : <House />}</div>
+        <div className={styled.title}>首頁</div>
       </div>
       <div className={cx(styled.cell, active === "chat" && styled.active)}>
-        <div className={cx(styled.icon)}>{active === "chat" ? <ChatFill /> : <Chat />}</div>
-        <div className={cx(styled.title)}>諮詢</div>
+        <div className={styled.icon}>{active === "chat" ? <ChatFill /> : <Chat />}</div>
+        <div className={styled.title}>諮詢</div>
       </div>
       <div className={cx(styled.cell, active === "person" && styled.active)}>
-        <div className={cx(styled.icon)}>{active === "person" ? <PersonFill /> : <Person />}</div>
-        <div className={cx(styled.title)}>個人</div>
+        <div className={styled.icon}>{active === "person" ? <PersonFill /> : <Person />}</div>
+        <div className={styled.title}>個人</div>
       </div>
     </div>
   )

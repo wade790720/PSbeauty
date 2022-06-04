@@ -1,0 +1,9 @@
+.wrapper {
+  flex: 1 0;
+  background: #fff;
+  padding: 24px 24px 24px;
+  margin-bottom: 55px;
+  display: grid;
+  grid-gap: 12px;
+  grid-template-rows: repeat(2, min-content) 1fr min-content;
+}

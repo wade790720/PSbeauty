@@ -1,0 +1,12 @@
+.wrapper {
+  padding: 0 10px;
+
+  &:after {
+    content: "";
+    display: block;
+    width: 1px;
+    height: 30px;
+    background-color: #dfe1e6;
+    margin: 4px 0;
+  }
+}

@@ -1,0 +1,5 @@
+@import 'assets/styles/variables';
+
+@function em($pixels, $context: $browser-context) {
+  @return #{calc($pixels / $context)}em
+}

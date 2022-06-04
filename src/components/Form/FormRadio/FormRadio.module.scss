@@ -1,0 +1,109 @@
+@import 'assets/styles/variables';
+@import 'assets/styles/mixins';
+
+.wrapper {
+  display: flex;
+
+  label.label {
+    align-items: center;
+    font-family: $font-family;
+    color: #091e42;
+    display: inline-flex;
+    position: relative;
+    box-sizing: border-box;
+    cursor: pointer;
+    line-height: 1.33333;
+
+    input {
+      --local-background: #FAFBFC;
+      --local-background-hover: #EBECF0;
+      --local-background-active: #DEEBFF;
+      --local-background-checked: #0052CC;
+      --local-background-checked-hover: #0065FF;
+      --local-dot-checked: #FAFBFC;
+      --local-dot-disabled: #A5ADBA;
+      --local-dot-active: #0052CC;
+      --local-border: #DFE1E6;
+      --local-border-hover: #DFE1E6;
+      --local-border-focus: #4C9AFF;
+      --local-disabled: #F4F5F7;
+      --local-invalid: #FF5630;
+      --radio-background-color: var(--local-background);
+      --radio-border-color: var(--local-border);
+      --radio-dot-color: var(--local-dot-checked);
+      --radio-dot-opacity: 0;
+      appearance: none;
+      height: 24px;
+      width: 24px;
+      flex-shrink: 0;
+      margin: 0px;
+      transform: scale(0.583333);
+      outline: none;
+      vertical-align: top;
+      position: relative;
+      border: calc(2px * 12 / 7) solid var(--radio-border-color);
+      background-color: var(--radio-background-color);
+      transition: border-color 0.2s ease-in-out 0s, background-color 0.2s ease-in-out 0s;
+      border-radius: 50%;
+      display: flex;
+      -webkit-box-align: center;
+      align-items: center;
+      -webkit-box-pack: center;
+      justify-content: center;
+
+      &::after {
+        content: "";
+        border-radius: 50%;
+        height: calc(6.85714px);
+        width: calc(6.85714px);
+        background: var(--radio-dot-color);
+        opacity: var(--radio-dot-opacity);
+        position: absolute;
+        transition: background-color 0.2s ease-in-out 0s, opacity 0.2s ease-in-out 0s;
+      }
+
+      &:hover {
+        --radio-background-color: var(--local-background-hover);
+      }
+
+      &:focus {
+        --radio-border-color: var(--local-border-focus);
+      }
+
+      &:checked {
+        --radio-background-color: var(--local-background-checked);
+        --radio-border-color: var(--local-background-checked);
+        --radio-dot-opacity: 1;
+      }
+
+      &:checked:hover {
+        --radio-background-color: var(--local-background-checked-hover);
+        --radio-border-color: var(--local-background-checked-hover);
+      }
+
+      &:checked:focus {
+        --radio-border-color: var(--local-border-focus);
+      }
+    }
+
+    .content {
+      padding-right: 4px;
+      padding-left: 4px;
+    }
+  }
+
+  input {
+    appearance: none;
+    margin: 0px;
+    border: none;
+    width: 0px;
+    height: 0px;
+    outline: none;
+    opacity: 0;
+  }
+
+  &.inline {
+    display: inline-flex;
+    height: 32px;
+  }
+}

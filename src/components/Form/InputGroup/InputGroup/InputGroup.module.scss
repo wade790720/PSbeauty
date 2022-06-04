@@ -1,0 +1,57 @@
+.wrapper {
+  -webkit-box-align: center;
+  align-items: center;
+  background-color: #fafbfc;
+  border-color: #dfe1e6;
+  color: #091e42;
+  cursor: text;
+  border-radius: 3px;
+  border-width: 1px;
+  border-style: solid;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 100%;
+  font-size: 14px;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  max-width: 100%;
+  overflow: hidden;
+  transition: background-color 0.2s ease-in-out 0s, border-color 0.2s ease-in-out 0s;
+  overflow-wrap: break-word;
+  vertical-align: top;
+  pointer-events: auto;
+
+  &:not(.disabled):not(.read-only) {
+    &:hover {
+      background-color: #ebecf0;
+    }
+    &:focus-within {
+      background-color: #fff;
+      border-color: #2D62C4;
+    }
+    &.invalid {
+      border: 1px solid #DE350B;
+    }
+  }
+
+  &.disabled {
+    background: #091e420a;
+    border-color: #091e420a;
+    cursor: not-allowed;
+    text-decoration: none;
+    color: #a5adba;
+    user-select: none;
+  }
+
+  .prepend,
+  .append {
+    height: 100%;
+  }
+
+  :global(.component-input) {
+    border: none !important;
+    border-radius: 0 !important;
+    height: 100% !important;
+    background-color: transparent;
+  }
+}

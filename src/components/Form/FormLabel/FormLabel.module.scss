@@ -1,0 +1,32 @@
+@import 'assets/styles/variables';
+@import 'assets/styles/mixins';
+
+.wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  font-style: inherit;
+  line-height: 1.33333;
+  color: #6b778c;
+  font-weight: 600;
+  font-family: $font-family;
+  margin-right: 10px;
+  margin-top: 0px;
+  white-space: nowrap;
+  height: 32px;
+  vertical-align: middle;
+
+  span {
+    position: relative;
+
+    &.required:before {
+      content: "*";
+      left: -8px;
+      position: absolute;
+      color: #de350b;
+      display: inline-block;
+      padding-right: 5px;
+    }
+  }
+}

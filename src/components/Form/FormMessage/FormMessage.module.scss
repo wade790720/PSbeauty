@@ -1,0 +1,24 @@
+@import 'assets/styles/variables';
+
+.wrapper {
+    font-size: 0.857143em;
+    font-style: inherit;
+    line-height: 1.33333;
+    font-weight: normal;
+    font-family: $font-family;
+    margin-top: 4px;
+    margin-bottom: 0;
+    display: flex;
+
+    &.helper {
+        color: #6B778C;
+    }
+
+    &.valid {
+        color: #00875A;
+    }
+
+    &.error {
+        color: #DE350B;
+    }
+}

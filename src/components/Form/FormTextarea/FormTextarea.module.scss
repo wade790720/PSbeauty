@@ -1,0 +1,85 @@
+@import 'assets/styles/mixins';
+@import 'assets/styles/variables';
+
+.wrapper {
+  -webkit-box-align: center;
+  align-items: center;
+  background-color: #fafbfc;
+  border-color: #dfe1e6;
+  color: #091e42;
+  cursor: text;
+  border-radius: 3px;
+  border-width: 1px;
+  border-style: solid;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 100%;
+  font-size: 14px;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  max-width: 100%;
+  width: 100%;
+  overflow: hidden;
+  transition: background-color 0.2s ease-in-out 0s, border-color 0.2s ease-in-out 0s;
+  overflow-wrap: break-word;
+  vertical-align: top;
+  pointer-events: auto;
+
+  &:not(.disabled):not(.read-only) {
+    &:hover {
+      background-color: #ebecf0;
+    }
+    &:focus-within {
+      background-color: #fff;
+      border-color: #4c9aff;
+    }
+  }
+
+  &.disabled {
+    background: #091e420a;
+    border-color: #091e420a;
+    cursor: not-allowed;
+    text-decoration: none;
+    color: #a5adba;
+    user-select: none;
+  }
+
+  textarea.control {
+    padding: 7px 10px;
+    height: auto;
+    background-color: #0000;
+    border: 0px;
+    box-sizing: border-box;
+    color: currentColor;
+    cursor: inherit;
+    font-size: 14px;
+    min-width: 0px;
+    outline: none;
+    width: 100%;
+    line-height: 1.42857;
+    font-family: $font-family;
+    appearance: none;
+    -webkit-appearance: none;
+
+    &::placeholder,
+    &::-webkit-input-placeholder {
+      color: #7a869a;
+      font-family: $font-family;
+    }
+
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+      box-shadow: 0 0 0 50px #ffffff inset;
+    }
+
+    &:-webkit-autofill::first-line {
+      font-family: $font-family;
+      font-size: 14px;
+      font-weight: normal;
+      line-height: 1;
+      color: currentColor;
+    }
+  }
+}

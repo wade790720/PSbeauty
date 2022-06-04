@@ -1,14 +1,14 @@
 import styled from "./BottomNavigation.module.scss"
 import cx from "classnames"
 
-import { ReactComponent as House } from "./svg/house.svg"
-import { ReactComponent as HouseFill } from "./svg/houseFill.svg"
-import { ReactComponent as Clinic } from "./svg/clinic.svg"
-import { ReactComponent as ClinicFill } from "./svg/clinicFill.svg"
-import { ReactComponent as Case } from "./svg/case.svg"
-import { ReactComponent as CaseFill } from "./svg/caseFill.svg"
-import { ReactComponent as Person } from "./svg/person.svg"
-import { ReactComponent as PersonFill } from "./svg/personFill.svg"
+import { ReactComponent as House } from "./svg/House.svg"
+import { ReactComponent as HouseFill } from "./svg/HouseFill.svg"
+import { ReactComponent as Clinic } from "./svg/Clinic.svg"
+import { ReactComponent as ClinicFill } from "./svg/ClinicFill.svg"
+import { ReactComponent as Case } from "./svg/Case.svg"
+import { ReactComponent as CaseFill } from "./svg/CaseFill.svg"
+import { ReactComponent as Person } from "./svg/Person.svg"
+import { ReactComponent as PersonFill } from "./svg/PersonFill.svg"
 
 // eslint-disable-next-line prefer-const
 let active = "house"

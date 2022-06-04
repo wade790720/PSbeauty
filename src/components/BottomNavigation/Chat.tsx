@@ -1,12 +1,12 @@
 import styled from "./BottomNavigation.module.scss"
 import cx from "classnames"
 
-import { ReactComponent as House } from "./svg/house.svg"
-import { ReactComponent as HouseFill } from "./svg/houseFill.svg"
-import { ReactComponent as Chat } from "./svg/chat.svg"
-import { ReactComponent as ChatFill } from "./svg/chatFill.svg"
-import { ReactComponent as Person } from "./svg/person.svg"
-import { ReactComponent as PersonFill } from "./svg/personFill.svg"
+import { ReactComponent as House } from "./svg/House.svg"
+import { ReactComponent as HouseFill } from "./svg/HouseFill.svg"
+import { ReactComponent as Chat } from "./svg/Chat.svg"
+import { ReactComponent as ChatFill } from "./svg/ChatFill.svg"
+import { ReactComponent as Person } from "./svg/Person.svg"
+import { ReactComponent as PersonFill } from "./svg/PersonFill.svg"
 
 // eslint-disable-next-line prefer-const
 let active = "house"

@@ -1,5 +1,8 @@
 [*.tsx]
 indent_size = 2
 
+[*.ts]
+indent_size = 2
+
 [*.scss]
 indent_size = 2

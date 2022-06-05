@@ -33,7 +33,11 @@
     }
 
     &.invalid {
-      border: 1px solid #DE350B;
+      border: 1px solid #DC3545;
+    }
+
+    &.valid {
+      border: 1px solid #198754;
     }
 
     &.solid {

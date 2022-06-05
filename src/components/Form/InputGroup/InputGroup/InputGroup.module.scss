@@ -5,7 +5,7 @@
   border-color: #dfe1e6;
   color: #091e42;
   cursor: text;
-  border-radius: 3px;
+  border-radius: 15px;
   border-width: 1px;
   border-style: solid;
   box-sizing: border-box;
@@ -22,13 +22,12 @@
   pointer-events: auto;
 
   &:not(.disabled):not(.read-only) {
-    &:hover {
-      background-color: #ebecf0;
+    background-color: #fff;
+
+    &.valid {
+      border: 1px solid #198754;
     }
-    &:focus-within {
-      background-color: #fff;
-      border-color: #2D62C4;
-    }
+
     &.invalid {
       border: 1px solid #DE350B;
     }

@@ -1,6 +1,6 @@
 import styled from "./Profile.module.scss"
+import Icon from "components/Icon"
 import { ReactComponent as Mail } from "./svg/Mail.svg"
-import { ReactComponent as Chat } from "./svg/Chat.svg"
 
 const Profile = () => {
   return (
@@ -13,7 +13,7 @@ const Profile = () => {
         <div className={styled.enhance}>現在驗證</div>
       </div>
       <div className={styled.chat}>
-        <Chat />
+        <Icon name="Chat" />
       </div>
     </div>
   )

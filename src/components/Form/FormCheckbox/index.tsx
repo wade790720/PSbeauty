@@ -12,7 +12,9 @@ export type FormCheckboxProps = {
    * If true, the checkbox will be disabled.
    */
   disabled?: boolean
-} & ReactProps.WithChildren & ReactProps.WithClassName & Omit<JSX.IntrinsicElements["input"], "type" | "css"> 
+} & ReactProps.WithChildren &
+  ReactProps.WithClassName &
+  Omit<JSX.IntrinsicElements["input"], "type" | "css">
 
 const FormCheckbox = React.forwardRef(function FormCheckbox(
   { children, inline, ...props }: FormCheckboxProps,

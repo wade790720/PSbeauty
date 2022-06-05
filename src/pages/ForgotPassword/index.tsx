@@ -28,50 +28,46 @@ const ForgotPassword = () => {
 
   const onSubmit: SubmitHandler<Inputs> = useCallback(data => console.log("onSubmit", data), [])
   return (
-    <div style={{ position: "relative", height: "100%" }}>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <Form.Group layout="vertical">
-          <Form.Label className={styled.title}>Email</Form.Label>
-          <InputGroup className={styled["input-box-group"]}>
-            <Form.Input
-              className={styled["input-box"]}
-              autoComplete="off"
-              {...register("email", {
-                required: true,
-                validate: (email: string) => {
-                  const a = isValidEmail(email)
-                  console.log("### a", a)
-                  return a
-                },
-                // pattern: {
-                //   value: /[A-Za-z]{3}/,
-                //   message: 'error message' // JS only: <p>error message</p> TS only support string
-                // }
-              })}
-              {...(["required", "validate"].some(el => el === errors?.email?.type)
-                ? { variant: "invalid" }
-                : { variant: "valid" })}
-              placeholder="example@gmail.com"
-            />
-            <Append>
+    <>
+      <Header leftArrow />
+      <Backdrop className={styled.wrapper}>
+        <div className={styled.title}>忘記密碼</div>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Form.Group layout="vertical">
+            <Form.Label className={styled["input-title"]}>Email</Form.Label>
+            <InputGroup className={styled["input-box-group"]}>
+              <Form.Input
+                className={styled["input-box"]}
+                autoComplete="off"
+                {...register("email", {
+                  required: true,
+                  validate: (email: string) => isValidEmail(email),
+                })}
+                {...(["required", "validate"].some(el => el === errors?.email?.type)
+                  ? { variant: "invalid" }
+                  : { variant: "valid" })}
+                placeholder="example@gmail.com"
+              />
+              <Append>
+                {errors?.email?.type === "required" || errors?.email?.type === "validate" ? (
+                  <Icon name="Cross" />
+                ) : (
+                  <Icon name="Check" />
+                )}
+              </Append>
+            </InputGroup>
+            <div className={styled.msg}>
               {errors?.email?.type === "required" || errors?.email?.type === "validate" ? (
-                <Icon name="Cross" />
+                <Form.ErrorMessage>格式不符合</Form.ErrorMessage>
               ) : (
-                <Icon name="Check" />
+                <Form.ValidMessage>格式符合</Form.ValidMessage>
               )}
-            </Append>
-          </InputGroup>
-          <div className={styled.msg}>
-            {errors?.email?.type === "required" || errors?.email?.type === "validate" ? (
-              <Form.ErrorMessage>格式不符合</Form.ErrorMessage>
-            ) : (
-              <Form.ValidMessage>格式符合</Form.ValidMessage>
-            )}
-          </div>
-        </Form.Group>
-        <Button>發送</Button>
-      </Form>
-    </div>
+            </div>
+          </Form.Group>
+          <Button>發送</Button>
+        </Form>
+      </Backdrop>
+    </>
   )
 }
 export default ForgotPassword

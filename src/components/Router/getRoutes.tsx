@@ -5,6 +5,7 @@ import QueryStatus from "components/QueryStatus"
 const NotFound = lazy(() => import("pages/NotFound"))
 const SignIn = lazy(() => import("pages/SignIn"))
 const Home = lazy(() => import("pages/Home"))
+const Advertisement = lazy(() => import("pages/Advertisement"))
 const Register = lazy(() => import("pages/Register"))
 const ForgotPassword = lazy(() => import("pages/ForgotPassword"))
 const Survey = lazy(() => import("pages/Survey"))
@@ -101,6 +102,15 @@ const getRoutes = (): RouteObject[] => {
       element: (
         <Suspense>
           <Chatroom />
+        </Suspense>
+      ),
+    },
+    /* 廣告內頁 */
+    {
+      path: "/advertisement",
+      element: (
+        <Suspense>
+          <Advertisement />
         </Suspense>
       ),
     },

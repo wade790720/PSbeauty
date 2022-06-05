@@ -1,0 +1,28 @@
+.wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  .paragraph {
+    >:first-child {
+      color: #7873E5;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    >:nth-child(2) {
+      color: #2B3A4B;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+    }
+
+    &:not(:first-child) {
+      margin-top: 36px;
+    }
+  }
+}

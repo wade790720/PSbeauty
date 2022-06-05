@@ -6,6 +6,7 @@ import { ReactComponent as LeftArrow } from "./LeftArrow.svg"
 import { ReactComponent as Chat } from "./Chat.svg"
 import { ReactComponent as Search } from "./Search.svg"
 import { ReactComponent as NotePencil } from "./NotePencil.svg"
+import { ReactComponent as Funnel } from "./Funnel.svg"
 
 const Image = Object.assign(
   {},
@@ -18,6 +19,7 @@ const Image = Object.assign(
     Chat,
     Search,
     NotePencil,
+    Funnel,
   },
 )
 

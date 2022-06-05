@@ -26,6 +26,7 @@ export const Icon = (props: IconProps) => {
     Chat: <Svg.Chat />,
     Search: <Svg.Search />,
     NotePencil: <Svg.NotePencil />,
+    Funnel: <Svg.Funnel />,
   }
 
   return (

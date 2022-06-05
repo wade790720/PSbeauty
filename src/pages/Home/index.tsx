@@ -1,19 +1,14 @@
 import styled from "./Home.module.scss"
-import Form, { InputGroup, Prepend } from "components/Form"
 import Icon from "components/Icon"
 import BottomNavigation from "components/BottomNavigation"
+import SearchBar from "components/SearchBar"
 
 const Home = () => {
   return (
     <>
       <div className={styled.wrapper}>
         <div className={styled.header}>
-          <InputGroup className={styled["input-group"]}>
-            <Prepend className={styled["search-icon"]}>
-              <Icon name="search" />
-            </Prepend>
-            <Form.Input placeholder="搜尋關鍵字" className={styled.input} />
-          </InputGroup>
+          <SearchBar />
           <Icon name="chat" className={styled["chat-icon"]} />
         </div>
         <div className={styled.banner}>

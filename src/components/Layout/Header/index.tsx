@@ -11,7 +11,7 @@ const Header = ({ style = {}, ...props }: HeaderProps) => {
   return (
     <div
       className={cx(styled.wrapper, props.className, {
-        [styled.large]: props.title,
+        [styled.large]: props.title || props.children,
         [styled.small]: !props.title && !props.leftArrow,
       })}
       style={{ ...style }}>

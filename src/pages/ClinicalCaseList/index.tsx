@@ -2,6 +2,7 @@ import styled from "./ClinicalCaseList.module.scss"
 import Icon from "components/Icon"
 import BottomNavigation from "components/BottomNavigation"
 import SearchBar from "components/SearchBar"
+import Button from "components/Button"
 
 const ClinicalCaseList = () => {
   return (
@@ -15,11 +16,10 @@ const ClinicalCaseList = () => {
           <div className={styled["banner-item"]}>banner-item</div>
           <div className={styled["banner-item"]}>banner-item</div>
         </div>
-
-        <div className={styled.consultation}>
+        <Button className={styled.button}>
           <Icon name="funnel" className={styled.funnel} />
           分類篩選
-        </div>
+        </Button>
       </div>
       <BottomNavigation />
     </>

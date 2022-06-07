@@ -2,6 +2,8 @@ import styled from "./Clinic.module.scss"
 import Icon from "components/Icon"
 import BottomNavigation from "components/BottomNavigation"
 import SearchBar from "components/SearchBar"
+import Button from "components/Button"
+import ClinicCard from "./ClinicCard"
 
 const Clinic = () => {
   return (
@@ -15,80 +17,15 @@ const Clinic = () => {
           <div className={styled["banner-item"]}>banner-item</div>
           <div className={styled["banner-item"]}>banner-item</div>
         </div>
-        <div className={styled.clinic}>
-          <div className={styled.title}>玉辛醫美診所</div>
-          <div className={styled["sub-title"]}>台北市大安區</div>
-          <div className={styled.content}>
-            <div className={styled.case}>
-              <div className={styled.block} />
-              案例數 <span>100.2K</span>
-            </div>
-            <div className={styled.reply}>
-              <div className={styled.block} />
-              回覆數 <span>100.2K</span>
-            </div>
-          </div>
-        </div>
-        <div className={styled.clinic}>
-          <div className={styled.title}>玉辛醫美診所</div>
-          <div className={styled["sub-title"]}>台北市大安區</div>
-          <div className={styled.content}>
-            <div className={styled.case}>
-              <div className={styled.block} />
-              案例數 <span>100.2K</span>
-            </div>
-            <div className={styled.reply}>
-              <div className={styled.block} />
-              回覆數 <span>100.2K</span>
-            </div>
-          </div>
-        </div>
-        <div className={styled.clinic}>
-          <div className={styled.title}>玉辛醫美診所</div>
-          <div className={styled["sub-title"]}>台北市大安區</div>
-          <div className={styled.content}>
-            <div className={styled.case}>
-              <div className={styled.block} />
-              案例數 <span>100.2K</span>
-            </div>
-            <div className={styled.reply}>
-              <div className={styled.block} />
-              回覆數 <span>100.2K</span>
-            </div>
-          </div>
-        </div>
-        <div className={styled.clinic}>
-          <div className={styled.title}>玉辛醫美診所</div>
-          <div className={styled["sub-title"]}>台北市大安區</div>
-          <div className={styled.content}>
-            <div className={styled.case}>
-              <div className={styled.block} />
-              案例數 <span>100.2K</span>
-            </div>
-            <div className={styled.reply}>
-              <div className={styled.block} />
-              回覆數 <span>100.2K</span>
-            </div>
-          </div>
-        </div>
-        <div className={styled.clinic}>
-          <div className={styled.title}>玉辛醫美診所</div>
-          <div className={styled["sub-title"]}>台北市大安區</div>
-          <div className={styled.content}>
-            <div className={styled.case}>
-              <div className={styled.block} />
-              案例數 <span>100.2K</span>
-            </div>
-            <div className={styled.reply}>
-              <div className={styled.block} />
-              回覆數 <span>100.2K</span>
-            </div>
-          </div>
-        </div>
-        <div className={styled.consultation}>
+        <ClinicCard />
+        <ClinicCard />
+        <ClinicCard />
+        <ClinicCard />
+        <ClinicCard />
+        <Button className={styled.button}>
           <Icon name="funnel" className={styled.funnel} />
           地區篩選
-        </div>
+        </Button>
       </div>
       <BottomNavigation />
     </>

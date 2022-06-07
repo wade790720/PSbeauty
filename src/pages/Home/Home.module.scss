@@ -1,6 +1,5 @@
 .wrapper {
-  width: 100vw;
-  height: 100%;
+  flex: 1;
   padding: 12px 24px 12px 24px;
   background-color: white;
 
@@ -36,9 +35,24 @@
       justify-content: center;
     }
   }
+  
+  .button {
+    position: fixed;
+    width: calc(100% - 48px);
+    height: 42px;
+    bottom: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px !important;
 
-  .ad-card {
-  //  width: 342px; 
+    .notePencil {
+      margin-right: 8px;
+    }
+  }
+}
+
+.ad-card {
    height: 180px;
    border: 1px solid rgba(170, 176, 178, 0.2);
    border-radius: 15px;
@@ -78,22 +92,3 @@
      }
    }
   }
-  .consultation {
-    position: fixed;
-    width: calc(100% - 48px);
-    height: 42px;
-    bottom: 72px;
-    background-color: #7873E5;
-    border-radius: 100px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: bold;
-    font-size: 16px;
-
-    .notePencil {
-      margin-right: 8px;
-    }
-  }
-}

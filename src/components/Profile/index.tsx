@@ -1,8 +1,11 @@
 import styled from "./Profile.module.scss"
 import Icon from "components/Icon"
 import { ReactComponent as Mail } from "./svg/Mail.svg"
+import { useGo } from "components/Router"
 
 const Profile = () => {
+  const go = useGo()
+
   return (
     <div className={styled.wrapper}>
       <img className={styled.avatar} src="/img/avatar.png" />
@@ -12,7 +15,7 @@ const Profile = () => {
         <div>您的信箱尚未認證，</div>
         <div className={styled.enhance}>現在驗證</div>
       </div>
-      <div className={styled.chat}>
+      <div className={styled.chat} onClick={go.toChatroom}>
         <Icon name="Chat" />
       </div>
     </div>

@@ -198,7 +198,7 @@ const getRoutes = (): RouteObject[] => {
             </Suspense>
           ),
         },
-        /* 常見問題 */
+        /* 常見問答 */
         {
           path: "questions",
           element: (
@@ -236,6 +236,15 @@ const getRoutes = (): RouteObject[] => {
           element: (
             <Suspense>
               <DoctorInformation />
+            </Suspense>
+          ),
+        },
+        /* 修改密碼 */
+        {
+          path: "update-password",
+          element: (
+            <Suspense>
+              <MemberUpdatePassword />
             </Suspense>
           ),
         },

@@ -6,6 +6,7 @@ const NotFound = lazy(() => import("pages/NotFound"))
 const SignIn = lazy(() => import("pages/SignIn"))
 const Home = lazy(() => import("pages/Home"))
 const Advertisement = lazy(() => import("pages/Advertisement"))
+const CaseInner = lazy(() => import("pages/CaseInner"))
 const Register = lazy(() => import("pages/Register"))
 const ForgotPassword = lazy(() => import("pages/ForgotPassword"))
 const Survey = lazy(() => import("pages/Survey"))
@@ -15,6 +16,7 @@ const Chatroom = lazy(() => import("pages/Chatroom"))
 const ClinicalCaseList = lazy(() => import("pages/ClinicalCaseList"))
 const ClinicalCase = lazy(() => import("pages/ClinicalCase"))
 const Clinic = lazy(() => import("pages/Clinic"))
+const ClinicInner = lazy(() => import("pages/ClinicInner"))
 const ClinicIntroduction = lazy(() => import("pages/ClinicIntroduction"))
 const ClinicMedicalTeam = lazy(() => import("pages/ClinicMedicalTeam"))
 const ClinicActivities = lazy(() => import("pages/ClinicActivities"))
@@ -111,6 +113,15 @@ const getRoutes = (): RouteObject[] => {
       element: (
         <Suspense>
           <Advertisement />
+        </Suspense>
+      ),
+    },
+    /* 案例內頁 */
+    {
+      path: "/case-inner",
+      element: (
+        <Suspense>
+          <CaseInner />
         </Suspense>
       ),
     },
@@ -234,6 +245,15 @@ const getRoutes = (): RouteObject[] => {
         /* 診所內頁 */
         {
           path: ":id",
+          element: (
+            <Suspense>
+              <ClinicInner />
+            </Suspense>
+          ),
+        },
+        /* 診所介紹頁 */
+        {
+          path: "introduction",
           element: (
             <Suspense>
               <ClinicIntroduction />

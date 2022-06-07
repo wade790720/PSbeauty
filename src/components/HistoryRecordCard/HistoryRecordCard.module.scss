@@ -1,0 +1,87 @@
+.wrapper {
+  flex-shrink: 0;
+  background: #fff;
+  border: 1px solid rgba(170, 176, 178, 0.2);
+  border-radius: 15px;
+  padding: 24px;
+  display: grid;
+  position: relative;
+
+  .title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 1.2;
+    color: #333333;
+  }
+
+  .date {
+    margin-top: 8px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #AAB0B2;
+    font-family: 'Taipei Sans TC Beta';
+  }
+
+  .images {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 12px;
+
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+  }
+
+  .content {
+    margin-top: 12px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #333333;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+  }
+
+  .tags {
+    margin-top: 24px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 12px;
+    grid-auto-columns: min-content;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    >div {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 1.5;
+      padding: 5px 12px;
+      border-radius: 100px;
+      white-space: nowrap;
+      color: #E58E73;
+      background: #E58E7333;
+      font-family: 'Taipei Sans TC Beta';
+
+      span {
+        margin-right: 7px;
+      }
+    }
+  }
+
+  .toggle {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+  }
+}

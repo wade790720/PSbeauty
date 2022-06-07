@@ -1,0 +1,12 @@
+.wrapper {
+  flex: 1 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  .cards {
+    flex: 1 0;
+    overflow: auto;
+    padding: 0 24px 32px;
+  }
+}

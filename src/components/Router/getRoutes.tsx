@@ -25,6 +25,7 @@ const Member = lazy(() => import("pages/Member"))
 const MemberConsultationRecord = lazy(() => import("pages/MemberConsultationRecord"))
 const MemberCollectClinicalCase = lazy(() => import("pages/MemberCollectClinicalCase"))
 const MemberUpdatePassword = lazy(() => import("pages/MemberUpdatePassword"))
+const MemberInbox = lazy(() => import("pages/MemberInbox"))
 const MemberQuestions = lazy(() => import("pages/MemberQuestions"))
 const Doctor = lazy(() => import("pages/Doctor"))
 const DoctorInbox = lazy(() => import("pages/DoctorInbox"))
@@ -185,6 +186,15 @@ const getRoutes = (): RouteObject[] => {
           element: (
             <Suspense>
               <MemberUpdatePassword />
+            </Suspense>
+          ),
+        },
+        /* 收件夾 */
+        {
+          path: "inbox",
+          element: (
+            <Suspense>
+              <MemberInbox />
             </Suspense>
           ),
         },

@@ -1,16 +1,16 @@
-import styled from "./MessageCard.module.scss"
+import styled from "./CaseCard.module.scss"
 import { ReactComponent as BookmarkFill } from "./BookmarkFill.svg"
 import imgBefore from "./Before.png"
 import imgAfter from "./After.png"
 
-export type MessageCardProps = {
+export type CaseCardProps = {
   title: string
   clinic: string
   introduction: string
   tags?: string[]
 } & ReactProps.Component
 
-const MessageCard = ({ ...props }: MessageCardProps) => {
+const CaseCard = ({ ...props }: CaseCardProps) => {
   return (
     <div className={styled.wrapper}>
       <div className={styled["title-wrapper"]}>
@@ -35,4 +35,4 @@ const MessageCard = ({ ...props }: MessageCardProps) => {
   )
 }
 
-export default MessageCard
+export default CaseCard

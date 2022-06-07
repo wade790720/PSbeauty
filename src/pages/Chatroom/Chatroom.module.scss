@@ -45,7 +45,7 @@
     }
 
     &.center {
-      flex-direction: row;
+      display: grid;
       justify-content: center;
 
       .time {

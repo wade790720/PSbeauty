@@ -1,8 +1,11 @@
 import styled from "./Home.module.scss"
+import { useGo } from "components/Router"
 
 const AdCard = () => {
+  const go = useGo()
+
   return (
-    <div className={styled["ad-card"]}>
+    <div className={styled["ad-card"]} onClick={go.toAdvertisement}>
       <div className={styled.title}>全新臉部拉提計畫</div>
       <div className={styled.content}>
         <div className={styled.pic} />

@@ -7,6 +7,8 @@ type toTarget = {
   toClinic: () => void
   /** 案例 */
   toClinicCaseList: () => void
+  /** 廣告內頁 */
+  toAdvertisement: () => void
 }
 
 const useGo = (): toTarget => {
@@ -15,6 +17,7 @@ const useGo = (): toTarget => {
     toHome: () => navigate("/"),
     toClinic: () => navigate("/clinic"),
     toClinicCaseList: () => navigate("/clinical-case-list"),
+    toAdvertisement: () => navigate("/advertisement"),
   }
 }
 

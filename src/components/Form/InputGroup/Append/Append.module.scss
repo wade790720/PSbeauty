@@ -1,9 +1,11 @@
 .wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  grid-auto-flow: column;
+  grid-gap: 9px;
+  grid-template-columns: 16px;
   color: currentColor;
   font-size: 14px;
-  padding-right: 17px;
+  padding: 0 17px;
   transition: all 0.4s;
+  align-items: center;
 }

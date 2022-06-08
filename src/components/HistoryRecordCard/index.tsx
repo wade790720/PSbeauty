@@ -1,4 +1,6 @@
+import { useState } from "react"
 import styled from "./HistoryRecordCard.module.scss"
+import cx from "classnames"
 import Switch from "react-switch"
 
 export type HistoryRecordCardProps = {
@@ -11,6 +13,8 @@ export type HistoryRecordCardProps = {
 } & ReactProps.Component
 
 const HistoryRecordCard = ({ ...props }: HistoryRecordCardProps) => {
+  const [open, setOpen] = useState<boolean>(false)
+
   return (
     <div className={styled.wrapper}>
       <div className={styled.title}>{props.title}</div>
@@ -20,7 +24,18 @@ const HistoryRecordCard = ({ ...props }: HistoryRecordCardProps) => {
           <img key={`img-${idx}`} src={image} />
         ))}
       </div>
-      <div className={styled.content}>{props.introduction}</div>
+      <div className={cx(styled.content, open && styled.open)}>
+        {open ? (
+          <span className={styled.more} onClick={() => setOpen(false)}>
+            收合
+          </span>
+        ) : (
+          <span className={styled.more} onClick={() => setOpen(true)}>
+            ...顯示更多
+          </span>
+        )}
+        {props.introduction}
+      </div>
       <div className={styled.tags}>
         {props.tags?.map((tag, idx) => (
           <div key={`tag-${idx}`}>

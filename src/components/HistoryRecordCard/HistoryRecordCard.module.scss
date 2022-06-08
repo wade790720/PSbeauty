@@ -42,10 +42,26 @@
     font-size: 14px;
     line-height: 1.5;
     color: #333333;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
+    max-height: 3em;
     overflow: hidden;
+    text-align: justify;
+
+    &::before {
+      content: '';
+      float: right;
+      width: 0px;
+      height: calc(100% - 1.5em);
+    }
+
+    &.open {
+      max-height: 999em;
+    }
+
+    .more {
+      float: right;
+      clear: both;
+      color: #B4BABB;
+    }
   }
 
   .tags {

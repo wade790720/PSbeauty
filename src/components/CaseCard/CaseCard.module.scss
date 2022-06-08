@@ -4,28 +4,22 @@
   border-radius: 15px;
   padding: 24px;
   position: relative;
+  display: grid;
 
-  &:not(:first-child) {
-    margin-top: 12px;
+  .title {
+    margin-bottom: 8px;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: #333333;
   }
 
-  .title-wrapper {
-    display: flex;
-    justify-content: space-between;
-
-    .title {
-      margin-bottom: 8px;
-      font-weight: 700;
-      font-size: 20px;
-      line-height: 24px;
-      color: #333333;
-    }
-  
-    .bookmark {
-      width: 20px;
-      height: 26px;
-      margin-right: 3px;
-    }
+  .bookmark {
+    width: 20px;
+    height: 26px;
+    position: absolute;
+    top: 24px;
+    right: 24px;
   }
 
   .clinic {
@@ -43,23 +37,21 @@
     overflow: hidden;
   }
 
-  .picture-block {
+  .images {
     margin-bottom: 12px;
-    display: flex;
+    display: grid;
+    grid-gap: 13px;
+    grid-template-columns: 1fr 1fr;
     border-radius: 15px;
 
     img {
-      display: flex;
-      flex: 1;
-      height: 128px;
-
-      &:first-child {
-        padding-right: 13px;
-      }
+      width: 100%;
+      height: auto;
+      object-fit: cover;
     }
   }
 
-  .tag-block {
+  .tags {
     flex-shrink: 0;
     display: grid;
     grid-auto-flow: column;

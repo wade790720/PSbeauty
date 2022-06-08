@@ -1,29 +1,26 @@
 import styled from "./CaseCard.module.scss"
 import { ReactComponent as BookmarkFill } from "./BookmarkFill.svg"
-import imgBefore from "./Before.png"
-import imgAfter from "./After.png"
 
 export type CaseCardProps = {
   title: string
   clinic: string
   introduction: string
+  images: string[]
   tags?: string[]
 } & ReactProps.Component
 
 const CaseCard = ({ ...props }: CaseCardProps) => {
   return (
     <div className={styled.wrapper}>
-      <div className={styled["title-wrapper"]}>
-        <div className={styled.title}>{props.title}</div>
-        <BookmarkFill className={styled.bookmark} />
-      </div>
+      <div className={styled.title}>{props.title}</div>
       <div className={styled.clinic}>{props.clinic}</div>
       <div className={styled.content}>{props.introduction}</div>
-      <div className={styled["picture-block"]}>
-        <img src={imgBefore} />
-        <img src={imgAfter} />
+      <div className={styled.images}>
+        {props.images?.map((image, idx) => (
+          <img key={`image-${idx}`} src={image} />
+        ))}
       </div>
-      <div className={styled["tag-block"]}>
+      <div className={styled.tags}>
         {props.tags?.map((tag, idx) => (
           <div key={`tag-${idx}`}>
             <span>#</span>
@@ -31,6 +28,7 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
           </div>
         ))}
       </div>
+      <BookmarkFill className={styled.bookmark} />
     </div>
   )
 }

@@ -14,7 +14,9 @@ type Inputs = {
 const ForgotPassword = () => {
   const {
     register,
+    reset,
     handleSubmit,
+    getValues,
     formState: { errors },
   } = useForm<Inputs>({
     mode: "all",
@@ -43,25 +45,31 @@ const ForgotPassword = () => {
                   required: true,
                   validate: (email: string) => isValidEmail(email),
                 })}
-                {...(["required", "validate"].some(el => el === errors?.email?.type)
-                  ? { variant: "invalid" }
-                  : { variant: "valid" })}
+                {...(errors?.email?.type &&
+                  (["required", "validate"].some(el => el === errors?.email?.type)
+                    ? { variant: "invalid" }
+                    : { variant: "valid" }))}
                 placeholder="example@gmail.com"
               />
               <Append>
-                {errors?.email?.type === "required" || errors?.email?.type === "validate" ? (
-                  <Icon name="Cross" />
-                ) : (
-                  <Icon name="Check" />
-                )}
+                {errors?.email?.type &&
+                  getValues("email") &&
+                  (errors?.email?.type === "required" || errors?.email?.type === "validate" ? (
+                    <div onClick={() => reset()}>
+                      <Icon name="Cross" />
+                    </div>
+                  ) : (
+                    <Icon name="Check" />
+                  ))}
               </Append>
             </InputGroup>
             <div className={styled.msg}>
-              {errors?.email?.type === "required" || errors?.email?.type === "validate" ? (
-                <Form.ErrorMessage>格式不符合</Form.ErrorMessage>
-              ) : (
-                <Form.ValidMessage>格式符合</Form.ValidMessage>
-              )}
+              {errors?.email?.type &&
+                (errors?.email?.type === "required" || errors?.email?.type === "validate" ? (
+                  <Form.ErrorMessage>格式不符合</Form.ErrorMessage>
+                ) : (
+                  <Form.ValidMessage>格式符合</Form.ValidMessage>
+                ))}
             </div>
           </Form.Group>
           <Button>發送</Button>

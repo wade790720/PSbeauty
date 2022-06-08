@@ -20,6 +20,7 @@ const ClinicInner = lazy(() => import("pages/ClinicInner"))
 const ClinicIntroduction = lazy(() => import("pages/ClinicIntroduction"))
 const ClinicMedicalTeam = lazy(() => import("pages/ClinicMedicalTeam"))
 const ClinicActivities = lazy(() => import("pages/ClinicActivities"))
+const ClinicActivity = lazy(() => import("pages/ClinicActivity"))
 const Member = lazy(() => import("pages/Member"))
 const MemberConsultationRecord = lazy(() => import("pages/MemberConsultationRecord"))
 const MemberCollectClinicalCase = lazy(() => import("pages/MemberCollectClinicalCase"))
@@ -245,38 +246,57 @@ const getRoutes = (): RouteObject[] => {
         /* 診所內頁 */
         {
           path: ":id",
-          element: (
-            <Suspense>
-              <ClinicInner />
-            </Suspense>
-          ),
-        },
-        /* 診所介紹頁 */
-        {
-          path: "introduction",
-          element: (
-            <Suspense>
-              <ClinicIntroduction />
-            </Suspense>
-          ),
-        },
-        /* 醫師團隊 */
-        {
-          path: "medical-team",
-          element: (
-            <Suspense>
-              <ClinicMedicalTeam />
-            </Suspense>
-          ),
-        },
-        /* 診所活動 */
-        {
-          path: "activities",
-          element: (
-            <Suspense>
-              <ClinicActivities />
-            </Suspense>
-          ),
+          children: [
+            {
+              index: true,
+              element: (
+                <Suspense>
+                  <ClinicInner />
+                </Suspense>
+              ),
+            },
+            /* 診所介紹頁 */
+            {
+              path: "introduction",
+              element: (
+                <Suspense>
+                  <ClinicIntroduction />
+                </Suspense>
+              ),
+            },
+            /* 醫師團隊 */
+            {
+              path: "medical-team",
+              element: (
+                <Suspense>
+                  <ClinicMedicalTeam />
+                </Suspense>
+              ),
+            },
+            {
+              /* 診所活動 */
+              path: "activities",
+              children: [
+                {
+                  index: true,
+                  element: (
+                    <Suspense>
+                      <ClinicActivities />
+                    </Suspense>
+                  ),
+                },
+                /* 診所活動內頁 */
+                {
+                  path: ":id",
+                  element: (
+                    <Suspense>
+                      <ClinicActivity />
+                    </Suspense>
+                  ),
+                },
+              ],
+            },
+          ],
         },
       ],
     },

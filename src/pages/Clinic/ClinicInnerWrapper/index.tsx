@@ -1,10 +1,16 @@
 import { Outlet } from "react-router-dom"
+import Header from "components/Layout/Header"
+import Backdrop from "components/Layout/Backdrop"
+import ClinicSwitch from "components/ClinicSwitch"
 
 const ClinicInnerWrapper = () => {
   return (
     <>
-      <div>診所內頁外框</div>
-      <Outlet />
+      <Header leftArrow title="玉欣醫美診所" />
+      <Backdrop>
+        <ClinicSwitch />
+        <Outlet />
+      </Backdrop>
     </>
   )
 }

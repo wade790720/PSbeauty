@@ -1,0 +1,25 @@
+@import 'assets/styles/mixins';
+
+.outer {
+  display: flex;
+
+  button {
+    height: 40px;
+    box-sizing: border-box;
+    min-width: 52px;
+    border-radius: 0;
+    font-weight: 500 !important;
+
+    &+.button {
+      border-left: none;
+    }
+  }
+
+  button:first-child {
+    border-radius: 100px 0 0 100px;
+  }
+
+  button:last-child {
+    border-radius: 0 100px 100px 0;
+  }
+}

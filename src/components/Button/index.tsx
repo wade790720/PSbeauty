@@ -15,6 +15,10 @@ export type ButtonProps = {
    */
   variant?: typeof VARIANT[keyof typeof VARIANT]
   /**
+   * Specify whether the Button is currently selected
+   */
+  selected?: boolean
+  /**
    * The button's key for the ButtonGroup.
    */
   eventKey?: ReactProps.EventKey
@@ -30,6 +34,7 @@ export type ButtonProps = {
 const Button = ({
   variant = "primary",
   className,
+  selected = false,
   children = "Click",
   eventKey,
   onClick,
@@ -37,7 +42,7 @@ const Button = ({
 }: PropsWithChildren<ButtonProps>) => {
   return (
     <button
-      className={cx(styled.wrapper, styled[variant], className)}
+      className={cx(styled.wrapper, styled[variant], { [styled.selected]: selected }, className)}
       style={props.style}
       onClick={e => {
         onClick && onClick(e, { eventKey: eventKey })

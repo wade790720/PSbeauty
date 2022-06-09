@@ -3,6 +3,7 @@
   height: 48px;
   border-radius: 100px;
   border: none;
+  cursor: pointer;
 
   &.primary {
     font-weight: 700;
@@ -14,10 +15,21 @@
 
   &.secondary {
     font-weight: 400;
-    background: rgba(120, 115, 229, 0.2);
+    background: #E4E3FA;
     color: #7873E5;
     font-size: 16px;
     line-height: 16px;
+
+    &.selected,
+    &.selected:hover,
+    &.selected:active,
+    &.selected:active:hover {
+      border-radius: 100px;
+      background: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      cursor: default;
+    }
   }
 
   &.text {

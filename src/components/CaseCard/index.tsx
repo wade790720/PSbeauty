@@ -1,6 +1,5 @@
 import styled from "./CaseCard.module.scss"
-import { ReactComponent as BookmarkFill } from "./BookmarkFill.svg"
-import { ReactComponent as BookmarkSimple } from "./BookmarkSimple.svg"
+import Icon from "components/Icon"
 
 export type CaseCardProps = {
   title: string
@@ -33,9 +32,9 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
       </div>
       <div className={styled["collect-block"]}>
         {props.isCollected ? (
-          <BookmarkFill className={styled["bookmark-fill"]} />
+          <Icon name="BookmarkFill" className={styled["bookmark-fill"]} />
         ) : (
-          <BookmarkSimple className={styled["bookmark-simple"]} />
+          <Icon name="BookmarkSimple" className={styled["bookmark-simple"]} />
         )}
         <div className={styled.amount}>{props.amount}</div>
       </div>

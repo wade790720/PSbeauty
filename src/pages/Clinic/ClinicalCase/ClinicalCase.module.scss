@@ -1,0 +1,97 @@
+.wrapper {
+  padding: 24px;
+  color: #2B3A4B;
+  position: relative;
+
+  .outer {
+    border-radius: 15px;
+    display: grid;
+
+    .title {
+      margin-bottom: 8px;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 24px;
+    }
+
+    .collect-block {
+      top: 27px;
+      right: 30px;
+      width: 32px;
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .bookmark-fill {
+        width: 20px;
+        height: 26px;
+      }
+
+      .bookmark-simple {
+        svg {
+          width: 24px;
+          height: 32px;
+        }
+      }
+    }
+
+    .clinic {
+      margin-bottom: 24px;
+      font-weight: 700;
+      font-size: 14px;
+      color: #AAB0B2;
+    }
+
+    .content {
+      margin-bottom: 24px;
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    .images {
+      margin-bottom: 24px;
+      display: grid;
+      grid-gap: 13px;
+      grid-template-columns: 1fr 1fr;
+      border-radius: 15px;
+
+      img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+      }
+    }
+
+    .tags {
+      flex-shrink: 0;
+      display: grid;
+      grid-auto-flow: column;
+      grid-gap: 8px;
+      grid-auto-columns: min-content;
+      overflow-x: auto;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      >div {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 1.5;
+        padding: 4px 13px;
+        border-radius: 15px;
+        background-color: rgba(229, 142, 115, 0.2);
+        white-space: nowrap;
+        color: #E58E73;
+
+        >span {
+          padding-right: 7.5px;
+        }
+      }
+    }
+  }
+
+}

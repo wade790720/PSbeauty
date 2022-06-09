@@ -7,6 +7,8 @@ import { ReactComponent as Chat } from "./Chat.svg"
 import { ReactComponent as Search } from "./Search.svg"
 import { ReactComponent as NotePencil } from "./NotePencil.svg"
 import { ReactComponent as Funnel } from "./Funnel.svg"
+import { ReactComponent as BookmarkFill } from "./BookmarkFill.svg"
+import { ReactComponent as BookmarkSimple } from "./BookmarkSimple.svg"
 
 const Image = Object.assign(
   {},
@@ -20,6 +22,8 @@ const Image = Object.assign(
     Search,
     NotePencil,
     Funnel,
+    BookmarkFill,
+    BookmarkSimple,
   },
 )
 

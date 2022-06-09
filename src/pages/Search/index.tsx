@@ -22,7 +22,6 @@ const Search = () => {
             </div>
           )
         })}
-        <div className={styled.more}>顯示更多</div>
       </Backdrop>
     </>
   )

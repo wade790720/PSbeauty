@@ -8,7 +8,7 @@
     font-family: $font-family;
     align-items: center;
     display: inline-flex;
-    color: #091e42;
+    color: #2B3A4B;
     cursor: pointer;
     line-height: 1.33333;
 
@@ -21,21 +21,21 @@
         --local-background: #FAFBFC;
         --local-background-hover: #EBECF0;
         --local-background-active: #DEEBFF;
-        --local-background-checked: #0052CC;
-        --local-background-checked-hover: #0065FF;
+        --local-background-checked: #7873E5;
+        --local-background-checked-hover: #7873E5;
         --local-background-disabled: #F4F5F7;
         --local-tick-rest: #0000;
         --local-tick-checked: #FAFBFC;
         --local-tick-disabled: #A5ADBA;
-        --local-tick-active: #0052CC;
+        --local-tick-active: #7873E5;
         --local-border: #DFE1E6;
         --local-border-disabled: #F4F5F7;
-        --local-border-checked: #0052CC;
+        --local-border-checked: #7873E5;
         --local-border-active: #DEEBFF;
         --local-border-invalid: #FF5630;
-        --local-border-focus: #4C9AFF;
+        --local-border-focus: #7873E5;
         --local-border-hover: #DFE1E6;
-        --local-border-checked-hover: #0065FF;
+        --local-border-checked-hover: #7873E5;
         --local-border-checked-invalid: #FF5630;
 
         --checkbox-background-color: var(--local-background);

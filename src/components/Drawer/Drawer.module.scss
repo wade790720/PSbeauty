@@ -1,0 +1,43 @@
+.wrapper {
+
+  &.active.in {
+    .container {
+      transform: translateY(0);
+    }
+
+    .overlay {
+      visibility: visible;
+    }
+  }
+
+  .container {
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 10;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.05);
+    transform: translateY(100%);
+    background-color: #fff;
+    transition: transform 300ms ease;
+    overflow: scroll;
+    border-radius: 15px 15px 0 0;
+
+      &::-webkit-scrollbar {
+      display: none;
+  }
+  }
+
+  .overlay {
+    visibility: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: #000000;
+    opacity: 0.2;
+    z-index: 9;
+    transition: opacity 300ms ease;
+  }
+}

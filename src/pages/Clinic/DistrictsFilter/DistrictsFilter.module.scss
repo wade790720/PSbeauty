@@ -1,0 +1,67 @@
+.wrapper {
+  padding: 15px 24px;
+  color: #2B3A4B;
+
+  .title {
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 22px;
+    margin-bottom: 12px;
+  }
+
+  .content {
+    display: flex;
+    height: 371px;
+    margin-bottom: 12px;
+
+    .city {
+      width: 73px;
+      border-right: 1px solid rgba(#AAB0B2, 0.2);
+      overflow: scroll;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    .item {
+      padding: 12px 0;
+      font-size: 16px;
+      line-height: 24px;
+      border: none;
+      background: none;
+      color: #2B3A4B;
+      cursor: pointer;
+
+      &.select {
+        color: #7873E5;
+        font-weight: bold;
+      }
+    }
+
+    .dist {
+      display: flex;
+      flex-direction: column;
+      overflow: scroll;
+      padding-left: 24px;
+      flex: 1;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  .buttons {
+    display: flex;
+
+    button {
+      height: 38px;
+      font-size: 16px;
+    }
+
+    button:first-child {
+      margin-right: 8px;
+    }
+  }
+}

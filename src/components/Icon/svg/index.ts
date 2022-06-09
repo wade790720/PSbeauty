@@ -9,6 +9,9 @@ import { ReactComponent as NotePencil } from "./NotePencil.svg"
 import { ReactComponent as Funnel } from "./Funnel.svg"
 import { ReactComponent as BookmarkFill } from "./BookmarkFill.svg"
 import { ReactComponent as BookmarkSimple } from "./BookmarkSimple.svg"
+import { ReactComponent as MapPin } from "./MapPin.svg"
+import { ReactComponent as Phone } from "./Phone.svg"
+import { ReactComponent as GlobeSimple } from "./GlobeSimple.svg"
 
 const Image = Object.assign(
   {},
@@ -24,6 +27,9 @@ const Image = Object.assign(
     Funnel,
     BookmarkFill,
     BookmarkSimple,
+    MapPin,
+    Phone,
+    GlobeSimple,
   },
 )
 

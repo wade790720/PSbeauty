@@ -29,6 +29,9 @@ export const Icon = (props: IconProps) => {
     Funnel: <Svg.Funnel />,
     BookmarkFill: <Svg.BookmarkFill />,
     BookmarkSimple: <Svg.BookmarkSimple />,
+    MapPin: <Svg.MapPin />,
+    Phone: <Svg.Phone />,
+    GlobeSimple: <Svg.GlobeSimple />,
   }
 
   return (

@@ -8,4 +8,10 @@
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
   overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }

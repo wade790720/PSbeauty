@@ -4,4 +4,11 @@
   margin-bottom: 55px;
   display: flex;
   flex-direction: column;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }

@@ -4,9 +4,9 @@ import MessageCard from "components/MessageCard"
 
 const MemberInbox = () => {
   return (
-    <div className={styled.wrapper}>
+    <>
       <Header title="收件夾" leftArrow />
-      <div className={styled.cards}>
+      <div className={styled.wrapper}>
         <MessageCard
           unread
           title="玉辛醫美診所"
@@ -20,7 +20,7 @@ const MemberInbox = () => {
         <MessageCard title="玉辛醫美診所" message="您好，我有「雙眼皮」「痘痘針」「玻尿..." />
         <MessageCard title="山茼醫美診所" message="您好，我有「雙眼皮」「痘痘針」「玻尿..." />
       </div>
-    </div>
+    </>
   )
 }
 export default MemberInbox

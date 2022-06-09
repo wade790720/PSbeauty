@@ -13,7 +13,6 @@ export type CaseCardProps = {
 } & ReactProps.Component
 
 const CaseCard = ({ ...props }: CaseCardProps) => {
-  console.log("### amount", props.amount)
   return (
     <div className={styled.wrapper} style={props.style}>
       <div className={styled.title}>{props.title}</div>

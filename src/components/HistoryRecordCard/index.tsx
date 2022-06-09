@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useRef, useLayoutEffect } from "react"
 import styled from "./HistoryRecordCard.module.scss"
 import cx from "classnames"
 import Switch from "react-switch"
@@ -13,7 +13,17 @@ export type HistoryRecordCardProps = {
 } & ReactProps.Component
 
 const HistoryRecordCard = ({ ...props }: HistoryRecordCardProps) => {
+  const [over, setOver] = useState<boolean>(false)
   const [open, setOpen] = useState<boolean>(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useLayoutEffect(() => {
+    const clientHeight = ref.current?.clientHeight || 0
+    const scrollHeight = ref.current?.scrollHeight || 0
+    if (clientHeight && scrollHeight > clientHeight) {
+      setOver(true)
+    }
+  }, [])
 
   return (
     <div className={styled.wrapper}>
@@ -24,18 +34,14 @@ const HistoryRecordCard = ({ ...props }: HistoryRecordCardProps) => {
           <img key={`img-${idx}`} src={image} />
         ))}
       </div>
-      <div className={cx(styled.content, open && styled.open)}>
-        {open ? (
-          <span className={styled.more} onClick={() => setOpen(false)}>
-            收合
-          </span>
-        ) : (
-          <span className={styled.more} onClick={() => setOpen(true)}>
-            ...顯示更多
-          </span>
-        )}
+      <div className={cx(styled.content, open && styled.open)} ref={ref}>
         {props.introduction}
       </div>
+      {over && !open && (
+        <span className={styled.more} onClick={() => setOpen(true)}>
+          顯示更多
+        </span>
+      )}
       <div className={styled.tags}>
         {props.tags?.map((tag, idx) => (
           <div key={`tag-${idx}`}>

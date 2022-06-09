@@ -42,9 +42,10 @@
     font-size: 14px;
     line-height: 1.5;
     color: #333333;
-    max-height: 3em;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
     overflow: hidden;
-    text-align: justify;
 
     &::before {
       content: '';
@@ -54,14 +55,12 @@
     }
 
     &.open {
-      max-height: 999em;
+      -webkit-line-clamp: 999;
     }
+  }
 
-    .more {
-      float: right;
-      clear: both;
-      color: #B4BABB;
-    }
+  .more {
+    color: #B4BABB;
   }
 
   .tags {

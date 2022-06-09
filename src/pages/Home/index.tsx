@@ -5,8 +5,8 @@ import SearchBar from "components/SearchBar"
 import AdCard from "./AdCard"
 import Button from "components/Button"
 import CaseCard from "components/CaseCard"
-import imgBefore from "pages/MemberCollectClinicalCase/Before.png"
-import imgAfter from "pages/MemberCollectClinicalCase/After.png"
+import imgBefore from "pages/Member/MemberCollectClinicalCase/Before.png"
+import imgAfter from "pages/Member/MemberCollectClinicalCase/After.png"
 
 const Home = () => {
   return (

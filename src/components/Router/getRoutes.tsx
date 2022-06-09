@@ -17,6 +17,7 @@ const ClinicalCaseList = lazy(() => import("pages/Clinic/ClinicalCaseList"))
 const ClinicalCase = lazy(() => import("pages/Clinic/ClinicalCase"))
 const Clinic = lazy(() => import("pages/Clinic"))
 const ClinicInner = lazy(() => import("pages/Clinic/ClinicInner"))
+const ClinicInnerWrapper = lazy(() => import("pages/Clinic/ClinicInnerWrapper"))
 const ClinicIntroduction = lazy(() => import("pages/Clinic/ClinicIntroduction"))
 const ClinicMedicalTeam = lazy(() => import("pages/Clinic/ClinicMedicalTeam"))
 const ClinicActivities = lazy(() => import("pages/Clinic/ClinicActivities"))
@@ -262,9 +263,14 @@ const getRoutes = (): RouteObject[] => {
             </Suspense>
           ),
         },
-        /* 診所內頁 */
+        /* 診所內頁外框 */
         {
-          path: ":id",
+          path: ":id/inner",
+          element: (
+            <Suspense>
+              <ClinicInnerWrapper />
+            </Suspense>
+          ),
           children: [
             {
               index: true,
@@ -274,7 +280,6 @@ const getRoutes = (): RouteObject[] => {
                 </Suspense>
               ),
             },
-            /* 診所介紹頁 */
             {
               path: "introduction",
               element: (

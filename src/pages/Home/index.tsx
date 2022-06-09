@@ -22,7 +22,6 @@ const Home = () => {
         </div>
         <AdCard />
         <CaseCard
-          style={{ marginBottom: "12px" }}
           amount="1.2K"
           isCollected={false}
           title="臉部拉提改善面部線條A"

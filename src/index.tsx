@@ -1,5 +1,8 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
+import "taipei-sans-tc"
+import "taipei-sans-tc/dist/Light/TaipeiSansTCBeta-Light.css"
+import "taipei-sans-tc/dist/Bold/TaipeiSansTCBeta-Bold.css"
 import "./index.css"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"

@@ -16,9 +16,9 @@ export type FormCheckboxProps = {
   ReactProps.WithClassName &
   Omit<JSX.IntrinsicElements["input"], "type" | "css">
 
-const FormCheckbox = React.forwardRef(function FormCheckbox(
-  { children, inline, ...props }: FormCheckboxProps,
-  ref: React.Ref<HTMLInputElement> = null,
+const FormCheckbox = React.forwardRef<HTMLInputElement, FormCheckboxProps>(function FormCheckbox(
+  { children, inline, ...props },
+  ref,
 ) {
   return (
     <div

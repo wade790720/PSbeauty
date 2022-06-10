@@ -13,9 +13,9 @@ export type FormInputProps = FormControlProps &
     type?: "text" | "password" | "number"
   }
 
-const FormInput = React.forwardRef(function FormInput(
-  { className, type = "text", ...props }: FormInputProps,
-  ref: React.Ref<HTMLInputElement> = null,
+const FormInput = React.forwardRef<HTMLInputElement, FormInputProps>(function FormInput(
+  { className, type = "text", ...props },
+  ref,
 ) {
   const { attributes, setAttributes } = useContext(FormGroupContext)
   const [entered, setEntered] = useState(false)

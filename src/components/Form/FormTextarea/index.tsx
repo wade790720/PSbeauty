@@ -5,9 +5,9 @@ import styled from "./FormTextarea.module.scss"
 
 export type FormTextareaProps = JSX.IntrinsicElements["textarea"]
 export type FormTextareaRef = React.Ref<HTMLTextAreaElement>
-const FormTextarea = React.forwardRef(function FormTextarea(
-  { className, ...props }: FormTextareaProps,
-  ref: FormTextareaRef = null,
+const FormTextarea = React.forwardRef<HTMLTextAreaElement, FormTextareaProps>(function FormTextarea(
+  { className, ...props },
+  ref,
 ) {
   const { attributes, setAttributes } = useContext(FormGroupContext)
   const [entered, setEntered] = useState(false)

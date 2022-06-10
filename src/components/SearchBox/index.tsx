@@ -1,7 +1,6 @@
 import { useRef } from "react"
 import styled from "./SearchBox.module.scss"
-import { ReactComponent as Search } from "./svg/Search.svg"
-import { ReactComponent as Cross } from "./svg/Cross.svg"
+import SearchBar from "components/SearchBar"
 
 export type SearchBoxProps = {
   onSubmit?: (text: string) => void
@@ -12,11 +11,7 @@ const SearchBox = ({ ...props }: SearchBoxProps) => {
 
   return (
     <div className={styled.wrapper}>
-      <div className={styled.input}>
-        <Search />
-        <input ref={ref} />
-        <Cross />
-      </div>
+      <SearchBar variant="white" ref={ref} />
       <div
         className={styled.submit}
         onClick={() => {

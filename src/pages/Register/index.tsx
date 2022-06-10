@@ -3,9 +3,11 @@ import styled from "./Register.module.scss"
 import Form from "components/Form"
 import Button from "components/Button"
 import Modal from "components/Modal"
+import { useGo } from "components/Router"
 
 const ForgotPassword = () => {
   const [open, setOpen] = useState(false)
+  const go = useGo()
 
   return (
     <div className={styled.wrapper}>
@@ -14,14 +16,6 @@ const ForgotPassword = () => {
       <Form>
         <Form.Input type="text" placeholder="帳號" />
         <Form.Input type="password" placeholder="密碼" />
-        {/* <InputGroup>
-          <Form.Input type="password" placeholder="密碼" />
-          <Append>
-            <button className={styled["search-icon"]}>
-              <Icon name="search" />
-            </button>
-          </Append>
-        </InputGroup> */}
         <Form.Input type="text" placeholder="名稱" />
         <Form.Input type="text" placeholder="電話" />
         <Button variant="transparent" onClick={() => setOpen(true)}>
@@ -35,7 +29,7 @@ const ForgotPassword = () => {
         <div />
         <div>忘記密碼</div>
         <div>|</div>
-        <div>已有帳號</div>
+        <div onClick={go.toSignIn}>已有帳號</div>
         <div />
       </div>
     </div>

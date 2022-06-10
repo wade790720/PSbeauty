@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom"
 type toTarget = {
   /** 首頁 */
   toHome: () => void
+  /** 登入 */
+  toSignIn: () => void
+  /** 註冊 */
+  toRegister: () => void
   /** 診所頁 */
   toClinic: () => void
   /** 案例 */
@@ -31,6 +35,8 @@ const useGo = (): toTarget => {
   const navigate = useNavigate()
   return {
     toHome: () => navigate("/"),
+    toSignIn: () => navigate("/sign-in"),
+    toRegister: () => navigate("/register"),
     toClinic: () => navigate("/clinic"),
     toClinicCaseList: () => navigate("/clinical-case-list"),
     toAdvertisement: () => navigate("/advertisement"),

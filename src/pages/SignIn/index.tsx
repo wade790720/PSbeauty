@@ -1,8 +1,11 @@
 import styled from "./SignIn.module.scss"
 import Form from "components/Form"
 import Button from "components/Button"
+import { useGo } from "components/Router"
 
 const SignIn = () => {
+  const go = useGo()
+
   return (
     <div className={styled.wrapper}>
       <div className={styled.title}>登入你的帳戶</div>
@@ -17,7 +20,7 @@ const SignIn = () => {
         <div />
         <div>忘記密碼</div>
         <div>|</div>
-        <div>註冊帳號</div>
+        <div onClick={go.toRegister}>註冊帳號</div>
         <div />
       </div>
     </div>

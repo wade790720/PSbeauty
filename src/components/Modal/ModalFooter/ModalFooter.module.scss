@@ -1,0 +1,22 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  >div {
+    padding-top: 11px;
+    padding-bottom: 11px;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    color: #7873E5;
+
+    &:first-child {
+      border-right: 0.5px solid #AAB0B2;
+    }
+  }
+}

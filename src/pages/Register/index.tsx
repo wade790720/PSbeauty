@@ -1,8 +1,12 @@
+import { useState } from "react"
 import styled from "./Register.module.scss"
 import Form from "components/Form"
 import Button from "components/Button"
+import Modal from "components/Modal"
 
 const ForgotPassword = () => {
+  const [open, setOpen] = useState(false)
+
   return (
     <div className={styled.wrapper}>
       <div className={styled.title}>註冊你的帳戶</div>
@@ -20,7 +24,12 @@ const ForgotPassword = () => {
         </InputGroup> */}
         <Form.Input type="text" placeholder="名稱" />
         <Form.Input type="text" placeholder="電話" />
-        <Button variant="transparent">註冊</Button>
+        <Button variant="transparent" onClick={() => setOpen(true)}>
+          註冊
+        </Button>
+        <Modal title="密碼錯誤" open={open} confirmText="確定" onClose={() => setOpen(false)}>
+          錯誤提示文字
+        </Modal>
       </Form>
       <div className={styled.actions}>
         <div />

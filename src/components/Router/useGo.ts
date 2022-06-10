@@ -23,6 +23,8 @@ type toTarget = {
   toDoctorInformation: () => void
   /** 醫生修改密碼 */
   toDoctorUpdatePassword: () => void
+  /** 搜尋結果列表 */
+  toSearchList: (text: string) => void
 }
 
 const useGo = (): toTarget => {
@@ -39,6 +41,7 @@ const useGo = (): toTarget => {
     toChatroom: () => navigate("/chatroom"),
     toDoctorInformation: () => navigate("/doctor/information"),
     toDoctorUpdatePassword: () => navigate("/doctor/update-password"),
+    toSearchList: text => navigate(`/search/${text}`),
   }
 }
 

@@ -92,7 +92,7 @@ const DistrictsFilter = (props: DistrictsFilterProps) => {
             }}>
             清除
           </Button>
-          <Button>完成</Button>
+          <Button onClick={props.onClose}>完成</Button>
         </div>
       </div>
     </Drawer>

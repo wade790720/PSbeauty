@@ -33,6 +33,7 @@ export const Icon = (props: IconProps) => {
     MapPin: <Svg.MapPin />,
     Phone: <Svg.Phone />,
     GlobeSimple: <Svg.GlobeSimple />,
+    CaretDown: <Svg.CaretDown />,
   }
 
   return (

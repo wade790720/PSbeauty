@@ -1,0 +1,150 @@
+import Drawer from "components/Drawer"
+import Form, { InputGroup, Append } from "components/Form"
+import Button from "components/Button"
+import { useState } from "react"
+import styled from "./Consulting.module.scss"
+import { useForm } from "react-hook-form"
+import Icon from "components/Icon"
+
+type consultProps = {
+  open: boolean
+  onClose: () => void
+}
+
+const Consulting = (props: consultProps) => {
+  // const { register, setValue } = useForm<{ dist: string[] }>()
+  const [file, setFile] = useState({
+    file1: "",
+    file2: "",
+    file3: "",
+  })
+
+  return (
+    <Drawer open={props.open} onClose={props.onClose} size="100%">
+      <div className={styled.wrapper}>
+        <h1>諮詢內容</h1>
+        <Form className={styled.form}>
+          <Form.Group layout="vertical" className={styled["input-group"]}>
+            <Form.Label required>標題</Form.Label>
+            <Form.Input placeholder="請輸入文字" className={styled.input} />
+          </Form.Group>
+          <Form.Group layout="vertical" className={styled["input-group"]}>
+            <Form.Label required>分類</Form.Label>
+            <InputGroup className={styled.classify}>
+              <Form.Input placeholder="請輸入文字" className={styled.input} />
+              <Append>
+                <Icon name="caretDown" />
+              </Append>
+            </InputGroup>
+          </Form.Group>
+          <Form.Group layout="vertical" className={styled["input-group"]}>
+            <Form.Label required>諮詢週期</Form.Label>
+            <Form.Input placeholder="請輸入文字" className={styled.input} />
+          </Form.Group>
+          <Form.Group layout="vertical" className={styled["input-group"]}>
+            <Form.Label required>諮詢問題</Form.Label>
+            <Form.Textarea placeholder="請輸入文字" className={styled.textarea} />
+          </Form.Group>
+          <Form.Group layout="vertical" className={styled["input-group"]}>
+            <Form.Label required>附加檔案</Form.Label>
+            <div className={styled.uploads}>
+              <Form.Group>
+                <label id="pic-1" className={styled.upload}>
+                  <div className={styled.add}>+</div>
+                  <input
+                    id="pic-1"
+                    type="file"
+                    accept="image/*"
+                    onChange={e =>
+                      e.target.files &&
+                      setFile({ ...file, file1: URL.createObjectURL(e.target.files[0]) })
+                    }
+                  />
+                  {file.file1 && (
+                    <div className={styled.image}>
+                      <img src={file.file1} />
+                      <div
+                        className={styled.delete}
+                        onClick={e => {
+                          e.preventDefault()
+                          setFile(prev => {
+                            return { file1: prev.file2 || "", file2: prev.file3 || "", file3: "" }
+                          })
+                        }}>
+                        X
+                      </div>
+                    </div>
+                  )}
+                </label>
+              </Form.Group>
+              <Form.Group>
+                <label id="pic-2" className={styled.upload}>
+                  <div className={styled.add}>+</div>
+                  <input
+                    id="pic-2"
+                    type="file"
+                    accept="image/*"
+                    onChange={e =>
+                      e.target.files &&
+                      setFile({ ...file, file2: URL.createObjectURL(e.target.files[0]) })
+                    }
+                  />
+                  {file.file2 && (
+                    <div className={styled.image}>
+                      <img src={file.file2} />
+                      <div
+                        className={styled.delete}
+                        onClick={e => {
+                          e.preventDefault()
+                          setFile(prev => {
+                            return { ...file, file2: prev.file3 || "", file3: "" }
+                          })
+                        }}>
+                        X
+                      </div>
+                    </div>
+                  )}{" "}
+                </label>
+              </Form.Group>
+              <Form.Group>
+                <label id="pic-3" className={styled.upload}>
+                  <div className={styled.add}>+</div>
+                  <input
+                    id="pic-3"
+                    type="file"
+                    accept="image/*"
+                    onChange={e =>
+                      e.target.files &&
+                      setFile({ ...file, file3: URL.createObjectURL(e.target.files[0]) })
+                    }
+                  />
+                  {file.file3 && (
+                    <div className={styled.image}>
+                      <img src={file.file3} />
+                      <div
+                        className={styled.delete}
+                        onClick={e => {
+                          e.preventDefault()
+                          setFile({ ...file, file3: "" })
+                        }}>
+                        X
+                      </div>
+                    </div>
+                  )}{" "}
+                </label>
+              </Form.Group>
+            </div>
+          </Form.Group>
+          <div className={styled.buttons}>
+            <Button variant="text" onClick={props.onClose}>
+              取消
+            </Button>
+            <Button>送出</Button>
+          </div>
+        </Form>
+      </div>
+    </Drawer>
+  )
+}
+
+export default Consulting

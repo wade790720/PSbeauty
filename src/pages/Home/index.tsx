@@ -7,8 +7,11 @@ import Button from "components/Button"
 import CaseCard from "components/CaseCard"
 import imgBefore from "pages/Member/MemberCollectClinicalCase/Before.png"
 import imgAfter from "pages/Member/MemberCollectClinicalCase/After.png"
+import Consulting from "./Consulting"
+import { useState } from "react"
 
 const Home = () => {
+  const [consult, setConsult] = useState(false)
   return (
     <>
       <div className={styled.wrapper}>
@@ -34,10 +37,11 @@ const Home = () => {
         <AdCard />
         <AdCard />
         <AdCard />
-        <Button className={styled.button}>
+        <Button className={styled.button} onClick={() => setConsult(true)}>
           <Icon name="notePencil" className={styled.notePencil} />
           匿名諮詢
         </Button>
+        <Consulting open={consult} onClose={() => setConsult(false)} />
       </div>
       <BottomNavigation />
     </>

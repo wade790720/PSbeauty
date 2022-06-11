@@ -7,26 +7,26 @@
   align-items: center;
   justify-content: flex-end;
   font-style: inherit;
-  line-height: 1.33333;
-  color: #6b778c;
-  font-weight: 600;
   font-family: $font-family;
   margin-right: 10px;
   margin-top: 0px;
   white-space: nowrap;
-  height: 32px;
+  height: 24px;
   vertical-align: middle;
+  margin-bottom: 4px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #2B3A4B;
 
   span {
     position: relative;
 
-    &.required:before {
+    &.required::after {
       content: "*";
-      left: -8px;
-      position: absolute;
       color: #de350b;
       display: inline-block;
-      padding-right: 5px;
+      padding-left: 4px;
     }
   }
 }

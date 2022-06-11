@@ -13,6 +13,7 @@ import { ReactComponent as BookmarkSimple } from "./BookmarkSimple.svg"
 import { ReactComponent as MapPin } from "./MapPin.svg"
 import { ReactComponent as Phone } from "./Phone.svg"
 import { ReactComponent as GlobeSimple } from "./GlobeSimple.svg"
+import { ReactComponent as CaretDown } from "./CaretDown.svg"
 
 const Image = Object.assign(
   {},
@@ -32,6 +33,7 @@ const Image = Object.assign(
     Phone,
     GlobeSimple,
     PurpleCross,
+    CaretDown,
   },
 )
 

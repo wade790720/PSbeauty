@@ -32,7 +32,7 @@ const MemberUpdatePassword = () => {
         <Form onSubmit={handleSubmit(onSubmit)}>
           {/* password */}
           <Form.Group layout="vertical">
-            <Form.Label className={styled["input-title"]}>現在的密碼</Form.Label>
+            <Form.Label>現在的密碼</Form.Label>
             <InputGroup className={styled["input-box-group"]}>
               <Form.Input
                 className={styled["input-box"]}
@@ -50,7 +50,7 @@ const MemberUpdatePassword = () => {
           {/* newPassword */}
           <div className={styled.split} />
           <Form.Group layout="vertical">
-            <Form.Label className={styled["input-title"]}>新密碼</Form.Label>
+            <Form.Label>新密碼</Form.Label>
             <InputGroup className={styled["input-box-group"]}>
               <Form.Input
                 className={styled["input-box"]}
@@ -71,7 +71,7 @@ const MemberUpdatePassword = () => {
           </Form.Group>
           {/* repeatPassword */}
           <Form.Group layout="vertical">
-            <Form.Label className={styled["input-title"]}>密碼確認</Form.Label>
+            <Form.Label>密碼確認</Form.Label>
             <InputGroup className={styled["input-box-group"]}>
               <Form.Input
                 className={styled["input-box"]}

@@ -1,0 +1,77 @@
+.wrapper {
+  display: grid;
+  grid-gap: 12px;
+}
+
+.doctor {
+  min-height: 312px;
+  border: 1px solid rgba(#AAB0B2, 0.2);
+  padding: 24px;
+  display: grid;
+  grid-gap: 12px;
+  
+  .personal {
+    display: flex;
+
+    .avatar {
+      width: 99px;
+      height: 90px;
+      border-radius: 15px;
+      display: inline-block;
+      background-color: #999;
+    }
+
+    .information {
+      display: flex;
+      flex-direction: column;
+      padding-left: 12px;
+      justify-content: center;
+      font-weight: bold;
+
+      .name {
+        font-size: 20px;
+        line-height: 24px;
+        padding-bottom: 8px;
+        color: #2B3A4B;
+      }
+
+      .job-title {
+        font-size: 14px;
+        line-height: 21px;
+        color: #AAB0B2;
+      }
+    }
+  }
+
+  .experience {
+    margin: 0;
+    padding: 0 18px;
+    font-size: 14px;
+    line-height: 21px;
+    height: 42px;
+    overflow: hidden;
+
+    &.more {
+      height: unset;
+    }
+
+    .job {
+      color: #333333;
+    }
+  }
+
+  .show {
+    margin-top: -4px;
+    color: #7873E5;
+    cursor: pointer;
+    padding-bottom: 4px;
+  }
+
+  .expertise {
+    height: 42px;
+
+    &.more {
+      height: unset;
+    }
+  }
+}

@@ -27,6 +27,7 @@
         padding: 0 13px;
         height: 38px;
         color: #2B3A4B;
+        cursor: pointer;
       }
 
       .textarea {
@@ -40,10 +41,11 @@
       border-radius: 4px;
       height: 38px;
       cursor: pointer;
-      
+
       .input {
         margin-top: 0px;
-        border: none ;
+        border: none;
+        // user-select: none;
       }
     }
 

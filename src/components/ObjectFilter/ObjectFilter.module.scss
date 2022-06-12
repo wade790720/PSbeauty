@@ -1,0 +1,84 @@
+.wrapper {
+  padding: 14px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+
+  .title {
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 22px;
+  }
+
+  .medical-type {
+    display: flex;
+    gap: 8px;
+    margin-right: -24px;
+    overflow: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    button {
+      min-width: 108px;
+      height: 32px;
+    }
+  }
+
+  .content {
+    display: flex;
+    margin-bottom: 12px;
+    max-height: 571px;
+    overflow: hidden;
+
+    .part {
+      width: 127px;
+      border-right: 1px solid rgba(#AAB0B2, 0.2);
+      overflow: scroll;
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    .item {
+      padding: 12px 0;
+      font-size: 16px;
+      line-height: 24px;
+      border: none;
+      background: none;
+      color: #2B3A4B;
+      cursor: pointer;
+
+      &.select {
+        color: #7873E5;
+        font-weight: bold;
+      }
+    }
+
+    .subjects {
+      display: flex;
+      flex-direction: column;
+      overflow: scroll;
+      padding-left: 24px;
+      flex: 1;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+  .buttons {
+    display: flex;
+    gap: 8px;
+  
+    button {
+      height: 38px;
+      font-size: 16px;
+    }
+  }
+}

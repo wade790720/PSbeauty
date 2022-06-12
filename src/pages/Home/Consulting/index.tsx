@@ -3,8 +3,8 @@ import Form, { InputGroup, Append } from "components/Form"
 import Button from "components/Button"
 import { useState } from "react"
 import styled from "./Consulting.module.scss"
-import { useForm } from "react-hook-form"
 import Icon from "components/Icon"
+import ObjectFilter from "components/ObjectFilter"
 
 type consultProps = {
   open: boolean
@@ -12,12 +12,17 @@ type consultProps = {
 }
 
 const Consulting = (props: consultProps) => {
-  // const { register, setValue } = useForm<{ dist: string[] }>()
+  const [chosenSubject, setChosenSubject] = useState("")
+  const [open, setOpen] = useState(false)
   const [file, setFile] = useState({
     file1: "",
     file2: "",
     file3: "",
   })
+
+  const getChosenSubject = (value: string) => {
+    setChosenSubject(value)
+  }
 
   return (
     <Drawer open={props.open} onClose={props.onClose} size="100%">
@@ -30,12 +35,23 @@ const Consulting = (props: consultProps) => {
           </Form.Group>
           <Form.Group layout="vertical" className={styled["input-group"]}>
             <Form.Label required>分類</Form.Label>
-            <InputGroup className={styled.classify}>
-              <Form.Input placeholder="請輸入文字" className={styled.input} />
-              <Append>
-                <Icon name="caretDown" />
-              </Append>
-            </InputGroup>
+            <div onClick={() => setOpen(true)} style={{ width: "100%" }}>
+              <InputGroup className={styled.classify}>
+                <Form.Input
+                  value={chosenSubject}
+                  placeholder="請點擊選擇"
+                  className={styled.input}
+                />
+                <Append>
+                  <Icon name="caretDown" />
+                </Append>
+              </InputGroup>
+            </div>
+            <ObjectFilter.Member
+              open={open}
+              onClose={() => setOpen(false)}
+              getValue={value => getChosenSubject(value)}
+            />
           </Form.Group>
           <Form.Group layout="vertical" className={styled["input-group"]}>
             <Form.Label required>諮詢週期</Form.Label>
@@ -136,7 +152,12 @@ const Consulting = (props: consultProps) => {
             </div>
           </Form.Group>
           <div className={styled.buttons}>
-            <Button variant="text" onClick={props.onClose}>
+            <Button
+              variant="text"
+              onClick={() => {
+                props.onClose()
+                setChosenSubject("")
+              }}>
               取消
             </Button>
             <Button>送出</Button>

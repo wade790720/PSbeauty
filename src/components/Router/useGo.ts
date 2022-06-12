@@ -9,8 +9,14 @@ type toTarget = {
   toRegister: () => void
   /** 診所頁 */
   toClinic: () => void
+  /** 診所內頁 */
+  toClinicInner: ({ id, tab }: { id: string; tab: string }) => void
+  /** 診所活動內頁 */
+  toClinicActivity: ({ id }: { id: string }) => void
   /** 案例 */
   toClinicCaseList: () => void
+  /** 案例內頁 */
+  toClinicCase: ({ id }: { id: string }) => void
   /** 廣告內頁 */
   toAdvertisement: () => void
   /** 諮詢歷史紀錄 */
@@ -38,7 +44,10 @@ const useGo = (): toTarget => {
     toSignIn: () => navigate("/sign-in"),
     toRegister: () => navigate("/register"),
     toClinic: () => navigate("/clinic"),
+    toClinicInner: ({ id, tab }) => navigate(`/clinic/${id}/inner/${tab}`),
+    toClinicActivity: id => navigate(`/clinic/${id}/activity`),
     toClinicCaseList: () => navigate("/clinical-case-list"),
+    toClinicCase: id => navigate(`/clinical-case-list/${id}`),
     toAdvertisement: () => navigate("/advertisement"),
     toConsultationRecord: () => navigate("/member/consultation-record"),
     toCollectClinicalCase: () => navigate("/member/collect-clinical-case"),

@@ -1,8 +1,10 @@
 import styled from "./ClinicActivities.module.scss"
+import useGo from "components/Router/useGo"
 
 const ActivityCard = () => {
+  const go = useGo()
   return (
-    <div className={styled["activity-card"]}>
+    <div className={styled["activity-card"]} onClick={() => go.toClinicActivity({ id: "123" })}>
       <div className={styled.title}>VIP會員方案-玻尿酸享半價優惠</div>
       <div className={styled.content}>
         <div className={styled.pic} />

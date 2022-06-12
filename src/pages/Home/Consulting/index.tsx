@@ -160,7 +160,7 @@ const Consulting = (props: consultProps) => {
               }}>
               取消
             </Button>
-            <Button>送出</Button>
+            <Button onClick={props.onClose}>送出</Button>
           </div>
         </Form>
       </div>

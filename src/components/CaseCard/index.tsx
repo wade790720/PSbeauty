@@ -1,5 +1,6 @@
 import styled from "./CaseCard.module.scss"
 import Icon from "components/Icon"
+import useGo from "components/Router/useGo"
 
 export type CaseCardProps = {
   title: string
@@ -12,8 +13,12 @@ export type CaseCardProps = {
 } & ReactProps.Component
 
 const CaseCard = ({ ...props }: CaseCardProps) => {
+  const go = useGo()
   return (
-    <div className={styled.wrapper} style={props.style}>
+    <div
+      className={styled.wrapper}
+      style={props.style}
+      onClick={() => go.toClinicCase({ id: "123" })}>
       <div className={styled.title}>{props.title}</div>
       <div className={styled.clinic}>{props.clinic}</div>
       <div className={styled.content}>{props.introduction}</div>

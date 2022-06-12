@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom"
 import Header from "components/Layout/Header"
 import Backdrop from "components/Layout/Backdrop"
-import ClinicSwitch from "components/ClinicSwitch"
+import ClinicSwitch from "../ClinicSwitch"
 import BottomNavigation from "components/BottomNavigation"
 
 const ClinicInnerWrapper = () => {

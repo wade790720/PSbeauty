@@ -1,3 +1,4 @@
+import { useState } from "react"
 import styled from "./ClinicalCaseList.module.scss"
 import Icon from "components/Icon"
 import BottomNavigation from "components/BottomNavigation"
@@ -6,8 +7,10 @@ import Button from "components/Button"
 import CaseCard from "components/CaseCard"
 import imgBefore from "pages/Member/MemberCollectClinicalCase/Before.png"
 import imgAfter from "pages/Member/MemberCollectClinicalCase/After.png"
+import ObjectFilter from "components/ObjectFilter"
 
 const ClinicalCaseList = () => {
+  const [open, setOpen] = useState(false)
   return (
     <>
       <div className={styled.wrapper}>
@@ -35,10 +38,15 @@ const ClinicalCaseList = () => {
           images={[imgBefore, imgAfter]}
           tags={["蘋果肌1", "蘋果肌2", "蘋果肌3", "蘋果肌4", "蘋果肌5"]}
         />
-        <Button className={styled.button}>
+        <Button className={styled.button} onClick={() => setOpen(true)}>
           <Icon name="funnel" className={styled.funnel} />
           分類篩選
         </Button>
+        <ObjectFilter
+          open={open}
+          onClose={() => setOpen(false)}
+          getValue={value => console.log(value)}
+        />
       </div>
       <BottomNavigation />
     </>

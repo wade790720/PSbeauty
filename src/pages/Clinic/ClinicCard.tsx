@@ -1,8 +1,10 @@
 import styled from "./Clinic.module.scss"
+import useGo from "components/Router/useGo"
 
 const ClinicCard = () => {
+  const go = useGo()
   return (
-    <div className={styled.clinic}>
+    <div className={styled.clinic} onClick={() => go.toClinicInner({ id: "abc", tab: "" })}>
       <div className={styled.title}>玉辛醫美診所</div>
       <div className={styled["sub-title"]}>台北市大安區</div>
       <div className={styled.content}>

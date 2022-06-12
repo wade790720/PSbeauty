@@ -6,11 +6,15 @@ import "taipei-sans-tc/dist/Bold/TaipeiSansTCBeta-Bold.css"
 import "./index.css"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
+import apolloClient from "./graphql/apolloClient"
+import { ApolloProvider } from "@apollo/client"
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={apolloClient}>
+      <App />
+    </ApolloProvider>
   </React.StrictMode>,
 )
 

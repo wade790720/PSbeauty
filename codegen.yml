@@ -1,0 +1,36 @@
+schema: https://cloud-run-api-psbeauty-deuedjpwuq-de.a.run.app/api/graphql
+
+generates:
+  src/types/schema.ts:
+    plugins:
+      - typescript
+  src/:
+    preset: near-operation-file
+    presetConfig:
+      extension: .generated.ts
+      baseTypesPath: types/schema.ts
+    pluckConfig:
+      modules:
+        - name: './src/**/*.graphql.ts'
+          identifier: gql
+    documents:
+      - './src/**/*.graphql.ts'
+    plugins:
+      - typescript-operations
+      - typescript-react-apollo
+config:
+  avoidOptionals: true 
+  nonOptionalTypename: true
+  skipTypeNameForRoot: true
+  withHooks: true
+  preResolveTypes: true
+  scalars:
+    Date: number
+    DateTime: number
+    Decimal: number
+    JSONString: string
+    JSONStringUTF8: string
+overwrite: true
+hooks:
+  afterAllFileWrite:
+    - eslint --fix

@@ -8693,6 +8693,11 @@ nth-check@^2.0.1:
   dependencies:
     boolbase "^1.0.0"
 
+nuka-carousel@^5.1.1:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/nuka-carousel/-/nuka-carousel-5.1.1.tgz#7467b67de0ee67c38d06b1577ab7de72a766469f"
+  integrity sha512-pWUp1CxFovKQ2uF7n0U6gUjmp6RjYHxp2qYb5pENi2G3jxV231lFy53MLv7U9pnz/H1gk4I3tszKp9RAqtKjbA==
+
 nullthrows@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/nullthrows/-/nullthrows-1.1.1.tgz#7818258843856ae971eae4208ad7d7eb19a431b1"

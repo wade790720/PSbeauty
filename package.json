@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.5.10",
-    "graphql": "^16.3.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
@@ -15,7 +14,9 @@
     "@types/react-dom": "^18.0.4",
     "axios": "^0.27.2",
     "classnames": "^2.3.1",
+    "graphql": "^16.3.0",
     "nanoid": "^3.3.4",
+    "nuka-carousel": "^5.1.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-grid-system": "^8.1.5",
@@ -23,8 +24,8 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-switch": "^6.0.0",
-    "taipei-sans-tc": "^0.1.1",
     "reactjs-popup": "^2.0.5",
+    "taipei-sans-tc": "^0.1.1",
     "typescript": "^4.6.4",
     "web-vitals": "^2.1.0"
   },

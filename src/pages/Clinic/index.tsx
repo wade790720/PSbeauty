@@ -6,6 +6,7 @@ import Button from "components/Button"
 import ClinicCard from "./ClinicCard"
 import { useState } from "react"
 import DistrictsFilter from "./DistrictsFilter"
+import Banner from "components/Banner"
 
 const Clinic = () => {
   const [openFilter, setOpenFilter] = useState(false)
@@ -16,10 +17,7 @@ const Clinic = () => {
           <SearchBar />
           <Icon name="chat" className={styled["chat-icon"]} />
         </div>
-        <div className={styled.banner}>
-          <div className={styled["banner-item"]}>banner-item</div>
-          <div className={styled["banner-item"]}>banner-item</div>
-        </div>
+        <Banner />
         <ClinicCard />
         <ClinicCard />
         <ClinicCard />

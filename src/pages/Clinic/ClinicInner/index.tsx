@@ -4,14 +4,12 @@ import Button from "components/Button"
 import CaseCard from "components/CaseCard"
 import imgBefore from "pages/Member/MemberCollectClinicalCase/Before.png"
 import imgAfter from "pages/Member/MemberCollectClinicalCase/After.png"
+import Banner from "components/Banner"
 
 const ClinicInner = () => {
   return (
     <div className={styled.wrapper}>
-      <div className={styled.banner}>
-        <div className={styled.pic} />
-        <div className={styled.pic} />
-      </div>
+      <Banner height="214px" />
       <div className={styled.content}>
         <div className={styled.contact}>
           <Icon name="mapPin" />

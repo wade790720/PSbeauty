@@ -9,6 +9,7 @@ import imgBefore from "pages/Member/MemberCollectClinicalCase/Before.png"
 import imgAfter from "pages/Member/MemberCollectClinicalCase/After.png"
 import Consulting from "./Consulting"
 import { useState } from "react"
+import Banner from "components/Banner"
 
 const Home = () => {
   const [consult, setConsult] = useState(false)
@@ -19,10 +20,7 @@ const Home = () => {
           <SearchBar />
           <Icon name="chat" className={styled["chat-icon"]} />
         </div>
-        <div className={styled.banner}>
-          <div className={styled["banner-item"]}>banner-item</div>
-          <div className={styled["banner-item"]}>banner-item</div>
-        </div>
+        <Banner />
         <AdCard />
         <CaseCard
           amount="1.2K"

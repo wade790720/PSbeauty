@@ -8,6 +8,7 @@ import CaseCard from "components/CaseCard"
 import imgBefore from "pages/Member/MemberCollectClinicalCase/Before.png"
 import imgAfter from "pages/Member/MemberCollectClinicalCase/After.png"
 import ObjectFilter from "components/ObjectFilter"
+import Banner from "components/Banner"
 
 const ClinicalCaseList = () => {
   const [open, setOpen] = useState(false)
@@ -18,10 +19,7 @@ const ClinicalCaseList = () => {
           <SearchBar />
           <Icon name="chat" className={styled["chat-icon"]} />
         </div>
-        <div className={styled.banner}>
-          <div className={styled["banner-item"]}>banner-item</div>
-          <div className={styled["banner-item"]}>banner-item</div>
-        </div>
+        <Banner />
         <CaseCard
           isCollected
           title="臉部拉提改善面部線條A"

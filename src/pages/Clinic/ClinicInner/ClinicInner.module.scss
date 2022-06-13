@@ -2,25 +2,6 @@
   display: grid;
   grid-gap: 12px;
 
-  .banner {
-    display: flex;
-    overflow: scroll;
-    gap: 12px;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    margin-right: -24px;
-
-    .pic {
-      min-width: 342px;
-      height: 213.75px;
-      border-radius: 15px;
-      background-color: rgba(red, 0.2);
-    }
-  }
-
   .content {
     color: #2B3A4B;
     display: grid;

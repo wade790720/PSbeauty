@@ -4,7 +4,7 @@ import Button from "components/Button"
 import { useState } from "react"
 import styled from "./Consulting.module.scss"
 import Icon from "components/Icon"
-import SbjectFilter from "components/SubjectFilter"
+import SubjectFilter from "components/SubjectFilter"
 
 type consultProps = {
   open: boolean
@@ -47,7 +47,7 @@ const Consulting = (props: consultProps) => {
                 </Append>
               </InputGroup>
             </div>
-            <SbjectFilter.Member
+            <SubjectFilter.Member
               open={open}
               onClose={() => setOpen(false)}
               getValue={value => getChosenSubject(value)}
@@ -151,18 +151,18 @@ const Consulting = (props: consultProps) => {
               </Form.Group>
             </div>
           </Form.Group>
-          <div className={styled.buttons}>
-            <Button
-              variant="text"
-              onClick={() => {
-                props.onClose()
-                setChosenSubject("")
-              }}>
-              取消
-            </Button>
-            <Button onClick={props.onClose}>送出</Button>
-          </div>
         </Form>
+      </div>
+      <div className={styled.buttons}>
+        <Button
+          variant="text"
+          onClick={() => {
+            props.onClose()
+            setChosenSubject("")
+          }}>
+          取消
+        </Button>
+        <Button onClick={props.onClose}>送出</Button>
       </div>
     </Drawer>
   )

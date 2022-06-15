@@ -88,24 +88,24 @@ const SubjectFilter = (props: consultProps) => {
             ))}
           </div>
         </div>
-        <div className={styled.buttons}>
-          <Button
-            variant="text"
-            onClick={() => {
-              setValue("subject", [])
-              setIsCheckAll(false)
-            }}>
-            清除
-          </Button>
-          <Button
-            variant="text"
-            onClick={() => {
-              props.getValue(chosenSubject.toString())
-              props.onClose()
-            }}>
-            完成
-          </Button>
-        </div>
+      </div>
+      <div className={styled.buttons}>
+        <Button
+          variant="text"
+          onClick={() => {
+            setValue("subject", [])
+            setIsCheckAll(false)
+          }}>
+          清除
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => {
+            props.getValue(chosenSubject.toString())
+            props.onClose()
+          }}>
+          完成
+        </Button>
       </div>
     </Drawer>
   )

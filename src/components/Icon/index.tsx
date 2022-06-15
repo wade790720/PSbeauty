@@ -34,6 +34,7 @@ export const Icon = (props: IconProps) => {
     Phone: <Svg.Phone />,
     GlobeSimple: <Svg.GlobeSimple />,
     CaretDown: <Svg.CaretDown />,
+    Info: <Svg.Info />,
   }
 
   return (

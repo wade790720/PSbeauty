@@ -5,6 +5,7 @@ import Button from "components/Button"
 import styled from "./SubjectFilter.module.scss"
 import { useForm } from "react-hook-form"
 import cx from "classnames"
+import Icon from "components/Icon"
 
 type consultProps = {
   open: boolean
@@ -30,24 +31,23 @@ const fakeSubjectData = [
 
 const SubjectFilter = (props: consultProps) => {
   const [eventKey, setEventKey] = useState("眼睛")
+  const [errorState, setErrorState] = useState(false)
   const { register, setValue, watch } = useForm<{ subject: string[] }>()
   const chosenSubject = watch().subject || []
-
-  register("subject", {
-    onChange: e => {
-      if (chosenSubject.length >= 3) {
-        e.target.checked = false
-        chosenSubject.pop()
-      }
-    },
-  })
-
-  const subjectLength = chosenSubject ? (chosenSubject?.length < 4 ? chosenSubject.length : 3) : 0
+  const registerSubject = register("subject")
 
   return (
     <Drawer open={props.open} onClose={props.onClose} size="100%">
       <div className={styled.wrapper}>
-        <div className={styled.title}>分類({subjectLength}/3)</div>
+        <div className={styled.title}>
+          分類({chosenSubject?.length}/3)
+          {errorState && (
+            <div className={styled.error}>
+              <Icon name="info" />
+              <p>最多選擇3項</p>
+            </div>
+          )}
+        </div>
         <div className={styled["medical-type"]}>
           <Button variant="text">整形手術</Button>
           <Button variant="text">整形手術</Button>
@@ -64,7 +64,6 @@ const SubjectFilter = (props: consultProps) => {
                   onClick={() => {
                     setEventKey(item)
                     setValue("subject", [])
-                    // setChosenSubject([])
                   }}
                   className={cx(styled.item, { [styled.select]: item === eventKey })}>
                   {item}
@@ -78,33 +77,40 @@ const SubjectFilter = (props: consultProps) => {
                 key={subject}
                 className={cx("checkbox", styled.item)}
                 value={subject}
-                {...register("subject")}>
+                {...register("subject")}
+                onChange={e => {
+                  if (e.target.checked && chosenSubject.length === 3) {
+                    e.target.checked = false
+                    setErrorState(true)
+                  } else {
+                    setErrorState(false)
+                  }
+                  registerSubject.onChange(e)
+                }}>
                 {subject}
               </Form.Checkbox>
             ))}
           </div>
         </div>
-        <div className={styled.buttons}>
-          <Button
-            variant="text"
-            onClick={() => {
-              setValue("subject", [])
-            }}>
-            清除
-          </Button>
-          <Button
-            variant="text"
-            onClick={() => {
-              // have to be fix
-              if (chosenSubject.length > 3) {
-                chosenSubject.pop()
-              }
-              props.getValue(chosenSubject.toString())
-              props.onClose()
-            }}>
-            完成
-          </Button>
-        </div>
+      </div>
+      <div className={styled.buttons}>
+        <Button
+          variant="text"
+          onClick={() => {
+            setValue("subject", [])
+            setErrorState(false)
+          }}>
+          清除
+        </Button>
+        <Button
+          variant="primary"
+          onClick={() => {
+            props.getValue(chosenSubject.toString())
+            props.onClose()
+            setErrorState(false)
+          }}>
+          完成
+        </Button>
       </div>
     </Drawer>
   )

@@ -7,7 +7,7 @@ import Button from "components/Button"
 import CaseCard from "components/CaseCard"
 import imgBefore from "pages/Member/MemberCollectClinicalCase/Before.png"
 import imgAfter from "pages/Member/MemberCollectClinicalCase/After.png"
-import ObjectFilter from "components/ObjectFilter"
+import SubjectFilter from "components/SubjectFilter"
 import Banner from "components/Banner"
 
 const ClinicalCaseList = () => {
@@ -40,7 +40,7 @@ const ClinicalCaseList = () => {
           <Icon name="funnel" className={styled.funnel} />
           分類篩選
         </Button>
-        <ObjectFilter
+        <SubjectFilter
           open={open}
           onClose={() => setOpen(false)}
           getValue={value => console.log(value)}

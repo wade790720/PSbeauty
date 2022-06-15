@@ -2,7 +2,7 @@ import { useState } from "react"
 import Drawer from "components/Drawer"
 import Form from "components/Form"
 import Button from "components/Button"
-import styled from "./ObjectFilter.module.scss"
+import styled from "./SubjectFilter.module.scss"
 import { useForm } from "react-hook-form"
 import cx from "classnames"
 
@@ -28,16 +28,26 @@ const fakeSubjectData = [
   "脂肪填充",
 ]
 
-const ObjectFilter = (props: consultProps) => {
+const SubjectFilter = (props: consultProps) => {
   const [eventKey, setEventKey] = useState("眼睛")
-  const [isCheckAll, setIsCheckAll] = useState(false)
   const { register, setValue, watch } = useForm<{ subject: string[] }>()
   const chosenSubject = watch().subject || []
+
+  register("subject", {
+    onChange: e => {
+      if (chosenSubject.length >= 3) {
+        e.target.checked = false
+        chosenSubject.pop()
+      }
+    },
+  })
+
+  const subjectLength = chosenSubject ? (chosenSubject?.length < 4 ? chosenSubject.length : 3) : 0
 
   return (
     <Drawer open={props.open} onClose={props.onClose} size="100%">
       <div className={styled.wrapper}>
-        <div className={styled.title}>分類(56)</div>
+        <div className={styled.title}>分類({subjectLength}/3)</div>
         <div className={styled["medical-type"]}>
           <Button variant="text">整形手術</Button>
           <Button variant="text">整形手術</Button>
@@ -54,7 +64,7 @@ const ObjectFilter = (props: consultProps) => {
                   onClick={() => {
                     setEventKey(item)
                     setValue("subject", [])
-                    setIsCheckAll(false)
+                    // setChosenSubject([])
                   }}
                   className={cx(styled.item, { [styled.select]: item === eventKey })}>
                   {item}
@@ -63,25 +73,11 @@ const ObjectFilter = (props: consultProps) => {
             })}
           </div>
           <div className={styled.subjects}>
-            <Form.Checkbox
-              className={styled.item}
-              checked={isCheckAll}
-              onClick={() => {
-                setIsCheckAll(!isCheckAll)
-                setValue("subject", !isCheckAll ? fakeSubjectData.map(subject => subject) : [])
-              }}>
-              全選
-            </Form.Checkbox>
             {fakeSubjectData.map(subject => (
               <Form.Checkbox
                 key={subject}
-                className={styled.item}
+                className={cx("checkbox", styled.item)}
                 value={subject}
-                onClick={() => {
-                  if (isCheckAll) {
-                    setIsCheckAll(false)
-                  }
-                }}
                 {...register("subject")}>
                 {subject}
               </Form.Checkbox>
@@ -93,13 +89,16 @@ const ObjectFilter = (props: consultProps) => {
             variant="text"
             onClick={() => {
               setValue("subject", [])
-              setIsCheckAll(false)
             }}>
             清除
           </Button>
           <Button
             variant="text"
             onClick={() => {
+              // have to be fix
+              if (chosenSubject.length > 3) {
+                chosenSubject.pop()
+              }
               props.getValue(chosenSubject.toString())
               props.onClose()
             }}>
@@ -111,4 +110,4 @@ const ObjectFilter = (props: consultProps) => {
   )
 }
 
-export default ObjectFilter
+export default SubjectFilter

@@ -10,6 +10,7 @@
   border-radius: 15px;
   border-width: 1px;
   border-style: solid;
+  height: 50px;
   box-sizing: border-box;
   display: flex;
   flex: 1 1 100%;
@@ -22,6 +23,8 @@
   overflow-wrap: break-word;
   vertical-align: top;
   pointer-events: auto;
+  background-color: #fff;
+
 
   &:not(.disabled) {
     &:focus-within {
@@ -50,7 +53,7 @@
 
         &:focus {
           background-color: #eef3f7;
-          color: #5e6278;;
+          color: #5e6278;
         }
       }
     }
@@ -66,8 +69,8 @@
   }
 
   input.control {
-    padding: 12px 17px;
     height: 48px;
+    padding: 12px 17px;
     background-clip: padding-box;
     appearance: none;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
@@ -81,6 +84,7 @@
     width: 100%;
     line-height: 1.42857;
     font-family: $font-family;
+    border-radius: 15px;
 
     &::placeholder,
     &::-webkit-input-placeholder {

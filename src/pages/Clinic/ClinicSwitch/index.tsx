@@ -1,26 +1,24 @@
+import { useMatch, Navigate } from "react-router-dom"
 import Button from "components/Button"
 import ButtonGroup from "components/ButtonGroup"
-import styled from "./ClinicSwitch.module.scss"
 import useGo from "components/Router/useGo"
+import styled from "./ClinicSwitch.module.scss"
+
+const DEFAULT_TAB = "info"
 
 const ClinicSwitch = () => {
   const go = useGo()
+  const match = useMatch("/clinic/:id/inner/:tab")
 
+  if (!match?.params.tab) return <Navigate to={DEFAULT_TAB} replace />
   return (
     <div className={styled.wrapper}>
       <ButtonGroup
-        defaultActiveKey="clinic"
-        onSelect={(
-          e: React.MouseEvent<Element, MouseEvent>,
-          { eventKey }: { eventKey?: ReactProps.EventKey },
-        ) => {
-          if (eventKey === "clinic") {
-            go.toClinicInner({ id: "123", tab: "" })
-          } else {
-            go.toClinicInner({ id: "123", tab: eventKey + "" })
-          }
+        defaultActiveKey={match?.params.tab || DEFAULT_TAB}
+        onSelect={(_, { eventKey }) => {
+          go.toClinicInner({ id: match.params.id || "", tab: `${eventKey}` })
         }}>
-        <Button eventKey="clinic">診所</Button>
+        <Button eventKey="info">診所</Button>
         <Button eventKey="introduction">介紹</Button>
         <Button eventKey="medical-team">團隊</Button>
         <Button eventKey="activities">活動</Button>

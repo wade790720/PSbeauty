@@ -1,10 +1,20 @@
 import styled from "./ClinicActivities.module.scss"
 import useGo from "components/Router/useGo"
+import { useMatch } from "react-router-dom"
 
 const ActivityCard = () => {
   const go = useGo()
+  const match = useMatch("/clinic/:id/inner/activities")
+
   return (
-    <div className={styled["activity-card"]} onClick={() => go.toClinicActivity({ id: "123" })}>
+    <div
+      className={styled["activity-card"]}
+      onClick={() =>
+        go.toClinicActivity({
+          id: match?.params.id || "",
+          activityId: "activityId",
+        })
+      }>
       <div className={styled.title}>VIP會員方案-玻尿酸享半價優惠</div>
       <div className={styled.content}>
         <div className={styled.pic} />

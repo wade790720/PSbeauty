@@ -263,15 +263,6 @@ const getRoutes = (): RouteObject[] => {
             </Suspense>
           ),
         },
-        /* 診所活動內頁 */
-        {
-          path: ":id/activity",
-          element: (
-            <Suspense>
-              <ClinicActivity />
-            </Suspense>
-          ),
-        },
         /* 診所內頁外框 */
         {
           path: ":id/inner",
@@ -283,6 +274,7 @@ const getRoutes = (): RouteObject[] => {
           children: [
             {
               index: true,
+              path: "info",
               element: (
                 <Suspense>
                   <ClinicInner />
@@ -315,6 +307,15 @@ const getRoutes = (): RouteObject[] => {
                   element: (
                     <Suspense>
                       <ClinicActivities />
+                    </Suspense>
+                  ),
+                },
+                /* 診所活動內頁 */
+                {
+                  path: ":activityId",
+                  element: (
+                    <Suspense>
+                      <ClinicActivity />
                     </Suspense>
                   ),
                 },

@@ -35,7 +35,12 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
           </div>
         ))}
       </div>
-      <div className={styled["collect-block"]}>
+      <div
+        className={styled["collect-block"]}
+        onClick={e => {
+          e.stopPropagation()
+          go.toChatroom()
+        }}>
         {props.isCollected ? (
           <Icon name="BookmarkFill" className={styled["bookmark-fill"]} />
         ) : (

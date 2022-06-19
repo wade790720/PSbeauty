@@ -48,7 +48,7 @@ const useGo = (): toTarget => {
     toClinicActivity: ({ id, activityId }) =>
       navigate(`/clinic/${id}/inner/activities/${activityId}`),
     toClinicCaseList: () => navigate("/clinical-case-list"),
-    toClinicCase: id => navigate(`/clinical-case-list/${id}`),
+    toClinicCase: ({ id }) => navigate(`/clinical-case-list/${id}`),
     toAdvertisement: () => navigate("/advertisement"),
     toConsultationRecord: () => navigate("/member/consultation-record"),
     toCollectClinicalCase: () => navigate("/member/collect-clinical-case"),

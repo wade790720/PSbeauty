@@ -1,21 +1,25 @@
 .wrapper {
   display: grid;
   grid-gap: 12px;
+  padding-bottom: 6px;
 }
 
 .doctor {
   min-height: 312px;
   border: 1px solid rgba(#AAB0B2, 0.2);
   padding: 24px;
-  display: grid;
+  color: #333333;
+  display: flex;
+  flex-direction: column;
   grid-gap: 12px;
-  
+  border-radius: 15px;
+
   .personal {
     display: flex;
+    height: 90px;
 
     .avatar {
       width: 99px;
-      height: 90px;
       border-radius: 15px;
       display: inline-block;
       background-color: #999;
@@ -54,10 +58,6 @@
     &.more {
       height: unset;
     }
-
-    .job {
-      color: #333333;
-    }
   }
 
   .show {
@@ -69,6 +69,7 @@
 
   .expertise {
     height: 42px;
+    overflow: hidden;
 
     &.more {
       height: unset;

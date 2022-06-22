@@ -5,7 +5,7 @@ const AdCard = () => {
   const go = useGo()
 
   return (
-    <div className={styled["ad-card"]} onClick={go.toAdvertisement}>
+    <div className={styled["ad-card"]} onClick={() => go.toAdvertisement({ id: "face" })}>
       <div className={styled.title}>全新臉部拉提計畫</div>
       <div className={styled.content}>
         <div className={styled.pic} />

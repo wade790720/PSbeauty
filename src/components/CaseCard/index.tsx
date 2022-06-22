@@ -1,6 +1,7 @@
 import styled from "./CaseCard.module.scss"
 import Icon from "components/Icon"
 import useGo from "components/Router/useGo"
+import { useAuth } from "hooks/useAuth"
 
 export type CaseCardProps = {
   title: string
@@ -14,6 +15,8 @@ export type CaseCardProps = {
 
 const CaseCard = ({ ...props }: CaseCardProps) => {
   const go = useGo()
+  const auth = useAuth()
+
   return (
     <div
       className={styled.wrapper}
@@ -39,7 +42,8 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
         className={styled["collect-block"]}
         onClick={e => {
           e.stopPropagation()
-          go.toChatroom()
+          // TODO: add collect function
+          if (!auth.user.id) go.toSignIn()
         }}>
         {props.isCollected ? (
           <Icon name="BookmarkFill" className={styled["bookmark-fill"]} />

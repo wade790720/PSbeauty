@@ -20,7 +20,7 @@ const BottomNavigation = () => {
           </div>
         )}
       </NavLink>
-      <NavLink to="/chatroom">
+      <NavLink to="/doctor/inbox">
         {({ isActive }) => (
           <div className={cx(styled.cell, { [styled.active]: isActive })}>
             <div className={styled.icon}>{isActive ? <ChatFill /> : <Chat />}</div>
@@ -28,7 +28,7 @@ const BottomNavigation = () => {
           </div>
         )}
       </NavLink>
-      <NavLink to="/doctor">
+      <NavLink to="/doctor" end>
         {({ isActive }) => (
           <div className={cx(styled.cell, { [styled.active]: isActive })}>
             <div className={styled.icon}>{isActive ? <PersonFill /> : <Person />}</div>

@@ -113,7 +113,7 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
     },
     /* 廣告內頁 */
     {
-      path: "/advertisement",
+      path: "/advertisement/:id",
       element: (
         <Suspense>
           <Advertisement />

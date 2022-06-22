@@ -18,7 +18,7 @@ type toTarget = {
   /** 案例內頁 */
   toClinicCase: ({ id }: { id: string }) => void
   /** 廣告內頁 */
-  toAdvertisement: () => void
+  toAdvertisement: ({ id }: { id: string }) => void
   /** 諮詢歷史紀錄 */
   toConsultationRecord: () => void
   /** 收藏案例 */
@@ -37,6 +37,10 @@ type toTarget = {
   toDoctorUpdatePassword: () => void
   /** 搜尋結果列表 */
   toSearchList: (text: string) => void
+  /** 醫生信箱 */
+  toDoctorInbox: () => void
+  /** 個人信箱 */
+  toMemberInbox: () => void
 }
 
 const useGo = (): toTarget => {
@@ -51,7 +55,7 @@ const useGo = (): toTarget => {
       navigate(`/clinic/${id}/inner/activities/${activityId}`),
     toClinicCaseList: () => navigate("/clinical-case-list"),
     toClinicCase: ({ id }) => navigate(`/clinical-case-list/${id}`),
-    toAdvertisement: () => navigate("/advertisement"),
+    toAdvertisement: ({ id }) => navigate(`/advertisement/${id}`),
     toConsultationRecord: () => navigate("/member/consultation-record"),
     toCollectClinicalCase: () => navigate("/member/collect-clinical-case"),
     toUpdatePassword: () => navigate("/member/update-password"),
@@ -61,6 +65,8 @@ const useGo = (): toTarget => {
     toDoctorInformation: () => navigate("/doctor/information"),
     toDoctorUpdatePassword: () => navigate("/doctor/update-password"),
     toSearchList: text => navigate(`/search/${text}`),
+    toDoctorInbox: () => navigate("/doctor/inbox"),
+    toMemberInbox: () => navigate("/member/inbox"),
   }
 }
 

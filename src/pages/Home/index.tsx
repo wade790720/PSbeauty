@@ -10,15 +10,25 @@ import imgAfter from "pages/Member/MemberCollectClinicalCase/After.png"
 import Consulting from "./Consulting"
 import { useState } from "react"
 import Banner from "components/Banner"
+import useGo from "components/Router/useGo"
+import { useAuth } from "hooks/useAuth"
 
 const Home = () => {
   const [consult, setConsult] = useState(false)
+  const go = useGo()
+  const auth = useAuth()
+
   return (
     <>
       <div className={styled.wrapper}>
         <div className={styled.header}>
           <SearchBar />
-          <Icon name="chat" className={styled["chat-icon"]} />
+          <div
+            onClick={() => {
+              auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
+            }}>
+            <Icon name="chat" className={styled["chat-icon"]} />
+          </div>
         </div>
         <Banner />
         <AdCard />
@@ -41,7 +51,7 @@ const Home = () => {
         </Button>
         <Consulting open={consult} onClose={() => setConsult(false)} />
       </div>
-      <BottomNavigation />
+      {auth.user.clinic ? <BottomNavigation.Chat /> : <BottomNavigation />}
     </>
   )
 }

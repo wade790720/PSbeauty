@@ -1,10 +1,12 @@
-import { useCallback } from "react"
+import { useState, useRef } from "react"
 import Backdrop from "components/Layout/Backdrop"
 import Header from "components/Layout/Header"
 import Form, { Append, InputGroup } from "components/Form"
 import Button from "components/Button"
 import Icon from "components/Icon"
+import Modal from "components/Modal"
 import { SubmitHandler, useForm } from "react-hook-form"
+import { forgotPassword } from "firebaseClient"
 import styled from "./ForgotPassword.module.scss"
 
 type Inputs = {
@@ -12,6 +14,9 @@ type Inputs = {
 }
 
 const ForgotPassword = () => {
+  const [open, setOpen] = useState(false)
+  const submitSuccessRef = useRef(false)
+
   const {
     register,
     reset,
@@ -28,7 +33,15 @@ const ForgotPassword = () => {
       email,
     )
 
-  const onSubmit: SubmitHandler<Inputs> = useCallback(data => console.log("onSubmit", data), [])
+  const onSubmit: SubmitHandler<Inputs> = async data => {
+    try {
+      await forgotPassword(data.email)
+      submitSuccessRef.current = true
+    } catch {
+      submitSuccessRef.current = false
+    }
+    setOpen(true)
+  }
   return (
     <>
       <Header leftArrow />
@@ -72,7 +85,14 @@ const ForgotPassword = () => {
                 ))}
             </div>
           </Form.Group>
-          <Button>發送</Button>
+          <Button type="submit">發送</Button>
+          <Modal
+            title={submitSuccessRef.current ? "發送成功" : "信箱錯誤"}
+            open={open}
+            confirmText="關閉"
+            onClose={() => setOpen(false)}>
+            {submitSuccessRef.current ? "請至註冊信箱查收新密碼" : "錯誤提示文字"}
+          </Modal>
         </Form>
       </Backdrop>
     </>

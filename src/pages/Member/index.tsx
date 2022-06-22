@@ -5,10 +5,12 @@ import Profile from "components/Profile"
 import BottomNavigation from "components/BottomNavigation"
 import { useGo } from "components/Router"
 import Modal from "components/Modal"
+import { useAuth } from "hooks/useAuth"
 
 const Member = () => {
   const [open, setOpen] = useState(false)
   const go = useGo()
+  const auth = useAuth()
 
   return (
     <>
@@ -35,7 +37,12 @@ const Member = () => {
           錯誤提示文字
         </Modal>
         <div />
-        <Button variant="text" onClick={go.toHome}>
+        <Button
+          variant="text"
+          onClick={() => {
+            auth.signOut()
+            go.toHome()
+          }}>
           登出
         </Button>
       </div>

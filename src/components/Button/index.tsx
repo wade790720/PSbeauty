@@ -23,6 +23,10 @@ export type ButtonProps = {
    */
   eventKey?: ReactProps.EventKey
   /**
+   * The button is a submit/text button
+   */
+  type?: "submit" | "button"
+  /**
    * Provide an optional function to be called when the button element is clicked
    */
   onClick?: (

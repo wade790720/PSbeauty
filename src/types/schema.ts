@@ -110,6 +110,8 @@ export type AdImage = {
   status: Scalars["Boolean"]
   /** 點擊後轉址目標識別碼 */
   targetId: Maybe<Scalars["String"]>
+  /** 標題 */
+  title: Maybe<Scalars["String"]>
   /** 廣告圖片用途，如：首頁輪播/診所輪播/症例輪播 */
   usageType: Maybe<Scalars["String"]>
 }
@@ -130,6 +132,8 @@ export type AdImageFilterInput = {
   status: InputMaybe<BooleanOperationFilterInput>
   /** 點擊後轉址目標識別碼 */
   targetId: InputMaybe<StringOperationFilterInput>
+  /** 標題 */
+  title: InputMaybe<StringOperationFilterInput>
   /** 廣告圖片用途，如：首頁輪播/診所輪播/症例輪播 */
   usageType: InputMaybe<StringOperationFilterInput>
 }
@@ -148,6 +152,8 @@ export type AdImageSortInput = {
   status: InputMaybe<SortEnumType>
   /** 點擊後轉址目標識別碼 */
   targetId: InputMaybe<SortEnumType>
+  /** 標題 */
+  title: InputMaybe<SortEnumType>
   /** 廣告圖片用途，如：首頁輪播/診所輪播/症例輪播 */
   usageType: InputMaybe<SortEnumType>
 }
@@ -217,6 +223,8 @@ export type AddAdImageInput = {
   status: Scalars["Boolean"]
   /** 點擊後轉址目標識別碼 */
   targetId: InputMaybe<Scalars["String"]>
+  /** 標題 */
+  title: InputMaybe<Scalars["String"]>
   /** 廣告圖片用途，如：首頁輪播/診所輪播/症例輪播 */
   usageType: InputMaybe<Scalars["String"]>
 }
@@ -570,6 +578,8 @@ export type Category = {
   parent: Maybe<Scalars["String"]>
   /** 大分類 */
   topParent: Maybe<Scalars["String"]>
+  /** 由 id 取出之唯一數字值 */
+  uniqueNumber: Scalars["Long"]
 }
 
 /** 診所資訊 */
@@ -1757,6 +1767,8 @@ export type Query = {
   question: Maybe<Question>
   /** 取得問卷列表 */
   questions: Maybe<QuestionsConnection>
+  /** 更新 customToken */
+  refresgedToken: Maybe<CustomTokenPayload>
   /** 取得分類樹 */
   topCategories: Maybe<Array<Maybe<TopCategory>>>
   /** 依 Topic 識別碼取得 Topic */
@@ -2140,6 +2152,8 @@ export type UpdateAdImageInput = {
   status: Scalars["Boolean"]
   /** 點擊後轉址目標識別碼 */
   targetId: InputMaybe<Scalars["String"]>
+  /** 標題 */
+  title: InputMaybe<Scalars["String"]>
   /** 廣告圖片用途，如：首頁輪播/診所輪播/症例輪播 */
   usageType: InputMaybe<Scalars["String"]>
 }

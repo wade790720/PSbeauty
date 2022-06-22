@@ -8,12 +8,15 @@ import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import apolloClient from "./graphql/apolloClient"
 import { ApolloProvider } from "@apollo/client"
+import { AuthProvider } from "hooks/useAuth"
 
 const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
   <React.StrictMode>
     <ApolloProvider client={apolloClient}>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </ApolloProvider>
   </React.StrictMode>,
 )

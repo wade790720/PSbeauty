@@ -25,6 +25,8 @@ type toTarget = {
   toCollectClinicalCase: () => void
   /** 修改密碼 */
   toUpdatePassword: () => void
+  /** 忘記密碼 */
+  toForgotPassword: () => void
   /** 常見問答 */
   toQuestions: () => void
   /** 聊天室 */
@@ -53,6 +55,7 @@ const useGo = (): toTarget => {
     toConsultationRecord: () => navigate("/member/consultation-record"),
     toCollectClinicalCase: () => navigate("/member/collect-clinical-case"),
     toUpdatePassword: () => navigate("/member/update-password"),
+    toForgotPassword: () => navigate("/forgot-password"),
     toQuestions: () => navigate("/member/questions"),
     toChatroom: () => navigate("/chatroom"),
     toDoctorInformation: () => navigate("/doctor/information"),

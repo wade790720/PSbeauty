@@ -14,7 +14,7 @@
   box-sizing: border-box;
   display: flex;
   flex: 1 1 100%;
-  font-size: 14px;
+  font-size: 16px;
   -webkit-box-pack: justify;
   justify-content: space-between;
   max-width: 100%;
@@ -78,18 +78,19 @@
     box-sizing: border-box;
     color: currentColor;
     cursor: inherit;
-    font-size: 14px;
+    font-size: 16px;
     min-width: 0px;
     outline: none;
     width: 100%;
-    line-height: 1.42857;
     font-family: $font-family;
     border-radius: 15px;
+    line-height: 3;
 
     &::placeholder,
     &::-webkit-input-placeholder {
       color: #8B919C;
       font-family: $font-family;
+      line-height: 3;
     }
 
     &:-webkit-autofill,
@@ -101,7 +102,7 @@
 
     &:-webkit-autofill::first-line {
       font-family: $font-family;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: normal;
       line-height: 1;
       color: currentColor;

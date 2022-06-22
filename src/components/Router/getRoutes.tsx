@@ -1,6 +1,7 @@
 import { lazy, Suspense as ReactSuspense } from "react"
-import { RouteObject } from "react-router-dom"
+import { RouteObject, Navigate } from "react-router-dom"
 import QueryStatus from "components/QueryStatus"
+import { AuthContextProps } from "hooks/useAuth/AuthContext"
 
 const NotFound = lazy(() => import("pages/NotFound"))
 const SignIn = lazy(() => import("pages/SignIn"))
@@ -36,7 +37,7 @@ const Suspense = (props: ReactProps.Component) => {
   return <ReactSuspense fallback={<QueryStatus.Loading />}>{props.children}</ReactSuspense>
 }
 
-const getRoutes = (): RouteObject[] => {
+const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
   return [
     /* 首頁 */
     {
@@ -157,10 +158,10 @@ const getRoutes = (): RouteObject[] => {
         /* 會員頁 */
         {
           index: true,
-          element: (
-            <Suspense>
-              <Member />
-            </Suspense>
+          element: user.id ? (
+            <Suspense>{user.clinic ? <Navigate to="/doctor" /> : <Member />}</Suspense>
+          ) : (
+            <Navigate to="/sign-in" />
           ),
         },
         /* 諮詢歷史紀錄 */
@@ -216,10 +217,10 @@ const getRoutes = (): RouteObject[] => {
         /* 診所醫生 */
         {
           index: true,
-          element: (
-            <Suspense>
-              <Doctor />
-            </Suspense>
+          element: user.id ? (
+            <Suspense>{user.clinic ? <Doctor /> : <Navigate to="/member" />}</Suspense>
+          ) : (
+            <Navigate to="/sign-in" />
           ),
         },
         /* 即時訊息收件夾 */

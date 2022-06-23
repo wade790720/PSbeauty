@@ -5,11 +5,14 @@ import SearchBar from "components/SearchBar"
 import Button from "components/Button"
 import ClinicCard from "./ClinicCard"
 import { useState } from "react"
+import { useAuth } from "hooks/useAuth"
 import DistrictsFilter from "./DistrictsFilter"
 import Banner from "components/Banner"
 
 const Clinic = () => {
   const [openFilter, setOpenFilter] = useState(false)
+  const auth = useAuth()
+
   return (
     <>
       <div className={styled.wrapper}>
@@ -29,7 +32,7 @@ const Clinic = () => {
         </Button>
         <DistrictsFilter open={openFilter} onClose={() => setOpenFilter(false)} />
       </div>
-      <BottomNavigation />
+      {auth.user.id ? <BottomNavigation.Chat /> : <BottomNavigation />}
     </>
   )
 }

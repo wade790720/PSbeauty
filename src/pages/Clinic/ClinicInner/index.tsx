@@ -5,8 +5,13 @@ import CaseCard from "components/CaseCard"
 import imgBefore from "pages/Member/MemberCollectClinicalCase/Before.png"
 import imgAfter from "pages/Member/MemberCollectClinicalCase/After.png"
 import Banner from "components/Banner"
+import useGo from "components/Router/useGo"
+import { useAuth } from "hooks/useAuth"
 
 const ClinicInner = () => {
+  const go = useGo()
+  const auth = useAuth()
+
   return (
     <div className={styled.wrapper}>
       <Banner height="214px" />
@@ -43,10 +48,12 @@ const ClinicInner = () => {
         images={[imgBefore, imgAfter]}
         tags={["蘋果肌1", "蘋果肌2", "蘋果肌3", "蘋果肌4", "蘋果肌5"]}
       />
-      <Button className={styled.button}>
-        <Icon name="chat" className={styled.chat} />
-        一對一匿名諮詢
-      </Button>
+      {!auth.user.clinic && (
+        <Button className={styled.button} onClick={go.toChatroom}>
+          <Icon name="chat" className={styled.chat} />
+          一對一匿名諮詢
+        </Button>
+      )}
     </div>
   )
 }

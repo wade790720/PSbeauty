@@ -10,9 +10,11 @@ import { ReactComponent as Person } from "./svg/Person.svg"
 import { ReactComponent as PersonFill } from "./svg/PersonFill.svg"
 
 const BottomNavigation = () => {
+  // TODO: need to changed hard code
+  const id = "234"
   return (
     <div className={cx(styled.wrapper, styled.chat)}>
-      <NavLink to="/">
+      <NavLink to={`/clinic/${id}/inner/info`}>
         {({ isActive }) => (
           <div className={cx(styled.cell, { [styled.active]: isActive })}>
             <div className={styled.icon}>{isActive ? <HouseFill /> : <House />}</div>

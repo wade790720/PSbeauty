@@ -31,7 +31,6 @@ const MemberInbox = lazy(() => import("pages/Member/MemberInbox"))
 const MemberQuestions = lazy(() => import("pages/Member/MemberQuestions"))
 const Doctor = lazy(() => import("pages/Doctor"))
 const DoctorInbox = lazy(() => import("pages/Doctor/DoctorInbox"))
-const DoctorInformation = lazy(() => import("pages/Doctor/DoctorInformation"))
 
 const Suspense = (props: ReactProps.Component) => {
   return <ReactSuspense fallback={<QueryStatus.Loading />}>{props.children}</ReactSuspense>
@@ -229,15 +228,6 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
           element: (
             <Suspense>
               <DoctorInbox />
-            </Suspense>
-          ),
-        },
-        /* 個人資訊頁 */
-        {
-          path: "information",
-          element: (
-            <Suspense>
-              <DoctorInformation />
             </Suspense>
           ),
         },

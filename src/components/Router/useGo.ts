@@ -31,8 +31,6 @@ type toTarget = {
   toQuestions: () => void
   /** 聊天室 */
   toChatroom: () => void
-  /** 個人資訊頁 */
-  toDoctorInformation: () => void
   /** 醫生修改密碼 */
   toDoctorUpdatePassword: () => void
   /** 搜尋結果列表 */
@@ -62,7 +60,6 @@ const useGo = (): toTarget => {
     toForgotPassword: () => navigate("/forgot-password"),
     toQuestions: () => navigate("/member/questions"),
     toChatroom: () => navigate("/chatroom"),
-    toDoctorInformation: () => navigate("/doctor/information"),
     toDoctorUpdatePassword: () => navigate("/doctor/update-password"),
     toSearchList: text => navigate(`/search/${text}`),
     toDoctorInbox: () => navigate("/doctor/inbox"),

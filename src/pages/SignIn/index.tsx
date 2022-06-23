@@ -65,8 +65,8 @@ const SignIn = () => {
         <Button variant="transparent" type="button" onClick={go.toHome}>
           訪客登入
         </Button>
-        <Modal title="帳號密碼錯誤" open={open} confirmText="確定" onClose={() => setOpen(false)}>
-          錯誤提示文字
+        <Modal title="登入失敗" open={open} confirmText="確定" onClose={() => setOpen(false)}>
+          帳號密碼錯誤，請重新輸入
         </Modal>
       </Form>
       <div className={styled.actions}>

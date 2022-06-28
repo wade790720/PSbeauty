@@ -12,6 +12,7 @@ import { endpoint, headers } from "utils/apiConfig"
 import { setStorageValue } from "hooks/useLocalStorage"
 import { print } from "graphql"
 import { useAuth } from "hooks/useAuth"
+import jwt_decode from "jwt-decode"
 
 type Inputs = {
   account: string
@@ -38,13 +39,15 @@ const SignIn = () => {
   const onSubmit: SubmitHandler<Inputs> = async info => {
     try {
       const idToken = await login(info.account, info.password)
+      const { email }: { email: string } = jwt_decode(idToken)
+
       const requestHeaders = { headers: headers(idToken) }
       const query = { query: print(CUSTOM_TOKEN) }
       const customToken = await axios.post(endpoint, query, requestHeaders)
-
       setStorageValue("token", customToken.data.data.customToken.customToken)
-      if (customToken) {
-        auth.signIn(customToken.data.data.customToken.customToken)
+
+      if (customToken && email) {
+        auth.signIn(customToken.data.data.customToken.customToken, email)
         go.toHome()
       }
     } catch {

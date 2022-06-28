@@ -6,7 +6,7 @@ import Button from "components/Button"
 import Icon from "components/Icon"
 import Modal from "components/Modal"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { forgotPassword } from "firebaseClient"
+import { sentResetPassword } from "firebaseClient"
 import styled from "./ForgotPassword.module.scss"
 
 type Inputs = {
@@ -35,7 +35,7 @@ const ForgotPassword = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async data => {
     try {
-      await forgotPassword(data.email)
+      await sentResetPassword(data.email)
       submitSuccessRef.current = true
     } catch {
       submitSuccessRef.current = false

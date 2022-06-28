@@ -6,6 +6,7 @@ export const DEFAULT_USER = {
   name: null,
   clinic: null,
   admin: null,
+  email: null,
 }
 
 export type AuthContextProps = {
@@ -15,9 +16,10 @@ export type AuthContextProps = {
     name: string | null
     clinic: string | null
     admin: boolean | null
+    email: string | null
   }
 
-  signIn: (token: string) => void
+  signIn: (token: string, email: string) => void
   signOut: () => void
 }
 

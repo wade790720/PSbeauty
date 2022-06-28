@@ -41,6 +41,6 @@ export const login = async (email: string, password: string) => {
   return getIdToken(userCred.user, false)
 }
 
-export const forgotPassword = async (email: string) => {
+export const sentResetPassword = async (email: string) => {
   await sendPasswordResetEmail(auth, email)
 }

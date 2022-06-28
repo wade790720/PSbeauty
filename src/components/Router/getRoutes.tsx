@@ -26,7 +26,6 @@ const ClinicActivity = lazy(() => import("pages/Clinic/ClinicActivity"))
 const Member = lazy(() => import("pages/Member"))
 const MemberConsultationRecord = lazy(() => import("pages/Member/MemberConsultationRecord"))
 const MemberCollectClinicalCase = lazy(() => import("pages/Member/MemberCollectClinicalCase"))
-const MemberUpdatePassword = lazy(() => import("pages/Member/MemberUpdatePassword"))
 const MemberInbox = lazy(() => import("pages/Member/MemberInbox"))
 const MemberQuestions = lazy(() => import("pages/Member/MemberQuestions"))
 const Doctor = lazy(() => import("pages/Doctor"))
@@ -181,15 +180,6 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
             </Suspense>
           ),
         },
-        /* 修改密碼 */
-        {
-          path: "update-password",
-          element: (
-            <Suspense>
-              <MemberUpdatePassword />
-            </Suspense>
-          ),
-        },
         /* 收件夾 */
         {
           path: "inbox",
@@ -228,15 +218,6 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
           element: (
             <Suspense>
               <DoctorInbox />
-            </Suspense>
-          ),
-        },
-        /* 修改密碼 */
-        {
-          path: "update-password",
-          element: (
-            <Suspense>
-              <MemberUpdatePassword />
             </Suspense>
           ),
         },

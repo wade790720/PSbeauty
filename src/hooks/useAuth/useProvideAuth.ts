@@ -10,6 +10,7 @@ const useProvideAuth = () => {
       try {
         const payload: { claims: AuthContextProps["user"] } = jwt_decode(savedToken)
         return {
+          ...user,
           id: payload?.claims?.id,
           phone: payload?.claims?.phone,
           name: payload?.claims?.name,
@@ -23,6 +24,7 @@ const useProvideAuth = () => {
           name: null,
           clinic: null,
           admin: null,
+          email: null,
         }
       }
     } else {
@@ -30,7 +32,7 @@ const useProvideAuth = () => {
     }
   })
 
-  const signIn = (token: string) => {
+  const signIn = (token: string, email: string) => {
     const payload: { claims: AuthContextProps["user"] } = jwt_decode(token)
     setUser({
       id: payload?.claims?.id,
@@ -38,6 +40,7 @@ const useProvideAuth = () => {
       name: payload?.claims?.name,
       clinic: payload?.claims?.clinic,
       admin: payload?.claims?.admin,
+      email,
     })
   }
 

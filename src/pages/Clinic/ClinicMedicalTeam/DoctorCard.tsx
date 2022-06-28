@@ -37,8 +37,8 @@ const DoctorCard = () => {
         className={cx(styled.experience, {
           [styled.more]: isExperienceMore,
         })}>
-        {data.experience.map(item => (
-          <li className={styled.job} key={item}>
+        {data.experience.map((item, idx) => (
+          <li className={styled.job} key={`${item}-${idx}`}>
             {item}
           </li>
         ))}

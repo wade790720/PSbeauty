@@ -49,7 +49,11 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
     /* 登入頁 */
     {
       path: "sign-in",
-      element: (
+      element: user.id ? (
+        <Suspense>
+          {user.clinic ? <Navigate to="/clinic/:id/inner/info" /> : <Navigate to="/home" />}
+        </Suspense>
+      ) : (
         <Suspense>
           <SignIn />
         </Suspense>

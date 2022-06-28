@@ -16,7 +16,7 @@ export type AuthContextProps = {
     name: string | null
     clinic: string | null
     admin: boolean | null
-    email: string | null
+    email?: string | null
   }
 
   signIn: (token: string, email: string) => void

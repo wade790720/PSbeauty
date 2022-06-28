@@ -13,6 +13,7 @@ import { setStorageValue } from "hooks/useLocalStorage"
 import { print } from "graphql"
 import { useAuth } from "hooks/useAuth"
 import jwt_decode from "jwt-decode"
+import { AuthContextProps } from "hooks/useAuth/AuthContext"
 
 type Inputs = {
   account: string
@@ -32,7 +33,6 @@ const SignIn = () => {
   const go = useGo()
   const auth = useAuth()
   const [open, setOpen] = useState(false)
-
   const { register, handleSubmit } = useForm<Inputs>({
     mode: "all",
   })
@@ -48,7 +48,12 @@ const SignIn = () => {
 
       if (customToken && email) {
         auth.signIn(customToken.data.data.customToken.customToken, email)
-        go.toHome()
+        const parserCustomToken: { claims: AuthContextProps["user"] } = jwt_decode(
+          customToken.data.data.customToken.customToken,
+        )
+        parserCustomToken?.claims?.clinic
+          ? go.toClinicInner({ id: parserCustomToken?.claims?.clinic, tab: "" })
+          : go.toHome()
       }
     } catch {
       setOpen(true)

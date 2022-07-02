@@ -343,16 +343,10 @@ export type AddClinicInput = {
   county: InputMaybe<Scalars["String"]>
   /** 診所䢗述 */
   description: InputMaybe<Scalars["String"]>
-  /** 最後付費時間 */
-  latestPayAt: Scalars["Long"]
   /** 診所名稱 */
   name: InputMaybe<Scalars["String"]>
   /** 診所管理人電子郵件信箱 */
   ownerEmail: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
-  /** 是否已付費 */
-  paid: Scalars["Boolean"]
-  /** 付費組數 */
-  paySets: Scalars["Int"]
   /** 診所電話 */
   phone: InputMaybe<Scalars["String"]>
   /** 診所鄉鎮市區 */
@@ -1325,6 +1319,12 @@ export type DoctorsEdge = {
   node: Maybe<ClinicDoctor>
 }
 
+/** Email 是否已被註冊 */
+export type EmailExistsPayload = {
+  __typename: "EmailExistsPayload"
+  exists: Scalars["Boolean"]
+}
+
 export type ListStringOperationFilterInput = {
   all: InputMaybe<StringOperationFilterInput>
   any: InputMaybe<Scalars["Boolean"]>
@@ -1753,6 +1753,8 @@ export type Query = {
   doctorByClinicId: Maybe<Array<Maybe<ClinicDoctor>>>
   /** 取得所有醫生 */
   doctors: Maybe<DoctorsConnection>
+  /** 註冊前判斷 email 是否已註冊 */
+  emailExists: Maybe<EmailExistsPayload>
   /** 取得最新一筆發文 */
   latestPost: Maybe<Post>
   /** 取得會員個人資訊 */
@@ -1768,7 +1770,7 @@ export type Query = {
   /** 取得問卷列表 */
   questions: Maybe<QuestionsConnection>
   /** 更新 customToken */
-  refresgedToken: Maybe<CustomTokenPayload>
+  refershToken: Maybe<CustomTokenPayload>
   /** 取得分類樹 */
   topCategories: Maybe<Array<Maybe<TopCategory>>>
   /** 依 Topic 識別碼取得 Topic */
@@ -1884,6 +1886,10 @@ export type QueryDoctorsArgs = {
   last: InputMaybe<Scalars["Int"]>
   order: InputMaybe<Array<ClinicDoctorSortInput>>
   where: InputMaybe<ClinicDoctorFilterInput>
+}
+
+export type QueryEmailExistsArgs = {
+  email: InputMaybe<Scalars["String"]>
 }
 
 export type QueryPostsArgs = {

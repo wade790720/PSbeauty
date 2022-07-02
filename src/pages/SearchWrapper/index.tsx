@@ -1,10 +1,8 @@
 import { useState } from "react"
-import styled from "./Search.module.scss"
+import { Outlet } from "react-router-dom"
 import Header from "components/Layout/Header"
 import SearchBox from "components/SearchBox"
-import Backdrop from "components/Layout/Backdrop"
 import { useGo } from "components/Router"
-import { ReactComponent as Delete } from "./Delete.svg"
 
 const STORAGE_KEY = "search-history"
 const getHistories = (): string[] => {
@@ -26,7 +24,7 @@ const saveHistories = (list: string[]) => {
   return result
 }
 
-const Search = () => {
+const SearchWrapper = () => {
   const go = useGo()
   const [list, setList] = useState(getHistories())
 
@@ -37,19 +35,12 @@ const Search = () => {
   }
 
   return (
-    <Backdrop className={styled.wrapper}>
-      <div className={styled.title}>歷史搜尋</div>
-      {list.length > 0 && (
-        <Delete className={styled.delete} onClick={() => setList(saveHistories([]))} />
-      )}
-      {list.map((text, i) => {
-        return (
-          <div key={`text-${i}`} className={styled.text} onClick={() => go.toSearchList(text)}>
-            {text}
-          </div>
-        )
-      })}
-    </Backdrop>
+    <>
+      <Header leftArrow>
+        <SearchBox onSubmit={onSubmit} />
+      </Header>
+      <Outlet />
+    </>
   )
 }
-export default Search
+export default SearchWrapper

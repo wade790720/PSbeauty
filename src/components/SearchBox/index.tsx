@@ -7,7 +7,7 @@ export type SearchBoxProps = {
 } & ReactProps.Component
 
 const SearchBox = ({ ...props }: SearchBoxProps) => {
-  const ref = useRef<HTMLInputElement>(null)
+  const ref = useRef<HTMLInputElement | null>(null)
 
   return (
     <div className={styled.wrapper}>

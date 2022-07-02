@@ -12,11 +12,11 @@ const Profile = () => {
     <div className={styled.wrapper}>
       <img className={styled.avatar} src="/img/avatar.png" />
       <div className={styled.username}>Wendy</div>
-      <div className={styled.hint}>
+      {/* <div className={styled.hint}>
         <Mail />
         <div>您的信箱尚未認證，</div>
         <div className={styled.enhance}>現在驗證</div>
-      </div>
+      </div> */}
       <div
         className={styled.chat}
         onClick={() => {

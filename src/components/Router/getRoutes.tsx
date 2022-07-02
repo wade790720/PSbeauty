@@ -11,6 +11,7 @@ const CaseInner = lazy(() => import("pages/CaseInner"))
 const Register = lazy(() => import("pages/Register"))
 const ForgotPassword = lazy(() => import("pages/ForgotPassword"))
 const Survey = lazy(() => import("pages/Survey"))
+const SearchWrapper = lazy(() => import("pages/SearchWrapper"))
 const Search = lazy(() => import("pages/Search"))
 const SearchList = lazy(() => import("pages/SearchList"))
 const Chatroom = lazy(() => import("pages/Chatroom"))
@@ -86,23 +87,34 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
         </Suspense>
       ),
     },
-    /* 搜尋 */
+    /* 搜尋內頁外框 */
     {
       path: "search",
       element: (
         <Suspense>
-          <Search />
+          <SearchWrapper />
         </Suspense>
       ),
-    },
-    /* 搜尋列表 */
-    {
-      path: "search/:id",
-      element: (
-        <Suspense>
-          <SearchList />
-        </Suspense>
-      ),
+      children: [
+        /* 搜尋 */
+        {
+          index: true,
+          element: (
+            <Suspense>
+              <Search />
+            </Suspense>
+          ),
+        },
+        /* 搜尋列表 */
+        {
+          path: ":id",
+          element: (
+            <Suspense>
+              <SearchList />
+            </Suspense>
+          ),
+        },
+      ],
     },
     /* 聊天室 */
     {

@@ -403,13 +403,13 @@ export type AddDoctorInput = {
   /** 所屬診所 */
   clinicId: InputMaybe<Scalars["String"]>
   /** 醫師專長，自填 */
-  expertise: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
+  expertise: InputMaybe<Scalars["String"]>
   /** 姓名 */
   name: InputMaybe<Scalars["String"]>
   /** 照片 */
   photo: InputMaybe<Scalars["String"]>
   /** 學經歷 */
-  resumes: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
+  resumes: InputMaybe<Scalars["String"]>
   /** 頭銜 */
   title: InputMaybe<Scalars["String"]>
 }
@@ -422,6 +422,19 @@ export type AddDoctorPayload = {
   id: Maybe<Scalars["String"]>
   /** 醫師姓名 */
   name: Maybe<Scalars["String"]>
+}
+
+/** 關鍵字輸入 */
+export type AddPopularKeywordInput = {
+  /** 關鍵字 */
+  keyword: InputMaybe<Scalars["String"]>
+}
+
+/** 關鍵字回覆 */
+export type AddPopularKeywordPayload = {
+  __typename: "AddPopularKeywordPayload"
+  /** 新增關鍵字 */
+  keyword: Maybe<Scalars["String"]>
 }
 
 /** 新增貼文內容 */
@@ -805,7 +818,7 @@ export type ClinicDoctor = {
   /** 醫生所屬診所 */
   clinic: Maybe<Clinic>
   /** 醫師專長，自填 */
-  expertise: Maybe<Array<Maybe<Scalars["String"]>>>
+  expertise: Maybe<Scalars["String"]>
   /** 物件識別碼 */
   id: Maybe<Scalars["String"]>
   /** 姓名 */
@@ -813,7 +826,7 @@ export type ClinicDoctor = {
   /** 玉照 */
   photo: Maybe<Scalars["String"]>
   /** 經歷 */
-  resumes: Maybe<Array<Maybe<Scalars["String"]>>>
+  resumes: Maybe<Scalars["String"]>
   /** 醫師頭銜 */
   title: Maybe<Scalars["String"]>
 }
@@ -824,7 +837,7 @@ export type ClinicDoctorFilterInput = {
   /** 所屬診所識別碼 */
   clinicId: InputMaybe<StringOperationFilterInput>
   /** 醫師專長，自填 */
-  expertise: InputMaybe<ListStringOperationFilterInput>
+  expertise: InputMaybe<StringOperationFilterInput>
   /** 物件識別碼 */
   id: InputMaybe<StringOperationFilterInput>
   /** 姓名 */
@@ -835,7 +848,7 @@ export type ClinicDoctorFilterInput = {
   /** 玉照 */
   photo: InputMaybe<StringOperationFilterInput>
   /** 經歷 */
-  resumes: InputMaybe<ListStringOperationFilterInput>
+  resumes: InputMaybe<StringOperationFilterInput>
   /** 醫師頭銜 */
   title: InputMaybe<StringOperationFilterInput>
 }
@@ -844,6 +857,8 @@ export type ClinicDoctorFilterInput = {
 export type ClinicDoctorSortInput = {
   /** 所屬診所識別碼 */
   clinicId: InputMaybe<SortEnumType>
+  /** 醫師專長，自填 */
+  expertise: InputMaybe<SortEnumType>
   /** 物件識別碼 */
   id: InputMaybe<SortEnumType>
   /** 姓名 */
@@ -852,6 +867,8 @@ export type ClinicDoctorSortInput = {
   parentId: InputMaybe<SortEnumType>
   /** 玉照 */
   photo: InputMaybe<SortEnumType>
+  /** 經歷 */
+  resumes: InputMaybe<SortEnumType>
   /** 醫師頭銜 */
   title: InputMaybe<SortEnumType>
 }
@@ -1278,6 +1295,19 @@ export type DeleteDoctorPayload = {
   id: Maybe<Scalars["String"]>
 }
 
+/** 關鍵字輸入 */
+export type DeletePopularKeywordInput = {
+  /** 刪除關鍵字 */
+  keyword: InputMaybe<Scalars["String"]>
+}
+
+/** 關鍵字回覆 */
+export type DeletePopularKeywordPayload = {
+  __typename: "DeletePopularKeywordPayload"
+  /** 已刪除關鍵字尸 */
+  keyword: Maybe<Scalars["String"]>
+}
+
 /** 刪除貼文內容 */
 export type DeletePostInput = {
   id: InputMaybe<Scalars["String"]>
@@ -1366,6 +1396,8 @@ export type Mutation = {
   addConsultTopic: Maybe<AddConsultTopicPayload>
   /** [廠商]新增診所醫生 */
   addDoctor: Maybe<AddDoctorPayload>
+  /** 新增熱門關鍵字 */
+  addPopularKeyword: Maybe<AddPopularKeywordPayload>
   /** [廠商]新增發文 */
   addPost: Maybe<AddPostPayload>
   /** [廠商]新增問卷 */
@@ -1396,6 +1428,8 @@ export type Mutation = {
   deleteConsult: Maybe<DeleteConsultPayload>
   /** [廠商]刪除診所醫生 */
   deleteDoctor: Maybe<DeleteDoctorPayload>
+  /** 刪除熱門關鍵字 */
+  deletePopularKeyword: Maybe<DeletePopularKeywordPayload>
   /** [廠商]刪除貼文 */
   deletePost: Maybe<DeletePostPayload>
   /** [會員]刪除使用者 */
@@ -1488,6 +1522,10 @@ export type MutationAddDoctorArgs = {
   input: InputMaybe<AddDoctorInput>
 }
 
+export type MutationAddPopularKeywordArgs = {
+  input: InputMaybe<AddPopularKeywordInput>
+}
+
 export type MutationAddPostArgs = {
   input: InputMaybe<AddPostInput>
 }
@@ -1546,6 +1584,10 @@ export type MutationDeleteConsultArgs = {
 
 export type MutationDeleteDoctorArgs = {
   input: InputMaybe<DeleteDoctorInput>
+}
+
+export type MutationDeletePopularKeywordArgs = {
+  input: InputMaybe<DeletePopularKeywordInput>
 }
 
 export type MutationDeletePostArgs = {
@@ -1718,6 +1760,8 @@ export type Query = {
   adCards: Maybe<AdCardsConnection>
   /** 取得所有廣告圖 */
   adImages: Maybe<AdImagesConnection>
+  /** 取得所有診所 */
+  allClinics: Maybe<Array<Maybe<Clinic>>>
   /** 取得指定問卷回答 */
   answersByQuestionId: Maybe<AnswersByQuestionIdConnection>
   /** 依識別碼取得病例 */
@@ -1734,7 +1778,7 @@ export type Query = {
   clinicImages: Maybe<Array<Maybe<ClinicImage>>>
   /** 取得診所信箱 */
   clinicInbox: Maybe<ClinicInboxConnection>
-  /** 取得所有診所 */
+  /** 取得診所列表 */
   clinics: Maybe<ClinicsConnection>
   /** 取得指定的諮詢 */
   consult: Maybe<Consult>
@@ -1808,6 +1852,10 @@ export type QueryAdImagesArgs = {
   last: InputMaybe<Scalars["Int"]>
   order: InputMaybe<Array<AdImageSortInput>>
   where: InputMaybe<AdImageFilterInput>
+}
+
+export type QueryAllClinicsArgs = {
+  order: InputMaybe<Array<ClinicSortInput>>
 }
 
 export type QueryAnswersByQuestionIdArgs = {
@@ -2319,14 +2367,14 @@ export type UpdateDoctorInput = {
   /** 診所識別碼 */
   clinicId: InputMaybe<Scalars["String"]>
   /** 醫師專長，自填 */
-  expertise: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
+  expertise: InputMaybe<Scalars["String"]>
   id: InputMaybe<Scalars["String"]>
   /** 醫師姓名 */
   name: InputMaybe<Scalars["String"]>
   /** 照片 */
   photo: InputMaybe<Scalars["String"]>
   /** 學經歷 */
-  resumes: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
+  resumes: InputMaybe<Scalars["String"]>
   /** 頭銜 */
   title: InputMaybe<Scalars["String"]>
 }

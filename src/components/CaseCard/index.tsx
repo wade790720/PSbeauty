@@ -2,10 +2,13 @@ import styled from "./CaseCard.module.scss"
 import Icon from "components/Icon"
 import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
+import { useCollectCaseMutation } from "./CaseCard.graphql.generated"
 
 export type CaseCardProps = {
+  id: string
   title: string
   clinic: string
+  clinicId: string
   introduction: string
   images: string[]
   isCollected: boolean
@@ -17,11 +20,28 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
   const go = useGo()
   const auth = useAuth()
 
+  const [collectCaseMutation] = useCollectCaseMutation({
+    variables: {
+      caseId: props.id,
+    },
+    update(cache, mutationResult) {
+      //   if (mutationResult.data?.deleteGroupComparison?.isDeleted) {
+      //     cache.modify({
+      //       fields: {
+      //         groupComparisonList(existingListRefs: Reference[] = [], { readField }) {
+      //           return existingListRefs.filter(ref => collectedId !== readField("id", ref))
+      //         },
+      //       },
+      //     })
+      //   }
+    },
+  })
+
   return (
     <div
       className={styled.wrapper}
       style={props.style}
-      onClick={() => go.toClinicCase({ id: "123" })}>
+      onClick={() => go.toClinicCase({ id: props.clinicId })}>
       <div className={styled.title}>{props.title}</div>
       <div className={styled.clinic}>{props.clinic}</div>
       <div className={styled.content}>{props.introduction}</div>
@@ -43,7 +63,7 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
         onClick={e => {
           e.stopPropagation()
           // TODO: add collect function
-          if (!auth.user.id) go.toSignIn()
+          !auth.user.id ? go.toSignIn() : collectCaseMutation()
         }}>
         {props.isCollected ? (
           <Icon name="BookmarkFill" className={styled["bookmark-fill"]} />

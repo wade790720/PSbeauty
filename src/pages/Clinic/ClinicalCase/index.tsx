@@ -1,42 +1,75 @@
 import styled from "./ClinicalCase.module.scss"
 import Backdrop from "components/Layout/Backdrop"
 import Header from "components/Layout/Header"
-import imgBefore from "pages/Member/MemberCollectClinicalCase/Before.png"
-import imgAfter from "pages/Member/MemberCollectClinicalCase/After.png"
 import Icon from "components/Icon"
+import {
+  useGetCaseQuery,
+  useGetCollectItemsQuery,
+  useCollectCaseMutation,
+  useRemoveCollectedCaseMutation,
+} from "./ClinicalCase.graphql.generated"
+import { useEffect, useState } from "react"
+import { useParams } from "react-router-dom"
 
 const ClinicalCase = () => {
+  const { id } = useParams()
+  const getCollectItemsQuery = useGetCollectItemsQuery()
+  const { data } = useGetCaseQuery({
+    variables: {
+      id: id || "",
+    },
+  })
+  const [isCollected, setIsCollected] = useState(false)
+
+  useEffect(() => {
+    setIsCollected(!!getCollectItemsQuery?.data?.me?.userCollectedCases?.find(el => el?.id === id))
+  }, [getCollectItemsQuery?.data?.me?.userCollectedCases])
+
+  const [collectCaseMutation] = useCollectCaseMutation({
+    variables: {
+      caseId: id || "",
+    },
+    update(cache, mutationResult) {
+      if (mutationResult?.data?.collectCase?.userId) setIsCollected(true)
+    },
+  })
+
+  const [removeCollectedCaseMutation] = useRemoveCollectedCaseMutation({
+    variables: {
+      caseId: id || "",
+    },
+    update(cache, mutationResult) {
+      if (mutationResult?.data?.removeCollectedCase) setIsCollected(false)
+    },
+  })
+
   return (
     <>
       <Header leftArrow />
       <Backdrop className={styled.wrapper}>
         <div className={styled.outer}>
-          <div className={styled.title}>臉部拉提改善面部線條</div>
-          <div className={styled.clinic}>玉辛醫美診所</div>
+          <div className={styled.title}>{data?.case?.title}</div>
+          <div className={styled.clinic}>{data?.case?.clinic?.name}</div>
           <div className={styled.images}>
-            <img src={imgBefore} />
-            <img src={imgAfter} />
+            <img src={data?.case?.beforeImage || ""} />
+            <img src={data?.case?.afterImage || ""} />
           </div>
-          <div className={styled.content}>
-            從台北皮膚科起家，北中南共有十六間醫美診，另外還有四間頂級SPA，旗艦店座落在熱鬧的東區跟台北火車站周遭，網友熱門討論項目大都集中在面部雷射光療，以及肉毒桿菌醫學美容，解決不少有咀嚼肌困擾的愛美女孩煩惱，讓臉部線條更明顯，另外ＸＸ診所也設置「ＸＸ學院」，將醫師與相關工作人員，與設備原廠合作認證課程，相關紀錄都在官網可見，讓消費者更安心
-          </div>
-
+          <div className={styled.content}>{data?.case?.description}</div>
           <div className={styled.tags}>
-            <div>
-              <span>#</span>
-              整形手術
-            </div>
-            <div>
-              <span>#</span>
-              皮膚
-            </div>
-            <div>
-              <span>#</span>
-              玻尿酸
-            </div>
+            {data?.case?.categories?.map(el => (
+              <div key={el?.id}>
+                <span>#</span>
+                {el?.name}
+              </div>
+            ))}
           </div>
-          <div className={styled["collect-block"]}>
-            <Icon name="BookmarkSimple" className={styled["bookmark-simple"]} />
+          <div
+            className={styled["collect-block"]}
+            onClick={() => (isCollected ? removeCollectedCaseMutation() : collectCaseMutation())}>
+            <Icon
+              name={isCollected ? "BookmarkFill" : "BookmarkSimple"}
+              className={styled["bookmark-simple"]}
+            />
           </div>
         </div>
       </Backdrop>

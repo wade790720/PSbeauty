@@ -144,7 +144,7 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
       ),
     },
     {
-      path: "clinical-case-list",
+      path: "cases",
       children: [
         /* 臨床案例頁 */
         {

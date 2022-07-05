@@ -30,7 +30,7 @@ const BottomNavigation = () => {
           </div>
         )}
       </NavLink>
-      <NavLink to="/clinical-case-list">
+      <NavLink to="/cases">
         {({ isActive }) => (
           <div className={cx(styled.cell, { [styled.active]: isActive })}>
             <div className={styled.icon}>{isActive ? <CaseFill /> : <Case />}</div>

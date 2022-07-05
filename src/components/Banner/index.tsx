@@ -4,12 +4,11 @@ import Carousel from "nuka-carousel"
 
 type BannerProps = {
   height?: string
+  images?: (string | null | undefined)[] | null
 }
 
-const Banner = ({ height = "132px" }: BannerProps) => {
+const Banner = ({ height = "132px", images = [] }: BannerProps) => {
   // const go = useGo()
-
-  const src = ["banner-item1", "banner-item2", "banner-item3", "banner-item4", "banner-item5"]
 
   return (
     <div className={styled.banner}>
@@ -19,9 +18,9 @@ const Banner = ({ height = "132px" }: BannerProps) => {
         wrapAround={true}
         withoutControls={true}
         cellSpacing={12}>
-        {src.map(item => (
-          <div key={item} className={styled["banner-item"]} style={{ height: height }}>
-            {item}
+        {images?.map(item => (
+          <div key={item} className={styled["banner-item"]} style={{ height }}>
+            {item && <img src={item} width="100%" height="100%" />}
           </div>
         ))}
       </Carousel>

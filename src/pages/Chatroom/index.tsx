@@ -1,14 +1,19 @@
-import styled from "./Chatroom.module.scss"
 import cx from "classnames"
-import Header from "components/Layout/Header"
-import Backdrop from "components/Layout/Backdrop"
 import HistoryRecordCard from "components/HistoryRecordCard"
-import { ReactComponent as UploadImage } from "./UploadImage.svg"
-import Left from "./Left.png"
+import Backdrop from "components/Layout/Backdrop"
+import Header from "components/Layout/Header"
+import { useParams } from "react-router-dom"
+import styled from "./Chatroom.module.scss"
 import Front from "./Front.png"
+import Left from "./Left.png"
 import Right from "./Right.png"
+import { ReactComponent as UploadImage } from "./UploadImage.svg"
 
 const Chatroom = () => {
+  const { id } = useParams()
+
+  console.log(id)
+
   return (
     <>
       <Header leftArrow title="玉辛醫美診所" />

@@ -28,7 +28,7 @@ type toTarget = {
   /** 常見問答 */
   toQuestions: () => void
   /** 聊天室 */
-  toChatroom: () => void
+  toChatroom: ({ id }: { id: string }) => void
   /** 醫生修改密碼 */
   toDoctorUpdatePassword: () => void
   /** 搜尋結果列表 */
@@ -56,7 +56,7 @@ const useGo = (): toTarget => {
     toCollectClinicalCase: () => navigate("/member/collect-clinical-case"),
     toForgotPassword: () => navigate("/forgot-password"),
     toQuestions: () => navigate("/member/questions"),
-    toChatroom: () => navigate("/chatroom"),
+    toChatroom: ({ id }) => navigate(`/chatroom/${id}`),
     toDoctorUpdatePassword: () => navigate("/doctor/update-password"),
     toSearchList: text => navigate(`/search/${text}`),
     toDoctorInbox: () => navigate("/doctor/inbox"),

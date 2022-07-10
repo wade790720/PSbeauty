@@ -51,7 +51,9 @@ const ClinicInner = () => {
         tags={["蘋果肌1", "蘋果肌2", "蘋果肌3", "蘋果肌4", "蘋果肌5"]}
       />
       {!auth.user.clinic && (
-        <Button className={styled.button} onClick={go.toChatroom}>
+        <Button
+          className={styled.button}
+          onClick={() => go.toChatroom({ id: "62ca5e512448688161c0a4cc" })}>
           <Icon name="chat" className={styled.chat} />
           一對一匿名諮詢
         </Button>

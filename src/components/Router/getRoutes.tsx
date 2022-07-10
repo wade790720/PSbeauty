@@ -118,7 +118,7 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
     },
     /* 聊天室 */
     {
-      path: "chatroom",
+      path: "chatroom/:id",
       element: (
         <Suspense>
           <Chatroom />

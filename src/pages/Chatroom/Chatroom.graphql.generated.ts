@@ -17,7 +17,6 @@ export type GeTopicDetailQuery = {
       days: number
       subject: string | null
       images: Array<string | null> | null
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       consultAt: any
       content: string | null
       poster: { __typename: "User"; id: string | null } | null
@@ -27,7 +26,6 @@ export type GeTopicDetailQuery = {
       id: string | null
       content: string | null
       contentType: string | null
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       readAt: any
       userId: string | null
     } | null> | null

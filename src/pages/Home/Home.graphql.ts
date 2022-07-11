@@ -49,7 +49,6 @@ export const GetCases = gql`
         categories {
           id
           name
-          parent
         }
         clinic {
           id

@@ -280,10 +280,10 @@ export type AddCasePayload = {
 export type AddCategoryInput = {
   /** 小分類名稱 */
   name: InputMaybe<Scalars["String"]>
-  /** 所屬中分類 */
-  parent: InputMaybe<Scalars["String"]>
-  /** 所屬大分類 */
-  topParent: InputMaybe<Scalars["String"]>
+  /** 所屬中分類識別碼 */
+  secondCategoryId: InputMaybe<Scalars["String"]>
+  /** 所屬大分類識別碼 */
+  topCategoryId: InputMaybe<Scalars["String"]>
 }
 
 /** 新增小分類結果 */
@@ -461,6 +461,32 @@ export type AddQuestionPayload = {
   id: Maybe<Scalars["String"]>
 }
 
+/** 新增中分類 */
+export type AddSecondCategoryInput = {
+  /** 中分類名稱 */
+  name: InputMaybe<Scalars["String"]>
+  /** 所屬大分類識別碼 */
+  topCategoryId: InputMaybe<Scalars["String"]>
+}
+
+/** 新增中分類結果 */
+export type AddSecondCategoryPayload = {
+  __typename: "AddSecondCategoryPayload"
+  id: Maybe<Scalars["String"]>
+}
+
+/** 新增大分類 */
+export type AddTopCategoryInput = {
+  /** 大分類名稱 */
+  name: InputMaybe<Scalars["String"]>
+}
+
+/** 新增大分類結果 */
+export type AddTopCategoryPayload = {
+  __typename: "AddTopCategoryPayload"
+  id: Maybe<Scalars["String"]>
+}
+
 export type AddUserInput = {
   /** 使用者所使用的裝識識別碼，用於接收 firebase 訊息用 */
   clientToken: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
@@ -581,10 +607,12 @@ export type Category = {
   id: Maybe<Scalars["String"]>
   /** 小分類名稱 */
   name: Maybe<Scalars["String"]>
+  parentField: Maybe<Scalars["String"]>
+  parentId: Maybe<Scalars["String"]>
   /** 所屬中分類 */
-  parent: Maybe<Scalars["String"]>
+  secondCategoryId: Maybe<Scalars["String"]>
   /** 大分類 */
-  topParent: Maybe<Scalars["String"]>
+  topCategoryId: Maybe<Scalars["String"]>
   /** 由 id 取出之唯一數字值 */
   uniqueNumber: Scalars["Long"]
 }
@@ -1319,6 +1347,28 @@ export type DeletePostPayload = {
   id: Maybe<Scalars["String"]>
 }
 
+/** 刪除中分類輸入 */
+export type DeleteSecondCategoryInput = {
+  id: InputMaybe<Scalars["String"]>
+}
+
+/** 刪除中分類結果 */
+export type DeleteSecondCategoryPayload = {
+  __typename: "DeleteSecondCategoryPayload"
+  id: Maybe<Scalars["String"]>
+}
+
+/** 刪除大分類輸入 */
+export type DeleteTopCategoryInput = {
+  id: InputMaybe<Scalars["String"]>
+}
+
+/** 刪除大分類結果 */
+export type DeleteTopCategoryPayload = {
+  __typename: "DeleteTopCategoryPayload"
+  id: Maybe<Scalars["String"]>
+}
+
 export type DeleteUserInput = {
   id: InputMaybe<Scalars["String"]>
 }
@@ -1362,14 +1412,6 @@ export type ListStringOperationFilterInput = {
   some: InputMaybe<StringOperationFilterInput>
 }
 
-export type MiddleCategory = {
-  __typename: "MiddleCategory"
-  /** 其下小分類 */
-  categories: Maybe<Array<Maybe<Category>>>
-  /** 中分類名稱 */
-  name: Maybe<Scalars["String"]>
-}
-
 export type Mutation = {
   __typename: "Mutation"
   /** [廠商]新增診所活動 */
@@ -1402,6 +1444,10 @@ export type Mutation = {
   addPost: Maybe<AddPostPayload>
   /** [廠商]新增問卷 */
   addQuestion: Maybe<AddQuestionPayload>
+  /** [廠商]建立中分類 */
+  addSecondCategory: Maybe<AddSecondCategoryPayload>
+  /** ［廠商］建立大分類 */
+  addTopCategory: Maybe<AddTopCategoryPayload>
   /** [會員註冊]新增使用者，在 firebase 新增完後呼叫此 API 新增 */
   addUser: Maybe<AddUserPayload>
   /** [會員]使用者將指定病例加入蒐藏 */
@@ -1432,6 +1478,10 @@ export type Mutation = {
   deletePopularKeyword: Maybe<DeletePopularKeywordPayload>
   /** [廠商]刪除貼文 */
   deletePost: Maybe<DeletePostPayload>
+  /** 刪除中分類 */
+  deleteSecondCategory: Maybe<DeleteSecondCategoryPayload>
+  /** 刪除大分類 */
+  deleteTopCategory: Maybe<DeleteTopCategoryPayload>
   /** [會員]刪除使用者 */
   deleteUser: Maybe<DeleteUserPayload>
   /** [診所管理員]讀取診所收件夾訊息 */
@@ -1470,6 +1520,10 @@ export type Mutation = {
   updateDoctor: Maybe<UpdateDoctorPayload>
   /** [廠商]修改貼文內容 */
   updatePost: Maybe<UpdatePostPayload>
+  /** [廠商]修改中分類 */
+  updateSecondCategory: Maybe<UpdateSecondCategoryPayload>
+  /** [廠商]修改大分類 */
+  updateTopCategory: Maybe<UpdateTopCategoryPayload>
   /** [會員]更新使用者資料 */
   updateUser: Maybe<UpdateUserPayload>
 }
@@ -1534,6 +1588,14 @@ export type MutationAddQuestionArgs = {
   input: InputMaybe<AddQuestionInput>
 }
 
+export type MutationAddSecondCategoryArgs = {
+  input: InputMaybe<AddSecondCategoryInput>
+}
+
+export type MutationAddTopCategoryArgs = {
+  input: InputMaybe<AddTopCategoryInput>
+}
+
 export type MutationAddUserArgs = {
   input: InputMaybe<AddUserInput>
 }
@@ -1592,6 +1654,14 @@ export type MutationDeletePopularKeywordArgs = {
 
 export type MutationDeletePostArgs = {
   input: InputMaybe<DeletePostInput>
+}
+
+export type MutationDeleteSecondCategoryArgs = {
+  input: InputMaybe<DeleteSecondCategoryInput>
+}
+
+export type MutationDeleteTopCategoryArgs = {
+  input: InputMaybe<DeleteTopCategoryInput>
 }
 
 export type MutationDeleteUserArgs = {
@@ -1670,6 +1740,14 @@ export type MutationUpdatePostArgs = {
   input: InputMaybe<UpdatePostInput>
 }
 
+export type MutationUpdateSecondCategoryArgs = {
+  input: InputMaybe<UpdateSecondCategoryInput>
+}
+
+export type MutationUpdateTopCategoryArgs = {
+  input: InputMaybe<UpdateTopCategoryInput>
+}
+
 export type MutationUpdateUserArgs = {
   input: InputMaybe<UpdateUserInput>
 }
@@ -1696,7 +1774,7 @@ export type PopularKeywords = {
   keywords: Maybe<Array<Maybe<Scalars["String"]>>>
 }
 
-/** 討論串回覆 */
+/** 貼文 */
 export type Post = {
   __typename: "Post"
   /** 內容 */
@@ -1709,7 +1787,7 @@ export type Post = {
   subject: Maybe<Scalars["String"]>
 }
 
-/** 討論串回覆 */
+/** 貼文 */
 export type PostFilterInput = {
   and: InputMaybe<Array<PostFilterInput>>
   /** 內容 */
@@ -1721,7 +1799,7 @@ export type PostFilterInput = {
   subject: InputMaybe<StringOperationFilterInput>
 }
 
-/** 討論串回覆 */
+/** 貼文 */
 export type PostSortInput = {
   /** 內容 */
   content: InputMaybe<SortEnumType>
@@ -2104,6 +2182,21 @@ export type ReplyTopicPayload = {
   topicId: Maybe<Scalars["String"]>
 }
 
+/** 小分類 */
+export type SecondCategory = {
+  __typename: "SecondCategory"
+  /** 取得第三層 */
+  categories: Maybe<Array<Maybe<Category>>>
+  /** 物件識別碼 */
+  id: Maybe<Scalars["String"]>
+  /** 中分類名稱 */
+  name: Maybe<Scalars["String"]>
+  parentField: Maybe<Scalars["String"]>
+  parentId: Maybe<Scalars["String"]>
+  /** 所屬大分類識別碼 */
+  topCategoryId: Maybe<Scalars["String"]>
+}
+
 /** 設定熱門搜尋資料 */
 export type SetPopularKeywordsInput = {
   /** 關鍵字 */
@@ -2136,12 +2229,15 @@ export type StringOperationFilterInput = {
   startsWith: InputMaybe<Scalars["String"]>
 }
 
+/** 小分類 */
 export type TopCategory = {
   __typename: "TopCategory"
+  /** 物件識別碼 */
+  id: Maybe<Scalars["String"]>
   /** 大分類名稱 */
   name: Maybe<Scalars["String"]>
-  /** 其下中分類 */
-  secondCategories: Maybe<Array<Maybe<MiddleCategory>>>
+  /** 取得第二層 */
+  secondCategories: Maybe<Array<Maybe<SecondCategory>>>
 }
 
 /** A connection to a list of items. */
@@ -2402,6 +2498,34 @@ export type UpdatePostInput = {
 /** 修改貼文回覆 */
 export type UpdatePostPayload = {
   __typename: "UpdatePostPayload"
+  id: Maybe<Scalars["String"]>
+}
+
+/** 修改中分類 */
+export type UpdateSecondCategoryInput = {
+  id: InputMaybe<Scalars["String"]>
+  /** 中分類名稱 */
+  name: InputMaybe<Scalars["String"]>
+  /** 所屬大分類識別碼 */
+  topCategoryId: InputMaybe<Scalars["String"]>
+}
+
+/** 修改中分類結果 */
+export type UpdateSecondCategoryPayload = {
+  __typename: "UpdateSecondCategoryPayload"
+  id: Maybe<Scalars["String"]>
+}
+
+/** 修改大分類 */
+export type UpdateTopCategoryInput = {
+  id: InputMaybe<Scalars["String"]>
+  /** 大分類名稱 */
+  name: InputMaybe<Scalars["String"]>
+}
+
+/** 修改大分類結果 */
+export type UpdateTopCategoryPayload = {
+  __typename: "UpdateTopCategoryPayload"
   id: Maybe<Scalars["String"]>
 }
 

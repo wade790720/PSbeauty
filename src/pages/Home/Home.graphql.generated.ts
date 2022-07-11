@@ -57,7 +57,6 @@ export type GetCasesQuery = {
         __typename: "Category"
         id: string | null
         name: string | null
-        parent: string | null
       } | null> | null
       clinic: {
         __typename: "Clinic"
@@ -166,7 +165,6 @@ export const GetCasesDocument = gql`
         categories {
           id
           name
-          parent
         }
         clinic {
           id

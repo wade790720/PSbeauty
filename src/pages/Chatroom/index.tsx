@@ -5,7 +5,7 @@ import Header from "components/Layout/Header"
 import { useAuth } from "hooks/useAuth"
 import { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
-import { useGeTopicDetailQuery } from "./Chatroom.graphql.generated"
+import { useGeTopicDetailQuery, useReplyTopicMutation } from "./Chatroom.graphql.generated"
 import styled from "./Chatroom.module.scss"
 import Front from "./Front.png"
 import Left from "./Left.png"
@@ -18,25 +18,14 @@ const Chatroom = () => {
   const [message, setMessage] = useState("")
   const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  const topicControl = useGeTopicDetailQuery({
+  const topicDetail = useGeTopicDetailQuery({
     variables: {
       input: id || "",
     },
   })
 
-  useEffect(() => {
-    scrollToBottom()
-  }, [topicControl.loading])
-
-  if (topicControl.loading) {
-    return <div>loading</div>
-  }
-
-  const newMessage = (msg: string) => {
-    console.log(msg)
-    scrollToBottom()
-    topicControl.refetch()
-  }
+  // , { data, loading, error }
+  const [replyTopicMutation] = useReplyTopicMutation()
 
   const scrollToBottom = () => {
     setTimeout(() => {
@@ -44,9 +33,33 @@ const Chatroom = () => {
     }, 100)
   }
 
-  const clinic = topicControl.data?.topic?.clinic
-  const consult = topicControl.data?.topic?.consult
-  const replies = topicControl.data?.topic?.replies || []
+  useEffect(() => {
+    scrollToBottom()
+  }, [topicDetail.loading])
+
+  if (topicDetail.loading) {
+    return <div>loading</div>
+  }
+
+  const newMessage = (msg: string) => {
+    replyTopicMutation({
+      variables: {
+        input: {
+          topicId: id || "",
+          content: msg,
+          contentType: "text",
+        },
+      },
+      async onCompleted() {
+        await topicDetail.refetch()
+        scrollToBottom()
+      },
+    })
+  }
+
+  const clinic = topicDetail.data?.topic?.clinic
+  const consult = topicDetail.data?.topic?.consult
+  const replies = topicDetail.data?.topic?.replies || []
 
   return (
     <>

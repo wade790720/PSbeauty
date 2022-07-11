@@ -28,3 +28,11 @@ export const GetTopicDetail = gql`
     }
   }
 `
+
+export const ReplyTopic = gql`
+  mutation replyTopic($input: ReplyTopicInput) {
+    replyTopic(input: $input) {
+      id
+    }
+  }
+`

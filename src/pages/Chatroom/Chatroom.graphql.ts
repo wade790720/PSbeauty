@@ -4,16 +4,26 @@ export const GetTopicDetail = gql`
   query GeTopicDetail($input: String) {
     topic(topicId: $input) {
       clinic {
-        id name
+        id
+        name
       }
       consult {
-        id days subject images consultAt content 
+        id
+        days
+        subject
+        images
+        consultAt
+        content
         poster {
           id
         }
       }
       replies {
-        id content contentType readAt userId
+        id
+        content
+        contentType
+        readAt
+        userId
       }
     }
   }

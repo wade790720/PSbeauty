@@ -3,6 +3,7 @@ import HistoryRecordCard from "components/HistoryRecordCard"
 import Backdrop from "components/Layout/Backdrop"
 import Header from "components/Layout/Header"
 import { useAuth } from "hooks/useAuth"
+import { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
 import { useGeTopicDetailQuery } from "./Chatroom.graphql.generated"
 import styled from "./Chatroom.module.scss"
@@ -14,20 +15,38 @@ import { ReactComponent as UploadImage } from "./UploadImage.svg"
 const Chatroom = () => {
   const { id } = useParams()
   const auth = useAuth()
+  const [message, setMessage] = useState("")
+  const messagesEndRef = useRef<HTMLDivElement>(null)
 
-  const response = useGeTopicDetailQuery({
+  const topicControl = useGeTopicDetailQuery({
     variables: {
-      input: id!,
+      input: id || "",
     },
   })
 
-  if (response.loading) {
+  useEffect(() => {
+    scrollToBottom()
+  }, [topicControl.loading])
+
+  if (topicControl.loading) {
     return <div>loading</div>
   }
 
-  const clinic = response.data?.topic?.clinic
-  const consult = response.data?.topic?.consult
-  const replies = response.data?.topic?.replies || []
+  const newMessage = (msg: string) => {
+    console.log(msg)
+    scrollToBottom()
+    topicControl.refetch()
+  }
+
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    }, 100)
+  }
+
+  const clinic = topicControl.data?.topic?.clinic
+  const consult = topicControl.data?.topic?.consult
+  const replies = topicControl.data?.topic?.replies || []
 
   return (
     <>
@@ -61,12 +80,15 @@ const Chatroom = () => {
             )
           }
         })}
+        <div ref={messagesEndRef}></div>
       </Backdrop>
       <div className={styled.input}>
         <div className={styled.control}>
           <UploadImage />
-          <input />
-          <div className={styled.submit}>送出</div>
+          <input value={message} onChange={e => setMessage(e.target.value)}></input>
+          <div className={styled.submit} onClick={() => newMessage(message)}>
+            送出
+          </div>
         </div>
       </div>
     </>

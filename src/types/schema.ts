@@ -1756,6 +1756,8 @@ export type Query = {
   __typename: "Query"
   /** 查詢診所活動 */
   activities: Maybe<ActivitiesConnection>
+  /** 依廣告卡識別碼取得廣告卡 */
+  adCard: Maybe<AdCard>
   /** 查詢廠商廣告卡 */
   adCards: Maybe<AdCardsConnection>
   /** 取得所有廣告圖 */
@@ -1834,6 +1836,10 @@ export type QueryActivitiesArgs = {
   last: InputMaybe<Scalars["Int"]>
   order: InputMaybe<Array<ClinicActivitySortInput>>
   where: InputMaybe<ClinicActivityFilterInput>
+}
+
+export type QueryAdCardArgs = {
+  adCardId: InputMaybe<Scalars["String"]>
 }
 
 export type QueryAdCardsArgs = {

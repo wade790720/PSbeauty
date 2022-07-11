@@ -21,7 +21,6 @@ const ClinicalCaseList = () => {
         </div>
         <Banner />
         <CaseCard
-          id="2"
           isCollected
           title="臉部拉提改善面部線條A"
           clinic="玉辛醫美診所"
@@ -31,7 +30,6 @@ const ClinicalCaseList = () => {
           tags={["蘋果肌1", "蘋果肌2", "蘋果肌3", "蘋果肌4", "蘋果肌5"]}
         />
         <CaseCard
-          id="3"
           isCollected
           title="臉部拉提改善面部線條A"
           clinic="玉辛醫美診所"

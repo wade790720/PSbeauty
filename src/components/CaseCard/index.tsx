@@ -5,7 +5,6 @@ import { useAuth } from "hooks/useAuth"
 import { useCollectCaseMutation } from "./CaseCard.graphql.generated"
 
 export type CaseCardProps = {
-  id: string
   title: string
   clinic: string
   clinicId: string
@@ -22,7 +21,7 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
 
   const [collectCaseMutation] = useCollectCaseMutation({
     variables: {
-      caseId: props.id,
+      caseId: props.clinicId,
     },
     update(cache, mutationResult) {
       //   if (mutationResult.data?.deleteGroupComparison?.isDeleted) {

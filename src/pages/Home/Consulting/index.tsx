@@ -1,10 +1,11 @@
 import Drawer from "components/Drawer"
 import Form, { InputGroup, Append } from "components/Form"
 import Button from "components/Button"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import styled from "./Consulting.module.scss"
 import Icon from "components/Icon"
 import SubjectFilter from "components/SubjectFilter"
+import { useGetTopCategoriesLazyQuery } from "./Consulting.graphql.generated"
 
 type consultProps = {
   open: boolean
@@ -19,6 +20,12 @@ const Consulting = (props: consultProps) => {
     file2: "",
     file3: "",
   })
+  const [loadQuery, query] = useGetTopCategoriesLazyQuery()
+
+  useEffect(() => {
+    if (!open) return
+    loadQuery()
+  }, [open])
 
   const getChosenSubject = (value: string) => {
     setChosenSubject(value)
@@ -51,6 +58,8 @@ const Consulting = (props: consultProps) => {
               open={open}
               onClose={() => setOpen(false)}
               getValue={value => getChosenSubject(value)}
+              topCategories={query?.data?.topCategories?.map(el => el?.name || "")}
+              query={query}
             />
           </Form.Group>
           <Form.Group layout="vertical" className={styled["input-group"]}>

@@ -2,15 +2,16 @@ import { useState, useRef, useLayoutEffect } from "react"
 import styled from "./ClinicMedicalTeam.module.scss"
 import cx from "classnames"
 
-const data = {
-  name: "陳家衛",
-  jobTitle: "院長",
-  experience: ["采家醫學美容診所院長", "AAAMS 美國醫學美容外科協會講師", "采家醫學美容診所院長"],
-  expertise:
-    "各種雷射操作、皮秒雷射、微整形操作、音波拉提、埋線拉提、電波拉提、美白針、痘痘針、埋線拉提、電波拉提、美白針、痘痘針",
+export type DoctorCardProps = {
+  name?: string
+  jobTitle?: string
+  photo?: string
+  // TODO: 2個欄位待確認型別
+  resumes?: string[]
+  expertise?: string[]
 }
 
-const DoctorCard = () => {
+const DoctorCard = ({ ...props }: DoctorCardProps) => {
   const [isExperienceMore, setIsExperienceMore] = useState(false)
   const [isExpertiseMore, setIsExpertiseMore] = useState(false)
   const [over, setOver] = useState<boolean>(false)
@@ -27,29 +28,29 @@ const DoctorCard = () => {
   return (
     <div className={styled.doctor}>
       <div className={styled.personal}>
-        <div className={styled.avatar} />
+        <img className={styled.avatar} src={props?.photo} />
         <div className={styled.information}>
-          <div className={styled.name}>{data.name}</div>
-          <div className={styled["job-title"]}>{data.jobTitle}</div>
+          <div className={styled.name}>{props?.name}</div>
+          <div className={styled["job-title"]}>{props?.jobTitle}</div>
         </div>
       </div>
       <ul
-        className={cx(styled.experience, {
+        className={cx(styled.resumes, {
           [styled.more]: isExperienceMore,
         })}>
-        {data.experience.map((item, idx) => (
+        {props?.resumes?.map((item, idx) => (
           <li className={styled.job} key={`${item}-${idx}`}>
             {item}
           </li>
         ))}
       </ul>
-      {data.experience.length > 2 && (
+      {props?.resumes && props?.resumes.length > 2 && (
         <div className={styled.show} onClick={() => setIsExperienceMore(!isExperienceMore)}>
           {isExperienceMore ? "顯示更少" : "顯示更多"}
         </div>
       )}
       <div className={cx(styled.expertise, { [styled.more]: isExpertiseMore })} ref={ref}>
-        {data.expertise}
+        {props?.expertise}
       </div>
       {over && (
         <div className={styled.show} onClick={() => setIsExpertiseMore(!isExpertiseMore)}>

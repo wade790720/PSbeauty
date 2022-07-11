@@ -31,7 +31,6 @@ const Home = () => {
       list.push(
         <CaseCard
           key={cases[i]?.id}
-          id={cases[i]?.id || ""}
           amount={cases[i]?.collectedCount}
           isCollected={false}
           title={cases[i]?.title || ""}

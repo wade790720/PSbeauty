@@ -1,13 +1,31 @@
-import { Outlet, useMatch } from "react-router-dom"
+import { useEffect } from "react"
+import { Outlet, useOutletContext, useMatch, useParams } from "react-router-dom"
 import { useAuth } from "hooks/useAuth"
 import Header from "components/Layout/Header"
 import Backdrop from "components/Layout/Backdrop"
 import ClinicSwitch from "../ClinicSwitch"
 import BottomNavigation from "components/BottomNavigation"
+import {
+  useGetClinicLazyQuery,
+  GetClinicQueryHookResult,
+} from "./ClinicInnerWrapper.graphql.generated"
+
+type ContextType = { query: { data: GetClinicQueryHookResult["data"] } }
 
 const ClinicInnerWrapper = () => {
   const auth = useAuth()
   const match = useMatch("/clinic/:id/inner/activities/:activityId")
+  const { id } = useParams()
+  const [loadQuery, query] = useGetClinicLazyQuery()
+
+  useEffect(() => {
+    if (match?.params.activityId) return
+    loadQuery({
+      variables: {
+        id: id || "",
+      },
+    })
+  }, [match?.params.activityId, loadQuery, id])
 
   return match?.params.activityId ? (
     <Outlet />
@@ -16,10 +34,15 @@ const ClinicInnerWrapper = () => {
       <Header leftArrow title="玉欣醫美診所" />
       <Backdrop style={{ paddingBottom: "49px" }}>
         <ClinicSwitch />
-        <Outlet />
-        {auth.user.id ? <BottomNavigation.Chat /> : <BottomNavigation />}
+        <Outlet context={{ query }} />
+        {auth.user.clinic ? <BottomNavigation.Chat /> : <BottomNavigation />}
       </Backdrop>
     </>
   )
 }
+
+export function useClinicInnerContext() {
+  return useOutletContext<ContextType>()
+}
+
 export default ClinicInnerWrapper

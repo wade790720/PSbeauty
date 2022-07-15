@@ -44,6 +44,7 @@ const SubjectFilter = (props: consultProps) => {
   const chosenSubject = watch().subject || []
   const registerSubject = register("subject")
   const topCategories = props?.query?.data?.topCategories
+  const secondCategories = topCategories?.find(el => el?.name === category?.top)?.secondCategories
 
   useEffect(() => {
     if (topCategories && topCategories?.length > 0 && !category?.top) {
@@ -72,53 +73,62 @@ const SubjectFilter = (props: consultProps) => {
             <Button
               variant="text"
               key={`topCategories-${idx}`}
-              className={cx({ [styled.category]: item === category?.top })}>
+              className={cx({ [styled.category]: item === category?.top })}
+              onClick={() => {
+                const second =
+                  topCategories?.filter(el => el?.name === item)?.[0]?.secondCategories?.[0]
+                    ?.name || ""
+                setCategory({
+                  top: item || "",
+                  second,
+                })
+              }}>
               {item}
             </Button>
           ))}
         </div>
         <div className={styled.content}>
           <div className={styled.part}>
-            {topCategories
-              ?.find(el => el?.name === category?.top)
-              ?.secondCategories?.map((item, idx) => {
-                return (
-                  <button
-                    key={`secondCategories-${idx}`}
-                    onClick={() => {
-                      setCategory({
-                        ...category,
-                        second: item?.name || "",
-                      })
-                      setValue("subject", [])
-                    }}
-                    className={cx(styled.item, {
-                      [styled.select]: item?.name === category?.second,
-                    })}>
-                    {item?.name || ""}
-                  </button>
-                )
-              })}
+            {secondCategories?.map((item, idx) => {
+              return (
+                <button
+                  key={`secondCategories-${idx}`}
+                  onClick={() => {
+                    setCategory({
+                      ...category,
+                      second: item?.name || "",
+                    })
+                    setValue("subject", [])
+                  }}
+                  className={cx(styled.item, {
+                    [styled.select]: item?.name === category?.second,
+                  })}>
+                  {item?.name || ""}
+                </button>
+              )
+            })}
           </div>
           <div className={styled.subjects}>
-            {fakeSubjectData.map(subject => (
-              <Form.Checkbox
-                key={subject}
-                className={cx("checkbox", styled.item)}
-                value={subject}
-                {...register("subject")}
-                onChange={e => {
-                  if (e.target.checked && chosenSubject.length === 3) {
-                    e.target.checked = false
-                    setErrorState(true)
-                  } else {
-                    setErrorState(false)
-                  }
-                  registerSubject.onChange(e)
-                }}>
-                {subject}
-              </Form.Checkbox>
-            ))}
+            {secondCategories?.[0]?.categories
+              ?.map(el => el?.name || "")
+              .map(subject => (
+                <Form.Checkbox
+                  key={subject}
+                  className={cx("checkbox", styled.item)}
+                  value={subject}
+                  {...register("subject")}
+                  onChange={e => {
+                    if (e.target.checked && chosenSubject.length === 3) {
+                      e.target.checked = false
+                      setErrorState(true)
+                    } else {
+                      setErrorState(false)
+                    }
+                    registerSubject.onChange(e)
+                  }}>
+                  {subject}
+                </Form.Checkbox>
+              ))}
           </div>
         </div>
       </div>

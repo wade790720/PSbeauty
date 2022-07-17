@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import styled from "./ClinicalCaseList.module.scss"
 import Icon from "components/Icon"
 import BottomNavigation from "components/BottomNavigation"
@@ -9,9 +9,17 @@ import imgBefore from "pages/Member/MemberCollectClinicalCase/Before.png"
 import imgAfter from "pages/Member/MemberCollectClinicalCase/After.png"
 import SubjectFilter from "components/SubjectFilter"
 import Banner from "components/Banner"
+import { useGetTopCategoriesLazyQuery } from "./ClinicalCaseList.graphql.generated"
 
 const ClinicalCaseList = () => {
   const [open, setOpen] = useState(false)
+  const [loadQuery, query] = useGetTopCategoriesLazyQuery()
+
+  useEffect(() => {
+    if (!open) return
+    loadQuery()
+  }, [open])
+
   return (
     <>
       <div className={styled.wrapper}>
@@ -46,6 +54,8 @@ const ClinicalCaseList = () => {
           open={open}
           onClose={() => setOpen(false)}
           getValue={value => console.log(value)}
+          topCategories={query?.data?.topCategories?.map(el => el?.name || "")}
+          query={query}
         />
       </div>
       <BottomNavigation />

@@ -44,7 +44,9 @@
 
     button {
       min-width: 88px;
+      width: unset;
       height: 32px;
+      font-weight: 400;
     }
 
     button:first-child {

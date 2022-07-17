@@ -1,63 +1,82 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Drawer from "components/Drawer"
 import Form from "components/Form"
 import Button from "components/Button"
 import styled from "./SubjectFilter.module.scss"
-import { useForm } from "react-hook-form"
+import { GetTopCategoriesQueryHookResult } from "pages/Doctor/Doctor.graphql.generated"
 import cx from "classnames"
 
 type consultProps = {
   open: boolean
   onClose: () => void
   getValue: (value: string) => void
+  topCategories?: string[]
+  query: GetTopCategoriesQueryHookResult
 }
 
-const fakePartData = ["眼睛", "臉頰", "鼻子", "嘴唇", "下巴", "額頭", "顴骨"]
-
-const fakeSubjectData = [
-  "臉部拉提",
-  "音波拉提",
-  "平滑臉部與前額",
-  "玻尿酸注射",
-  "痘痘針",
-  "美白粉刺",
-  "皮秒雷射",
-  "埋線拉提",
-  "電波拉提",
-  "肉毒桿菌注射",
-  "脂肪填充",
-]
+type CategoryType = {
+  top?: string
+  second?: string
+}
 
 const SubjectFilter = (props: consultProps) => {
-  const [eventKey, setEventKey] = useState("眼睛")
-  const [isCheckAll, setIsCheckAll] = useState(false)
-  const { register, setValue, watch } = useForm<{ subject: string[] }>()
-  const chosenSubject = watch().subject || []
+  const [isCheckAll, setIsCheckAll] = useState<string[]>([])
+  const [category, setCategory] = useState<CategoryType>()
+  const [chosenItem, setChosenItem] = useState<string[]>([])
+  const topCategories = props?.query?.data?.topCategories
+  const secondCategories = topCategories?.find(el => el?.name === category?.top)?.secondCategories
+
+  useEffect(() => {
+    if (topCategories && topCategories?.length > 0 && !category?.top) {
+      setCategory({
+        top: topCategories[0]?.name || "",
+        second:
+          (topCategories[0]?.secondCategories && topCategories[0]?.secondCategories[0]?.name) || "",
+      })
+    }
+  }, [topCategories])
 
   return (
     <Drawer open={props.open} onClose={props.onClose} size="100%">
       <div className={styled.wrapper}>
-        <div className={styled.title}>分類(56)</div>
+        <div className={styled.title}>{`分類(${chosenItem.length})`}</div>
         <div className={styled["medical-type"]}>
-          <Button variant="text">整形手術</Button>
-          <Button variant="text">整形手術</Button>
-          <Button variant="text">整形手術</Button>
-          <Button variant="text">整形手術</Button>
-          <Button variant="text">整形手術</Button>
+          {props.topCategories?.map((item, idx) => (
+            <Button
+              variant="text"
+              key={`topCategories-${idx}`}
+              className={cx({ [styled.category]: item === category?.top })}
+              onClick={() => {
+                const second =
+                  topCategories?.filter(el => el?.name === item)?.[0]?.secondCategories?.[0]
+                    ?.name || ""
+                setCategory({
+                  top: item || "",
+                  second,
+                })
+              }}>
+              {`${item}(${
+                topCategories?.filter(el => el?.name === item)?.[0]?.secondCategories?.length || 0
+              })`}
+            </Button>
+          ))}
         </div>
         <div className={styled.content}>
           <div className={styled.part}>
-            {fakePartData.map(item => {
+            {secondCategories?.map((item, idx) => {
               return (
                 <button
-                  key={item}
+                  key={`secondCategories-${idx}`}
                   onClick={() => {
-                    setEventKey(item)
-                    setValue("subject", [])
-                    setIsCheckAll(false)
+                    setCategory({
+                      ...category,
+                      second: item?.name || "",
+                    })
                   }}
-                  className={cx(styled.item, { [styled.select]: item === eventKey })}>
-                  {item}
+                  className={cx(styled.item, {
+                    [styled.select]: item?.name === category?.second,
+                  })}>
+                  {`${item?.name}(${item?.categories?.length || "0"})` || ""}
                 </button>
               )
             })}
@@ -65,27 +84,55 @@ const SubjectFilter = (props: consultProps) => {
           <div className={styled.subjects}>
             <Form.Checkbox
               className={styled.item}
-              checked={isCheckAll}
-              onClick={() => {
-                setIsCheckAll(!isCheckAll)
-                setValue("subject", !isCheckAll ? fakeSubjectData.map(subject => subject) : [])
+              checked={isCheckAll?.some(el => el === category?.second)}
+              onChange={e => {
+                const categories =
+                  secondCategories
+                    ?.filter(el => el?.name === category?.second)?.[0]
+                    ?.categories?.map(el => el?.name || "") || []
+                if (e.target.checked) {
+                  setIsCheckAll([...isCheckAll, category?.second || ""])
+                  setChosenItem([...chosenItem, ...categories])
+                } else {
+                  isCheckAll.splice(
+                    isCheckAll.findIndex(el => el === category?.top),
+                    1,
+                  )
+                  setIsCheckAll(isCheckAll)
+                  setChosenItem(chosenItem.filter(x => !categories.includes(x)))
+                }
               }}>
               全選
             </Form.Checkbox>
-            {fakeSubjectData.map(subject => (
-              <Form.Checkbox
-                key={subject}
-                className={styled.item}
-                value={subject}
-                onClick={() => {
-                  if (isCheckAll) {
-                    setIsCheckAll(false)
-                  }
-                }}
-                {...register("subject")}>
-                {subject}
-              </Form.Checkbox>
-            ))}
+            {secondCategories
+              ?.filter(el => el?.name === category?.second)?.[0]
+              ?.categories?.map(el => el?.name || "")
+              ?.map(subject => (
+                <Form.Checkbox
+                  key={subject}
+                  className={styled.item}
+                  checked={chosenItem.some(el => el === subject)}
+                  value={subject}
+                  onChange={e => {
+                    if (e.target.checked) {
+                      setChosenItem([...chosenItem, subject])
+                      const target = secondCategories
+                        ?.filter(el => el?.name === category?.second)?.[0]
+                        ?.categories?.map(el => el?.name || "")
+
+                      const intersection = [...chosenItem, subject].filter(x => target?.includes(x))
+
+                      if (intersection.length === target?.length) {
+                        setIsCheckAll([...isCheckAll, category?.second || ""])
+                      }
+                    } else {
+                      setChosenItem(chosenItem.filter(el => el !== subject))
+                      setIsCheckAll(isCheckAll.filter(el => el !== category?.second))
+                    }
+                  }}>
+                  {subject}
+                </Form.Checkbox>
+              ))}
           </div>
         </div>
       </div>
@@ -93,15 +140,15 @@ const SubjectFilter = (props: consultProps) => {
         <Button
           variant="text"
           onClick={() => {
-            setValue("subject", [])
-            setIsCheckAll(false)
+            setChosenItem([])
+            setIsCheckAll([])
           }}>
           清除
         </Button>
         <Button
           variant="primary"
           onClick={() => {
-            props.getValue(chosenSubject.toString())
+            props.getValue(chosenItem.toString())
             props.onClose()
           }}>
           完成

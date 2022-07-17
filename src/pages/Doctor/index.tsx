@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Button from "components/Button"
 import Profile from "components/Profile"
 import BottomNavigation from "components/BottomNavigation"
@@ -8,6 +8,7 @@ import Modal from "components/Modal"
 import SubjectFilter from "components/SubjectFilter"
 import { sentResetPassword } from "firebaseClient"
 import styled from "./Doctor.module.scss"
+import { useGetTopCategoriesLazyQuery } from "./Doctor.graphql.generated"
 
 const DEFAULT_MODAL_MSG = {
   title: "2-1寄送認證郵件",
@@ -22,6 +23,12 @@ const Doctor = () => {
   const [open, setOpen] = useState(false)
   const [filterOpen, setFilterOpen] = useState(false)
   const [modalMsg, setModalMsg] = useState(DEFAULT_MODAL_MSG)
+  const [loadQuery, query] = useGetTopCategoriesLazyQuery()
+
+  useEffect(() => {
+    if (!filterOpen) return
+    loadQuery()
+  }, [filterOpen])
 
   return (
     <>
@@ -81,6 +88,8 @@ const Doctor = () => {
           open={filterOpen}
           onClose={() => setFilterOpen(false)}
           getValue={value => console.log(value)}
+          topCategories={query?.data?.topCategories?.map(el => el?.name || "")}
+          query={query}
         />
       </div>
       <BottomNavigation.Chat />

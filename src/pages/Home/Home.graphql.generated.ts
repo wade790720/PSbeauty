@@ -32,7 +32,9 @@ export type GetAdImagesQuery = {
   } | null
 }
 
-export type GetCasesQueryVariables = Types.Exact<{ [key: string]: never }>
+export type GetCasesQueryVariables = Types.Exact<{
+  contains: Types.InputMaybe<Types.Scalars["String"]>
+}>
 
 export type GetCasesQuery = {
   cases: {
@@ -146,8 +148,8 @@ export type GetAdImagesQueryHookResult = ReturnType<typeof useGetAdImagesQuery>
 export type GetAdImagesLazyQueryHookResult = ReturnType<typeof useGetAdImagesLazyQuery>
 export type GetAdImagesQueryResult = Apollo.QueryResult<GetAdImagesQuery, GetAdImagesQueryVariables>
 export const GetCasesDocument = gql`
-  query GetCases {
-    cases(first: 10, order: { id: DESC }) {
+  query GetCases($contains: String) {
+    cases(where: { title: { contains: $contains } }, first: 10, order: { id: DESC }) {
       pageInfo {
         hasNextPage
         hasPreviousPage
@@ -188,6 +190,7 @@ export const GetCasesDocument = gql`
  * @example
  * const { data, loading, error } = useGetCasesQuery({
  *   variables: {
+ *      contains: // value for 'contains'
  *   },
  * });
  */

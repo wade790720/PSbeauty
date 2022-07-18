@@ -30,8 +30,8 @@ export const GetAdImages = gql`
 `
 
 export const GetCases = gql`
-  query GetCases {
-    cases(first: 10, order: { id: DESC }) {
+  query GetCases($contains: String) {
+    cases(where: { title: { contains: $contains } }, first: 10, order: { id: DESC }) {
       pageInfo {
         hasNextPage
         hasPreviousPage

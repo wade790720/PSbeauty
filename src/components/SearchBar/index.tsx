@@ -6,6 +6,7 @@ import Icon from "components/Icon"
 
 export type SearchBarProps = {
   variant?: string
+  onChange?: (value: string) => void
 } & ReactProps.Component
 
 const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(function SearchBar(
@@ -26,6 +27,9 @@ const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(function Se
           style={{ backgroundColor: "transparent" }}
           onChange={e => {
             setEmpty(!e.target.value)
+            if (props.onChange) {
+              props.onChange(e.target.value)
+            }
           }}
           ref={ref}
         />

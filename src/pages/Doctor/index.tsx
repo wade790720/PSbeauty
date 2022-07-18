@@ -8,7 +8,11 @@ import Modal from "components/Modal"
 import SubjectFilter from "components/SubjectFilter"
 import { sentResetPassword } from "firebaseClient"
 import styled from "./Doctor.module.scss"
-import { useGetTopCategoriesLazyQuery } from "./Doctor.graphql.generated"
+import {
+  useGetTopCategoriesLazyQuery,
+  useUpdateClinicCategoryMutation,
+  useGetMyClinicLazyQuery,
+} from "./Doctor.graphql.generated"
 
 const DEFAULT_MODAL_MSG = {
   title: "2-1寄送認證郵件",
@@ -24,6 +28,8 @@ const Doctor = () => {
   const [filterOpen, setFilterOpen] = useState(false)
   const [modalMsg, setModalMsg] = useState(DEFAULT_MODAL_MSG)
   const [loadQuery, query] = useGetTopCategoriesLazyQuery()
+  const [loadClinic, queryClinic] = useGetMyClinicLazyQuery()
+  const [updateClinicCategoryMutation] = useUpdateClinicCategoryMutation()
 
   useEffect(() => {
     if (!filterOpen) return
@@ -34,7 +40,13 @@ const Doctor = () => {
     <>
       <Profile />
       <div className={styled.wrapper}>
-        <Button variant="secondary" onClick={() => setFilterOpen(true)}>
+        <Button
+          variant="secondary"
+          onClick={() => {
+            loadClinic({ fetchPolicy: "no-cache" })
+
+            setFilterOpen(true)
+          }}>
           專長項目
         </Button>
         <Button variant="secondary" onClick={() => setOpen(true)}>
@@ -87,7 +99,13 @@ const Doctor = () => {
         <SubjectFilter
           open={filterOpen}
           onClose={() => setFilterOpen(false)}
-          getValue={value => console.log(value)}
+          getValue={value => {
+            updateClinicCategoryMutation({
+              variables: {
+                categories: value.split(","),
+              },
+            })
+          }}
           topCategories={query?.data?.topCategories?.map(el => el?.name || "")}
           query={query}
         />

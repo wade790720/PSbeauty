@@ -14,3 +14,22 @@ export const GetTopCategories = gql`
     }
   }
 `
+
+export const UpdateClinicCategory = gql`
+  mutation UpdateClinicCategory($categories: [String]) {
+    updateClinicCategory(input: { categories: $categories }) {
+      id
+    }
+  }
+`
+
+export const GetMyClinic = gql`
+  query GetMyClinic {
+    myClinic {
+      categories {
+        id
+        name
+      }
+    }
+  }
+`

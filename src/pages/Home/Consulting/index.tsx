@@ -9,7 +9,7 @@ import { useGetTopCategoriesLazyQuery } from "./Consulting.graphql.generated"
 
 type consultProps = {
   open: boolean
-  onClose: () => void
+  onClose: (result: string) => void
 }
 
 const Consulting = (props: consultProps) => {
@@ -32,7 +32,7 @@ const Consulting = (props: consultProps) => {
   }
 
   return (
-    <Drawer open={props.open} onClose={props.onClose} size="100%">
+    <Drawer open={props.open} onClose={() => props.onClose("")} size="100%">
       <div className={styled.wrapper}>
         <h1>諮詢內容</h1>
         <Form className={styled.form}>
@@ -166,12 +166,17 @@ const Consulting = (props: consultProps) => {
         <Button
           variant="text"
           onClick={() => {
-            props.onClose()
+            props.onClose(chosenSubject)
             setChosenSubject("")
           }}>
           取消
         </Button>
-        <Button onClick={props.onClose}>送出</Button>
+        <Button
+          onClick={() => {
+            props.onClose(chosenSubject)
+          }}>
+          送出
+        </Button>
       </div>
     </Drawer>
   )

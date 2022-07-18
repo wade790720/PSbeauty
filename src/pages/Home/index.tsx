@@ -6,22 +6,38 @@ import AdCard from "./AdCard"
 import Button from "components/Button"
 import CaseCard from "components/CaseCard"
 import Consulting from "./Consulting"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Banner from "components/Banner"
 import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
-import { useGetCasesQuery, useGetAdCardsQuery, useGetAdImagesQuery } from "./Home.graphql.generated"
+import {
+  useGetCasesQuery,
+  useGetAdCardsQuery,
+  useGetAdImagesQuery,
+  useGetCasesLazyQuery,
+} from "./Home.graphql.generated"
+import { createImportSpecifier } from "typescript"
 
 const Home = () => {
   const [consult, setConsult] = useState(false)
+
   const go = useGo()
   const auth = useAuth()
-  const getCasesQuery = useGetCasesQuery()
+  const [getCasesLazyQuery, getCasesQuery] = useGetCasesLazyQuery()
+
   const getAdCardsQuery = useGetAdCardsQuery()
   const getAdImagesQuery = useGetAdImagesQuery()
   const cases = getCasesQuery?.data?.cases?.nodes
   const adCards = getAdCardsQuery?.data?.adCards?.nodes
   const adImages = getAdImagesQuery?.data?.adImages?.edges?.map(el => el.node?.image)
+
+  useEffect(() => {
+    getCasesLazyQuery({
+      variables: {
+        contains: "",
+      },
+    })
+  }, [])
 
   const list = []
   const casesCount = cases?.length || 0
@@ -58,7 +74,15 @@ const Home = () => {
     <>
       <div className={styled.wrapper}>
         <div className={styled.header}>
-          <SearchBar />
+          <SearchBar
+            onChange={value => {
+              getCasesLazyQuery({
+                variables: {
+                  contains: value,
+                },
+              })
+            }}
+          />
           <div
             onClick={() => {
               auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
@@ -72,7 +96,12 @@ const Home = () => {
           <Icon name="notePencil" className={styled.notePencil} />
           匿名諮詢
         </Button>
-        <Consulting open={consult} onClose={() => setConsult(false)} />
+        <Consulting
+          open={consult}
+          onClose={(result: string) => {
+            setConsult(false)
+          }}
+        />
       </div>
       {auth.user.clinic ? <BottomNavigation.Chat /> : <BottomNavigation />}
     </>

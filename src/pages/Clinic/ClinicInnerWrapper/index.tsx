@@ -31,7 +31,7 @@ const ClinicInnerWrapper = () => {
     <Outlet />
   ) : (
     <>
-      <Header leftArrow title="玉欣醫美診所" />
+      <Header leftArrow title={query?.data?.clinic?.name || ""} />
       <Backdrop style={{ paddingBottom: "49px" }}>
         <ClinicSwitch />
         <Outlet context={{ query }} />

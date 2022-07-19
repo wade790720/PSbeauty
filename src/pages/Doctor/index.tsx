@@ -13,6 +13,7 @@ import {
   useUpdateClinicCategoryMutation,
   useGetMyClinicLazyQuery,
 } from "./Doctor.graphql.generated"
+import Loading from "components/QueryStatus/Loading"
 
 const DEFAULT_MODAL_MSG = {
   title: "2-1寄送認證郵件",
@@ -36,6 +37,7 @@ const Doctor = () => {
     loadQuery()
   }, [filterOpen])
 
+  if (query.loading) return <Loading />
   return (
     <>
       <Profile />

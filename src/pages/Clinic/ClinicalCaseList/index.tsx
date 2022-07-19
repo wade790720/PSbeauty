@@ -54,8 +54,8 @@ const ClinicalCaseList = () => {
           open={open}
           onClose={() => setOpen(false)}
           getValue={value => console.log(value)}
-          topCategories={query?.data?.topCategories?.map(el => el?.name || "")}
-          query={query}
+          topCategoriesQuery={query}
+          defaultValue={[]}
         />
       </div>
       <BottomNavigation />

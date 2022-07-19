@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import Button from "components/Button"
 import Profile from "components/Profile"
 import BottomNavigation from "components/BottomNavigation"
@@ -102,12 +102,17 @@ const Doctor = () => {
           getValue={value => {
             updateClinicCategoryMutation({
               variables: {
-                categories: value.split(","),
+                categories: value.map(el => el.id || ""),
               },
             })
           }}
-          topCategories={query?.data?.topCategories?.map(el => el?.name || "")}
-          query={query}
+          topCategoriesQuery={query}
+          defaultValue={
+            queryClinic?.data?.myClinic?.categories?.map(el => ({
+              id: el?.id || "",
+              name: el?.name || "",
+            })) || []
+          }
         />
       </div>
       <BottomNavigation.Chat />

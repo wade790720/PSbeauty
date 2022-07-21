@@ -23,6 +23,7 @@ const Banner = ({ height = "132px", images = [] }: BannerProps) => {
         cellSpacing={12}>
         {images?.map(item => (
           <div
+            className={styled.slide}
             key={item?.id}
             style={{ height }}
             onClick={() => {

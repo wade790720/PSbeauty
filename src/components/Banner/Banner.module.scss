@@ -2,7 +2,13 @@
   margin: 3px 0 8px;
   min-width: 1px;
 
-  img {
+  .slide {
+    overflow: hidden;
+    border: 1px solid #aab0b233;
     border-radius: 15px;
+  }
+
+  img {
+    object-fit: cover;
   }
 }

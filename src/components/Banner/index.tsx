@@ -1,14 +1,17 @@
 import styled from "./Banner.module.scss"
-// import { useGo } from "components/Router"
+import { useGo } from "components/Router"
 import Carousel from "nuka-carousel"
 
 type BannerProps = {
   height?: string
-  images?: (string | null | undefined)[] | null
+  images?: {
+    id?: string
+    image?: string | null | undefined
+  }[]
 }
 
 const Banner = ({ height = "132px", images = [] }: BannerProps) => {
-  // const go = useGo()
+  const go = useGo()
 
   return (
     <div className={styled.banner}>
@@ -19,8 +22,13 @@ const Banner = ({ height = "132px", images = [] }: BannerProps) => {
         withoutControls={true}
         cellSpacing={12}>
         {images?.map(item => (
-          <div key={item} className={styled["banner-item"]} style={{ height }}>
-            {item && <img src={item} width="100%" height="100%" />}
+          <div
+            key={item?.id}
+            style={{ height }}
+            onClick={() => {
+              go.toClinicInner({ id: item?.id || "", tab: "info" })
+            }}>
+            {item && <img src={item?.image || ""} width="100%" height="100%" />}
           </div>
         ))}
       </Carousel>

@@ -1,7 +1,6 @@
 import { ApolloClient, InMemoryCache, createHttpLink, from } from "@apollo/client"
 import { setContext } from "@apollo/client/link/context"
 import { onError } from "@apollo/client/link/error"
-import { Token } from "graphql"
 import { getStorageValue } from "hooks/useLocalStorage"
 
 const httpLink = createHttpLink({

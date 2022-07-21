@@ -16,7 +16,9 @@ const Clinic = () => {
   const auth = useAuth()
   const getAdImagesQuery = useGetAdImagesQuery()
   const getClinicsQuery = useGetClinicsQuery()
-  const adImages = getAdImagesQuery?.data?.adImages?.edges?.map(el => el.node?.image)
+  const adImages = getAdImagesQuery?.data?.adImages?.edges?.map(el => {
+    return { image: el.node?.image || "", id: el.node?.targetId || "" }
+  })
 
   return (
     <>

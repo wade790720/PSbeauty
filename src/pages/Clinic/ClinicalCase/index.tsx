@@ -54,7 +54,10 @@ const ClinicalCase = () => {
             <img src={data?.case?.beforeImage || ""} />
             <img src={data?.case?.afterImage || ""} />
           </div>
-          <div className={styled.content}>{data?.case?.description}</div>
+          <div
+            className={styled.content}
+            dangerouslySetInnerHTML={{ __html: data?.case?.description || "" }}
+          />
           <div className={styled.tags}>
             {data?.case?.categories?.map(el => (
               <div key={el?.id}>

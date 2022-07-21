@@ -1,8 +1,9 @@
 .wrapper {
+  display: grid;
   flex: 1;
   padding: 12px 24px 49px 24px;
   background-color: white;
-  display: grid;
+
   grid-gap: 12px;
 
   .header {
@@ -11,20 +12,21 @@
 
     .chat-icon {
       margin-left: 18px;
+
       path {
-        fill: #7873E5;
+        fill: #7873e5;
       }
     }
   }
 
   .button {
     position: fixed;
-    width: calc(100% - 48px);
-    height: 42px;
     bottom: 72px;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: calc(100% - 48px);
+    height: 42px;
     font-size: 16px !important;
 
     .notePencil {
@@ -34,41 +36,41 @@
 }
 
 .ad-card {
-   height: 180px;
-   border: 1px solid rgba(170, 176, 178, 0.2);
-   border-radius: 15px;
-   padding: 24px;
+  padding: 24px;
+  border: 1px solid rgba(170, 176, 178, 0.2);
+  border-radius: 15px;
 
-   .title {
-     font-weight: bold;
-     font-size: 20px;
-     line-height: 24px;
-     margin-bottom: 24px;
-     color: black;
-   }
-
-   .content {
-     display: flex;
-     height: 84px;
-
-     .pic {
-       min-width: 90px;
-       height: 81.82px;
-       border: 1px solid rgba(170, 176, 178, 0.2);
-       border-radius: 15px;
-       margin-right: 12px;
-       background-color: #999;
-     }
-
-     .text {
-       height: 84px;
-       color: #333333;
-       line-height: 21px;
-       display: -webkit-box;
-       -webkit-box-orient: vertical;
-       -webkit-line-clamp: 4;
-       overflow: hidden;
-       text-overflow: ellipsis;
-     }
-   }
+  .title {
+    margin-bottom: 12px;
+    color: black;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
   }
+
+  .content {
+    .pic {
+      display: flex;
+      overflow: hidden;
+      justify-content: center;
+      margin-bottom: 12px;
+      min-width: 90px;
+      width: 100%;
+      border: 2px solid rgba(170, 176, 178, 0.2);
+      border-radius: 15px;
+      background-color: #999;
+    }
+
+    .text {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      height: 84px;
+      color: #333;
+      text-overflow: ellipsis;
+      line-height: 21px;
+
+      -webkit-line-clamp: 4;
+    }
+  }
+}

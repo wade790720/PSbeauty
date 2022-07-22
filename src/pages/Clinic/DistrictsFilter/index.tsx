@@ -18,7 +18,7 @@ type RegionProps = {
 
 const DistrictsFilter = (props: DistrictsFilterProps) => {
   const [countyEventKey, setCountyEventKey] = useState("臺北市")
-  const [region, setRegion] = useState<RegionProps>()
+  const [region, setRegion] = useState<RegionProps>([])
   const [isCheckAll, setIsCheckAll] = useState(false)
 
   return (
@@ -58,7 +58,7 @@ const DistrictsFilter = (props: DistrictsFilterProps) => {
                     county: countyEventKey,
                     town: el.name,
                   }))
-                setRegion(target)
+                setRegion(target || [])
               }}>
               全選
             </Form.Checkbox>

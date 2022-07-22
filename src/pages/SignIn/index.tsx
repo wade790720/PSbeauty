@@ -14,6 +14,7 @@ import { print } from "graphql"
 import { useAuth } from "hooks/useAuth"
 import jwt_decode from "jwt-decode"
 import { AuthContextProps } from "hooks/useAuth/AuthContext"
+import { useSignInWithEmailAndPasswordMutation } from "./SignIn.graphql.generated"
 
 type Inputs = {
   account: string
@@ -36,6 +37,9 @@ const SignIn = () => {
   const { register, handleSubmit } = useForm<Inputs>({
     mode: "all",
   })
+
+  const [signInMutation] = useSignInWithEmailAndPasswordMutation()
+
   const onSubmit: SubmitHandler<Inputs> = async info => {
     try {
       const idToken = await login(info.account, info.password)
@@ -47,7 +51,15 @@ const SignIn = () => {
       setStorageValue("token", customToken.data.data.customToken.customToken)
 
       if (customToken && email) {
-        auth.signIn(customToken.data.data.customToken.customToken, email)
+        // auth.signIn(customToken.data.data.customToken.customToken, email)
+
+        signInMutation({
+          variables: {
+            email: info.account,
+            password: info.password,
+          },
+        })
+
         const parserCustomToken: { claims: AuthContextProps["user"] } = jwt_decode(
           customToken.data.data.customToken.customToken,
         )

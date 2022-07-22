@@ -1494,6 +1494,14 @@ export type Mutation = {
   replyTopic: Maybe<ReplyTopicPayload>
   /** [廠商]設定熱門關鍵字 */
   setPopularKeywords: Maybe<SetPopularKeywordsPayload>
+  /**
+   * 以 Email + Password 來登入使用者
+   *
+   *
+   * **Returns:**
+   * 登入成功之 Token
+   */
+  signInWithEmailAndPassword: Maybe<SignInWithEmailAndPasswordPayload>
   /** [廠商]更新診所活動頁 */
   updateActivity: Maybe<UpdateActivityPayload>
   /** [廠商]更新廠商廣告卡 */
@@ -1686,6 +1694,10 @@ export type MutationReplyTopicArgs = {
 
 export type MutationSetPopularKeywordsArgs = {
   input: InputMaybe<SetPopularKeywordsInput>
+}
+
+export type MutationSignInWithEmailAndPasswordArgs = {
+  input: InputMaybe<SignInWithEmailAndPasswordInput>
 }
 
 export type MutationUpdateActivityArgs = {
@@ -2207,6 +2219,16 @@ export type SetPopularKeywordsInput = {
 export type SetPopularKeywordsPayload = {
   __typename: "SetPopularKeywordsPayload"
   keywords: Maybe<Array<Maybe<Scalars["String"]>>>
+}
+
+export type SignInWithEmailAndPasswordInput = {
+  email: InputMaybe<Scalars["String"]>
+  password: InputMaybe<Scalars["String"]>
+}
+
+export type SignInWithEmailAndPasswordPayload = {
+  __typename: "SignInWithEmailAndPasswordPayload"
+  token: Maybe<Scalars["String"]>
 }
 
 export enum SortEnumType {

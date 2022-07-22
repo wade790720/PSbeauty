@@ -86,6 +86,7 @@ const Home = () => {
                 },
               })
             }}
+            onInputClick={() => go.toSearchList("")}
           />
           <div
             onClick={() => {

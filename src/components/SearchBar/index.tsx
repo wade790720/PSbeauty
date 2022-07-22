@@ -7,6 +7,7 @@ import Icon from "components/Icon"
 export type SearchBarProps = {
   variant?: string
   onChange?: (value: string) => void
+  onInputClick?: () => void
 } & ReactProps.Component
 
 const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(function SearchBar(
@@ -29,6 +30,11 @@ const SearchBar = React.forwardRef<HTMLInputElement, SearchBarProps>(function Se
             setEmpty(!e.target.value)
             if (props.onChange) {
               props.onChange(e.target.value)
+            }
+          }}
+          onClick={() => {
+            if (props.onInputClick) {
+              props.onInputClick()
             }
           }}
           ref={ref}

@@ -4,7 +4,6 @@ import Button from "components/Button"
 import { useState } from "react"
 import styled from "./DistrictsFilter.module.scss"
 import districtsData from "./taiwan_districts.json"
-import { useForm } from "react-hook-form"
 import cx from "classnames"
 
 type DistrictsFilterProps = {
@@ -12,11 +11,15 @@ type DistrictsFilterProps = {
   onClose: () => void
 }
 
+type RegionProps = {
+  county: string
+  town: string
+}[]
+
 const DistrictsFilter = (props: DistrictsFilterProps) => {
   const [countyEventKey, setCountyEventKey] = useState("臺北市")
+  const [region, setRegion] = useState<RegionProps>()
   const [isCheckAll, setIsCheckAll] = useState(false)
-
-  const { register, setValue } = useForm<{ dist: string[] }>()
 
   return (
     <Drawer open={props.open} onClose={props.onClose} size="516px">
@@ -30,7 +33,7 @@ const DistrictsFilter = (props: DistrictsFilterProps) => {
                   key={item.name}
                   onClick={() => {
                     setCountyEventKey(item.name)
-                    setValue("dist", [])
+                    // setValue("dist", [])
                     setIsCheckAll(false)
                   }}
                   className={cx(styled.item, { [styled.select]: item.name === countyEventKey })}>
@@ -45,19 +48,17 @@ const DistrictsFilter = (props: DistrictsFilterProps) => {
               checked={isCheckAll}
               onChange={() => setIsCheckAll(!isCheckAll)}
               onClick={() => {
-                setValue(
-                  "dist",
-                  !isCheckAll
-                    ? districtsData
-                        .filter(county => {
-                          return county.name === countyEventKey
-                        })
-                        .map(district => {
-                          return district.districts.map(item => item.name)
-                        })
-                        .flat()
-                    : [],
-                )
+                if (isCheckAll) {
+                  setRegion([])
+                  return
+                }
+                const target = districtsData
+                  .find(county => county.name === countyEventKey)
+                  ?.districts.map(el => ({
+                    county: countyEventKey,
+                    town: el.name,
+                  }))
+                setRegion(target)
               }}>
               全選
             </Form.Checkbox>
@@ -71,12 +72,27 @@ const DistrictsFilter = (props: DistrictsFilterProps) => {
                     key={item.zip}
                     className={styled.item}
                     value={item.name}
-                    onClick={() => {
+                    checked={region?.some(
+                      el => el.county === countyEventKey && el.town === item.name,
+                    )}
+                    onChange={e => {
                       if (isCheckAll) {
                         setIsCheckAll(false)
                       }
-                    }}
-                    {...register("dist")}>
+
+                      if (e.target.checked) {
+                        region
+                          ? setRegion([...region, { county: countyEventKey, town: item.name }])
+                          : setRegion([{ county: countyEventKey, town: item.name }])
+                      } else {
+                        region &&
+                          region.splice(
+                            region.findIndex(el => el.town === item.name),
+                            1,
+                          )
+                        setRegion(region)
+                      }
+                    }}>
                     {item.name}
                   </Form.Checkbox>
                 ))
@@ -87,7 +103,7 @@ const DistrictsFilter = (props: DistrictsFilterProps) => {
           <Button
             variant="text"
             onClick={() => {
-              setValue("dist", [])
+              setRegion([])
               setIsCheckAll(false)
             }}>
             清除

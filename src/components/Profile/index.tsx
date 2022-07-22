@@ -3,15 +3,31 @@ import Icon from "components/Icon"
 import { ReactComponent as Mail } from "./svg/Mail.svg"
 import { useGo } from "components/Router"
 import { useAuth } from "hooks/useAuth"
+import Colors from "./colors.json"
+
+const getBackgroundColor = () => {
+  const AVATAR_COLOR = "avatar-color"
+  let index = parseInt(`${localStorage.getItem(AVATAR_COLOR)}`, 10)
+  if (!index) {
+    index = Math.round(Math.random() * 1000)
+    localStorage.setItem(AVATAR_COLOR, `${index}`)
+  }
+  return Colors[index % Colors.length]
+}
 
 const Profile = () => {
   const go = useGo()
   const auth = useAuth()
+  const backgroundColor = getBackgroundColor()
+  const userName = auth.user.name || "未命名"
 
   return (
     <div className={styled.wrapper}>
-      <img className={styled.avatar} src="/img/avatar.png" />
-      <div className={styled.username}>Wendy</div>
+      {/* <img className={styled.avatar} src="/img/avatar.png" /> */}
+      <div className={styled.avatar} style={{ background: backgroundColor }}>
+        {userName[0]}
+      </div>
+      <div className={styled.username}>{userName}</div>
       {/* <div className={styled.hint}>
         <Mail />
         <div>您的信箱尚未認證，</div>

@@ -29,32 +29,27 @@
     font-weight: 400;
     background: #E4E3FA;
     border: none;
-  } 
+  }
 
   .medical-type {
-    display: flex;
-    gap: 8px;
-    margin: 0 -24px;
-    overflow-x: scroll;
-    min-height: 32px;
+    flex-shrink: 0;
+    display: grid;
+    grid-auto-flow: column;
+    grid-gap: 8px;
+    grid-auto-columns: min-content;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 
     &::-webkit-scrollbar {
       display: none;
     }
 
     button {
-      min-width: 88px;
-      width: unset;
+      padding: 0 10px;
       height: 32px;
       font-weight: 400;
-    }
-
-    button:first-child {
-      margin-left: 24px;
-    }
-    
-    button:last-child {
-      margin-right: 24px;
+      white-space: nowrap;
     }
   }
 
@@ -104,6 +99,7 @@
     }
   }
 }
+
 .buttons {
   display: flex;
   gap: 8px;
@@ -111,6 +107,7 @@
   position: fixed;
   bottom: 24px;
   left: 24px;
+
   button {
     height: 38px;
     font-size: 16px !important;

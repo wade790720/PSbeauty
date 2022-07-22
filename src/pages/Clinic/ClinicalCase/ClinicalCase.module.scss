@@ -54,12 +54,12 @@
       display: grid;
       grid-gap: 13px;
       grid-template-columns: 1fr 1fr;
-      border-radius: 15px;
-
+      
       img {
         width: 100%;
-        height: auto;
+        height: 150px;
         object-fit: cover;
+        border-radius: 15px;
       }
     }
 

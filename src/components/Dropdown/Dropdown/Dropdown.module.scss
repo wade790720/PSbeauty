@@ -1,0 +1,11 @@
+.wrapper {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+:global {
+  .dropdown-content {
+    padding: 8px 0 !important;
+  }
+}

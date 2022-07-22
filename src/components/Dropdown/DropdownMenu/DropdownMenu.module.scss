@@ -1,0 +1,13 @@
+.wrapper {
+  padding: 4px 0;
+  max-height: 360px;
+  border-radius: 3px;
+  background: #fff;
+  box-shadow: 0 3px 5px rgba(9, 30, 66, 0.2), 0 0 1px rgba(9, 30, 66, 0.31);
+}
+
+.list {
+  overflow: auto;
+  padding: 8px 0;
+  max-height: 224px;
+}

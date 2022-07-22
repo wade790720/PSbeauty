@@ -36,9 +36,17 @@
         cursor: pointer;
       }
 
-      .textarea {
-        margin-top: 4px;
-        height: 86px;
+      :global(.component-textarea) {
+        background: #fff;
+
+        &:focus-within {
+          border-color: #EBEEF2;
+        }
+
+        .textarea {
+          margin-top: 4px;
+          height: 86px;
+        }
       }
     }
 
@@ -47,11 +55,12 @@
       border-radius: 4px;
       height: 38px;
       cursor: pointer;
+      border: 1px solid #EBEEF2;
 
       .input {
         margin-top: 0px;
         border: none;
-        // user-select: none;
+        user-select: none;
       }
     }
 
@@ -59,14 +68,14 @@
       margin-top: 4px;
       display: flex;
       gap: 8px;
-      height: 104px;
+      height: 100px;
 
       .upload {
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 104px;
-        height: 104px;
+        width: 100px;
+        height: 100px;
         color: #7873E5;
         font-weight: bold;
         background-color: #F4F6F9;
@@ -96,8 +105,8 @@
 
       .image {
         position: absolute;
-        width: 104px;
-        height: 104px;
+        width: 100px;
+        height: 100px;
 
         img {
           position: absolute;

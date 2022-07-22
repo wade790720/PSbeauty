@@ -67,7 +67,7 @@ const Consulting = (props: consultProps) => {
             <Form.Input placeholder="請輸入文字" className={styled.input} />
           </Form.Group>
           <Form.Group layout="vertical" className={styled["input-group"]}>
-            <Form.Label required>諮詢問題</Form.Label>
+            <Form.Label>諮詢問題</Form.Label>
             <Form.Textarea placeholder="請輸入文字" className={styled.textarea} />
           </Form.Group>
           <Form.Group layout="vertical" className={styled["input-group"]}>

@@ -43,6 +43,10 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
       onClick={() => go.toClinicCase({ id: props.clinicId })}>
       <div className={styled.title}>{props.title}</div>
       <div className={styled.clinic}>{props.clinic}</div>
+      <div
+        className={styled.content}
+        dangerouslySetInnerHTML={{ __html: props.introduction.replace(/<h.>.*<\/h.>/, "") }}
+      />
       <div className={styled.images}>
         {props.images?.map((image, idx) => (
           <img key={`image-${idx}`} src={image} />

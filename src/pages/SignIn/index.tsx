@@ -2,15 +2,10 @@ import styled from "./SignIn.module.scss"
 import Form from "components/Form"
 import Button from "components/Button"
 import Modal from "components/Modal"
-import axios from "axios"
 import { useState } from "react"
 import { useGo } from "components/Router"
-import { login } from "firebaseClient"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { gql } from "@apollo/client"
-import { endpoint, headers } from "utils/apiConfig"
 import { setStorageValue } from "hooks/useLocalStorage"
-import { print } from "graphql"
 import { useAuth } from "hooks/useAuth"
 import jwt_decode from "jwt-decode"
 import { AuthContextProps } from "hooks/useAuth/AuthContext"
@@ -20,15 +15,6 @@ type Inputs = {
   account: string
   password: string
 }
-
-const CUSTOM_TOKEN = gql`
-  query {
-    customToken {
-      customToken
-      uid
-    }
-  }
-`
 
 const SignIn = () => {
   const go = useGo()
@@ -42,27 +28,18 @@ const SignIn = () => {
 
   const onSubmit: SubmitHandler<Inputs> = async info => {
     try {
-      const idToken = await login(info.account, info.password)
-      const { email }: { email: string } = jwt_decode(idToken)
-
-      const requestHeaders = { headers: headers(idToken) }
-      const query = { query: print(CUSTOM_TOKEN) }
-      const customToken = await axios.post(endpoint, query, requestHeaders)
-      setStorageValue("token", customToken.data.data.customToken.customToken)
-
-      if (customToken && email) {
-        // auth.signIn(customToken.data.data.customToken.customToken, email)
-
-        signInMutation({
-          variables: {
-            email: info.account,
-            password: info.password,
-          },
-        })
-
-        const parserCustomToken: { claims: AuthContextProps["user"] } = jwt_decode(
-          customToken.data.data.customToken.customToken,
-        )
+      const res = await signInMutation({
+        variables: {
+          email: info.account,
+          password: info.password,
+        },
+      })
+      const email = info.account
+      const token = res?.data?.signInWithEmailAndPassword?.token || ""
+      setStorageValue("token", token)
+      if (token && email) {
+        auth.signIn(token, info.account)
+        const parserCustomToken: { claims: AuthContextProps["user"] } = jwt_decode(token)
         parserCustomToken?.claims?.clinic
           ? go.toClinicInner({ id: parserCustomToken?.claims?.clinic, tab: "" })
           : go.toHome()

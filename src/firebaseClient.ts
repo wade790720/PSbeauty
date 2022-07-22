@@ -3,8 +3,6 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   sendEmailVerification,
-  getIdToken,
-  signInWithEmailAndPassword,
   sendPasswordResetEmail,
   signInWithCustomToken,
 } from "firebase/auth"
@@ -34,11 +32,6 @@ export const register = async (email: string, password: string) => {
   await sendEmailVerification(userCred.user)
   const idToken = await userCred.user.getIdToken(true)
   return idToken
-}
-
-export const login = async (email: string, password: string) => {
-  const userCred = await signInWithEmailAndPassword(auth, email, password)
-  return getIdToken(userCred.user, false)
 }
 
 export const sentResetPassword = async (email: string) => {

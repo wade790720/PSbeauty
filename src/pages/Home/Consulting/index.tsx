@@ -1,5 +1,6 @@
 import Drawer from "components/Drawer"
 import Form, { InputGroup, Append } from "components/Form"
+import Dropdown from "components/Dropdown"
 import Button from "components/Button"
 import { useState, useEffect } from "react"
 import styled from "./Consulting.module.scss"
@@ -14,6 +15,7 @@ type consultProps = {
 
 const Consulting = (props: consultProps) => {
   const [chosenSubject, setChosenSubject] = useState("")
+  const [chosenCycle, setChosenCycle] = useState("")
   const [open, setOpen] = useState(false)
   const [file, setFile] = useState({
     file1: "",
@@ -64,7 +66,33 @@ const Consulting = (props: consultProps) => {
           </Form.Group>
           <Form.Group layout="vertical" className={styled["input-group"]}>
             <Form.Label required>諮詢週期</Form.Label>
-            <Form.Input placeholder="請輸入文字" className={styled.input} />
+            <Dropdown
+              className={styled.dropdown}
+              onSelect={(_, { eventKey }) => {
+                setChosenCycle(String(eventKey))
+              }}>
+              <Dropdown.Toggle>
+                <InputGroup className={styled.classify}>
+                  <Form.Input
+                    value={chosenCycle}
+                    placeholder="請點擊選擇"
+                    className={styled.input}
+                  />
+                  <Append>
+                    <Icon name="caretDown" />
+                  </Append>
+                </InputGroup>
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {["一天", "二天", "三天"].map(value => {
+                  return (
+                    <Dropdown.Item key={value} eventKey={value}>
+                      <p>{value}</p>
+                    </Dropdown.Item>
+                  )
+                })}
+              </Dropdown.Menu>
+            </Dropdown>
           </Form.Group>
           <Form.Group layout="vertical" className={styled["input-group"]}>
             <Form.Label>諮詢問題</Form.Label>

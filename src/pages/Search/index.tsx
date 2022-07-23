@@ -5,6 +5,7 @@ import SearchBox from "components/SearchBox"
 import Backdrop from "components/Layout/Backdrop"
 import { useGo } from "components/Router"
 import { ReactComponent as Delete } from "./Delete.svg"
+import Icon from "components/Icon"
 
 const STORAGE_KEY = "search-history"
 const getHistories = (): string[] => {
@@ -38,13 +39,17 @@ const Search = () => {
 
   return (
     <Backdrop className={styled.wrapper}>
-      <div className={styled.title}>歷史搜尋</div>
-      {list.length > 0 && (
-        <Delete className={styled.delete} onClick={() => setList(saveHistories([]))} />
-      )}
+      <div className={styled.title}>
+        <span>歷史搜尋</span>
+        {list.length > 0 && (
+          <Delete className={styled.delete} onClick={() => setList(saveHistories([]))} />
+        )}
+      </div>
+
       {list.map((text, i) => {
         return (
           <div key={`text-${i}`} className={styled.text} onClick={() => go.toSearchList(text)}>
+            <Icon name="search" className={styled.search} />
             {text}
           </div>
         )

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useNavigate } from "react-router-dom"
 
 type toTarget = {
@@ -47,8 +48,7 @@ const useGo = (): toTarget => {
     toRegister: () => navigate("/register"),
     toClinic: () => navigate("/clinic"),
     toClinicInner: ({ id, tab }) => navigate(`/clinic/${id}/inner/${tab}`),
-    toClinicActivity: ({ id, activityId }) =>
-      navigate(`/clinic/${id}/inner/activities/${activityId}`),
+    toClinicActivity: ({ id, activityId }) => navigate(`/clinic/${id}/inner/activities/${activityId}`),
     toClinicCaseList: () => navigate("/cases"),
     toClinicCase: ({ id }) => navigate(`/cases/${id}`),
     toAdvertisement: ({ id }) => navigate(`/advertisement/${id}`),

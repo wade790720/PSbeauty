@@ -8,17 +8,28 @@ import { useState, useRef } from "react"
 import { useAuth } from "hooks/useAuth"
 import DistrictsFilter from "./DistrictsFilter"
 import Banner from "components/Banner"
-import { useGetAdImagesQuery, useGetClinicsQuery } from "./ClinicCard.graphql.generated"
+import { useGetClinicsQuery } from "./ClinicCard.graphql.generated"
+import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
+import { SortEnumType } from "types/schema"
 
 const Clinic = () => {
   const ref = useRef<HTMLInputElement | null>(null)
   const [openFilter, setOpenFilter] = useState(false)
   const auth = useAuth()
-  const getAdImagesQuery = useGetAdImagesQuery()
-  const getClinicsQuery = useGetClinicsQuery()
-  const adImages = getAdImagesQuery?.data?.adImages?.edges?.map(el => {
-    return { image: el.node?.image || "", id: el.node?.targetId || "" }
+  const getAdImagesQuery = useGetAdImagesQuery({
+    variables: {
+      first: 10,
+      orderId: SortEnumType.Desc,
+      where: "診所輪播",
+    },
   })
+  const getClinicsQuery = useGetClinicsQuery()
+  const adImages = getAdImagesQuery?.data?.adImages?.edges?.map(el => ({
+    image: el.node?.image || "",
+    clinicId: el.node?.clinicId || "",
+    targetId: el.node?.targetId || "",
+    redirectType: el.node?.redirectType,
+  }))
 
   return (
     <>

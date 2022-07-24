@@ -1,35 +1,5 @@
 import { gql } from "@apollo/client"
 
-export const GetAdImages = gql`
-  query GetAdImages {
-    adImages(
-      where: { and: [{ usageType: { eq: "首頁輪播" } }, { status: { eq: true } }] }
-      order: { id: DESC }
-      first: 5
-    ) {
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
-      edges {
-        cursor
-        node {
-          id
-          title
-          image
-          sort
-          usageType
-          redirectType
-          targetId
-          status
-        }
-      }
-    }
-  }
-`
-
 export const GetCases = gql`
   query GetCases($contains: String) {
     cases(where: { title: { contains: $contains } }, first: 10, order: { id: DESC }) {

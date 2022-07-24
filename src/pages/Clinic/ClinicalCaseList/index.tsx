@@ -10,10 +10,25 @@ import imgAfter from "pages/Member/MemberCollectClinicalCase/After.png"
 import SubjectFilter from "components/SubjectFilter"
 import Banner from "components/Banner"
 import { useGetTopCategoriesLazyQuery } from "./ClinicalCaseList.graphql.generated"
+import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
+import { SortEnumType } from "types/schema"
 
 const ClinicalCaseList = () => {
   const [open, setOpen] = useState(false)
   const [loadQuery, query] = useGetTopCategoriesLazyQuery()
+  const adImageCaseQuery = useGetAdImagesQuery({
+    variables: {
+      first: 5,
+      orderId: SortEnumType.Desc,
+      where: "案例輪播",
+    },
+  })
+  const adImages = adImageCaseQuery?.data?.adImages?.edges?.map(el => ({
+    image: el.node?.image || "",
+    clinicId: el.node?.clinicId || "",
+    targetId: el.node?.targetId || "",
+    redirectType: el.node?.redirectType,
+  }))
 
   useEffect(() => {
     if (!open) return
@@ -27,7 +42,7 @@ const ClinicalCaseList = () => {
           <SearchBar />
           <Icon name="chat" className={styled["chat-icon"]} />
         </div>
-        <Banner />
+        <Banner images={adImages} />
         <CaseCard
           isCollected
           title="臉部拉提改善面部線條A"

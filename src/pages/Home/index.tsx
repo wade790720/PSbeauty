@@ -10,11 +10,9 @@ import { useEffect, useState } from "react"
 import Banner from "components/Banner"
 import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
-import {
-  useGetAdCardsQuery,
-  useGetAdImagesQuery,
-  useGetCasesLazyQuery,
-} from "./Home.graphql.generated"
+import { useGetAdCardsQuery, useGetCasesLazyQuery } from "./Home.graphql.generated"
+import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
+import { SortEnumType } from "types/schema"
 
 const Home = () => {
   const [consult, setConsult] = useState(false)
@@ -23,12 +21,21 @@ const Home = () => {
   const [getCasesLazyQuery, getCasesQuery] = useGetCasesLazyQuery()
 
   const getAdCardsQuery = useGetAdCardsQuery()
-  const getAdImagesQuery = useGetAdImagesQuery()
+  const getAdImagesQuery = useGetAdImagesQuery({
+    variables: {
+      first: 5,
+      orderId: SortEnumType.Desc,
+      where: "首頁輪播",
+    },
+  })
   const cases = getCasesQuery?.data?.cases?.nodes
   const adCards = getAdCardsQuery?.data?.adCards?.nodes
-  const adImages = getAdImagesQuery?.data?.adImages?.edges?.map(el => {
-    return { image: el.node?.image || "", id: el.node?.targetId || "" }
-  })
+  const adImages = getAdImagesQuery?.data?.adImages?.edges?.map(el => ({
+    image: el.node?.image || "",
+    clinicId: el.node?.clinicId || "",
+    targetId: el.node?.targetId || "",
+    redirectType: el.node?.redirectType,
+  }))
 
   useEffect(() => {
     getCasesLazyQuery({

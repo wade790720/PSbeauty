@@ -5,8 +5,10 @@ import Carousel from "nuka-carousel"
 type BannerProps = {
   height?: string
   images?: {
-    id?: string
-    image?: string | null | undefined
+    image: string
+    clinicId: string
+    targetId: string
+    redirectType: string | null | undefined
   }[]
 }
 
@@ -23,13 +25,13 @@ const Banner = ({ height = "132px", images = [] }: BannerProps) => {
         cellSpacing={12}>
         {images?.map(item => (
           <div
+            key={item.clinicId}
             className={styled.slide}
-            key={item?.id}
             style={{ height }}
             onClick={() => {
-              go.toClinicInner({ id: item?.id || "", tab: "info" })
+              go.toClinicInner({ id: item.clinicId || "", tab: "info" })
             }}>
-            {item && <img src={item?.image || ""} width="100%" height="100%" />}
+            {item && <img src={item?.image} width="100%" height="100%" />}
           </div>
         ))}
       </Carousel>

@@ -24,3 +24,33 @@ export const GetClinics = gql`
     }
   }
 `
+
+export const GetClinicsSearch = gql`
+  query GetClinicsSearch($county: [String], $town: [String]) {
+    clinics(
+      where: { county: { in: $county }, town: { in: $town } }
+      order: { consultReplyCount: DESC }
+      first: 10
+      after: "MA=="
+    ) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      edges {
+        cursor
+        node {
+          consultReplyCount
+          caseCount
+          county
+          town
+          name
+          id
+        }
+      }
+    }
+  }
+`

@@ -14,9 +14,16 @@ const ClinicInner = () => {
     query: { data },
   } = useClinicInnerContext()
 
+  const adImages = data?.clinic?.images?.map(el => ({
+    image: el?.image || "",
+    clinicId: el?.id || "",
+    targetId: el?.targetId || "",
+    redirectType: el?.redirectType,
+  }))
+
   return (
     <div className={styled.wrapper}>
-      <Banner height="214px" />
+      <Banner height="214px" images={adImages} />
       <div className={styled.content}>
         <div className={styled.contact}>
           <Icon name="mapPin" />

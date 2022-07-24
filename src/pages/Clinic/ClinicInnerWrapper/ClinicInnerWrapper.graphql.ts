@@ -27,6 +27,8 @@ export const GetClinic = gql`
       images {
         id
         image
+        redirectType
+        targetId
       }
       doctors {
         id

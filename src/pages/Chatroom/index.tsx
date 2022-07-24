@@ -11,21 +11,28 @@ import Front from "./Front.png"
 import Left from "./Left.png"
 import Right from "./Right.png"
 import { ReactComponent as UploadImage } from "./UploadImage.svg"
+import useRealtime from "./useRealtime"
 
 const Chatroom = () => {
   const { id } = useParams()
   const auth = useAuth()
   const [message, setMessage] = useState("")
   const messagesEndRef = useRef<HTMLDivElement>(null)
-
   const topicDetail = useGeTopicDetailQuery({
     variables: {
       input: id || "",
     },
   })
 
-  // , { data, loading, error }
   const [replyTopicMutation] = useReplyTopicMutation()
+
+  const notify = useRealtime({
+    chatroomId: id || "",
+    onMessage: async msg => {
+      await topicDetail.refetch()
+      scrollToBottom()
+    },
+  })
 
   const scrollToBottom = () => {
     setTimeout(() => {
@@ -51,8 +58,8 @@ const Chatroom = () => {
         },
       },
       async onCompleted() {
-        await topicDetail.refetch()
-        scrollToBottom()
+        notify({ content: msg, userId: auth.user.id })
+        setMessage("")
       },
     })
   }

@@ -3,20 +3,15 @@ import { gql } from "@apollo/client"
 export const GetAdImages = gql`
   query GetAdImages {
     adImages(
-      where: { and: [{ usageType: { eq: "診所頁輪播" } }, { status: { eq: true } }] }
+      where: { and: [{ usageType: { eq: "診所輪播" } }, { status: { eq: true } }] }
       order: { id: DESC }
       first: 5
     ) {
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
       edges {
         cursor
         node {
           id
+          title
           image
           sort
           usageType

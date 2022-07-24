@@ -21,6 +21,7 @@ export type GetAdImagesQuery = {
       node: {
         __typename: "AdImage"
         id: string | null
+        title: string | null
         image: string | null
         sort: number
         usageType: string | null
@@ -102,6 +103,7 @@ export const GetAdImagesDocument = gql`
         cursor
         node {
           id
+          title
           image
           sort
           usageType

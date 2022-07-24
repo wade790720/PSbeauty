@@ -98,6 +98,9 @@ export type AdCardsEdge = {
 /** 廣告圖片，包含首頁輪播/症例輪播二種類型 */
 export type AdImage = {
   __typename: "AdImage"
+  clinic: Maybe<Clinic>
+  /** 所屬診所 */
+  clinicId: Maybe<Scalars["String"]>
   /** 物件識別碼 */
   id: Maybe<Scalars["String"]>
   /** 廣告圖片網址 */
@@ -119,11 +122,15 @@ export type AdImage = {
 /** 廣告圖片，包含首頁輪播/症例輪播二種類型 */
 export type AdImageFilterInput = {
   and: InputMaybe<Array<AdImageFilterInput>>
+  /** 所屬診所 */
+  clinicId: InputMaybe<StringOperationFilterInput>
   /** 物件識別碼 */
   id: InputMaybe<StringOperationFilterInput>
   /** 廣告圖片網址 */
   image: InputMaybe<StringOperationFilterInput>
   or: InputMaybe<Array<AdImageFilterInput>>
+  parentField: InputMaybe<StringOperationFilterInput>
+  parentId: InputMaybe<StringOperationFilterInput>
   /** 點擊後轉址類型，如：Clinic/Case/Doctor */
   redirectType: InputMaybe<StringOperationFilterInput>
   /** 排序 */
@@ -140,10 +147,14 @@ export type AdImageFilterInput = {
 
 /** 廣告圖片，包含首頁輪播/症例輪播二種類型 */
 export type AdImageSortInput = {
+  /** 所屬診所 */
+  clinicId: InputMaybe<SortEnumType>
   /** 物件識別碼 */
   id: InputMaybe<SortEnumType>
   /** 廣告圖片網址 */
   image: InputMaybe<SortEnumType>
+  parentField: InputMaybe<SortEnumType>
+  parentId: InputMaybe<SortEnumType>
   /** 點擊後轉址類型，如：Clinic/Case/Doctor */
   redirectType: InputMaybe<SortEnumType>
   /** 排序 */
@@ -213,6 +224,8 @@ export type AddAdCardPayload = {
 
 /** 新增廣告圖片參數 */
 export type AddAdImageInput = {
+  /** 所屬診所 */
+  clinicId: InputMaybe<Scalars["String"]>
   /** 廣告圖片網址 */
   image: InputMaybe<Scalars["String"]>
   /** 點擊後轉址類型，如：Clinic/Case/Doctor */
@@ -622,6 +635,8 @@ export type Clinic = {
   __typename: "Clinic"
   /** 取得診所活動頁 */
   activities: Maybe<Array<Maybe<ClinicActivity>>>
+  /** 取得診所所屬廣告 */
+  adImages: Maybe<Array<Maybe<AdImage>>>
   /** 診所地址 （路巷號樓） */
   address: Maybe<Scalars["String"]>
   /** 取得診所案例數 */
@@ -2319,6 +2334,8 @@ export type UpdateAdCardPayload = {
 
 /** 更新廣告圖片參數 */
 export type UpdateAdImageInput = {
+  /** 所屬診所 */
+  clinicId: InputMaybe<Scalars["String"]>
   id: InputMaybe<Scalars["String"]>
   /** 廣告圖片網址 */
   image: InputMaybe<Scalars["String"]>

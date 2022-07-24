@@ -17,7 +17,7 @@ const Banner = ({ height = "132px", images = [] }: BannerProps) => {
     <div className={styled.banner}>
       <Carousel
         autoplay={true}
-        autoplayInterval={2000}
+        autoplayInterval={5000}
         wrapAround={true}
         withoutControls={true}
         cellSpacing={12}>

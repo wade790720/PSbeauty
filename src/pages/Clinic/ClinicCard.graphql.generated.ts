@@ -8,19 +8,13 @@ export type GetAdImagesQueryVariables = Types.Exact<{ [key: string]: never }>
 export type GetAdImagesQuery = {
   adImages: {
     __typename: "AdImagesConnection"
-    pageInfo: {
-      __typename: "PageInfo"
-      hasNextPage: boolean
-      hasPreviousPage: boolean
-      startCursor: string | null
-      endCursor: string | null
-    }
     edges: Array<{
       __typename: "AdImagesEdge"
       cursor: string
       node: {
         __typename: "AdImage"
         id: string | null
+        title: string | null
         image: string | null
         sort: number
         usageType: string | null
@@ -64,20 +58,15 @@ export type GetClinicsQuery = {
 export const GetAdImagesDocument = gql`
   query GetAdImages {
     adImages(
-      where: { and: [{ usageType: { eq: "診所頁輪播" } }, { status: { eq: true } }] }
+      where: { and: [{ usageType: { eq: "診所輪播" } }, { status: { eq: true } }] }
       order: { id: DESC }
       first: 5
     ) {
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
       edges {
         cursor
         node {
           id
+          title
           image
           sort
           usageType

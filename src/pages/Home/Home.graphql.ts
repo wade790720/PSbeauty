@@ -17,6 +17,7 @@ export const GetAdImages = gql`
         cursor
         node {
           id
+          title
           image
           sort
           usageType

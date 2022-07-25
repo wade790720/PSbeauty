@@ -7,8 +7,8 @@ export type DoctorCardProps = {
   jobTitle?: string
   photo?: string
   // TODO: 2個欄位待確認型別
-  resumes?: string[]
-  expertise?: string[]
+  resumes?: string
+  expertise?: string
 }
 
 const DoctorCard = ({ ...props }: DoctorCardProps) => {
@@ -34,16 +34,11 @@ const DoctorCard = ({ ...props }: DoctorCardProps) => {
           <div className={styled["job-title"]}>{props?.jobTitle}</div>
         </div>
       </div>
-      <ul
-        className={cx(styled.resumes, {
-          [styled.more]: isExperienceMore,
-        })}>
-        {props?.resumes?.map((item, idx) => (
-          <li className={styled.job} key={`${item}-${idx}`}>
-            {item}
-          </li>
-        ))}
-      </ul>
+      <div
+        className={cx(styled.resumes, { [styled.more]: isExperienceMore })}
+        dangerouslySetInnerHTML={{ __html: props.resumes || "" }}
+      />
+
       {props?.resumes && props?.resumes.length > 2 && (
         <div className={styled.show} onClick={() => setIsExperienceMore(!isExperienceMore)}>
           {isExperienceMore ? "顯示更少" : "顯示更多"}

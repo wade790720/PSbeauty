@@ -1,10 +1,13 @@
 .wrapper {
   display: grid;
+
   grid-gap: 12px;
 
   .content {
-    color: #2B3A4B;
     display: grid;
+    padding: 5px;
+    color: #2b3a4b;
+
     gap: 12px;
 
     .contact {
@@ -19,20 +22,19 @@
 
     .information {
       display: flex;
+      margin: 12px 0;
       height: 24px;
       font-weight: bold;
-      margin: 12px 0;
 
       .block {
+        margin-right: 8px;
         width: 4px;
         height: 24px;
         border-radius: 15px;
-        background-color: #E58073;
-        margin-right: 8px;
+        background-color: #e58073;
       }
 
-      .case,
-      .reply {
+      .case, .reply {
         display: flex;
         align-items: center;
         flex: 1;
@@ -42,16 +44,16 @@
         }
       }
     }
-
   }
+
   .button {
     position: fixed;
-    width: calc(100% - 48px);
-    height: 42px;
     bottom: 72px;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: calc(100% - 48px);
+    height: 42px;
     font-size: 16px;
 
     .chat {

@@ -1,9 +1,7 @@
 //@import-normalize;
 
 :global {
-
-  html,
-  body {
+  html, body {
     height: 100%;
 
     * {
@@ -18,56 +16,58 @@
     }
 
     ::-webkit-scrollbar-thumb {
-      background-color: #C9CBCE;
       border-radius: 60px;
+      background-color: #c9cbce;
     }
 
     ::-webkit-scrollbar-track {
-      background-color: #F6F6F7;
       border-radius: 60px;
+      background-color: #f6f6f7;
     }
   }
 
   body {
     margin: 0;
-    font-size: 14px;
-    font-family: "Taipei Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", "Microsoft JhengHei", "Microsoft YaHei", sans-serif;
+    background-color: #fff;
+    color: #45536c;
     font-style: normal;
+    font-size: 14px;
+    font-family: 'Taipei Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 'Microsoft JhengHei', 'Microsoft YaHei', sans-serif;
     line-height: 1.42857;
-    background-color: #F8F9FE;
-    color: #45536C;
+
     text-decoration-skip-ink: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    >div {
-      color: #45536C;
+    > div {
+      color: #45536c;
     }
   }
 
   #root {
-    height: 100%;
     display: flex;
+    margin-top: 50px;
+    height: 100%;
+    background-color: #7d82ff;
     background-image: url(./Background.svg);
     background-position: center center;
     background-size: cover;
-    background-color: #7D82FF;
   }
 
   a {
-    color: #0052CC;
+    color: #0052cc;
     transition-duration: 0s, 0.15s;
 
     &:hover {
-      color: #0065FF;
+      color: #0065ff;
     }
   }
 }
 
 .container {
-  flex: 1 0;
   display: flex;
-  flex-direction: column;
   overflow-x: hidden;
   overflow-y: auto;
+  flex: 1 0;
+  flex-direction: column;
 }

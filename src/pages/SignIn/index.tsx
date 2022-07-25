@@ -37,6 +37,7 @@ const SignIn = () => {
       const email = info.account
       const token = res?.data?.signInWithEmailAndPassword?.token || ""
       setStorageValue("token", token)
+      setStorageValue("email", email)
       if (token && email) {
         auth.signIn(token, info.account)
         const parserCustomToken: { claims: AuthContextProps["user"] } = jwt_decode(token)

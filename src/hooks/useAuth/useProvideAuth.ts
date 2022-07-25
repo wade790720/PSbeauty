@@ -2,10 +2,12 @@ import { useState } from "react"
 import { getStorageValue, removeStorageValue } from "hooks/useLocalStorage"
 import { AuthContextProps, DEFAULT_USER } from "./AuthContext"
 import jwt_decode from "jwt-decode"
+import { signOut as firebaseSignOut } from "firebaseClient"
 
 const useProvideAuth = () => {
   const [user, setUser] = useState<AuthContextProps["user"]>(() => {
     const savedToken = getStorageValue("token", "")
+    const email = getStorageValue("email", "")
     if (savedToken) {
       try {
         const payload: { claims: AuthContextProps["user"] } = jwt_decode(savedToken)
@@ -15,6 +17,7 @@ const useProvideAuth = () => {
           name: payload?.claims?.name,
           clinic: payload?.claims?.clinic,
           admin: payload?.claims?.admin,
+          email: email,
         }
       } catch {
         return {
@@ -46,7 +49,9 @@ const useProvideAuth = () => {
 
   const signOut = () => {
     removeStorageValue("token")
+    removeStorageValue("email")
     setUser(DEFAULT_USER)
+    firebaseSignOut()
   }
 
   return {

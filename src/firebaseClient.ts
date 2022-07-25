@@ -37,3 +37,7 @@ export const register = async (email: string, password: string) => {
 export const sentResetPassword = async (email: string) => {
   await sendPasswordResetEmail(auth, email)
 }
+
+export const signOut = async () => {
+  auth.signOut()
+}

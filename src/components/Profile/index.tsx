@@ -19,13 +19,14 @@ const Profile = () => {
   const go = useGo()
   const auth = useAuth()
   const backgroundColor = getBackgroundColor()
+  const userEmail = auth.user.email || "Unknown"
   const userName = auth.user.name || "未命名"
 
   return (
     <div className={styled.wrapper}>
       {/* <img className={styled.avatar} src="/img/avatar.png" /> */}
       <div className={styled.avatar} style={{ background: backgroundColor }}>
-        {userName[0]}
+        {userEmail[0]}
       </div>
       <div className={styled.username}>{userName}</div>
       {/* <div className={styled.hint}>

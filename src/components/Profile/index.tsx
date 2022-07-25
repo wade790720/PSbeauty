@@ -26,7 +26,7 @@ const Profile = () => {
     <div className={styled.wrapper}>
       {/* <img className={styled.avatar} src="/img/avatar.png" /> */}
       <div className={styled.avatar} style={{ background: backgroundColor }}>
-        {userEmail[0]}
+        {userEmail[0].toUpperCase()}
       </div>
       <div className={styled.username}>{userName}</div>
       {/* <div className={styled.hint}>

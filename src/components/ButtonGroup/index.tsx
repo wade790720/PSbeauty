@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "./ButtonGroup.module.scss"
 import Button from "components/Button"
 
@@ -30,6 +30,9 @@ const ButtonGroup = (props: ButtonGroupProps) => {
     setEventKay(eventKey)
     props.onSelect && props.onSelect(e, { eventKey })
   }
+  useEffect(() => {
+    setEventKay(props.defaultActiveKey)
+  }, [props.defaultActiveKey])
 
   return (
     <div className={styled.outer}>

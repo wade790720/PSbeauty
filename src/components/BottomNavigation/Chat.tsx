@@ -17,7 +17,7 @@ const BottomNavigation = () => {
 
   return (
     <div className={cx(styled.wrapper, styled.chat)}>
-      <NavLink to={`/clinic/${auth?.user?.id}/inner/info`}>
+      <NavLink to={`/clinic/${auth?.user?.clinic}/inner/info`}>
         {({ isActive }) => (
           <div
             className={cx(styled.cell, {

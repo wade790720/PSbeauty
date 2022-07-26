@@ -12,12 +12,14 @@ import {
   useGetCasesQuery,
 } from "./ClinicalCaseList.graphql.generated"
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
+import { useGetCollectedCaseQuery } from "graphql/queries/getCollectedCase.graphql.generated"
 import { SortEnumType } from "types/schema"
 
 const ClinicalCaseList = () => {
   const [open, setOpen] = useState(false)
   const [loadQuery, query] = useGetTopCategoriesLazyQuery()
   const getCasesQuery = useGetCasesQuery()
+  const getCollectedCaseQuery = useGetCollectedCaseQuery()
   const adImageCaseQuery = useGetAdImagesQuery({
     variables: {
       first: 5,
@@ -51,7 +53,11 @@ const ClinicalCaseList = () => {
         {getCasesQuery?.data?.cases?.edges?.map(el => (
           <CaseCard
             key={el?.node?.id}
-            isCollected
+            isCollected={
+              getCollectedCaseQuery?.data?.me?.userCollectedCases?.some(
+                item => item?.id === el?.node?.id,
+              ) || false
+            }
             title={el?.node?.title || ""}
             clinic={el?.node?.clinic?.name || ""}
             clinicId={el?.node?.clinic?.id || ""}

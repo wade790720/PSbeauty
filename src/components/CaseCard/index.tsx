@@ -1,8 +1,12 @@
+import { useState } from "react"
 import styled from "./CaseCard.module.scss"
 import Icon from "components/Icon"
 import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
-import { useCollectCaseMutation } from "./CaseCard.graphql.generated"
+import {
+  useCollectCaseMutation,
+  useRemoveCollectedCaseMutation,
+} from "./CaseCard.graphql.generated"
 
 export type CaseCardProps = {
   title: string
@@ -19,11 +23,20 @@ export type CaseCardProps = {
 const CaseCard = ({ ...props }: CaseCardProps) => {
   const go = useGo()
   const auth = useAuth()
+  const [isCollected, setIsCollected] = useState(props.isCollected)
 
   const [collectCaseMutation] = useCollectCaseMutation({
     variables: {
-      caseId: props.clinicId,
+      caseId: props.caseId,
     },
+    onCompleted: () => setIsCollected(true),
+  })
+
+  const [removeCollectCaseMutation] = useRemoveCollectedCaseMutation({
+    variables: {
+      caseId: props.caseId,
+    },
+    onCompleted: () => setIsCollected(false),
   })
 
   return (
@@ -60,10 +73,10 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
         className={styled["collect-block"]}
         onClick={e => {
           e.stopPropagation()
-          // TODO: add collect function
-          !auth.user.id ? go.toSignIn() : collectCaseMutation()
+          if (!auth.user.id) return go.toSignIn()
+          isCollected ? removeCollectCaseMutation() : collectCaseMutation()
         }}>
-        {props.isCollected ? (
+        {isCollected ? (
           <Icon name="BookmarkFill" className={styled["bookmark-fill"]} />
         ) : (
           <Icon name="BookmarkSimple" className={styled["bookmark-simple"]} />

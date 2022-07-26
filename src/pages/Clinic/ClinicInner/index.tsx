@@ -6,6 +6,7 @@ import Banner from "components/Banner"
 import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
 import { useClinicInnerContext } from "pages/Clinic/ClinicInnerWrapper"
+import { useGetCollectedCaseQuery } from "graphql/queries/getCollectedCase.graphql.generated"
 import { useParams } from "react-router-dom"
 
 const ClinicInner = () => {
@@ -14,6 +15,7 @@ const ClinicInner = () => {
   const {
     query: { data },
   } = useClinicInnerContext()
+  const getCollectedCaseQuery = useGetCollectedCaseQuery()
   const { id } = useParams()
 
   const adImages = data?.clinic?.images
@@ -61,7 +63,11 @@ const ClinicInner = () => {
         <CaseCard
           key={el?.id}
           amount={el?.collectedCount}
-          isCollected={false}
+          isCollected={
+            getCollectedCaseQuery?.data?.me?.userCollectedCases?.some(
+              item => item?.id === el?.id,
+            ) || false
+          }
           title={el?.title || "　"}
           clinic={data?.clinic?.name || ""}
           clinicId={id || ""}

@@ -4,11 +4,16 @@ import HistoryRecordCard from "components/HistoryRecordCard"
 import Left from "./Left.png"
 import Front from "./Front.png"
 import Right from "./Right.png"
+import { useGetMeQuery } from "./MemberConsultationRecord.graphql.generated"
+import Loading from "components/QueryStatus/Loading"
 
 const MemberConsultationRecord = () => {
+  const { data, loading } = useGetMeQuery()
+
+  if (loading) return <Loading />
   return (
     <>
-      <Header title="收諮詢歷史紀錄件夾" leftArrow />
+      <Header title="諮詢歷史紀錄件夾" leftArrow />
       <div className={styled.wrapper}>
         <HistoryRecordCard
           title="側臉線條"

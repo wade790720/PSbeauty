@@ -12,6 +12,7 @@ import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
 import { useGetAdCardsQuery, useGetCasesLazyQuery } from "./Home.graphql.generated"
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
+import { useGetCollectedCaseQuery } from "graphql/queries/getCollectedCase.graphql.generated"
 import { SortEnumType } from "types/schema"
 
 const Home = () => {
@@ -19,7 +20,7 @@ const Home = () => {
   const go = useGo()
   const auth = useAuth()
   const [getCasesLazyQuery, getCasesQuery] = useGetCasesLazyQuery()
-
+  const getCollectedCaseQuery = useGetCollectedCaseQuery()
   const getAdCardsQuery = useGetAdCardsQuery()
   const getAdImagesQuery = useGetAdImagesQuery({
     variables: {
@@ -60,7 +61,11 @@ const Home = () => {
           <CaseCard
             key={cases[idx]?.id}
             amount={cases[idx]?.collectedCount}
-            isCollected={false}
+            isCollected={
+              getCollectedCaseQuery?.data?.me?.userCollectedCases?.some(
+                el => el?.id === cases[idx]?.id,
+              ) || false
+            }
             title={cases[idx]?.title || ""}
             clinic={cases[idx]?.clinic?.name || "　"}
             clinicId={cases[idx]?.clinic?.id || ""}

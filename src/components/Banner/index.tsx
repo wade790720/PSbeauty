@@ -29,7 +29,10 @@ const Banner = ({ height = "132px", images = [] }: BannerProps) => {
             className={styled.slide}
             style={{ height }}
             onClick={() => {
-              go.toClinicInner({ id: item.clinicId || "", tab: "info" })
+              if (item.redirectType === "clinic" && item.clinicId)
+                go.toClinicInner({ id: item.clinicId || "", tab: "info" })
+              else if (item.redirectType === "case" && item.clinicId && item.targetId)
+                go.toClinicCase({ clinicId: item.clinicId, caseId: item.targetId })
             }}>
             {item && <img src={item?.image} width="100%" height="100%" />}
           </div>

@@ -21,8 +21,8 @@ export type GetClinicsQuery = {
       cursor: string
       node: {
         __typename: "Clinic"
-        consultReplyCount: any
-        caseCount: any
+        consultReplyCount: number
+        caseCount: number
         county: string | null
         town: string | null
         name: string | null
@@ -57,8 +57,8 @@ export type GetClinicsSearchQuery = {
       cursor: string
       node: {
         __typename: "Clinic"
-        consultReplyCount: any
-        caseCount: any
+        consultReplyCount: number
+        caseCount: number
         county: string | null
         town: string | null
         name: string | null

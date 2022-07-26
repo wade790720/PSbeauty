@@ -17,7 +17,7 @@ export type GeTopicDetailQuery = {
       days: number
       subject: string | null
       images: Array<string | null> | null
-      consultAt: any
+      consultAt: number
       content: string | null
       poster: { __typename: "User"; id: string | null } | null
     } | null
@@ -26,7 +26,7 @@ export type GeTopicDetailQuery = {
       id: string | null
       content: string | null
       contentType: string | null
-      readAt: any
+      readAt: number
       userId: string | null
     } | null> | null
   } | null

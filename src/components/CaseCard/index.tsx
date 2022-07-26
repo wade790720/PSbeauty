@@ -12,7 +12,7 @@ export type CaseCardProps = {
   images: string[]
   isCollected: boolean
   tags?: string[]
-  amount?: string // 收藏人數
+  amount?: number // 收藏人數
 } & ReactProps.Component
 
 const CaseCard = ({ ...props }: CaseCardProps) => {
@@ -22,17 +22,6 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
   const [collectCaseMutation] = useCollectCaseMutation({
     variables: {
       caseId: props.clinicId,
-    },
-    update(cache, mutationResult) {
-      //   if (mutationResult.data?.deleteGroupComparison?.isDeleted) {
-      //     cache.modify({
-      //       fields: {
-      //         groupComparisonList(existingListRefs: Reference[] = [], { readField }) {
-      //           return existingListRefs.filter(ref => collectedId !== readField("id", ref))
-      //         },
-      //       },
-      //     })
-      //   }
     },
   })
 

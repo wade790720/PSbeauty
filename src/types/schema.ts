@@ -11,7 +11,7 @@ export type Scalars = {
   Int: number
   Float: number
   /** The `Long` scalar type represents non-fractional signed whole 64-bit numeric values. Long can represent values between -(2^63) and 2^63 - 1. */
-  Long: any
+  Long: number
 }
 
 /** A connection to a list of items. */

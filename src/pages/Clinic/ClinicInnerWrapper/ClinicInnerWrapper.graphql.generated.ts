@@ -16,8 +16,8 @@ export type GetClinicQuery = {
     address: string | null
     phone: string | null
     web: string | null
-    consultReplyCount: any
-    caseCount: any
+    consultReplyCount: number
+    caseCount: number
     description: string | null
     cases: Array<{
       __typename: "ClinicCase"
@@ -26,7 +26,7 @@ export type GetClinicQuery = {
       title: string | null
       beforeImage: string | null
       afterImage: string | null
-      collectedCount: any
+      collectedCount: number
       categories: Array<{
         __typename: "Category"
         id: string | null
@@ -54,7 +54,7 @@ export type GetClinicQuery = {
       id: string | null
       subject: string | null
       content: string | null
-      createdAt: any
+      createdAt: number
       image: string | null
     } | null> | null
   } | null

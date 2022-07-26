@@ -1,6 +1,5 @@
 import styled from "./Profile.module.scss"
 import Icon from "components/Icon"
-import { ReactComponent as Mail } from "./svg/Mail.svg"
 import { useGo } from "components/Router"
 import { useAuth } from "hooks/useAuth"
 import Colors from "./colors.json"

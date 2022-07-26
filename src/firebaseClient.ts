@@ -1,12 +1,10 @@
 import {
-  Auth,
   createUserWithEmailAndPassword,
   getAuth,
   sendEmailVerification,
   sendPasswordResetEmail,
-  signInWithCustomToken,
 } from "firebase/auth"
-import { getMessaging, getToken, Messaging } from "firebase/messaging"
+import { getMessaging, getToken } from "firebase/messaging"
 import { initializeApp } from "firebase/app"
 
 const firebaseConfig = {

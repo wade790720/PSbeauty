@@ -25,11 +25,7 @@ config:
   withHooks: true
   preResolveTypes: true
   scalars:
-    Date: number
-    DateTime: number
-    Decimal: number
-    JSONString: string
-    JSONStringUTF8: string
+    Long: number
 overwrite: true
 hooks:
   afterAllFileWrite:

@@ -1,43 +1,45 @@
 .wrapper {
-  padding: 24px;
   display: flex;
   flex-direction: column;
+  padding: 24px;
   height: calc(100vh - 62px);
 
   .title {
     display: flex;
     align-items: center;
+    margin-bottom: 12px;
+    height: 24px;
+    color: #2b3a4b;
     font-weight: bold;
     font-size: 17px;
-    margin-bottom: 12px;
-    color: #2B3A4B;
-    height: 24px;
 
     .error {
       display: flex;
       align-items: center;
       margin-left: 12px;
-      color: #DC3545;
+      color: #dc3545;
+      font-weight: normal;
       font-size: 12px;
       line-height: 12px;
-      font-weight: normal;
+
       gap: 4px;
     }
   }
 
   .category {
-    font-weight: 400;
-    background: #E4E3FA;
     border: none;
+    background: #e4e3fa;
+    font-weight: 400;
   }
 
   .medical-type {
-    flex-shrink: 0;
     display: grid;
+    overflow-x: auto;
+    flex-shrink: 0;
+
     grid-auto-flow: column;
     grid-gap: 8px;
     grid-auto-columns: min-content;
-    overflow-x: auto;
     -ms-overflow-style: none;
     scrollbar-width: none;
 
@@ -48,23 +50,23 @@
     button {
       padding: 0 10px;
       height: 32px;
-      font-weight: 400;
       white-space: nowrap;
+      font-weight: 400;
     }
   }
 
   .content {
     display: flex;
-    margin-top: 24px;
     overflow: hidden;
+    margin-top: 24px;
 
     .part {
-      width: 127px;
-      border-right: 1px solid rgba(#AAB0B2, 0.2);
-      overflow: scroll;
       display: flex;
+      overflow: scroll;
+      align-items: flex-start;
       flex-direction: column;
-      align-items: start;
+      width: 127px;
+      border-right: 1px solid rgba(#aab0b2, 0.2);
 
       &::-webkit-scrollbar {
         display: none;
@@ -73,25 +75,25 @@
 
     .item {
       padding: 12px 0;
-      font-size: 16px;
-      line-height: 24px;
       border: none;
       background: none;
-      color: #2B3A4B;
+      color: #2b3a4b;
+      font-size: 16px;
+      line-height: 24px;
       cursor: pointer;
 
       &.select {
-        color: #7873E5;
+        color: #7873e5;
         font-weight: bold;
       }
     }
 
     .subjects {
       display: flex;
-      flex-direction: column;
       overflow: scroll;
-      padding-left: 19px;
       flex: 1;
+      flex-direction: column;
+      padding-left: 19px;
 
       &::-webkit-scrollbar {
         display: none;
@@ -101,12 +103,13 @@
 }
 
 .buttons {
-  display: flex;
-  gap: 8px;
-  width: calc(100% - 48px);
   position: fixed;
   bottom: 24px;
   left: 24px;
+  display: flex;
+  width: calc(100% - 48px);
+
+  gap: 8px;
 
   button {
     height: 38px;

@@ -52,7 +52,7 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
       path: "sign-in",
       element: user.id ? (
         <Suspense>
-          {user.clinic ? <Navigate to="/clinic/:id/inner/info" /> : <Navigate to="/home" />}
+          {user.clinic ? <Navigate to="/clinic/:id/inner/info" /> : <Navigate to="/" />}
         </Suspense>
       ) : (
         <Suspense>

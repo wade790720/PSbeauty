@@ -38,9 +38,15 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
         dangerouslySetInnerHTML={{ __html: props.introduction || "" }}
       />
       <div className={styled.images}>
-        {props.images?.map((image, idx) => (
-          <img key={`image-${idx}`} src={image} />
-        ))}
+        {props.images?.map((image, idx) => {
+          return (
+            <div key={`image-${idx}`} className={styled.image}>
+              <img src={image} />
+              {idx === 0 && <div className={styled.label}>Before</div>}
+              {idx === 1 && <div className={styled.label}>After</div>}
+            </div>
+          )
+        })}
       </div>
       <div className={styled.tags}>
         {props.tags?.map((tag, idx) => (

@@ -56,8 +56,14 @@ const ClinicalCase = () => {
           <div className={styled.title}>{data?.case?.title}</div>
           <div className={styled.clinic}>{data?.case?.clinic?.name}</div>
           <div className={styled.images}>
-            <img src={data?.case?.beforeImage || ""} />
-            <img src={data?.case?.afterImage || ""} />
+            <div className={styled.image}>
+              <img src={data?.case?.beforeImage || ""} />
+              <div className={styled.label}>Before</div>
+            </div>
+            <div className={styled.image}>
+              <img src={data?.case?.afterImage || ""} />
+              <div className={styled.label}>After</div>
+            </div>
           </div>
           <div
             className={styled.content}

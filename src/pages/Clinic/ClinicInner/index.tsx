@@ -16,12 +16,15 @@ const ClinicInner = () => {
   } = useClinicInnerContext()
   const { id } = useParams()
 
-  const adImages = data?.clinic?.images?.map(el => ({
-    image: el?.image || "",
-    clinicId: el?.id || "",
-    targetId: el?.targetId || "",
-    redirectType: el?.redirectType,
-  }))
+  const adImages = data?.clinic?.images
+    ?.map(el => ({
+      image: el?.image || "",
+      clinicId: el?.id || "",
+      targetId: el?.targetId || "",
+      redirectType: el?.redirectType,
+      sort: el?.sort || 0,
+    }))
+    ?.sort((prev, next) => prev.sort - next.sort)
 
   return (
     <div className={styled.wrapper}>

@@ -24,12 +24,16 @@ const Clinic = () => {
       where: "診所輪播",
     },
   })
-  const adImages = getAdImagesQuery?.data?.adImages?.edges?.map(el => ({
-    image: el.node?.image || "",
-    clinicId: el.node?.clinicId || "",
-    targetId: el.node?.targetId || "",
-    redirectType: el.node?.redirectType,
-  }))
+  const adImages = getAdImagesQuery?.data?.adImages?.edges
+    ?.map(el => ({
+      image: el.node?.image || "",
+      clinicId: el.node?.clinicId || "",
+      targetId: el.node?.targetId || "",
+      redirectType: el.node?.redirectType,
+      sort: el.node?.sort || 0,
+    }))
+    ?.sort((prev, next) => prev.sort - next.sort)
+
   const getClinicsQuery = useGetClinicsQuery()
   const [loadGetClinicsQuerySearch, getClinicsQuerySearch] = useGetClinicsSearchLazyQuery()
 

@@ -44,7 +44,7 @@ export type GetCasesQuery = {
         title: string | null
         beforeImage: string | null
         afterImage: string | null
-        collectedCount: any
+        collectedCount: number
         categories: Array<{
           __typename: "Category"
           id: string | null

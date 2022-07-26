@@ -39,6 +39,7 @@ export type GetClinicQuery = {
       image: string | null
       redirectType: string | null
       targetId: string | null
+      sort: number
     } | null> | null
     doctors: Array<{
       __typename: "ClinicDoctor"
@@ -89,6 +90,7 @@ export const GetClinicDocument = gql`
         image
         redirectType
         targetId
+        sort
       }
       doctors {
         id

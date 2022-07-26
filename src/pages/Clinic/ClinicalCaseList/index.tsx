@@ -25,12 +25,15 @@ const ClinicalCaseList = () => {
       where: "案例輪播",
     },
   })
-  const adImages = adImageCaseQuery?.data?.adImages?.edges?.map(el => ({
-    image: el.node?.image || "",
-    clinicId: el.node?.clinicId || "",
-    targetId: el.node?.targetId || "",
-    redirectType: el.node?.redirectType,
-  }))
+  const adImages = adImageCaseQuery?.data?.adImages?.edges
+    ?.map(el => ({
+      image: el.node?.image || "",
+      clinicId: el.node?.clinicId || "",
+      targetId: el.node?.targetId || "",
+      redirectType: el.node?.redirectType,
+      sort: el.node?.sort || 0,
+    }))
+    ?.sort((prev, next) => prev.sort - next.sort)
 
   useEffect(() => {
     if (!open) return

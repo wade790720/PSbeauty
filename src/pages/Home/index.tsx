@@ -60,10 +60,11 @@ const Home = () => {
             isCollected={false}
             title={cases[idx]?.title || ""}
             clinic={cases[idx]?.clinic?.name || "　"}
-            clinicId={cases[idx]?.id || ""}
+            clinicId={cases[idx]?.clinic?.id || ""}
             introduction={cases[idx]?.description || ""}
             images={[cases[idx]?.beforeImage || "", cases[idx]?.afterImage || ""]}
             tags={cases[idx]?.categories?.map(tag => tag?.name || "")}
+            caseId={cases[idx]?.id || ""}
           />,
         )
       }

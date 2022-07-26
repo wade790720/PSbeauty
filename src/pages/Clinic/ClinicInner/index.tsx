@@ -6,6 +6,7 @@ import Banner from "components/Banner"
 import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
 import { useClinicInnerContext } from "pages/Clinic/ClinicInnerWrapper"
+import { useParams } from "react-router-dom"
 
 const ClinicInner = () => {
   const go = useGo()
@@ -13,6 +14,7 @@ const ClinicInner = () => {
   const {
     query: { data },
   } = useClinicInnerContext()
+  const { id } = useParams()
 
   const adImages = data?.clinic?.images?.map(el => ({
     image: el?.image || "",
@@ -59,10 +61,11 @@ const ClinicInner = () => {
           isCollected={false}
           title={el?.title || "　"}
           clinic={data?.clinic?.name || ""}
-          clinicId={el?.id || ""}
+          clinicId={id || ""}
           introduction={el?.description || ""}
           images={[el?.beforeImage || "", el?.afterImage || ""]}
           tags={el?.categories?.map(tag => tag?.name || "")}
+          caseId={el?.id || ""}
         />
       ))}
       {!auth.user.clinic && (

@@ -10,24 +10,27 @@ import {
 } from "./ClinicalCase.graphql.generated"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import Loading from "components/QueryStatus/Loading"
 
 const ClinicalCase = () => {
-  const { id } = useParams()
+  const { caseId } = useParams()
   const getCollectItemsQuery = useGetCollectItemsQuery()
-  const { data } = useGetCaseQuery({
+  const { data, loading } = useGetCaseQuery({
     variables: {
-      id: id || "",
+      id: caseId || "",
     },
   })
   const [isCollected, setIsCollected] = useState(false)
 
   useEffect(() => {
-    setIsCollected(!!getCollectItemsQuery?.data?.me?.userCollectedCases?.find(el => el?.id === id))
+    setIsCollected(
+      !!getCollectItemsQuery?.data?.me?.userCollectedCases?.find(el => el?.id === caseId),
+    )
   }, [getCollectItemsQuery?.data?.me?.userCollectedCases])
 
   const [collectCaseMutation] = useCollectCaseMutation({
     variables: {
-      caseId: id || "",
+      caseId: caseId || "",
     },
     update(cache, mutationResult) {
       if (mutationResult?.data?.collectCase?.userId) setIsCollected(true)
@@ -36,12 +39,14 @@ const ClinicalCase = () => {
 
   const [removeCollectedCaseMutation] = useRemoveCollectedCaseMutation({
     variables: {
-      caseId: id || "",
+      caseId: caseId || "",
     },
     update(cache, mutationResult) {
       if (mutationResult?.data?.removeCollectedCase) setIsCollected(false)
     },
   })
+
+  if (loading) return <Loading />
 
   return (
     <>

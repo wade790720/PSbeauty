@@ -143,28 +143,23 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
         </Suspense>
       ),
     },
+    /* 臨床案例頁 */
     {
       path: "cases",
-      children: [
-        /* 臨床案例頁 */
-        {
-          index: true,
-          element: (
-            <Suspense>
-              <ClinicalCaseList />
-            </Suspense>
-          ),
-        },
-        /* 臨床案例內頁 */
-        {
-          path: ":id",
-          element: (
-            <Suspense>
-              <ClinicalCase />
-            </Suspense>
-          ),
-        },
-      ],
+      element: (
+        <Suspense>
+          <ClinicalCaseList />
+        </Suspense>
+      ),
+    },
+    /* 臨床案例內頁 */
+    {
+      path: "clinic/:clinicId/case/:caseId",
+      element: (
+        <Suspense>
+          <ClinicalCase />
+        </Suspense>
+      ),
     },
     {
       path: "member",

@@ -17,7 +17,7 @@ type toTarget = {
   /** 案例 */
   toClinicCaseList: () => void
   /** 案例內頁 */
-  toClinicCase: ({ id }: { id: string }) => void
+  toClinicCase: ({ caseId, clinicId }: { caseId: string, clinicId: string }) => void
   /** 廣告內頁 */
   toAdvertisement: ({ id }: { id: string }) => void
   /** 諮詢歷史紀錄 */
@@ -50,7 +50,7 @@ const useGo = (): toTarget => {
     toClinicInner: ({ id, tab }) => navigate(`/clinic/${id}/inner/${tab}`),
     toClinicActivity: ({ id, activityId }) => navigate(`/clinic/${id}/inner/activities/${activityId}`),
     toClinicCaseList: () => navigate("/cases"),
-    toClinicCase: ({ id }) => navigate(`/cases/${id}`),
+    toClinicCase: ({ caseId, clinicId }) => navigate(`/clinic/${clinicId}/case/${caseId}`),
     toAdvertisement: ({ id }) => navigate(`/advertisement/${id}`),
     toConsultationRecord: () => navigate("/member/consultation-record"),
     toCollectClinicalCase: () => navigate("/member/collect-clinical-case"),

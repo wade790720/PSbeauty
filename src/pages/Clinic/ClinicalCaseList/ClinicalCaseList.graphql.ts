@@ -14,3 +14,37 @@ export const GetTopCategories = gql`
     }
   }
 `
+
+export const GetCases = gql`
+  query GetCases {
+    cases(first: 10, order: { id: DESC }) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      totalCount
+      edges {
+        cursor
+        node {
+          id
+          description
+          title
+          beforeImage
+          afterImage
+          collectedCount
+          categories {
+            id
+            name
+          }
+          clinic {
+            id
+            name
+            phone
+          }
+        }
+      }
+    }
+  }
+`

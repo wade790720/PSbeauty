@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react"
+import { useState, useEffect } from "react"
 import Button from "components/Button"
 import Profile from "components/Profile"
 import BottomNavigation from "components/BottomNavigation"

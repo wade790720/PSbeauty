@@ -13,6 +13,7 @@ export type CaseCardProps = {
   isCollected: boolean
   tags?: string[]
   amount?: number // 收藏人數
+  caseId: string
 } & ReactProps.Component
 
 const CaseCard = ({ ...props }: CaseCardProps) => {
@@ -29,22 +30,18 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
     <div
       className={styled.wrapper}
       style={props.style}
-      onClick={() => go.toClinicCase({ id: props.clinicId })}>
+      onClick={() => go.toClinicCase({ clinicId: props.clinicId, caseId: props.caseId })}>
       <div className={styled.title}>{props.title}</div>
       <div className={styled.clinic}>{props.clinic}</div>
       <div
         className={styled.content}
-        dangerouslySetInnerHTML={{ __html: props.introduction.replace(/<h.>.*<\/h.>/, "") }}
+        dangerouslySetInnerHTML={{ __html: props.introduction || "" }}
       />
       <div className={styled.images}>
         {props.images?.map((image, idx) => (
           <img key={`image-${idx}`} src={image} />
         ))}
       </div>
-      <div
-        className={styled.content}
-        dangerouslySetInnerHTML={{ __html: props.introduction || "" }}
-      />
       <div className={styled.tags}>
         {props.tags?.map((tag, idx) => (
           <div key={`tag-${idx}`}>

@@ -10,14 +10,19 @@ const useProvideAuth = () => {
     const email = getStorageValue("email", "")
     if (savedToken) {
       try {
-        const payload: { claims: AuthContextProps["user"] } = jwt_decode(savedToken)
-        return {
-          id: payload?.claims?.id,
-          phone: payload?.claims?.phone,
-          name: payload?.claims?.name,
-          clinic: payload?.claims?.clinic,
-          admin: payload?.claims?.admin,
-          email: email,
+        const payload: {
+          claims: AuthContextProps["user"]
+          exp: number
+        } = jwt_decode(savedToken)
+        if (new Date(payload.exp * 1000) > new Date()) {
+          return {
+            id: payload?.claims?.id,
+            phone: payload?.claims?.phone,
+            name: payload?.claims?.name,
+            clinic: payload?.claims?.clinic,
+            admin: payload?.claims?.admin,
+            email: email,
+          }
         }
       } catch {
         return {
@@ -29,9 +34,8 @@ const useProvideAuth = () => {
           email: null,
         }
       }
-    } else {
-      return DEFAULT_USER
     }
+    return DEFAULT_USER
   })
 
   const signIn = (token: string, email: string) => {

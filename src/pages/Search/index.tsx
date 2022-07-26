@@ -1,7 +1,5 @@
 import { useState } from "react"
 import styled from "./Search.module.scss"
-import Header from "components/Layout/Header"
-import SearchBox from "components/SearchBox"
 import Backdrop from "components/Layout/Backdrop"
 import { useGo } from "components/Router"
 import { ReactComponent as Delete } from "./Delete.svg"

@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useParams } from "react-router-dom"
+import { useGo } from "components/Router"
 import styled from "./SearchList.module.scss"
 import cx from "classnames"
 import Backdrop from "components/Layout/Backdrop"
@@ -11,10 +12,11 @@ import { useEffect } from "react"
 
 const SearchList = () => {
   const { id } = useParams()
+  const go = useGo()
+
   const [activeKeyword, setActiveKeyword] = useState("")
   const [loadQuery, query] = useGetSearchListLazyQuery()
   const getPopularKeywords = useGetPopularKeywordsQuery()
-  const keywords = getPopularKeywords?.data?.popularKeywords?.keywords
 
   useEffect(() => {
     if (!id) return
@@ -23,11 +25,8 @@ const SearchList = () => {
         contains: id,
       },
     })
+    setActiveKeyword(id)
   }, [id, loadQuery])
-
-  useEffect(() => {
-    if (!activeKeyword && keywords?.[0]) setActiveKeyword(keywords?.[0])
-  }, [activeKeyword, keywords])
 
   return (
     <Backdrop className={styled.wrapper}>
@@ -36,7 +35,12 @@ const SearchList = () => {
           <div
             className={cx({ [styled.active]: activeKeyword === el })}
             key={`keywords-${idx}`}
-            onClick={() => el && setActiveKeyword(el)}>
+            onClick={() => {
+              if (el) {
+                setActiveKeyword(el)
+                go.toSearchList(el)
+              }
+            }}>
             {el}
           </div>
         ))}

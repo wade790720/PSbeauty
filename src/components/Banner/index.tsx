@@ -15,7 +15,6 @@ type BannerProps = {
 const Banner = ({ height = "132px", images = [] }: BannerProps) => {
   const go = useGo()
 
-  console.log("### images", images)
   return (
     <div className={styled.banner}>
       <Carousel

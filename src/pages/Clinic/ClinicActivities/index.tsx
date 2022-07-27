@@ -12,6 +12,7 @@ const ClinicActivities = () => {
       {data?.clinic?.activities?.map(activity => (
         <ActivityCard
           key={activity?.id}
+          activityId={activity?.id || ""}
           subject={activity?.subject || ""}
           content={activity?.content || ""}
           image={activity?.image || ""}

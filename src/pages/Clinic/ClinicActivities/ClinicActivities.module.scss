@@ -1,45 +1,54 @@
 .wrapper {
   display: grid;
-  grid-gap: 12px;
   padding-bottom: 6px;
+
+  grid-gap: 12px;
 }
 
 .activity-card {
-   height: 180px;
-   border: 1px solid rgba(170, 176, 178, 0.2);
-   border-radius: 15px;
-   padding: 24px;
+  padding: 24px;
+  height: 180px;
+  border: 1px solid rgba(170, 176, 178, 0.2);
+  border-radius: 15px;
 
-   .title {
-     font-weight: bold;
-     font-size: 20px;
-     line-height: 24px;
-     margin-bottom: 24px;
-     color: #7873E5;
-   }
-
-   .content {
-     display: flex;
-     height: 84px;
-
-     .pic {
-       min-width: 90px;
-       height: 81.82px;
-       border: 1px solid rgba(170, 176, 178, 0.2);
-       border-radius: 15px;
-       margin-right: 12px;
-       background-color: #999;
-     }
-
-     .text {
-       height: 84px;
-       color: #333333;
-       line-height: 21px;
-       display: -webkit-box;
-       -webkit-box-orient: vertical;
-       -webkit-line-clamp: 4;
-       overflow: hidden;
-       text-overflow: ellipsis;
-     }
-   }
+  .title {
+    margin-bottom: 24px;
+    color: #7873e5;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 24px;
   }
+
+  .content {
+    display: flex;
+    height: 84px;
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
+
+    .pic {
+      margin-right: 12px;
+      min-width: 90px;
+      height: 81.82px;
+      border: 1px solid rgba(170, 176, 178, 0.2);
+      border-radius: 15px;
+      background-color: #999;
+
+      object-fit: cover;
+    }
+
+    .text {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      height: 84px;
+      color: #333;
+      text-overflow: ellipsis;
+      line-height: 21px;
+
+      -webkit-line-clamp: 4;
+    }
+  }
+}

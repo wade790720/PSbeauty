@@ -101,6 +101,6 @@ module.exports = {
       },
     ],
     "@typescript-eslint/explicit-module-boundary-types": ["off"],
-    "@typescript-eslint/no-unused-vars": process.env.NODE_ENV === "production" ? "warn" : "warn",
+    "@typescript-eslint/no-unused-vars": process.env.NODE_ENV === "production" ? "error" : "warn",
   },
 }

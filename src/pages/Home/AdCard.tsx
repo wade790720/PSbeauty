@@ -14,7 +14,7 @@ const AdCard = ({ ...props }: AdCardProps) => {
     <div className={styled["ad-card"]} onClick={() => go.toAdvertisement({ id: "face" })}>
       <div className={styled.title}>{props.title}</div>
       <div className={styled.content}>
-        <div className={styled.pic}>
+        <div className={styled.picture}>
           <img src={props.image} style={{ width: "100%", height: "100%" }} />
         </div>
         <div className={styled.text} dangerouslySetInnerHTML={{ __html: props.content }} />

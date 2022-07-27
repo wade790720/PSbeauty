@@ -1,5 +1,4 @@
 .wrapper {
-  // padding: 12px 24px 120px 24px;
   width: 100%;
   height: 100%;
   background-color: white;
@@ -51,12 +50,12 @@
 }
 
 .ad-card {
-  padding: 24px;
+  padding: 12px 0;
   border: 1px solid rgba(170, 176, 178, 0.2);
   border-radius: 15px;
 
   .title {
-    margin-bottom: 12px;
+    padding: 0 24px 12px;
     color: black;
     font-weight: bold;
     font-size: 20px;
@@ -64,15 +63,15 @@
   }
 
   .content {
-    .pic {
+    position: relative;
+
+    .picture {
       display: flex;
       overflow: hidden;
       justify-content: center;
       margin-bottom: 12px;
       min-width: 90px;
       width: 100%;
-      border: 2px solid rgba(170, 176, 178, 0.2);
-      border-radius: 15px;
       background-color: #999;
     }
 
@@ -80,6 +79,7 @@
       display: -webkit-box;
       overflow: hidden;
       -webkit-box-orient: vertical;
+      padding: 0 24px;
       height: 84px;
       color: #333;
       text-overflow: ellipsis;

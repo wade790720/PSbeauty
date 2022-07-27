@@ -12,6 +12,7 @@ import { app } from "./testFirebase"
 
 type RealTimeMessage = Pick<ConsultTopicReply, "content" | "userId"> & {
   timestamp: Timestamp | ReturnType<typeof serverTimestamp>
+  timestampMillis?: number
 }
 
 type useRealtimeProps = {
@@ -36,7 +37,12 @@ const useRealtime = ({ chatroomId, onMessage }: useRealtimeProps) => {
         const msg = doc.data() as RealTimeMessage
 
         if (connected.current) {
-          onMessage(msg)
+          if (!msg.timestamp) {
+            return
+          }
+
+          const { seconds, nanoseconds } = msg.timestamp as Timestamp
+          onMessage({ ...msg, timestampMillis: new Timestamp(seconds, nanoseconds).toMillis() })
         } else {
           connected.current = true
         }

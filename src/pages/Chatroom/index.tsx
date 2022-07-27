@@ -3,7 +3,7 @@ import HistoryRecordCard from "components/HistoryRecordCard"
 import Backdrop from "components/Layout/Backdrop"
 import Header from "components/Layout/Header"
 import { useAuth } from "hooks/useAuth"
-import { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
 import { useGeTopicDetailQuery, useReplyTopicMutation } from "./Chatroom.graphql.generated"
 import styled from "./Chatroom.module.scss"
@@ -13,10 +13,19 @@ import Right from "./Right.png"
 import { ReactComponent as UploadImage } from "./UploadImage.svg"
 import useRealtime from "./useRealtime"
 
+interface MessageRow {
+  content: string
+  userId: string
+  key: string
+}
+
 const Chatroom = () => {
   const { id } = useParams()
   const auth = useAuth()
+  const msgInputRef = useRef<HTMLInputElement>(null)
   const [message, setMessage] = useState("")
+  const [realtimes, setRealtimes] = useState<MessageRow[]>([])
+  const realtimesRef = useRef<MessageRow[]>()
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const topicDetail = useGeTopicDetailQuery({
     variables: {
@@ -26,10 +35,20 @@ const Chatroom = () => {
 
   const [replyTopicMutation] = useReplyTopicMutation()
 
+  realtimesRef.current = realtimes
   const notify = useRealtime({
     chatroomId: id || "",
-    onMessage: async msg => {
-      await topicDetail.refetch()
+    onMessage: msg => {
+      const rt = realtimesRef.current || []
+      const newRt = [
+        ...rt,
+        {
+          content: msg.content || "",
+          key: msg.timestampMillis + "",
+          userId: msg.userId || "",
+        },
+      ]
+      setRealtimes(newRt)
       scrollToBottom()
     },
   })
@@ -58,8 +77,9 @@ const Chatroom = () => {
         },
       },
       async onCompleted() {
-        notify({ content: msg, userId: auth.user.id })
+        await notify({ content: msg, userId: auth.user.id })
         setMessage("")
+        msgInputRef.current?.focus()
       },
     })
   }
@@ -68,6 +88,13 @@ const Chatroom = () => {
   const consult = topicDetail.data?.topic?.consult
   const replies = topicDetail.data?.topic?.replies || []
 
+  const messages: MessageRow[] = replies.map(r => ({
+    content: r?.content || "",
+    key: r?.id || "",
+    userId: r?.userId || "",
+  }))
+
+  messages.push(...realtimes)
   return (
     <>
       <Header leftArrow title={clinic?.name || ""} />
@@ -84,16 +111,16 @@ const Chatroom = () => {
             tags={["蘋果肌", "痘痘針", "玻尿酸", "蘋果肌2", "痘痘針2", "玻尿酸2"]}
           />
         </div>
-        {replies?.map(v => {
+        {messages.map(v => {
           if (v?.userId == auth.user.id) {
             return (
-              <div className={cx(styled.row, styled.right)} key={v?.id}>
+              <div className={cx(styled.row, styled.right)} key={v?.key}>
                 <div className={styled.message}>{v?.content}</div>
               </div>
             )
           } else {
             return (
-              <div className={cx(styled.row, styled.left)} key={v?.id}>
+              <div className={cx(styled.row, styled.left)} key={v?.key}>
                 <img className={styled.avatar} src="/img/chatroom-user.png" />
                 <div className={styled.message}>{v?.content}</div>
               </div>
@@ -105,7 +132,10 @@ const Chatroom = () => {
       <div className={styled.input}>
         <div className={styled.control}>
           <UploadImage />
-          <input value={message} onChange={e => setMessage(e.target.value)}></input>
+          <input
+            ref={msgInputRef}
+            value={message}
+            onChange={e => setMessage(e.target.value)}></input>
           <div className={styled.submit} onClick={() => newMessage(message)}>
             送出
           </div>

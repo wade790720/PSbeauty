@@ -11,12 +11,15 @@ import Banner from "components/Banner"
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
 import { SortEnumType } from "types/schema"
 import { useGetClinicsQuery, useGetClinicsSearchLazyQuery } from "./ClinicCard.graphql.generated"
+import useGo from "components/Router/useGo"
 
 const Clinic = () => {
   const ref = useRef<HTMLInputElement | null>(null)
   const [openFilter, setOpenFilter] = useState(false)
   const [isSearch, setIsSearch] = useState(false)
   const auth = useAuth()
+  const go = useGo()
+
   const getAdImagesQuery = useGetAdImagesQuery({
     variables: {
       first: 10,
@@ -45,7 +48,7 @@ const Clinic = () => {
     <>
       <div className={styled.wrapper}>
         <div className={styled.header}>
-          <SearchBar ref={ref} />
+          <SearchBar ref={ref} onInputClick={() => go.toSearchList("")} />
           <Icon name="chat" className={styled["chat-icon"]} />
         </div>
         {adImages && adImages?.length > 0 && (

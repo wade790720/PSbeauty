@@ -7,6 +7,7 @@ import Button from "components/Button"
 import CaseCard from "components/CaseCard"
 import SubjectFilter from "components/SubjectFilter"
 import Banner from "components/Banner"
+import useGo from "components/Router/useGo"
 import {
   useGetTopCategoriesLazyQuery,
   useGetCasesQuery,
@@ -16,6 +17,7 @@ import { useGetCollectedCaseQuery } from "graphql/queries/getCollectedCase.graph
 import { SortEnumType } from "types/schema"
 
 const ClinicalCaseList = () => {
+  const go = useGo()
   const [open, setOpen] = useState(false)
   const [loadQuery, query] = useGetTopCategoriesLazyQuery()
   const getCasesQuery = useGetCasesQuery()
@@ -46,7 +48,7 @@ const ClinicalCaseList = () => {
     <>
       <div className={styled.wrapper}>
         <div className={styled.header}>
-          <SearchBar />
+          <SearchBar onInputClick={() => go.toSearchList("")} />
           <Icon name="chat" className={styled["chat-icon"]} />
         </div>
         <Banner images={adImages} />

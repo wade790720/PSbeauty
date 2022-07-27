@@ -94,16 +94,7 @@ const Home = () => {
     <>
       <div className={styled.wrapper}>
         <div className={styled.header}>
-          <SearchBar
-            onChange={value => {
-              getCasesLazyQuery({
-                variables: {
-                  contains: value,
-                },
-              })
-            }}
-            onInputClick={() => go.toSearchList("")}
-          />
+          <SearchBar onInputClick={() => go.toSearchList("")} />
           <div
             onClick={() => {
               auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()

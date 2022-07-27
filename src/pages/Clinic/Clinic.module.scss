@@ -1,12 +1,13 @@
 .wrapper {
-  align-items: start;
   flex: 1;
-  padding: 12px 24px 61px 24px;
+  width: 100%;
+  height: 100%;
   background-color: white;
 
   .header {
     display: flex;
     align-items: center;
+    padding: 12px 24px 12px 24px;
 
     .chat-icon {
       margin-left: 18px;
@@ -17,8 +18,21 @@
     }
   }
 
+  .inner {
+    position: relative;
+    overflow-y: auto;
+    padding: 0 24px 180px;
+    width: 100%;
+    height: 100%;
+
+    .filter {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
   .banner {
-    padding: 12px 0 20px;
+    padding-bottom: 20px;
   }
 
   .card {

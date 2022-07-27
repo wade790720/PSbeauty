@@ -1,31 +1,46 @@
 .wrapper {
-  flex: 1;
-  padding: 12px 24px 49px 24px;
+  width: 100%;
+  height: 100%;
   background-color: white;
-  display: grid;
-  grid-gap: 12px;
-  align-items: start;
 
   .header {
     display: flex;
     align-items: center;
+    padding: 12px 24px 12px 24px;
 
     .chat-icon {
       margin-left: 18px;
+
       path {
-        fill: #7873E5;
+        fill: #7873e5;
       }
+    }
+  }
+
+  .inner {
+    position: relative;
+    display: grid;
+    overflow-y: auto;
+    padding: 0 24px 170px;
+    width: 100%;
+    height: 100%;
+
+    grid-gap: 12px;
+
+    .filter {
+      display: flex;
+      justify-content: center;
     }
   }
 
   .button {
     position: fixed;
-    width: calc(100% - 48px);
-    height: 42px;
     bottom: 72px;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: calc(100% - 48px);
+    height: 42px;
     font-size: 16px !important;
 
     .funnel {

@@ -51,46 +51,50 @@ const Clinic = () => {
           <SearchBar ref={ref} onInputClick={() => go.toSearchList("")} />
           <Icon name="chat" className={styled["chat-icon"]} />
         </div>
-        {adImages && adImages?.length > 0 && (
-          <div className={styled.banner}>
-            <Banner images={adImages} />
+        <div className={styled.inner}>
+          {adImages && adImages?.length > 0 && (
+            <div className={styled.banner}>
+              <Banner images={adImages} />
+            </div>
+          )}
+          <div className={styled.card}>
+            {data?.map(el => (
+              <ClinicCard
+                key={el.node?.id || ""}
+                id={el.node?.id || ""}
+                name={el.node?.name || ""}
+                county={el.node?.county || ""}
+                town={el.node?.town || ""}
+                caseCount={el.node?.caseCount || 0}
+                consultReplyCount={el.node?.consultReplyCount || 0}
+              />
+            ))}
           </div>
-        )}
-        <div className={styled.card}>
-          {data?.map(el => (
-            <ClinicCard
-              key={el.node?.id || ""}
-              id={el.node?.id || ""}
-              name={el.node?.name || ""}
-              county={el.node?.county || ""}
-              town={el.node?.town || ""}
-              caseCount={el.node?.caseCount || 0}
-              consultReplyCount={el.node?.consultReplyCount || 0}
+          <div className={styled.filter}>
+            <Button className={styled.button} onClick={() => setOpenFilter(true)}>
+              <Icon name="funnel" className={styled.funnel} />
+              地區篩選
+            </Button>
+            <DistrictsFilter
+              open={openFilter}
+              onClose={value => {
+                setOpenFilter(false)
+
+                if (value.length === 0) return
+
+                loadGetClinicsQuerySearch({
+                  variables: {
+                    county: value
+                      .map(el => el.county)
+                      .filter((value, index, self) => self.indexOf(value) === index),
+                    town: value.map(el => el.town),
+                  },
+                })
+                setIsSearch(true)
+              }}
             />
-          ))}
+          </div>
         </div>
-        <Button className={styled.button} onClick={() => setOpenFilter(true)}>
-          <Icon name="funnel" className={styled.funnel} />
-          地區篩選
-        </Button>
-        <DistrictsFilter
-          open={openFilter}
-          onClose={value => {
-            setOpenFilter(false)
-
-            if (value.length === 0) return
-
-            loadGetClinicsQuerySearch({
-              variables: {
-                county: value
-                  .map(el => el.county)
-                  .filter((value, index, self) => self.indexOf(value) === index),
-                town: value.map(el => el.town),
-              },
-            })
-            setIsSearch(true)
-          }}
-        />
       </div>
       {auth.user.clinic ? <BottomNavigation.Chat /> : <BottomNavigation />}
     </>

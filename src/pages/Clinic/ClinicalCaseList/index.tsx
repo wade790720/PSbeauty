@@ -51,35 +51,39 @@ const ClinicalCaseList = () => {
           <SearchBar onInputClick={() => go.toSearchList("")} />
           <Icon name="chat" className={styled["chat-icon"]} />
         </div>
-        <Banner images={adImages} />
-        {getCasesQuery?.data?.cases?.edges?.map(el => (
-          <CaseCard
-            key={el?.node?.id}
-            isCollected={
-              getCollectedCaseQuery?.data?.me?.userCollectedCases?.some(
-                item => item?.id === el?.node?.id,
-              ) || false
-            }
-            title={el?.node?.title || ""}
-            clinic={el?.node?.clinic?.name || ""}
-            clinicId={el?.node?.clinic?.id || ""}
-            introduction={el?.node?.description || ""}
-            images={[el?.node?.beforeImage || "", el?.node?.afterImage || ""]}
-            tags={el?.node?.categories?.map(el => el?.name || "")}
-            caseId={el?.node?.id || ""}
-          />
-        ))}
-        <Button className={styled.button} onClick={() => setOpen(true)}>
-          <Icon name="funnel" className={styled.funnel} />
-          分類篩選
-        </Button>
-        <SubjectFilter
-          open={open}
-          onClose={() => setOpen(false)}
-          getValue={value => console.log(value)}
-          topCategoriesQuery={query}
-          defaultValue={[]}
-        />
+        <div className={styled.inner}>
+          <Banner images={adImages} />
+          {getCasesQuery?.data?.cases?.edges?.map(el => (
+            <CaseCard
+              key={el?.node?.id}
+              isCollected={
+                getCollectedCaseQuery?.data?.me?.userCollectedCases?.some(
+                  item => item?.id === el?.node?.id,
+                ) || false
+              }
+              title={el?.node?.title || ""}
+              clinic={el?.node?.clinic?.name || ""}
+              clinicId={el?.node?.clinic?.id || ""}
+              introduction={el?.node?.description || ""}
+              images={[el?.node?.beforeImage || "", el?.node?.afterImage || ""]}
+              tags={el?.node?.categories?.map(el => el?.name || "")}
+              caseId={el?.node?.id || ""}
+            />
+          ))}
+          <div className={styled.filter}>
+            <Button className={styled.button} onClick={() => setOpen(true)}>
+              <Icon name="funnel" className={styled.funnel} />
+              分類篩選
+            </Button>
+            <SubjectFilter
+              open={open}
+              onClose={() => setOpen(false)}
+              getValue={value => console.log(value)}
+              topCategoriesQuery={query}
+              defaultValue={[]}
+            />
+          </div>
+        </div>
       </div>
       <BottomNavigation />
     </>

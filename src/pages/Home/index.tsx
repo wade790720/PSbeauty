@@ -102,20 +102,24 @@ const Home = () => {
             <Icon name="chat" className={styled["chat-icon"]} />
           </div>
         </div>
-        <Banner images={adImages} />
-        {list}
-        <Button
-          className={styled.button}
-          onClick={() => (auth?.user?.id ? setConsult(true) : go.toSignIn())}>
-          <Icon name="notePencil" className={styled.notePencil} />
-          匿名諮詢
-        </Button>
-        <Consulting
-          open={consult}
-          onClose={(result: string) => {
-            setConsult(false)
-          }}
-        />
+        <div className={styled.inner}>
+          <Banner images={adImages} />
+          {list}
+          <div className={styled.filter}>
+            <Button
+              className={styled.button}
+              onClick={() => (auth?.user?.id ? setConsult(true) : go.toSignIn())}>
+              <Icon name="notePencil" className={styled.notePencil} />
+              匿名諮詢
+            </Button>
+            <Consulting
+              open={consult}
+              onClose={() => {
+                setConsult(false)
+              }}
+            />
+          </div>
+        </div>
       </div>
       {auth.user.clinic ? <BottomNavigation.Chat /> : <BottomNavigation />}
     </>

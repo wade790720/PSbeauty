@@ -13,7 +13,7 @@ type toTarget = {
   /** 診所內頁 */
   toClinicInner: ({ id, tab }: { id: string; tab: string }) => void
   /** 診所活動內頁 */
-  toClinicActivity: ({ id, activityId }: { id: string; activityId: string }) => void
+  toClinicActivity: ({ clinicId, activityId }: { clinicId: string; activityId: string }) => void
   /** 案例 */
   toClinicCaseList: () => void
   /** 案例內頁 */
@@ -48,7 +48,7 @@ const useGo = (): toTarget => {
     toRegister: () => navigate("/register"),
     toClinic: () => navigate("/clinic"),
     toClinicInner: ({ id, tab }) => navigate(`/clinic/${id}/inner/${tab}`),
-    toClinicActivity: ({ id, activityId }) => navigate(`/clinic/${id}/inner/activities/${activityId}`),
+    toClinicActivity: ({ clinicId, activityId }) => navigate(`/clinic/${clinicId}/activity/${activityId}`),
     toClinicCaseList: () => navigate("/cases"),
     toClinicCase: ({ caseId, clinicId }) => navigate(`/clinic/${clinicId}/case/${caseId}`),
     toAdvertisement: ({ id }) => navigate(`/advertisement/${id}`),

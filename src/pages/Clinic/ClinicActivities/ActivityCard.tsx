@@ -18,7 +18,7 @@ const ActivityCard = ({ activityId, ...props }: ActivityCardProps) => {
       className={styled["activity-card"]}
       onClick={() =>
         go.toClinicActivity({
-          id: match?.params.id || "",
+          clinicId: match?.params.id || "",
           activityId,
         })
       }>

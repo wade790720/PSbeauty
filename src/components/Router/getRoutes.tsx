@@ -161,6 +161,15 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
         </Suspense>
       ),
     },
+    /* 診所活動內頁 */
+    {
+      path: "clinic/:id/activity/:activityId",
+      element: (
+        <Suspense>
+          <ClinicActivity />
+        </Suspense>
+      ),
+    },
     {
       path: "member",
       children: [
@@ -290,15 +299,6 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
                   element: (
                     <Suspense>
                       <ClinicActivities />
-                    </Suspense>
-                  ),
-                },
-                /* 診所活動內頁 */
-                {
-                  path: ":activityId",
-                  element: (
-                    <Suspense>
-                      <ClinicActivity />
                     </Suspense>
                   ),
                 },

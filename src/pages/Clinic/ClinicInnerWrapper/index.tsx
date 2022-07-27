@@ -15,12 +15,12 @@ type ContextType = { query: { data: GetClinicQueryHookResult["data"] } }
 
 const ClinicInnerWrapper = () => {
   const auth = useAuth()
-  const match = useMatch("/clinic/:id/inner/activities/:activityId")
+  const match = useMatch("/clinic/:id/activity/:activityId")
   const { id } = useParams()
   const location = useLocation()
 
   const [loadQuery, query] = useGetClinicLazyQuery()
-  location?.pathname.includes("/inner/info")
+
   useEffect(() => {
     if (match?.params.activityId) return
     loadQuery({

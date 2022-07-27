@@ -1158,10 +1158,8 @@ export type ComparableInt64OperationFilterInput = {
 /** 會員諮詢 */
 export type Consult = {
   __typename: "Consult"
-  /** 諮詢小分類 */
-  categories: Maybe<Array<Maybe<Scalars["String"]>>>
   /** 取得所屬小分類 */
-  category: Maybe<Array<Maybe<Category>>>
+  categories: Maybe<Array<Maybe<Category>>>
   /** 取得諮詢時間 */
   consultAt: Scalars["Long"]
   /** 諮詢內容 */
@@ -1227,6 +1225,21 @@ export type ConsultTopicReply = {
   topicId: Maybe<Scalars["String"]>
   /** 回覆者識別碼 */
   userId: Maybe<Scalars["String"]>
+}
+
+/** 以 email + password 建立 firebase 使用者 */
+export type CreateUserWithEmailAndPasswordInput = {
+  /** 使用者信箱 */
+  email: InputMaybe<Scalars["String"]>
+  /** 使用者密碼 */
+  password: InputMaybe<Scalars["String"]>
+}
+
+/** 以 email + password 建立 firebase 使用者 */
+export type CreateUserWithEmailAndPasswordPayload = {
+  __typename: "CreateUserWithEmailAndPasswordPayload"
+  /** Firebase token */
+  firebaseToken: Maybe<Scalars["String"]>
 }
 
 /** 客製化 token 內容 */
@@ -1469,6 +1482,8 @@ export type Mutation = {
   collectCase: Maybe<CollectCasePayload>
   /** [會員]一對一諮詢，由使用者直接諮詢診所 */
   consultClinic: Maybe<ConsultClinicPayload>
+  /** 以 Email+Password 建立 firebase 使用者 */
+  createUserWithEmailAndPassword: Maybe<CreateUserWithEmailAndPasswordPayload>
   /** [廠商]刪除診所活動頁 */
   deleteActivity: Maybe<DeleteActivityPayload>
   /** [廠商]刪除廠商廣告卡 */
@@ -1507,6 +1522,13 @@ export type Mutation = {
   removeCollectedCase: Maybe<RemoveCollectedCasePayload>
   /** [會員]回覆話題 */
   replyTopic: Maybe<ReplyTopicPayload>
+  /** 重新寄發認證信 */
+  sendEmailVerification: Maybe<SendEmailVerificationPayload>
+  /**
+   * 寄發密碼重設認證信，若成功會回傳 succeed = true.
+   * 若失敗會回傳 code 5001
+   */
+  sendPasswordResetEmail: Maybe<SendPasswordResetEmailPayload>
   /** [廠商]設定熱門關鍵字 */
   setPopularKeywords: Maybe<SetPopularKeywordsPayload>
   /**
@@ -1631,6 +1653,10 @@ export type MutationConsultClinicArgs = {
   input: InputMaybe<ConsultClinicInput>
 }
 
+export type MutationCreateUserWithEmailAndPasswordArgs = {
+  input: InputMaybe<CreateUserWithEmailAndPasswordInput>
+}
+
 export type MutationDeleteActivityArgs = {
   input: InputMaybe<DeleteActivityInput>
 }
@@ -1705,6 +1731,14 @@ export type MutationRemoveCollectedCaseArgs = {
 
 export type MutationReplyTopicArgs = {
   input: InputMaybe<ReplyTopicInput>
+}
+
+export type MutationSendEmailVerificationArgs = {
+  input: InputMaybe<SendEmailVerificationInput>
+}
+
+export type MutationSendPasswordResetEmailArgs = {
+  input: InputMaybe<SendPasswordResetEmailInput>
 }
 
 export type MutationSetPopularKeywordsArgs = {
@@ -2222,6 +2256,26 @@ export type SecondCategory = {
   parentId: Maybe<Scalars["String"]>
   /** 所屬大分類識別碼 */
   topCategoryId: Maybe<Scalars["String"]>
+}
+
+export type SendEmailVerificationInput = {
+  email: InputMaybe<Scalars["String"]>
+}
+
+export type SendEmailVerificationPayload = {
+  __typename: "SendEmailVerificationPayload"
+  succeed: Scalars["Boolean"]
+}
+
+/** 寄發重置密碼認證信 */
+export type SendPasswordResetEmailInput = {
+  email: InputMaybe<Scalars["String"]>
+}
+
+/** 寄發重置密碼認證信結果 */
+export type SendPasswordResetEmailPayload = {
+  __typename: "SendPasswordResetEmailPayload"
+  succeed: Scalars["Boolean"]
 }
 
 /** 設定熱門搜尋資料 */

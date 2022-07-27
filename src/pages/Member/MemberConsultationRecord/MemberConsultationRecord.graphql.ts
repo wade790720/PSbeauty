@@ -9,7 +9,7 @@ export const GetMe = gql`
         subject
         content
         consultAt
-        category {
+        categories {
           name
           id
         }

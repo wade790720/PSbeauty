@@ -15,7 +15,7 @@ export type GetMeQuery = {
       subject: string | null
       content: string | null
       consultAt: number
-      category: Array<{
+      categories: Array<{
         __typename: "Category"
         name: string | null
         id: string | null
@@ -33,7 +33,7 @@ export const GetMeDocument = gql`
         subject
         content
         consultAt
-        category {
+        categories {
           name
           id
         }

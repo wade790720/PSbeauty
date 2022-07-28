@@ -1,14 +1,7 @@
-import {
-  doc,
-  getFirestore,
-  onSnapshot,
-  serverTimestamp,
-  setDoc,
-  Timestamp,
-} from "firebase/firestore"
+import { doc, onSnapshot, serverTimestamp, setDoc, Timestamp } from "firebase/firestore"
 import { useEffect, useMemo, useRef } from "react"
 import { ConsultTopicReply } from "types/schema"
-import { app } from "./testFirebase"
+import { firestore } from "../../firebaseClient"
 
 type RealTimeMessage = Pick<ConsultTopicReply, "content" | "userId"> & {
   timestamp: Timestamp | ReturnType<typeof serverTimestamp>
@@ -26,7 +19,6 @@ const useRealtime = ({ chatroomId, onMessage }: useRealtimeProps) => {
   }
 
   const connected = useRef<boolean>(false)
-  const firestore = getFirestore(app)
   const chatroomRef = useMemo(() => {
     return doc(firestore, "chatroom", chatroomId)
   }, [chatroomId])

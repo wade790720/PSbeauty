@@ -6,6 +6,7 @@ export const GetMe = gql`
       consults {
         id
         images
+        days
         subject
         content
         consultAt

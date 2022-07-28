@@ -29,11 +29,13 @@ const HistoryRecordCard = ({ ...props }: HistoryRecordCardProps) => {
     <div className={styled.wrapper}>
       <div className={styled.title}>{props.title}</div>
       <div className={styled.date}>{props.date}</div>
-      <div className={styled.images}>
-        {props.images?.map((image, idx) => (
-          <img key={`img-${idx}`} src={image} />
-        ))}
-      </div>
+      {props.images.length > 0 && (
+        <div className={styled.images}>
+          {props.images.map((image, idx) => (
+            <img key={`img-${idx}`} src={image} />
+          ))}
+        </div>
+      )}
       <div className={cx(styled.content, open && styled.open)} ref={ref}>
         {props.introduction}
       </div>

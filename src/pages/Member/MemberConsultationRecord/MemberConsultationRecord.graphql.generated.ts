@@ -12,6 +12,7 @@ export type GetMeQuery = {
       __typename: "Consult"
       id: string | null
       images: Array<string | null> | null
+      days: number
       subject: string | null
       content: string | null
       consultAt: number
@@ -30,6 +31,7 @@ export const GetMeDocument = gql`
       consults {
         id
         images
+        days
         subject
         content
         consultAt

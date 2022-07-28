@@ -70,7 +70,7 @@ export type GetClinicsSearchQuery = {
 
 export const GetClinicsDocument = gql`
   query GetClinics {
-    clinics(order: { consultReplyCount: DESC }, first: 10, after: "MA==") {
+    clinics(order: { consultReplyCount: DESC }, first: 10) {
       totalCount
       pageInfo {
         hasNextPage
@@ -129,7 +129,6 @@ export const GetClinicsSearchDocument = gql`
       where: { county: { in: $county }, town: { in: $town } }
       order: { consultReplyCount: DESC }
       first: 10
-      after: "MA=="
     ) {
       totalCount
       pageInfo {

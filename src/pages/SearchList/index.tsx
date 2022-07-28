@@ -1,6 +1,4 @@
-import { useState } from "react"
-import { useParams } from "react-router-dom"
-import { useGo } from "components/Router"
+import { useParams, useNavigate, useSearchParams } from "react-router-dom"
 import styled from "./SearchList.module.scss"
 import cx from "classnames"
 import Backdrop from "components/Layout/Backdrop"
@@ -11,34 +9,37 @@ import {
 import { useEffect } from "react"
 
 const SearchList = () => {
-  const { id } = useParams()
-  const go = useGo()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const { text } = useParams()
+  const navigate = useNavigate()
+  const tag = searchParams.get("tag")
 
-  const [activeKeyword, setActiveKeyword] = useState("")
   const [loadQuery, query] = useGetSearchListLazyQuery()
   const getPopularKeywords = useGetPopularKeywordsQuery()
 
   useEffect(() => {
-    if (!id) return
+    if (!(tag || text)) return
     loadQuery({
       variables: {
-        contains: id,
+        contains: `${tag || text}`,
       },
     })
-    setActiveKeyword(id)
-  }, [id, loadQuery])
+  }, [text, searchParams, loadQuery])
 
   return (
     <Backdrop className={styled.wrapper}>
       <div className={styled.filters}>
         {getPopularKeywords?.data?.popularKeywords?.keywords?.map((el, idx) => (
           <div
-            className={cx({ [styled.active]: activeKeyword === el })}
+            className={cx({ [styled.active]: tag === el })}
             key={`keywords-${idx}`}
             onClick={() => {
               if (el) {
-                setActiveKeyword(el)
-                go.toSearchList(el)
+                if (tag === el) {
+                  navigate(-1)
+                } else {
+                  setSearchParams({ tag: el }, { replace: !!tag })
+                }
               }
             }}>
             {el}

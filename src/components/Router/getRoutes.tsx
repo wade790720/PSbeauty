@@ -107,7 +107,7 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
         },
         /* 搜尋列表 */
         {
-          path: ":id",
+          path: ":text",
           element: (
             <Suspense>
               <SearchList />

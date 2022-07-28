@@ -1,5 +1,4 @@
-import { useState } from "react"
-import { Outlet } from "react-router-dom"
+import { Outlet, useSearchParams, useParams } from "react-router-dom"
 import Header from "components/Layout/Header"
 import SearchBox from "components/SearchBox"
 import { useGo } from "components/Router"
@@ -25,13 +24,20 @@ const saveHistories = (list: string[]) => {
 }
 
 const SearchWrapper = () => {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const { text: originText } = useParams()
+  const tag = searchParams.get("tag")
   const go = useGo()
-  const [list, setList] = useState(getHistories())
 
   const onSubmit = (text: string) => {
+    const list = getHistories()
     list.unshift(text)
-    setList(saveHistories(list))
-    go.toSearchList(text)
+    saveHistories(list)
+    if (!tag) {
+      go.toSearchList(text, { replace: !!originText })
+    } else {
+      setSearchParams({ tag: text })
+    }
   }
 
   return (

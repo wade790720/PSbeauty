@@ -33,7 +33,7 @@ type toTarget = {
   /** 醫生修改密碼 */
   toDoctorUpdatePassword: () => void
   /** 搜尋結果列表 */
-  toSearchList: (text: string) => void
+  toSearchList: (text: string, options?: { replace: boolean }) => void
   /** 醫生信箱 */
   toDoctorInbox: () => void
   /** 個人信箱 */
@@ -58,7 +58,7 @@ const useGo = (): toTarget => {
     toQuestions: () => navigate("/member/questions"),
     toChatroom: ({ id }) => navigate(`/chatroom/${id}`),
     toDoctorUpdatePassword: () => navigate("/doctor/update-password"),
-    toSearchList: text => navigate(`/search/${text}`),
+    toSearchList: (text, options) => navigate(`/search/${text}`, options),
     toDoctorInbox: () => navigate("/doctor/inbox"),
     toMemberInbox: () => navigate("/member/inbox"),
   }

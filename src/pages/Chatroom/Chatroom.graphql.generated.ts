@@ -14,12 +14,17 @@ export type GeTopicDetailQuery = {
     consult: {
       __typename: "Consult"
       id: string | null
+      consultAt: number
       days: number
       subject: string | null
       images: Array<string | null> | null
-      consultAt: number
       content: string | null
       poster: { __typename: "User"; id: string | null } | null
+      categories: Array<{
+        __typename: "Category"
+        id: string | null
+        name: string | null
+      } | null> | null
     } | null
     replies: Array<{
       __typename: "ConsultTopicReply"
@@ -49,6 +54,7 @@ export const GeTopicDetailDocument = gql`
       }
       consult {
         id
+        consultAt
         days
         subject
         images
@@ -56,6 +62,10 @@ export const GeTopicDetailDocument = gql`
         content
         poster {
           id
+        }
+        categories {
+          id
+          name
         }
       }
       replies {

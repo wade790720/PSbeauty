@@ -2,14 +2,12 @@ import cx from "classnames"
 import HistoryRecordCard from "components/HistoryRecordCard"
 import Backdrop from "components/Layout/Backdrop"
 import Header from "components/Layout/Header"
+import dayjs from "dayjs"
 import { useAuth } from "hooks/useAuth"
-import React, { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
 import { useGeTopicDetailQuery, useReplyTopicMutation } from "./Chatroom.graphql.generated"
 import styled from "./Chatroom.module.scss"
-import Front from "./Front.png"
-import Left from "./Left.png"
-import Right from "./Right.png"
 import { ReactComponent as UploadImage } from "./UploadImage.svg"
 import useRealtime from "./useRealtime"
 
@@ -17,6 +15,10 @@ interface MessageRow {
   content: string
   userId: string
   key: string
+}
+
+const f = (dayjs: dayjs.Dayjs) => {
+  return dayjs.format("YYYY-MM-DD")
 }
 
 const Chatroom = () => {
@@ -68,6 +70,10 @@ const Chatroom = () => {
   }
 
   const newMessage = (msg: string) => {
+    if (!msg) {
+      return
+    }
+
     replyTopicMutation({
       variables: {
         input: {
@@ -94,21 +100,32 @@ const Chatroom = () => {
     userId: r?.userId || "",
   }))
 
+  const consultAt = dayjs((consult?.consultAt || 0) * 1000)
+  const endDay = consultAt.add(consult?.days || 0, "day")
+  // const today = dayjs("2022/7/15") // 測試
+  const today = dayjs()
+  const timeleft = endDay.diff(today, "day")
+
+  const images = (consult?.images || []).map(v => v || "")
+  const categories = (consult?.categories || []).map(v => v?.name || "")
+
   messages.push(...realtimes)
   return (
     <>
       <Header leftArrow title={clinic?.name || ""} />
       <Backdrop className={styled.wrapper}>
         <div className={cx(styled.row, styled.center)}>
-          <div className={styled.time}>Yesterday 9:41</div>
+          {/* <div className={styled.time}>Yesterday 9:41</div> */}
         </div>
         <div className={cx(styled.row, styled.center)}>
           <HistoryRecordCard
             title={consult?.subject || ""}
-            date="2022-05-18｜剩餘3天"
-            images={[Left, Front, Right]}
-            introduction="諮詢內容簡介說明文字，請將症例相關說明文字，僅供參考排版樣式，內容簡介...顯示更多"
-            tags={["蘋果肌", "痘痘針", "玻尿酸", "蘋果肌2", "痘痘針2", "玻尿酸2"]}
+            date={`起始日 ${f(consultAt)}｜到期日 ${f(endDay)}${
+              timeleft > 0 ? `(剩餘${timeleft}天)` : `(已過期)`
+            }`}
+            images={images}
+            introduction={consult?.content || ""}
+            tags={categories}
           />
         </div>
         {messages.map(v => {
@@ -129,18 +146,20 @@ const Chatroom = () => {
         })}
         <div ref={messagesEndRef}></div>
       </Backdrop>
-      <div className={styled.input}>
-        <div className={styled.control}>
-          <UploadImage />
-          <input
-            ref={msgInputRef}
-            value={message}
-            onChange={e => setMessage(e.target.value)}></input>
-          <div className={styled.submit} onClick={() => newMessage(message)}>
-            送出
+      {timeleft > 0 && (
+        <div className={styled.input}>
+          <div className={styled.control}>
+            <UploadImage />
+            <input
+              ref={msgInputRef}
+              value={message}
+              onChange={e => setMessage(e.target.value)}></input>
+            <div className={styled.submit} onClick={() => newMessage(message)}>
+              送出
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   )
 }

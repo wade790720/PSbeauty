@@ -9,6 +9,7 @@ export const GetTopicDetail = gql`
       }
       consult {
         id
+        consultAt
         days
         subject
         images
@@ -16,6 +17,10 @@ export const GetTopicDetail = gql`
         content
         poster {
           id
+        }
+        categories {
+          id
+          name
         }
       }
       replies {

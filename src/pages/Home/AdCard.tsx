@@ -2,6 +2,7 @@ import styled from "./Home.module.scss"
 import { useGo } from "components/Router"
 
 export type AdCardProps = {
+  id: string
   title: string
   content: string
   image: string
@@ -11,7 +12,7 @@ const AdCard = ({ ...props }: AdCardProps) => {
   const go = useGo()
 
   return (
-    <div className={styled["ad-card"]} onClick={() => go.toAdvertisement({ id: "face" })}>
+    <div className={styled["ad-card"]} onClick={() => go.toAdvertisement({ id: props.id })}>
       <div className={styled.title}>{props.title}</div>
       <div className={styled.content}>
         <div className={styled.picture}>

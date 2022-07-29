@@ -22,6 +22,7 @@ const MemberCollectClinicalCase = () => {
             images={[el?.beforeImage || "", el?.afterImage || ""]}
             tags={el?.categories?.map(el => el?.name || "")}
             caseId={el?.id || ""}
+            last={false}
           />
         ))}
       </div>

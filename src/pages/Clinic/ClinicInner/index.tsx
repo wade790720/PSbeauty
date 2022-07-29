@@ -75,6 +75,7 @@ const ClinicInner = () => {
           images={[el?.beforeImage || "", el?.afterImage || ""]}
           tags={el?.categories?.map(tag => tag?.name || "")}
           caseId={el?.id || ""}
+          last={false}
         />
       ))}
       {!auth.user.clinic && (

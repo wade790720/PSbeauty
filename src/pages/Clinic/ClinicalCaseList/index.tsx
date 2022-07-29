@@ -68,6 +68,7 @@ const ClinicalCaseList = () => {
               images={[el?.node?.beforeImage || "", el?.node?.afterImage || ""]}
               tags={el?.node?.categories?.map(el => el?.name || "")}
               caseId={el?.node?.id || ""}
+              last={false}
             />
           ))}
           <div className={styled.filter}>

@@ -73,6 +73,7 @@ const Home = () => {
             images={[cases[idx]?.beforeImage || "", cases[idx]?.afterImage || ""]}
             tags={cases[idx]?.categories?.map(tag => tag?.name || "")}
             caseId={cases[idx]?.id || ""}
+            last={casesCount === idx - 1}
           />,
         )
       }
@@ -82,6 +83,7 @@ const Home = () => {
       list.push(
         <AdCard
           key={adCards[i]?.id}
+          id={adCards[i]?.id || ""}
           title={adCards[i]?.title || ""}
           content={adCards[i]?.content || ""}
           image={adCards[i]?.image || ""}

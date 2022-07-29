@@ -18,6 +18,7 @@ export type CaseCardProps = {
   tags?: string[]
   amount?: number // 收藏人數
   caseId: string
+  last: boolean
 } & ReactProps.Component
 
 const CaseCard = ({ ...props }: CaseCardProps) => {

@@ -2590,9 +2590,9 @@ export type UpdateClinicPaymentInput = {
   /** 診所識別碼 */
   id: InputMaybe<Scalars["String"]>
   /** 最後付費時間。若不傳此值則使用系統時間。 */
-  latestPayAt: Scalars["Long"]
+  latestPayAt: InputMaybe<Scalars["Long"]>
   /** 是否已付費 */
-  paid: Scalars["Boolean"]
+  paid: InputMaybe<Scalars["Boolean"]>
   /** 付費組數 */
   paySets: Scalars["Int"]
 }

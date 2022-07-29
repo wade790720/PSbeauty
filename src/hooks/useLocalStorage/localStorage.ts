@@ -1,4 +1,4 @@
-export type LocalStorageKey = "token" | "email"
+export type LocalStorageKey = "customToken" | "firebaseToken" | "email"
 export type LocalStorageValue = string | number | boolean
 
 export function getStorageValue(key: LocalStorageKey, defaultValue: LocalStorageValue) {

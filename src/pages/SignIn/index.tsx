@@ -35,12 +35,14 @@ const SignIn = () => {
         },
       })
       const email = info.account
-      const token = res?.data?.signInWithEmailAndPassword?.token || ""
-      setStorageValue("token", token)
+      const customToken = res?.data?.signInWithEmailAndPassword?.customToken || ""
+      const firebaseToken = res?.data?.signInWithEmailAndPassword?.firebaseToken || ""
+      setStorageValue("customToken", customToken)
+      setStorageValue("firebaseToken", firebaseToken)
       setStorageValue("email", email)
-      if (token && email) {
-        auth.signIn(token, info.account)
-        const parserCustomToken: { claims: AuthContextProps["user"] } = jwt_decode(token)
+      if (customToken && email) {
+        auth.signIn(customToken, info.account)
+        const parserCustomToken: { claims: AuthContextProps["user"] } = jwt_decode(customToken)
         parserCustomToken?.claims?.clinic
           ? go.toClinicInner({ id: parserCustomToken?.claims?.clinic, tab: "" })
           : go.toHome()

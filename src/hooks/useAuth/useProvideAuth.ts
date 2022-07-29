@@ -6,7 +6,7 @@ import { signOut as firebaseSignOut } from "firebaseClient"
 
 const useProvideAuth = () => {
   const [user, setUser] = useState<AuthContextProps["user"]>(() => {
-    const savedToken = getStorageValue("token", "")
+    const savedToken = getStorageValue("customToken", "")
     const email = getStorageValue("email", "")
     if (savedToken) {
       try {
@@ -52,7 +52,7 @@ const useProvideAuth = () => {
   }
 
   const signOut = () => {
-    removeStorageValue("token")
+    removeStorageValue("customToken")
     removeStorageValue("email")
     setUser(DEFAULT_USER)
     firebaseSignOut()

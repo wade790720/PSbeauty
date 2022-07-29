@@ -8,7 +8,7 @@ const httpLink = createHttpLink({
 })
 
 const authLink = setContext((_, { headers }) => {
-  const token = getStorageValue("token", "")
+  const token = getStorageValue("customToken", "")
   return {
     headers: {
       ...headers,

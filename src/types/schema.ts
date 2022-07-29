@@ -1166,6 +1166,10 @@ export type Consult = {
   content: Maybe<Scalars["String"]>
   /** 諮詢天數 */
   days: Scalars["Int"]
+  /** 是否開啟 */
+  enable: Scalars["Boolean"]
+  /** 開啟到期時間 */
+  expiresIn: Scalars["Long"]
   /** 物件識別碼 */
   id: Maybe<Scalars["String"]>
   /** 諮詢圖片 */
@@ -1433,6 +1437,23 @@ export type EmailExistsPayload = {
   exists: Scalars["Boolean"]
 }
 
+/** 開關諮詢輸入 */
+export type EnableConsultInput = {
+  /** 開 true/ 關 false */
+  enable: Scalars["Boolean"]
+  id: InputMaybe<Scalars["String"]>
+}
+
+/** /// 開關結果 */
+export type EnableConsultPayload = {
+  __typename: "EnableConsultPayload"
+  /** 開 true/ 關 false */
+  enable: Scalars["Boolean"]
+  /** 諮詢公開到期日 */
+  expiresIn: Scalars["Long"]
+  id: Maybe<Scalars["String"]>
+}
+
 export type ListStringOperationFilterInput = {
   all: InputMaybe<StringOperationFilterInput>
   any: InputMaybe<Scalars["Boolean"]>
@@ -1450,7 +1471,11 @@ export type Mutation = {
   addAdImage: Maybe<AddAdImagePayload>
   /** [會員]問卷回覆 */
   addAnswer: Maybe<AddAnswerPayload>
-  /** [廠商]新增案例 */
+  /**
+   * [廠商]新增案例。
+   * 錯誤碼 5001: 診所可用組數為 0.
+   * 錯誤碼 5002: 診所已存在案例已達到上限。
+   */
   addCase: Maybe<AddCasePayload>
   /** [廠商]建立小分類 */
   addCategory: Maybe<AddCategoryPayload>
@@ -1500,7 +1525,10 @@ export type Mutation = {
   deleteClinic: Maybe<DeleteClinicPayload>
   /** [廠商]刪除診所圖片 */
   deleteClinicImage: Maybe<DeleteClinicImagePayload>
-  /** [會員]刪除諮詢 */
+  /**
+   * [會員]刪除諮詢
+   * 錯誤碼 4031: 非諮詢者本人進行刪除
+   */
   deleteConsult: Maybe<DeleteConsultPayload>
   /** [廠商]刪除診所醫生 */
   deleteDoctor: Maybe<DeleteDoctorPayload>
@@ -1514,6 +1542,11 @@ export type Mutation = {
   deleteTopCategory: Maybe<DeleteTopCategoryPayload>
   /** [會員]刪除使用者 */
   deleteUser: Maybe<DeleteUserPayload>
+  /**
+   * [會員]啟動/關閉諮詢
+   * 錯誤碼 4031: 非諮詢者本人進行刪除
+   */
+  enableConsult: Maybe<EnableConsultPayload>
   /** [診所管理員]讀取診所收件夾訊息 */
   readClinicInbox: Maybe<ReadClinicInboxPayload>
   /** [會員/診所管理員]讀取諮詢回覆 */
@@ -1522,7 +1555,10 @@ export type Mutation = {
   removeCollectedCase: Maybe<RemoveCollectedCasePayload>
   /** [會員]回覆話題 */
   replyTopic: Maybe<ReplyTopicPayload>
-  /** 重新寄發認證信 */
+  /**
+   * 重新寄發認證信
+   * 錯誤碼： 5001，寄發時發生錯誤
+   */
   sendEmailVerification: Maybe<SendEmailVerificationPayload>
   /**
    * 寄發密碼重設認證信，若成功會回傳 succeed = true.
@@ -1559,7 +1595,7 @@ export type Mutation = {
   updateClinicImage: Maybe<UpdateClinicImagePayload>
   /** [廠商]修改診所聯絡人資訊 */
   updateClinicOwner: Maybe<UpdateClinicOwnerPayload>
-  /** [廠商]修改診所付費資訊 */
+  /** [廠商]修改診所付費資訊。 */
   updateClinicPayment: Maybe<UpdateClinicPaymentPayload>
   /** [廠商]更新診所醫生 */
   updateDoctor: Maybe<UpdateDoctorPayload>
@@ -1715,6 +1751,10 @@ export type MutationDeleteTopCategoryArgs = {
 
 export type MutationDeleteUserArgs = {
   input: InputMaybe<DeleteUserInput>
+}
+
+export type MutationEnableConsultArgs = {
+  input: InputMaybe<EnableConsultInput>
 }
 
 export type MutationReadClinicInboxArgs = {
@@ -1955,7 +1995,7 @@ export type Query = {
   /** 取得問卷列表 */
   questions: Maybe<QuestionsConnection>
   /** 更新 customToken */
-  refershToken: Maybe<CustomTokenPayload>
+  refreshToken: Maybe<CustomTokenPayload>
   /** 取得分類樹 */
   topCategories: Maybe<Array<Maybe<TopCategory>>>
   /** 依 Topic 識別碼取得 Topic */
@@ -2295,9 +2335,13 @@ export type SignInWithEmailAndPasswordInput = {
   password: InputMaybe<Scalars["String"]>
 }
 
+/** 登入憑證結果 */
 export type SignInWithEmailAndPasswordPayload = {
   __typename: "SignInWithEmailAndPasswordPayload"
-  token: Maybe<Scalars["String"]>
+  /** 會員系統憑證 */
+  customToken: Maybe<Scalars["String"]>
+  /** Firebase Auth 憑證 */
+  firebaseToken: Maybe<Scalars["String"]>
 }
 
 export enum SortEnumType {
@@ -2545,7 +2589,7 @@ export type UpdateClinicPayload = {
 export type UpdateClinicPaymentInput = {
   /** 診所識別碼 */
   id: InputMaybe<Scalars["String"]>
-  /** 最後付費時間 */
+  /** 最後付費時間。若不傳此值則使用系統時間。 */
   latestPayAt: Scalars["Long"]
   /** 是否已付費 */
   paid: Scalars["Boolean"]

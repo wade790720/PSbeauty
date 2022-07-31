@@ -1,15 +1,14 @@
 import { useState } from "react"
-import axios from "axios"
 import styled from "./Register.module.scss"
 import Form from "components/Form"
 import Button from "components/Button"
 import Modal from "components/Modal"
 import { useGo } from "components/Router"
+import apolloClient from "graphql/apolloClient"
 import * as FirebaseClient from "firebaseClient"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { endpoint, headers } from "utils/apiConfig"
-import { print } from "graphql"
-import gql from "graphql-tag"
+import { AddUserDocument } from "graphql/queries/addUser.graphql.generated"
+import { setStorageValue, removeStorageValue } from "hooks/useLocalStorage"
 
 type Inputs = {
   account: string
@@ -17,14 +16,6 @@ type Inputs = {
   name: string
   phone: string
 }
-
-const ADD_USER = gql`
-  mutation addUser($phone: String, $clientToken: [String], $name: String!) {
-    addUser(input: { phone: $phone, clientToken: $clientToken, name: $name }) {
-      id
-    }
-  }
-`
 
 const Register = () => {
   const [open, setOpen] = useState(false)
@@ -37,20 +28,20 @@ const Register = () => {
   const onSubmit: SubmitHandler<Inputs> = info => {
     FirebaseClient.register(info.account, info.password)
       .then(async idToken => {
-        const { data } = await axios.post(
-          endpoint,
-          {
-            query: print(ADD_USER),
+        setStorageValue("customToken", idToken)
+        try {
+          const { data } = await apolloClient.mutate({
+            mutation: AddUserDocument,
             variables: {
               phone: info.phone,
               name: info.name,
               clientToken: ["firebase_client_device_token"],
             },
-          },
-          { headers: headers(idToken) },
-        )
-
-        if (data?.data?.addUser?.id) console.log("register success")
+          })
+          if (data?.data?.addUser?.id) console.log("register success")
+        } finally {
+          removeStorageValue("customToken")
+        }
       })
       .catch(() => {
         setOpen(true)

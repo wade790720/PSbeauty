@@ -1121,6 +1121,8 @@ export type CollectCaseInput = {
 /** 使用者蒐集案例回覆 */
 export type CollectCasePayload = {
   __typename: "CollectCasePayload"
+  /** 案例被收藏的次數 */
+  collectedCount: Scalars["Long"]
   /** 使用者識別碼 */
   userId: Maybe<Scalars["String"]>
 }
@@ -1188,6 +1190,7 @@ export type ConsultClinicInput = {
    * ///
    */
   categories: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
+  /** 診所識別碼 */
   clinicId: InputMaybe<Scalars["String"]>
   /** 諮詢內容 */
   content: InputMaybe<Scalars["String"]>
@@ -2260,6 +2263,8 @@ export type RemoveCollectedCaseInput = {
 /** 移除病例輸出資料 */
 export type RemoveCollectedCasePayload = {
   __typename: "RemoveCollectedCasePayload"
+  /** 案例被收藏的次數 */
+  collectedCount: Scalars["Long"]
   /** 使用者識別碼 */
   userId: Maybe<Scalars["String"]>
 }

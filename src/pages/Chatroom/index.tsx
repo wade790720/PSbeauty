@@ -6,7 +6,11 @@ import dayjs from "dayjs"
 import { useAuth } from "hooks/useAuth"
 import { useEffect, useRef, useState } from "react"
 import { useParams } from "react-router-dom"
-import { useGeTopicDetailQuery, useReplyTopicMutation } from "./Chatroom.graphql.generated"
+import {
+  useGeTopicDetailQuery,
+  useReadReplyMutation,
+  useReplyTopicMutation,
+} from "./Chatroom.graphql.generated"
 import styled from "./Chatroom.module.scss"
 import { ReactComponent as UploadImage } from "./UploadImage.svg"
 import useRealtime from "./useRealtime"
@@ -29,6 +33,7 @@ const Chatroom = () => {
   const [realtimes, setRealtimes] = useState<MessageRow[]>([])
   const realtimesRef = useRef<MessageRow[]>()
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
   const topicDetail = useGeTopicDetailQuery({
     variables: {
       input: id || "",
@@ -36,6 +41,8 @@ const Chatroom = () => {
   })
 
   const [replyTopicMutation] = useReplyTopicMutation()
+
+  const [readReply] = useReadReplyMutation()
 
   realtimesRef.current = realtimes
   const notify = useRealtime({
@@ -60,6 +67,16 @@ const Chatroom = () => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
     }, 100)
   }
+
+  useEffect(() => {
+    readReply({
+      variables: {
+        input: {
+          topicId: id || "",
+        },
+      },
+    })
+  })
 
   useEffect(() => {
     scrollToBottom()

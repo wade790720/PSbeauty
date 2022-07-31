@@ -41,3 +41,11 @@ export const ReplyTopic = gql`
     }
   }
 `
+
+export const ReadReply = gql`
+  mutation readReply($input: ReadReplyInput) {
+    readReply(input: $input) {
+      replyId
+    }
+  }
+`

@@ -45,6 +45,14 @@ export type ReplyTopicMutation = {
   replyTopic: { __typename: "ReplyTopicPayload"; id: string | null } | null
 }
 
+export type ReadReplyMutationVariables = Types.Exact<{
+  input: Types.InputMaybe<Types.ReadReplyInput>
+}>
+
+export type ReadReplyMutation = {
+  readReply: { __typename: "ReadReplyPayload"; replyId: Array<string | null> | null } | null
+}
+
 export const GeTopicDetailDocument = gql`
   query GeTopicDetail($input: String) {
     topic(topicId: $input) {
@@ -162,4 +170,48 @@ export type ReplyTopicMutationResult = Apollo.MutationResult<ReplyTopicMutation>
 export type ReplyTopicMutationOptions = Apollo.BaseMutationOptions<
   ReplyTopicMutation,
   ReplyTopicMutationVariables
+>
+export const ReadReplyDocument = gql`
+  mutation readReply($input: ReadReplyInput) {
+    readReply(input: $input) {
+      replyId
+    }
+  }
+`
+export type ReadReplyMutationFn = Apollo.MutationFunction<
+  ReadReplyMutation,
+  ReadReplyMutationVariables
+>
+
+/**
+ * __useReadReplyMutation__
+ *
+ * To run a mutation, you first call `useReadReplyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReadReplyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [readReplyMutation, { data, loading, error }] = useReadReplyMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useReadReplyMutation(
+  baseOptions?: Apollo.MutationHookOptions<ReadReplyMutation, ReadReplyMutationVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<ReadReplyMutation, ReadReplyMutationVariables>(
+    ReadReplyDocument,
+    options,
+  )
+}
+export type ReadReplyMutationHookResult = ReturnType<typeof useReadReplyMutation>
+export type ReadReplyMutationResult = Apollo.MutationResult<ReadReplyMutation>
+export type ReadReplyMutationOptions = Apollo.BaseMutationOptions<
+  ReadReplyMutation,
+  ReadReplyMutationVariables
 >

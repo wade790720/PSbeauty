@@ -8,6 +8,9 @@ import styled from "./Consulting.module.scss"
 import Icon from "components/Icon"
 import SubjectFilter from "components/SubjectFilter"
 import Modal from "components/Modal"
+import { storage } from "firebaseClient"
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
+import uuid from "utils/uuid"
 import {
   useGetTopCategoriesLazyQuery,
   useGetConsultClinicMutation,
@@ -45,20 +48,22 @@ const DEFAULT_MODAL_MSG = {
   cancel: "取消",
 }
 
+const createFile = (raw: File | null = null, url = "") => ({ raw, url })
+
 const Consulting = (props: consultProps) => {
   const auth = useAuth()
   const [subject, setSubject] = useState("")
-  const [categories, setCategoies] = useState("")
-  const [chosenCycle, setChosenCycle] = useState<number>()
+  const [categories, setCategories] = useState("")
+  const [chosenCycle, setChosenCycle] = useState<number | "">("")
   const [content, setContent] = useState("")
   const [modalMsg, setModalMsg] = useState(DEFAULT_MODAL_MSG)
   const [open, setOpen] = useState(false)
   const [isAlert, setIsAlert] = useState(false)
-  const [file, setFile] = useState({
-    file1: "",
-    file2: "",
-    file3: "",
-  })
+  const [files, setFiles] = useState<{ raw: File | null; url: string }[]>([
+    createFile(),
+    createFile(),
+    createFile(),
+  ])
   const [loadQuery, query] = useGetTopCategoriesLazyQuery()
   const [getConsultClinicMutation] = useGetConsultClinicMutation({})
 
@@ -68,7 +73,7 @@ const Consulting = (props: consultProps) => {
   }, [open])
 
   const getCategories = (value: string) => {
-    setCategoies(value)
+    setCategories(value)
   }
 
   return (
@@ -112,7 +117,7 @@ const Consulting = (props: consultProps) => {
               <Dropdown.Toggle>
                 <InputGroup className={styled.classify}>
                   <Form.Input
-                    value={DAYS.find(el => el.value === chosenCycle)?.name}
+                    value={DAYS.find(el => el.value === chosenCycle)?.name || ""}
                     placeholder="請點擊選擇"
                     className={styled.input}
                   />
@@ -141,91 +146,51 @@ const Consulting = (props: consultProps) => {
           <Form.Group layout="vertical" className={styled["input-group"]}>
             <Form.Label required>附加檔案</Form.Label>
             <div className={styled.uploads}>
-              <Form.Group>
-                <label id="pic-1" className={styled.upload}>
-                  <div className={styled.add}>+</div>
-                  <input
-                    id="pic-1"
-                    type="file"
-                    accept="image/*"
-                    onChange={e =>
-                      e.target.files &&
-                      setFile({ ...file, file1: URL.createObjectURL(e.target.files[0]) })
-                    }
-                  />
-                  {file.file1 && (
-                    <div className={styled.image}>
-                      <img src={file.file1} />
-                      <div
-                        className={styled.delete}
-                        onClick={e => {
-                          e.preventDefault()
-                          setFile(prev => {
-                            return { file1: prev.file2 || "", file2: prev.file3 || "", file3: "" }
-                          })
-                        }}>
-                        X
-                      </div>
-                    </div>
-                  )}
-                </label>
-              </Form.Group>
-              <Form.Group>
-                <label id="pic-2" className={styled.upload}>
-                  <div className={styled.add}>+</div>
-                  <input
-                    id="pic-2"
-                    type="file"
-                    accept="image/*"
-                    onChange={e =>
-                      e.target.files &&
-                      setFile({ ...file, file2: URL.createObjectURL(e.target.files[0]) })
-                    }
-                  />
-                  {file.file2 && (
-                    <div className={styled.image}>
-                      <img src={file.file2} />
-                      <div
-                        className={styled.delete}
-                        onClick={e => {
-                          e.preventDefault()
-                          setFile(prev => {
-                            return { ...file, file2: prev.file3 || "", file3: "" }
-                          })
-                        }}>
-                        X
-                      </div>
-                    </div>
-                  )}{" "}
-                </label>
-              </Form.Group>
-              <Form.Group>
-                <label id="pic-3" className={styled.upload}>
-                  <div className={styled.add}>+</div>
-                  <input
-                    id="pic-3"
-                    type="file"
-                    accept="image/*"
-                    onChange={e =>
-                      e.target.files &&
-                      setFile({ ...file, file3: URL.createObjectURL(e.target.files[0]) })
-                    }
-                  />
-                  {file.file3 && (
-                    <div className={styled.image}>
-                      <img src={file.file3} />
-                      <div
-                        className={styled.delete}
-                        onClick={e => {
-                          e.preventDefault()
-                          setFile({ ...file, file3: "" })
-                        }}>
-                        X
-                      </div>
-                    </div>
-                  )}{" "}
-                </label>
-              </Form.Group>
+              {files.map((file, index) => {
+                return (
+                  <Form.Group key={`upload-image-${index}`}>
+                    <label id={`pic-${index}`} className={styled.upload}>
+                      <div className={styled.add}>+</div>
+                      <input
+                        id={`pic-${index}`}
+                        type="file"
+                        accept="image/*"
+                        onChange={e => {
+                          if (e.target.files && e.target.files.length) {
+                            const tempFile = createFile(
+                              e.target.files[0],
+                              URL.createObjectURL(e.target.files[0]),
+                            )
+                            setFiles([
+                              index === 0 ? tempFile : files[0],
+                              index === 1 ? tempFile : files[1],
+                              index === 2 ? tempFile : files[2],
+                            ])
+                          }
+                        }}
+                      />
+                      {file.raw && (
+                        <div className={styled.image}>
+                          <img src={file.url} />
+                          <div
+                            className={styled.delete}
+                            onClick={e => {
+                              e.preventDefault()
+                              const tempFile = createFile()
+                              setFiles([
+                                index === 0 ? tempFile : files[0],
+                                index === 1 ? tempFile : files[1],
+                                index === 2 ? tempFile : files[2],
+                              ])
+                            }}>
+                            X
+                          </div>
+                        </div>
+                      )}
+                    </label>
+                  </Form.Group>
+                )
+              })}
             </div>
           </Form.Group>
         </Form>
@@ -236,34 +201,43 @@ const Consulting = (props: consultProps) => {
           onClick={() => {
             props.onClose()
             setSubject("")
-            setCategoies("")
-            setChosenCycle(undefined)
-            setFile({
-              file1: "",
-              file2: "",
-              file3: "",
-            })
+            setCategories("")
+            setChosenCycle("")
+            setFiles([createFile(), createFile(), createFile()])
           }}>
           取消
         </Button>
         <Button
           onClick={() => {
-            if (!subject || categories.length === 0 || !chosenCycle) {
+            const uploadImages = files.flatMap(file => {
+              if (!file.raw) return []
+              return {
+                ref: ref(storage, `image/${uuid()}/${file.raw?.name || ""}`),
+                file: file.raw,
+              }
+            })
+            if (!subject || !categories.length || !chosenCycle || !uploadImages.length) {
               setIsAlert(true)
               return
             }
 
-            getConsultClinicMutation({
-              variables: {
-                userId: auth?.user.id,
-                subject,
-                categories,
-                days: Number(chosenCycle),
-                content,
-                images: [],
-                // images: [file.file1, file.file2, file.file3],
-              },
-            })
+            Promise.all(uploadImages.map(upload => uploadBytes(upload.ref, upload.file)))
+              .then(snapshots =>
+                Promise.all(snapshots.map(snapshot => getDownloadURL(snapshot.ref))),
+              )
+              .then(images => {
+                return getConsultClinicMutation({
+                  variables: {
+                    userId: auth?.user.id,
+                    subject,
+                    categories,
+                    days: Number(chosenCycle),
+                    content,
+                    images,
+                  },
+                })
+              })
+
             // props.onClose({
             //   subject,
             //   categories,

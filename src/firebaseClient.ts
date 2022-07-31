@@ -7,6 +7,7 @@ import {
 import { getMessaging, getToken } from "firebase/messaging"
 import { initializeApp } from "firebase/app"
 import { getFirestore } from "firebase/firestore"
+import { getStorage } from "firebase/storage"
 
 const firebaseConfig = {
   apiKey: "AIzaSyAzu4iFHYHhXrXByuCU25u7kpgW6b49WEA",
@@ -22,8 +23,9 @@ const auth = getAuth(app)
 // This browser doesn't support the API's required to use the Firebase SDK.
 const messaging = getMessaging(app)
 const firestore = getFirestore(app)
+const storage = getStorage(app)
 
-export { firestore }
+export { firestore, storage }
 
 export const getClientToken = () => {
   return getToken(messaging)

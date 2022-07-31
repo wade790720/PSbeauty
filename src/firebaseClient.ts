@@ -3,6 +3,7 @@ import {
   getAuth,
   sendEmailVerification,
   sendPasswordResetEmail,
+  User,
 } from "firebase/auth"
 import { getMessaging, getToken } from "firebase/messaging"
 import { initializeApp } from "firebase/app"
@@ -24,8 +25,9 @@ const auth = getAuth(app)
 const messaging = getMessaging(app)
 const firestore = getFirestore(app)
 const storage = getStorage(app)
+const cachedUserCred: { user: User | null; timeout: number | null } = { user: null, timeout: null }
 
-export { firestore, storage }
+export { firestore, storage, cachedUserCred }
 
 export const getClientToken = () => {
   return getToken(messaging)
@@ -34,8 +36,23 @@ export const getClientToken = () => {
 export const register = async (email: string, password: string) => {
   const userCred = await createUserWithEmailAndPassword(auth, email, password)
   await sendEmailVerification(userCred.user)
+  cachedUserCred.user = userCred.user
+  cachedUserCred.timeout = new Date().getTime() + 60000
   const idToken = await userCred.user.getIdToken(true)
   return idToken
+}
+
+export const resendEmailVerification = async () => {
+  if (
+    cachedUserCred.user &&
+    cachedUserCred.timeout &&
+    new Date().getTime() >= cachedUserCred.timeout
+  ) {
+    await sendEmailVerification(cachedUserCred.user)
+    cachedUserCred.timeout = new Date().getTime() + 60000
+    return true
+  }
+  return false
 }
 
 export const sentResetPassword = async (email: string) => {

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "./Register.module.scss"
 import Form from "components/Form"
 import Button from "components/Button"
@@ -18,8 +18,20 @@ type Inputs = {
 }
 
 const Register = () => {
-  const [open, setOpen] = useState(false)
+  const [openError, setOpenError] = useState(false)
+  const [openConfirm, setOpenConfirm] = useState(false)
   const go = useGo()
+  const [countDown, setCountDown] = useState(60)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (FirebaseClient.cachedUserCred.timeout) {
+        const ms = FirebaseClient.cachedUserCred.timeout - new Date().getTime()
+        setCountDown(ms > 0 ? Math.ceil(ms / 1000) : 0)
+      }
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [FirebaseClient.cachedUserCred.timeout])
 
   const { register, handleSubmit } = useForm<Inputs>({
     mode: "all",
@@ -38,13 +50,15 @@ const Register = () => {
               clientToken: ["firebase_client_device_token"],
             },
           })
-          if (data?.data?.addUser?.id) console.log("register success")
+          if (data?.addUser?.id) {
+            setOpenConfirm(true)
+          }
         } finally {
           removeStorageValue("customToken")
         }
       })
       .catch(() => {
-        setOpen(true)
+        setOpenError(true)
       })
   }
 
@@ -60,8 +74,25 @@ const Register = () => {
         <Button type="submit" variant="transparent">
           註冊
         </Button>
-        <Modal title="帳號已存在" open={open} confirmText="確定" onClose={() => setOpen(false)}>
+        <Modal
+          title="帳號已存在"
+          open={openError}
+          confirmText="確定"
+          onClose={() => setOpenError(false)}>
           錯誤提示文字
+        </Modal>
+        <Modal
+          title="認證郵件已寄送"
+          open={openConfirm}
+          confirmText={"重新發送" + (countDown ? `(${countDown})` : "")}
+          confirmButtonProps={{ disabled: !!countDown }}
+          cancelText="關閉"
+          onConfirm={() => FirebaseClient.resendEmailVerification()}
+          onCancel={() => {
+            setOpenConfirm(false)
+            go.toSignIn()
+          }}>
+          請至信箱選取郵件，並點選確認按鈕
         </Modal>
       </Form>
       <div className={styled.actions}>

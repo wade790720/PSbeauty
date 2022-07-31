@@ -46,8 +46,20 @@ const ModalFooter = (props: ModalFooterProps) => {
 
   return (
     <footer className={cx(styled.wrapper, props.className)} style={props.style}>
-      {!!props.cancelText && <div onClick={handleCancel}>{props.cancelText}</div>}
-      {!!props.confirmText && <div onClick={handleConfirm}>{props.confirmText}</div>}
+      {!!props.cancelText && (
+        <div
+          onClick={handleCancel}
+          className={cx({ [styled.disabled]: props.cancelButtonProps?.disabled })}>
+          {props.cancelText}
+        </div>
+      )}
+      {!!props.confirmText && (
+        <div
+          onClick={handleConfirm}
+          className={cx({ [styled.disabled]: props.confirmButtonProps?.disabled })}>
+          {props.confirmText}
+        </div>
+      )}
     </footer>
   )
 }

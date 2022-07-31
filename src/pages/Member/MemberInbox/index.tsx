@@ -1,13 +1,16 @@
+import cx from "classnames"
 import styled from "./MemberInbox.module.scss"
 import Header from "components/Layout/Header"
-import MessageCard from "components/MessageCard"
+// import MessageCard from "components/MessageCard"
 
 const MemberInbox = () => {
   return (
     <>
       <Header title="收件夾" leftArrow />
-      <div className={styled.wrapper}>
-        <MessageCard
+      {/* TODO: 如果接了真資料，ture要改成判斷是否是無資料 */}
+      <div className={cx(styled.wrapper, { [styled.empty]: true })}>
+        <div className={styled["empty-card"]}>尚無信件</div>
+        {/* <MessageCard
           unread
           title="玉辛醫美診所"
           message="您好，我有「雙眼皮」「痘痘針」「玻尿..."
@@ -18,7 +21,7 @@ const MemberInbox = () => {
         <MessageCard title="五代醫美診所" message="您好，我有「雙眼皮」「痘痘針」「玻尿..." />
         <MessageCard title="健康醫美診所" message="您好，我有「雙眼皮」「痘痘針」「玻尿..." />
         <MessageCard title="玉辛醫美診所" message="您好，我有「雙眼皮」「痘痘針」「玻尿..." />
-        <MessageCard title="山茼醫美診所" message="您好，我有「雙眼皮」「痘痘針」「玻尿..." />
+        <MessageCard title="山茼醫美診所" message="您好，我有「雙眼皮」「痘痘針」「玻尿..." /> */}
       </div>
     </>
   )

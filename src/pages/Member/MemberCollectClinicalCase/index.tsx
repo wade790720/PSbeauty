@@ -1,3 +1,4 @@
+import cx from "classnames"
 import styled from "./MemberCollectClinicalCase.module.scss"
 import Header from "components/Layout/Header"
 import CaseCard from "components/CaseCard"
@@ -10,7 +11,9 @@ const MemberCollectClinicalCase = () => {
   return (
     <>
       <Header title="收藏案例" leftArrow />
-      <div className={styled.wrapper}>
+      <div
+        className={cx(styled.wrapper, { [styled.empty]: !data?.me?.userCollectedCases?.length })}>
+        <div className={styled["empty-card"]}>尚無收藏案例</div>
         {data?.me?.userCollectedCases?.map(el => (
           <CaseCard
             key={el?.id}

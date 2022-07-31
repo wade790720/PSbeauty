@@ -21,7 +21,7 @@ const Register = () => {
   const [openError, setOpenError] = useState(false)
   const [openConfirm, setOpenConfirm] = useState(false)
   const go = useGo()
-  const [countDown, setCountDown] = useState(60)
+  const [countDown, setCountDown] = useState(30)
 
   useEffect(() => {
     const interval = setInterval(() => {

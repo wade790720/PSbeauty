@@ -1,3 +1,4 @@
+import cx from "classnames"
 import styled from "./MemberConsultationRecord.module.scss"
 import Header from "components/Layout/Header"
 import HistoryRecordCard from "components/HistoryRecordCard"
@@ -20,7 +21,8 @@ const MemberConsultationRecord = () => {
   return (
     <>
       <Header title="諮詢歷史紀錄件夾" leftArrow />
-      <div className={styled.wrapper}>
+      <div className={cx(styled.wrapper, { [styled.empty]: !data?.me?.consults?.length })}>
+        <div className={styled["empty-card"]}>尚無諮詢紀錄</div>
         {data?.me?.consults?.map(el => {
           const date = dayjs((el?.consultAt || 0) * 1000).format("YYYY-MM-DD")
           return (

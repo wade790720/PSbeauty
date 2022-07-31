@@ -5,6 +5,17 @@
   grid-gap: 12px;
 }
 
+.empty {
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 120%;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  color: #AAB0B2;
+}
+
 .doctor {
   display: flex;
   flex-direction: column;

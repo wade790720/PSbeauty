@@ -1,3 +1,4 @@
+import cx from "classnames"
 import styled from "./MemberInbox.module.scss"
 import Header from "components/Layout/Header"
 import MessageCard from "components/MessageCard"
@@ -16,7 +17,8 @@ const MemberInbox = () => {
   return (
     <>
       <Header title="收件夾" leftArrow />
-      <div className={styled.wrapper}>
+      <div className={cx(styled.wrapper, { [styled.empty]: (replyInbox?.length || 0) <= 0 })}>
+        <div className={styled["empty-card"]}>尚無信件</div>
         {replyInbox?.map(msg => (
           <MessageCard
             key={msg?.id}

@@ -137,6 +137,7 @@ const Chatroom = () => {
         </div>
         <div className={cx(styled.row, styled.center)}>
           <HistoryRecordCard
+            id={consult?.id || ""}
             title={consult?.subject || ""}
             date={`起始日 ${f(consultAt)}｜到期日 ${f(endDay)}${
               timeleft > 0 ? `(剩餘${timeleft}天)` : `(已過期)`

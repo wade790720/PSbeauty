@@ -62,7 +62,6 @@ const SearchList = () => {
                   ""
                 }
               />
-              {/* <img src={el.node?.afterImage || ""} /> */}
               <div className={styled.cover} />
               <div className={styled.title}>
                 {(el.node?.beforeImageText?.includes(tag || text || "") &&

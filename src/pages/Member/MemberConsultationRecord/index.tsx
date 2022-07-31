@@ -4,7 +4,10 @@ import Header from "components/Layout/Header"
 import HistoryRecordCard from "components/HistoryRecordCard"
 import { useAuth } from "hooks/useAuth"
 import { useGo } from "components/Router"
-import { useGetMeQuery } from "./MemberConsultationRecord.graphql.generated"
+import {
+  useGetMeQuery,
+  useEnableConsultMutation,
+} from "./MemberConsultationRecord.graphql.generated"
 import Loading from "components/QueryStatus/Loading"
 import dayjs from "dayjs"
 
@@ -12,12 +15,14 @@ const MemberConsultationRecord = () => {
   const { data, loading } = useGetMeQuery()
   const auth = useAuth()
   const go = useGo()
+  const [enableConsultMutation] = useEnableConsultMutation()
 
   if (loading) return <Loading />
   if (!auth?.user?.id) {
     go.toSignIn()
     return <></>
   }
+
   return (
     <>
       <Header title="諮詢歷史紀錄件夾" leftArrow />
@@ -28,12 +33,21 @@ const MemberConsultationRecord = () => {
           return (
             <HistoryRecordCard
               key={el?.id}
+              id={el?.id || ""}
               title={el?.subject || ""}
               date={`${date}｜剩餘${el?.days}天`}
-              toggle={true}
+              toggle={el?.enable}
               images={el?.images?.map(el => el ?? "") || []}
               introduction={el?.content || ""}
               tags={el?.categories?.map(el => el?.name || "") || []}
+              onChange={({ id, enable }: { id: string; enable: boolean }) => {
+                enableConsultMutation({
+                  variables: {
+                    id,
+                    enable,
+                  },
+                })
+              }}
             />
           )
         })}

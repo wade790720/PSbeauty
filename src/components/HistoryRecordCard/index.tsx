@@ -1,21 +1,28 @@
-import { useState, useRef, useLayoutEffect } from "react"
+import { useState, useRef, useLayoutEffect, useEffect } from "react"
 import styled from "./HistoryRecordCard.module.scss"
 import cx from "classnames"
 import Switch from "react-switch"
 
 export type HistoryRecordCardProps = {
+  id: string
   title: string
   date: string
   toggle?: boolean
   images: string[]
   introduction: string
   tags?: string[]
+  onChange?: ({ id, enable }: { id: string; enable: boolean }) => void
 } & ReactProps.Component
 
 const HistoryRecordCard = ({ ...props }: HistoryRecordCardProps) => {
   const [over, setOver] = useState<boolean>(false)
   const [open, setOpen] = useState<boolean>(false)
+  const [toggle, setToggle] = useState<boolean>()
   const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    setToggle(props.toggle)
+  }, [props.toggle])
 
   useLayoutEffect(() => {
     const clientHeight = ref.current?.clientHeight || 0
@@ -62,9 +69,12 @@ const HistoryRecordCard = ({ ...props }: HistoryRecordCardProps) => {
             onColor="#7873E5"
             offColor="#CBCBCD"
             activeBoxShadow="0 0 2px 3px #7873E533"
-            checked={props.toggle}
+            checked={toggle || false}
             onChange={() => {
-              console.log("toggle", props.toggle)
+              if (props.onChange) {
+                setToggle(!toggle)
+                props.onChange({ id: props.id, enable: !props.toggle })
+              }
             }}
           />
         </div>

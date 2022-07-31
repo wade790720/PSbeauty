@@ -10,11 +10,21 @@ export const GetMe = gql`
         subject
         content
         consultAt
+        enable
         categories {
           name
           id
         }
       }
+    }
+  }
+`
+
+export const EnableConsult = gql`
+  mutation EnableConsult($id: String!, $enable: Boolean!) {
+    enableConsult(input: { id: $id, enable: $enable }) {
+      id
+      enable
     }
   }
 `

@@ -21,6 +21,27 @@ export type GetTopCategoriesQuery = {
   } | null> | null
 }
 
+export type GetConsultClinicMutationVariables = Types.Exact<{
+  userId: Types.InputMaybe<Types.Scalars["String"]>
+  days: Types.Scalars["Int"]
+  categories: Types.InputMaybe<
+    Array<Types.InputMaybe<Types.Scalars["String"]>> | Types.InputMaybe<Types.Scalars["String"]>
+  >
+  images: Types.InputMaybe<
+    Array<Types.InputMaybe<Types.Scalars["String"]>> | Types.InputMaybe<Types.Scalars["String"]>
+  >
+  subject: Types.Scalars["String"]
+  content: Types.Scalars["String"]
+}>
+
+export type GetConsultClinicMutation = {
+  consultClinic: {
+    __typename: "ConsultClinicPayload"
+    id: string | null
+    topicId: string | null
+  } | null
+}
+
 export const GetTopCategoriesDocument = gql`
   query GetTopCategories {
     topCategories {
@@ -74,4 +95,73 @@ export type GetTopCategoriesLazyQueryHookResult = ReturnType<typeof useGetTopCat
 export type GetTopCategoriesQueryResult = Apollo.QueryResult<
   GetTopCategoriesQuery,
   GetTopCategoriesQueryVariables
+>
+export const GetConsultClinicDocument = gql`
+  mutation GetConsultClinic(
+    $userId: String
+    $days: Int!
+    $categories: [String]
+    $images: [String]
+    $subject: String!
+    $content: String!
+  ) {
+    consultClinic(
+      input: {
+        userId: $userId
+        days: $days
+        categories: $categories
+        images: $images
+        subject: $subject
+        content: $content
+      }
+    ) {
+      id
+      topicId
+    }
+  }
+`
+export type GetConsultClinicMutationFn = Apollo.MutationFunction<
+  GetConsultClinicMutation,
+  GetConsultClinicMutationVariables
+>
+
+/**
+ * __useGetConsultClinicMutation__
+ *
+ * To run a mutation, you first call `useGetConsultClinicMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useGetConsultClinicMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [getConsultClinicMutation, { data, loading, error }] = useGetConsultClinicMutation({
+ *   variables: {
+ *      userId: // value for 'userId'
+ *      days: // value for 'days'
+ *      categories: // value for 'categories'
+ *      images: // value for 'images'
+ *      subject: // value for 'subject'
+ *      content: // value for 'content'
+ *   },
+ * });
+ */
+export function useGetConsultClinicMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    GetConsultClinicMutation,
+    GetConsultClinicMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<GetConsultClinicMutation, GetConsultClinicMutationVariables>(
+    GetConsultClinicDocument,
+    options,
+  )
+}
+export type GetConsultClinicMutationHookResult = ReturnType<typeof useGetConsultClinicMutation>
+export type GetConsultClinicMutationResult = Apollo.MutationResult<GetConsultClinicMutation>
+export type GetConsultClinicMutationOptions = Apollo.BaseMutationOptions<
+  GetConsultClinicMutation,
+  GetConsultClinicMutationVariables
 >

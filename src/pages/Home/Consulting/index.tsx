@@ -3,54 +3,92 @@ import Form, { InputGroup, Append } from "components/Form"
 import Dropdown from "components/Dropdown"
 import Button from "components/Button"
 import { useState, useEffect } from "react"
+import { useAuth } from "hooks/useAuth"
 import styled from "./Consulting.module.scss"
 import Icon from "components/Icon"
 import SubjectFilter from "components/SubjectFilter"
-import { useGetTopCategoriesLazyQuery } from "./Consulting.graphql.generated"
+import Modal from "components/Modal"
+import {
+  useGetTopCategoriesLazyQuery,
+  useGetConsultClinicMutation,
+} from "./Consulting.graphql.generated"
 
 type consultProps = {
   open: boolean
-  onClose: (result: string) => void
+  onClose: (target?: {
+    subject: string
+    categories: string | null[]
+    days: number
+    content: string
+    images: string[]
+  }) => void
+}
+
+const DAYS = [
+  {
+    name: "一天",
+    value: 1,
+  },
+  {
+    name: "二天",
+    value: 2,
+  },
+  {
+    name: "三天",
+    value: 3,
+  },
+]
+
+const DEFAULT_MODAL_MSG = {
+  title: "送出錯誤",
+  content: "需填寫必填欄位",
+  cancel: "取消",
 }
 
 const Consulting = (props: consultProps) => {
-  const [chosenSubject, setChosenSubject] = useState("")
-  const [chosenCycle, setChosenCycle] = useState("")
+  const auth = useAuth()
+  const [subject, setSubject] = useState("")
+  const [categories, setCategoies] = useState("")
+  const [chosenCycle, setChosenCycle] = useState<number>()
+  const [content, setContent] = useState("")
+  const [modalMsg, setModalMsg] = useState(DEFAULT_MODAL_MSG)
   const [open, setOpen] = useState(false)
+  const [isAlert, setIsAlert] = useState(false)
   const [file, setFile] = useState({
     file1: "",
     file2: "",
     file3: "",
   })
   const [loadQuery, query] = useGetTopCategoriesLazyQuery()
+  const [getConsultClinicMutation] = useGetConsultClinicMutation({})
 
   useEffect(() => {
     if (!open) return
     loadQuery()
   }, [open])
 
-  const getChosenSubject = (value: string) => {
-    setChosenSubject(value)
+  const getCategories = (value: string) => {
+    setCategoies(value)
   }
 
   return (
-    <Drawer open={props.open} onClose={() => props.onClose("")} size="100%">
+    <Drawer open={props.open} onClose={() => props.onClose()} size="100%">
       <div className={styled.wrapper}>
         <h1>諮詢內容</h1>
         <Form className={styled.form}>
           <Form.Group layout="vertical" className={styled["input-group"]}>
             <Form.Label required>標題</Form.Label>
-            <Form.Input placeholder="請輸入文字" className={styled.input} />
+            <Form.Input
+              placeholder="請輸入文字"
+              className={styled.input}
+              onChange={e => setSubject(e.target.value)}
+            />
           </Form.Group>
           <Form.Group layout="vertical" className={styled["input-group"]}>
             <Form.Label required>分類</Form.Label>
             <div onClick={() => setOpen(true)} style={{ width: "100%" }}>
               <InputGroup className={styled.classify}>
-                <Form.Input
-                  value={chosenSubject}
-                  placeholder="請點擊選擇"
-                  className={styled.input}
-                />
+                <Form.Input value={categories} placeholder="請點擊選擇" className={styled.input} />
                 <Append>
                   <Icon name="caretDown" />
                 </Append>
@@ -59,7 +97,7 @@ const Consulting = (props: consultProps) => {
             <SubjectFilter.Member
               open={open}
               onClose={() => setOpen(false)}
-              getValue={value => getChosenSubject(value)}
+              getValue={value => getCategories(value)}
               topCategories={query?.data?.topCategories?.map(el => el?.name || "")}
               query={query}
             />
@@ -69,12 +107,12 @@ const Consulting = (props: consultProps) => {
             <Dropdown
               className={styled.dropdown}
               onSelect={(_, { eventKey }) => {
-                setChosenCycle(String(eventKey))
+                if (typeof eventKey === "number") setChosenCycle(eventKey)
               }}>
               <Dropdown.Toggle>
                 <InputGroup className={styled.classify}>
                   <Form.Input
-                    value={chosenCycle}
+                    value={DAYS.find(el => el.value === chosenCycle)?.name}
                     placeholder="請點擊選擇"
                     className={styled.input}
                   />
@@ -84,19 +122,21 @@ const Consulting = (props: consultProps) => {
                 </InputGroup>
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                {["一天", "二天", "三天"].map(value => {
-                  return (
-                    <Dropdown.Item key={value} eventKey={value}>
-                      <p>{value}</p>
-                    </Dropdown.Item>
-                  )
-                })}
+                {DAYS.map(item => (
+                  <Dropdown.Item key={item?.value} eventKey={item?.value}>
+                    <p>{item?.name}</p>
+                  </Dropdown.Item>
+                ))}
               </Dropdown.Menu>
             </Dropdown>
           </Form.Group>
           <Form.Group layout="vertical" className={styled["input-group"]}>
             <Form.Label>諮詢問題</Form.Label>
-            <Form.Textarea placeholder="請輸入文字" className={styled.textarea} />
+            <Form.Textarea
+              placeholder="請輸入文字"
+              className={styled.textarea}
+              onChange={e => setContent(e.target.value)}
+            />
           </Form.Group>
           <Form.Group layout="vertical" className={styled["input-group"]}>
             <Form.Label required>附加檔案</Form.Label>
@@ -194,17 +234,55 @@ const Consulting = (props: consultProps) => {
         <Button
           variant="text"
           onClick={() => {
-            props.onClose(chosenSubject)
-            setChosenSubject("")
+            props.onClose()
+            setSubject("")
+            setCategoies("")
+            setChosenCycle(undefined)
+            setFile({
+              file1: "",
+              file2: "",
+              file3: "",
+            })
           }}>
           取消
         </Button>
         <Button
           onClick={() => {
-            props.onClose(chosenSubject)
+            if (!subject || categories.length === 0 || !chosenCycle) {
+              setIsAlert(true)
+              return
+            }
+
+            getConsultClinicMutation({
+              variables: {
+                userId: auth?.user.id,
+                subject,
+                categories,
+                days: Number(chosenCycle),
+                content,
+                images: [],
+                // images: [file.file1, file.file2, file.file3],
+              },
+            })
+            // props.onClose({
+            //   subject,
+            //   categories,
+            //   days: chosenCycle || 0,
+            //   content,
+            //   images: [file.file1, file.file2, file.file3],
+            // })
           }}>
           送出
         </Button>
+        <Modal
+          title={modalMsg.title}
+          open={isAlert}
+          cancelText={modalMsg.cancel}
+          onCancel={() => {
+            setIsAlert(false)
+          }}>
+          {modalMsg.content}
+        </Modal>
       </div>
     </Drawer>
   )

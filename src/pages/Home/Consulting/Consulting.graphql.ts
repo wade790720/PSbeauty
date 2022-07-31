@@ -14,3 +14,28 @@ export const GetTopCategories = gql`
     }
   }
 `
+
+export const GetConsultClinic = gql`
+  mutation GetConsultClinic(
+    $userId: String
+    $days: Int!
+    $categories: [String]
+    $images: [String]
+    $subject: String!
+    $content: String!
+  ) {
+    consultClinic(
+      input: {
+        userId: $userId
+        days: $days
+        categories: $categories
+        images: $images
+        subject: $subject
+        content: $content
+      }
+    ) {
+      id
+      topicId
+    }
+  }
+`

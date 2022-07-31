@@ -1,24 +1,31 @@
 import styled from "./MemberInbox.module.scss"
 import Header from "components/Layout/Header"
 import MessageCard from "components/MessageCard"
+import { useGetMemberInboxQuery } from "./MemberInbox.graphql.generated"
+import Loading from "components/QueryStatus/Loading"
 
 const MemberInbox = () => {
+  const getMemberInbox = useGetMemberInboxQuery()
+
+  if (getMemberInbox.loading) {
+    return <Loading />
+  }
+
+  const replyInbox = getMemberInbox.data?.me?.replyInbox
+
   return (
     <>
       <Header title="收件夾" leftArrow />
       <div className={styled.wrapper}>
-        <MessageCard
-          unread
-          title="玉辛醫美診所"
-          message="您好，我有「雙眼皮」「痘痘針」「玻尿..."
-        />
-        <MessageCard unread title="山茼醫美診所" message="好的，謝謝告知。" />
-        <MessageCard unread title="和黛醫美診所" message="了解，回診時間再跟您電話聯繫。" />
-        <MessageCard title="關楊哲健康醫美診所" message="您好，我有「雙眼皮」「痘痘針」「玻尿..." />
-        <MessageCard title="五代醫美診所" message="您好，我有「雙眼皮」「痘痘針」「玻尿..." />
-        <MessageCard title="健康醫美診所" message="您好，我有「雙眼皮」「痘痘針」「玻尿..." />
-        <MessageCard title="玉辛醫美診所" message="您好，我有「雙眼皮」「痘痘針」「玻尿..." />
-        <MessageCard title="山茼醫美診所" message="您好，我有「雙眼皮」「痘痘針」「玻尿..." />
+        {replyInbox?.map(msg => (
+          <MessageCard
+            key={msg?.id}
+            topicId={msg?.topic?.id || ""}
+            unread={(msg?.readAt || 0) <= 0}
+            title={msg?.topic?.clinic?.name || ""}
+            message={msg?.content || ""}
+          />
+        ))}
       </div>
     </>
   )

@@ -14,6 +14,7 @@ import {
 import styled from "./Chatroom.module.scss"
 import { ReactComponent as UploadImage } from "./UploadImage.svg"
 import useRealtime from "./useRealtime"
+import Loading from "components/QueryStatus/Loading"
 
 interface MessageRow {
   content: string
@@ -76,14 +77,14 @@ const Chatroom = () => {
         },
       },
     })
-  })
+  }, [])
 
   useEffect(() => {
     scrollToBottom()
   }, [topicDetail.loading])
 
   if (topicDetail.loading) {
-    return <div>loading</div>
+    return <Loading />
   }
 
   const newMessage = (msg: string) => {

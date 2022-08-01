@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom"
 export type HeaderProps = {
   leftArrow?: boolean
   title?: string
+  url?: string
 } & ReactProps.Component
 
 const Header = ({ style = {}, ...props }: HeaderProps) => {
@@ -18,7 +19,7 @@ const Header = ({ style = {}, ...props }: HeaderProps) => {
       })}
       style={{ ...style }}>
       {props.leftArrow && (
-        <div onClick={() => navigate(-1)}>
+        <div onClick={() => (props.url ? navigate(props.url) : navigate(-1))}>
           <Icon className={styled["back"]} name="LeftArrow" />
         </div>
       )}

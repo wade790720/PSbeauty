@@ -38,6 +38,7 @@ const ClinicInnerWrapper = () => {
       <Header
         leftArrow={!(location?.pathname.includes("/inner/info") && auth?.user?.clinic)}
         title={query?.data?.clinic?.name || ""}
+        url={`/clinic/${id}/inner/info`}
       />
       <Backdrop style={{ paddingBottom: "49px" }}>
         <ClinicSwitch />

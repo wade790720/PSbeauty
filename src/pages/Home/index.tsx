@@ -20,7 +20,7 @@ const Home = () => {
   const go = useGo()
   const auth = useAuth()
   const [getCasesLazyQuery, getCasesQuery] = useGetCasesLazyQuery()
-  const getCollectedCaseQuery = useGetCollectedCaseQuery()
+  const getCollectedCaseQuery = useGetCollectedCaseQuery({ fetchPolicy: "no-cache" })
   const getAdCardsQuery = useGetAdCardsQuery()
   const getAdImagesQuery = useGetAdImagesQuery({
     variables: {

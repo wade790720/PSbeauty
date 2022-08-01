@@ -14,12 +14,13 @@ import Loading from "components/QueryStatus/Loading"
 
 const ClinicalCase = () => {
   const { caseId } = useParams()
-  const getCollectItemsQuery = useGetCollectItemsQuery()
+  const getCollectItemsQuery = useGetCollectItemsQuery({ fetchPolicy: "no-cache" })
   const { data, loading } = useGetCaseQuery({
     variables: {
       id: caseId || "",
     },
   })
+
   const [isCollected, setIsCollected] = useState(false)
 
   useEffect(() => {

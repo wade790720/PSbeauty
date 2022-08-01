@@ -38,7 +38,11 @@ export type CollectCaseMutationVariables = Types.Exact<{
 }>
 
 export type CollectCaseMutation = {
-  collectCase: { __typename: "CollectCasePayload"; userId: string | null } | null
+  collectCase: {
+    __typename: "CollectCasePayload"
+    userId: string | null
+    collectedCount: number
+  } | null
 }
 
 export type RemoveCollectedCaseMutationVariables = Types.Exact<{
@@ -46,7 +50,11 @@ export type RemoveCollectedCaseMutationVariables = Types.Exact<{
 }>
 
 export type RemoveCollectedCaseMutation = {
-  removeCollectedCase: { __typename: "RemoveCollectedCasePayload"; userId: string | null } | null
+  removeCollectedCase: {
+    __typename: "RemoveCollectedCasePayload"
+    userId: string | null
+    collectedCount: number
+  } | null
 }
 
 export const GetCaseDocument = gql`
@@ -153,6 +161,7 @@ export const CollectCaseDocument = gql`
   mutation CollectCase($caseId: String!) {
     collectCase(input: { caseId: $caseId }) {
       userId
+      collectedCount
     }
   }
 `
@@ -197,6 +206,7 @@ export const RemoveCollectedCaseDocument = gql`
   mutation RemoveCollectedCase($caseId: String!) {
     removeCollectedCase(input: { caseId: $caseId }) {
       userId
+      collectedCount
     }
   }
 `

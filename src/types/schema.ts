@@ -1510,7 +1510,13 @@ export type Mutation = {
   collectCase: Maybe<CollectCasePayload>
   /** [會員]一對一諮詢，由使用者直接諮詢診所 */
   consultClinic: Maybe<ConsultClinicPayload>
-  /** 以 Email+Password 建立 firebase 使用者 */
+  /**
+   * 以 Email+Password 建立 firebase 使用者.
+   * 錯誤碼 5001: email 已被註冊且已通過驗證。
+   * 錯誤碼 5002: email 已被註冊但未通過驗證。
+   * 錯誤碼 5003: 註冊帳號失敗。
+   * 錯誤碼 5004: 帳號建立成功，但驗證信發送失敗。
+   */
   createUserWithEmailAndPassword: Maybe<CreateUserWithEmailAndPasswordPayload>
   /** [廠商]刪除診所活動頁 */
   deleteActivity: Maybe<DeleteActivityPayload>

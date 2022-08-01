@@ -25,19 +25,26 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
   const go = useGo()
   const auth = useAuth()
   const [isCollected, setIsCollected] = useState(props.isCollected)
+  const [amount, setAmount] = useState(props.amount)
 
   const [collectCaseMutation] = useCollectCaseMutation({
     variables: {
       caseId: props.caseId,
     },
-    onCompleted: () => setIsCollected(true),
+    onCompleted: props => {
+      setIsCollected(true)
+      setAmount(props.collectCase?.collectedCount)
+    },
   })
 
   const [removeCollectCaseMutation] = useRemoveCollectedCaseMutation({
     variables: {
       caseId: props.caseId,
     },
-    onCompleted: () => setIsCollected(false),
+    onCompleted: props => {
+      setIsCollected(false)
+      setAmount(props?.removeCollectedCase?.collectedCount)
+    },
   })
 
   return (
@@ -82,7 +89,7 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
         ) : (
           <Icon name="BookmarkSimple" className={styled["bookmark-simple"]} />
         )}
-        <div className={styled.amount}>{props.amount}</div>
+        <div className={styled.amount}>{amount}</div>
       </div>
     </div>
   )

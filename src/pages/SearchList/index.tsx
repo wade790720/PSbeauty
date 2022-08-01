@@ -7,11 +7,13 @@ import {
   useGetPopularKeywordsQuery,
 } from "./SearchList.graphql.generated"
 import { useEffect } from "react"
+import { useGo } from "components/Router"
 
 const SearchList = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const { text } = useParams()
   const navigate = useNavigate()
+  const go = useGo()
   const tag = searchParams.get("tag")
 
   const [loadQuery, query] = useGetSearchListLazyQuery()
@@ -51,6 +53,12 @@ const SearchList = () => {
           query?.data?.cases?.edges.map((el, idx) => (
             <div
               key={el.node?.id}
+              onClick={() =>
+                go.toClinicCase({
+                  clinicId: el.node?.clinic?.id || "",
+                  caseId: el.node?.id || "",
+                })
+              }
               className={cx(
                 styled.cell,
                 styled[["a-style", "b-style", "c-style", "d-style", "e-style", "f-style"][idx % 6]],

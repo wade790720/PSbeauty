@@ -27,6 +27,9 @@ export const getSearchList = gql`
           beforeImageText
           afterImage
           afterImageText
+          clinic {
+            id
+          }
         }
       }
     }

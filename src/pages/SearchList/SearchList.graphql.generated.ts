@@ -28,6 +28,7 @@ export type GetSearchListQuery = {
         beforeImageText: string | null
         afterImage: string | null
         afterImageText: string | null
+        clinic: { __typename: "Clinic"; id: string | null } | null
       } | null
     }> | null
   } | null
@@ -66,6 +67,9 @@ export const GetSearchListDocument = gql`
           beforeImageText
           afterImage
           afterImageText
+          clinic {
+            id
+          }
         }
       }
     }

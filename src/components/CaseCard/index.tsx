@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "./CaseCard.module.scss"
 import Icon from "components/Icon"
 import useGo from "components/Router/useGo"
@@ -24,7 +24,7 @@ export type CaseCardProps = {
 const CaseCard = ({ ...props }: CaseCardProps) => {
   const go = useGo()
   const auth = useAuth()
-  const [isCollected, setIsCollected] = useState(props.isCollected)
+  const [isCollected, setIsCollected] = useState(false)
   const [amount, setAmount] = useState(props.amount)
 
   const [collectCaseMutation] = useCollectCaseMutation({
@@ -46,6 +46,10 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
       setAmount(props?.removeCollectedCase?.collectedCount)
     },
   })
+
+  useEffect(() => {
+    setIsCollected(props.isCollected)
+  }, [props.isCollected])
 
   return (
     <div

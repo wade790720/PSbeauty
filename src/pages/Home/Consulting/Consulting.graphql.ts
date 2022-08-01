@@ -17,25 +17,22 @@ export const GetTopCategories = gql`
 
 export const GetConsultClinic = gql`
   mutation GetConsultClinic(
-    $userId: String
-    $days: Int!
     $categories: [String]
+    $days: Int!
     $images: [String]
     $subject: String!
-    $content: String!
+    $content: String
   ) {
-    consultClinic(
+    addConsult(
       input: {
-        userId: $userId
-        days: $days
         categories: $categories
+        days: $days
         images: $images
         subject: $subject
         content: $content
       }
     ) {
       id
-      topicId
     }
   }
 `

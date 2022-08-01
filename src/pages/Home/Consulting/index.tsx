@@ -3,7 +3,6 @@ import Form, { InputGroup, Append } from "components/Form"
 import Dropdown from "components/Dropdown"
 import Button from "components/Button"
 import { useState, useEffect } from "react"
-import { useAuth } from "hooks/useAuth"
 import styled from "./Consulting.module.scss"
 import Icon from "components/Icon"
 import SubjectFilter from "components/SubjectFilter"
@@ -15,6 +14,7 @@ import {
   useGetTopCategoriesLazyQuery,
   useGetConsultClinicMutation,
 } from "./Consulting.graphql.generated"
+import { ChosenItemType } from "components/SubjectFilter/Member"
 
 type consultProps = {
   open: boolean
@@ -51,9 +51,8 @@ const DEFAULT_MODAL_MSG = {
 const createFile = (raw: File | null = null, url = "") => ({ raw, url })
 
 const Consulting = (props: consultProps) => {
-  const auth = useAuth()
   const [subject, setSubject] = useState("")
-  const [categories, setCategories] = useState("")
+  const [categories, setCategories] = useState<ChosenItemType>([])
   const [chosenCycle, setChosenCycle] = useState<number | "">("")
   const [content, setContent] = useState("")
   const [modalMsg, setModalMsg] = useState(DEFAULT_MODAL_MSG)
@@ -72,8 +71,12 @@ const Consulting = (props: consultProps) => {
     loadQuery()
   }, [open])
 
-  const getCategories = (value: string) => {
-    setCategories(value)
+  const handleInit = () => {
+    props.onClose()
+    setSubject("")
+    setCategories([])
+    setChosenCycle("")
+    setFiles([createFile(), createFile(), createFile()])
   }
 
   return (
@@ -93,7 +96,11 @@ const Consulting = (props: consultProps) => {
             <Form.Label required>分類</Form.Label>
             <div onClick={() => setOpen(true)} style={{ width: "100%" }}>
               <InputGroup className={styled.classify}>
-                <Form.Input value={categories} placeholder="請點擊選擇" className={styled.input} />
+                <Form.Input
+                  value={categories.map(el => el.name).toString()}
+                  placeholder="請點擊選擇"
+                  className={styled.input}
+                />
                 <Append>
                   <Icon name="caretDown" />
                 </Append>
@@ -102,7 +109,7 @@ const Consulting = (props: consultProps) => {
             <SubjectFilter.Member
               open={open}
               onClose={() => setOpen(false)}
-              getValue={value => getCategories(value)}
+              getValue={value => setCategories(value)}
               topCategories={query?.data?.topCategories?.map(el => el?.name || "")}
               query={query}
             />
@@ -196,15 +203,7 @@ const Consulting = (props: consultProps) => {
         </Form>
       </div>
       <div className={styled.buttons}>
-        <Button
-          variant="text"
-          onClick={() => {
-            props.onClose()
-            setSubject("")
-            setCategories("")
-            setChosenCycle("")
-            setFiles([createFile(), createFile(), createFile()])
-          }}>
+        <Button variant="text" onClick={handleInit}>
           取消
         </Button>
         <Button
@@ -226,25 +225,18 @@ const Consulting = (props: consultProps) => {
                 Promise.all(snapshots.map(snapshot => getDownloadURL(snapshot.ref))),
               )
               .then(images => {
-                return getConsultClinicMutation({
+                getConsultClinicMutation({
                   variables: {
-                    userId: auth?.user.id,
                     subject,
-                    categories,
+                    categories: categories.map(el => el.id),
                     days: Number(chosenCycle),
-                    content,
                     images,
+                    content,
                   },
+                  onCompleted: handleInit,
                 })
+                props.onClose()
               })
-
-            // props.onClose({
-            //   subject,
-            //   categories,
-            //   days: chosenCycle || 0,
-            //   content,
-            //   images: [file.file1, file.file2, file.file3],
-            // })
           }}>
           送出
         </Button>

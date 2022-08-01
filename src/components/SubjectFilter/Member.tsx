@@ -7,10 +7,15 @@ import cx from "classnames"
 import Icon from "components/Icon"
 import { GetTopCategoriesQueryHookResult } from "pages/Home/Consulting/Consulting.graphql.generated"
 
+export type ChosenItemType = {
+  id: string
+  name: string
+}[]
+
 type consultProps = {
   open: boolean
   onClose: () => void
-  getValue: (value: string) => void
+  getValue: (value: ChosenItemType) => void
   topCategories?: string[]
   query: GetTopCategoriesQueryHookResult
 }
@@ -23,7 +28,7 @@ type CategoryType = {
 const SubjectFilter = (props: consultProps) => {
   const [category, setCategory] = useState<CategoryType>()
   const [errorState, setErrorState] = useState(false)
-  const [chosenItem, setChosenItem] = useState<string[]>([])
+  const [chosenItem, setChosenItem] = useState<ChosenItemType>([])
   const topCategories = props?.query?.data?.topCategories
   const secondCategories = topCategories?.find(el => el?.name === category?.top)?.secondCategories
 
@@ -91,20 +96,21 @@ const SubjectFilter = (props: consultProps) => {
           <div className={styled.subjects}>
             {secondCategories
               ?.filter(el => el?.name === category?.second)?.[0]
-              ?.categories?.map(el => el?.name || "")
+              ?.categories?.map(el => ({ id: el?.id || "", name: el?.name || "" }))
               ?.map(subject => (
                 <Form.Checkbox
-                  key={subject}
+                  key={subject.id}
                   className={cx("checkbox", styled.item)}
-                  checked={chosenItem.some(el => el === subject)}
-                  value={subject}
+                  checked={chosenItem.some(el => el.name === subject.name)}
+                  value={subject.name}
                   onChange={e => {
                     if (e.target.checked && chosenItem.length === 3) {
                       e.target.checked = false
                       setErrorState(true)
                       return
                     }
-                    if (e.target.checked) setChosenItem([...chosenItem, subject])
+                    if (e.target.checked)
+                      setChosenItem([...chosenItem, { id: subject.id, name: subject.name }])
                     else {
                       chosenItem.splice(
                         chosenItem.findIndex(el => el === subject),
@@ -114,7 +120,7 @@ const SubjectFilter = (props: consultProps) => {
                     }
                     setErrorState(false)
                   }}>
-                  {subject}
+                  {subject.name}
                 </Form.Checkbox>
               ))}
           </div>
@@ -132,7 +138,7 @@ const SubjectFilter = (props: consultProps) => {
         <Button
           variant="primary"
           onClick={() => {
-            props.getValue(chosenItem.toString())
+            props.getValue(chosenItem)
             props.onClose()
             setErrorState(false)
           }}>

@@ -22,24 +22,19 @@ export type GetTopCategoriesQuery = {
 }
 
 export type GetConsultClinicMutationVariables = Types.Exact<{
-  userId: Types.InputMaybe<Types.Scalars["String"]>
-  days: Types.Scalars["Int"]
   categories: Types.InputMaybe<
     Array<Types.InputMaybe<Types.Scalars["String"]>> | Types.InputMaybe<Types.Scalars["String"]>
   >
+  days: Types.Scalars["Int"]
   images: Types.InputMaybe<
     Array<Types.InputMaybe<Types.Scalars["String"]>> | Types.InputMaybe<Types.Scalars["String"]>
   >
   subject: Types.Scalars["String"]
-  content: Types.Scalars["String"]
+  content: Types.InputMaybe<Types.Scalars["String"]>
 }>
 
 export type GetConsultClinicMutation = {
-  consultClinic: {
-    __typename: "ConsultClinicPayload"
-    id: string | null
-    topicId: string | null
-  } | null
+  addConsult: { __typename: "AddConsultPayload"; id: string | null } | null
 }
 
 export const GetTopCategoriesDocument = gql`
@@ -98,25 +93,22 @@ export type GetTopCategoriesQueryResult = Apollo.QueryResult<
 >
 export const GetConsultClinicDocument = gql`
   mutation GetConsultClinic(
-    $userId: String
-    $days: Int!
     $categories: [String]
+    $days: Int!
     $images: [String]
     $subject: String!
-    $content: String!
+    $content: String
   ) {
-    consultClinic(
+    addConsult(
       input: {
-        userId: $userId
-        days: $days
         categories: $categories
+        days: $days
         images: $images
         subject: $subject
         content: $content
       }
     ) {
       id
-      topicId
     }
   }
 `
@@ -138,9 +130,8 @@ export type GetConsultClinicMutationFn = Apollo.MutationFunction<
  * @example
  * const [getConsultClinicMutation, { data, loading, error }] = useGetConsultClinicMutation({
  *   variables: {
- *      userId: // value for 'userId'
- *      days: // value for 'days'
  *      categories: // value for 'categories'
+ *      days: // value for 'days'
  *      images: // value for 'images'
  *      subject: // value for 'subject'
  *      content: // value for 'content'

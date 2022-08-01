@@ -10,7 +10,8 @@ import { useRef, useState, useCallback } from "react"
 import Banner from "components/Banner"
 import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
-import { useGetAdCardsQuery, useGetCasesQuery } from "./Home.graphql.generated"
+import { useGetAdCardsQuery } from "./Home.graphql.generated"
+import { useGetCasesQuery } from "graphql/queries/getCases.graphql.generated"
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
 import { useGetCollectedCaseQuery } from "graphql/queries/getCollectedCase.graphql.generated"
 import { SortEnumType } from "types/schema"
@@ -20,7 +21,7 @@ const Home = () => {
   const go = useGo()
   const auth = useAuth()
   const cursorRef = useRef<string>("")
-  const getCasesQuery = useGetCasesQuery({ variables: { contains: "", after: null } })
+  const getCasesQuery = useGetCasesQuery({ variables: { after: null } })
   const getCollectedCaseQuery = useGetCollectedCaseQuery({ fetchPolicy: "no-cache" })
   const getAdCardsQuery = useGetAdCardsQuery()
   const getAdImagesQuery = useGetAdImagesQuery({
@@ -48,7 +49,6 @@ const Home = () => {
 
     getCasesQuery.fetchMore({
       variables: {
-        contains: "",
         after,
       },
       updateQuery: (prevResult, { fetchMoreResult }) => {

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import styled from "./ClinicalCaseList.module.scss"
 import Icon from "components/Icon"
 import BottomNavigation from "components/BottomNavigation"
@@ -8,10 +8,9 @@ import CaseCard from "components/CaseCard"
 import SubjectFilter from "components/SubjectFilter"
 import Banner from "components/Banner"
 import useGo from "components/Router/useGo"
-import {
-  useGetTopCategoriesLazyQuery,
-  useGetCasesQuery,
-} from "./ClinicalCaseList.graphql.generated"
+import { useGetTopCategoriesLazyQuery } from "./ClinicalCaseList.graphql.generated"
+import { useGetCasesQuery } from "graphql/queries/getCases.graphql.generated"
+
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
 import { useGetCollectedCaseQuery } from "graphql/queries/getCollectedCase.graphql.generated"
 import { SortEnumType } from "types/schema"
@@ -19,8 +18,11 @@ import { SortEnumType } from "types/schema"
 const ClinicalCaseList = () => {
   const go = useGo()
   const [open, setOpen] = useState(false)
+  const cursorRef = useRef<string>("")
   const [loadQuery, query] = useGetTopCategoriesLazyQuery()
   const getCasesQuery = useGetCasesQuery()
+  const edges = getCasesQuery?.data?.cases?.edges || []
+
   const getCollectedCaseQuery = useGetCollectedCaseQuery()
   const adImageCaseQuery = useGetAdImagesQuery({
     variables: {
@@ -44,6 +46,38 @@ const ClinicalCaseList = () => {
     loadQuery()
   }, [open])
 
+  const fetchMore = useCallback(() => {
+    const after = edges?.[edges.length - 1]?.cursor || null
+
+    getCasesQuery.fetchMore({
+      variables: {
+        after,
+      },
+      updateQuery: (prevResult, { fetchMoreResult }) => {
+        if (
+          !after ||
+          after === cursorRef?.current ||
+          !fetchMoreResult?.cases?.edges ||
+          !prevResult?.cases?.edges ||
+          prevResult?.cases?.edges.length > edges.length
+        )
+          return prevResult
+
+        fetchMoreResult.cases.edges = [
+          ...(prevResult?.cases?.edges || []),
+          ...(fetchMoreResult?.cases?.edges || []),
+        ]
+
+        fetchMoreResult.cases.nodes = [
+          ...(prevResult.cases?.nodes || []),
+          ...(fetchMoreResult?.cases?.nodes || []),
+        ]
+        cursorRef.current = after
+        return fetchMoreResult
+      },
+    })
+  }, [edges, getCasesQuery])
+
   return (
     <>
       <div className={styled.wrapper}>
@@ -53,22 +87,29 @@ const ClinicalCaseList = () => {
         </div>
         <div className={styled.inner}>
           <Banner images={adImages} />
-          {getCasesQuery?.data?.cases?.edges?.map(el => (
+          {getCasesQuery?.data?.cases?.nodes?.map((el, idx) => (
             <CaseCard
-              key={el?.node?.id}
+              key={el?.id}
               isCollected={
                 getCollectedCaseQuery?.data?.me?.userCollectedCases?.some(
-                  item => item?.id === el?.node?.id,
+                  item => item?.id === el?.id,
                 ) || false
               }
-              title={el?.node?.title || ""}
-              clinic={el?.node?.clinic?.name || ""}
-              clinicId={el?.node?.clinic?.id || ""}
-              introduction={el?.node?.description || ""}
-              images={[el?.node?.beforeImage || "", el?.node?.afterImage || ""]}
-              tags={el?.node?.categories?.map(el => el?.name || "")}
-              caseId={el?.node?.id || ""}
-              last={false}
+              title={el?.title || ""}
+              clinic={el?.clinic?.name || ""}
+              clinicId={el?.clinic?.id || ""}
+              introduction={el?.description || ""}
+              images={[el?.beforeImage || "", el?.afterImage || ""]}
+              tags={el?.categories?.map(el => el?.name || "")}
+              caseId={el?.id || ""}
+              last={
+                (getCasesQuery?.data?.cases?.nodes &&
+                  getCasesQuery?.data?.cases?.nodes?.length - 1 === idx) ||
+                false
+              }
+              fetchMore={() => {
+                getCasesQuery?.data?.cases?.pageInfo?.hasNextPage && fetchMore()
+              }}
             />
           ))}
           <div className={styled.filter}>

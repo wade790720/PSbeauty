@@ -35,6 +35,8 @@ const Banner = ({ height = "132px", images = [] }: BannerProps) => {
                 go.toClinicCase({ clinicId: item.clinicId, caseId: item.targetId })
               else if (item.redirectType === "doctor" && item.clinicId)
                 go.toClinicInner({ id: item.clinicId || "", tab: "medical-team" })
+              else if (item.redirectType === "activity" && item.clinicId && item.targetId)
+                go.toClinicActivity({ clinicId: item.clinicId, activityId: item.targetId })
             }}>
             {item && <img src={item?.image} width="100%" height="100%" />}
           </div>

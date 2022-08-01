@@ -6,11 +6,11 @@ import AdCard from "./AdCard"
 import Button from "components/Button"
 import CaseCard from "components/CaseCard"
 import Consulting from "./Consulting"
-import { useEffect, useState } from "react"
+import { useRef, useState, useCallback } from "react"
 import Banner from "components/Banner"
 import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
-import { useGetAdCardsQuery, useGetCasesLazyQuery } from "./Home.graphql.generated"
+import { useGetAdCardsQuery, useGetCasesQuery } from "./Home.graphql.generated"
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
 import { useGetCollectedCaseQuery } from "graphql/queries/getCollectedCase.graphql.generated"
 import { SortEnumType } from "types/schema"
@@ -19,7 +19,8 @@ const Home = () => {
   const [consult, setConsult] = useState(false)
   const go = useGo()
   const auth = useAuth()
-  const [getCasesLazyQuery, getCasesQuery] = useGetCasesLazyQuery()
+  const cursorRef = useRef<string>("")
+  const getCasesQuery = useGetCasesQuery({ variables: { contains: "", after: null } })
   const getCollectedCaseQuery = useGetCollectedCaseQuery({ fetchPolicy: "no-cache" })
   const getAdCardsQuery = useGetAdCardsQuery()
   const getAdImagesQuery = useGetAdImagesQuery({
@@ -30,6 +31,7 @@ const Home = () => {
     },
   })
   const cases = getCasesQuery?.data?.cases?.nodes
+  const edges = getCasesQuery?.data?.cases?.edges || []
   const adCards = getAdCardsQuery?.data?.adCards?.nodes
   const adImages = getAdImagesQuery?.data?.adImages?.edges
     ?.map(el => ({
@@ -41,13 +43,38 @@ const Home = () => {
     }))
     ?.sort((prev, next) => prev.sort - next.sort)
 
-  useEffect(() => {
-    getCasesLazyQuery({
+  const fetchMore = useCallback(() => {
+    const after = edges?.[edges.length - 1]?.cursor || null
+
+    getCasesQuery.fetchMore({
       variables: {
         contains: "",
+        after,
+      },
+      updateQuery: (prevResult, { fetchMoreResult }) => {
+        if (
+          !after ||
+          after === cursorRef?.current ||
+          !fetchMoreResult?.cases?.edges ||
+          !prevResult?.cases?.edges ||
+          prevResult?.cases?.edges.length > edges.length
+        )
+          return prevResult
+
+        fetchMoreResult.cases.edges = [
+          ...(prevResult?.cases?.edges || []),
+          ...(fetchMoreResult?.cases?.edges || []),
+        ]
+
+        fetchMoreResult.cases.nodes = [
+          ...(prevResult.cases?.nodes || []),
+          ...(fetchMoreResult?.cases?.nodes || []),
+        ]
+        cursorRef.current = after
+        return fetchMoreResult
       },
     })
-  }, [])
+  }, [edges, getCasesQuery])
 
   const list = []
   const casesCount = cases?.length || 0
@@ -73,7 +100,10 @@ const Home = () => {
             images={[cases[idx]?.beforeImage || "", cases[idx]?.afterImage || ""]}
             tags={cases[idx]?.categories?.map(tag => tag?.name || "")}
             caseId={cases[idx]?.id || ""}
-            last={casesCount === idx - 1}
+            last={casesCount - 1 === idx}
+            fetchMore={() => {
+              getCasesQuery?.data?.cases?.pageInfo?.hasNextPage && fetchMore()
+            }}
           />,
         )
       }

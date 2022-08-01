@@ -1,8 +1,13 @@
 import { gql } from "@apollo/client"
 
 export const GetCases = gql`
-  query GetCases($contains: String) {
-    cases(where: { title: { contains: $contains } }, first: 10, order: { id: DESC }) {
+  query GetCases($contains: String, $after: String) {
+    cases(
+      where: { title: { contains: $contains } }
+      first: 10
+      order: { id: DESC }
+      after: $after
+    ) {
       pageInfo {
         hasNextPage
         hasPreviousPage
@@ -26,6 +31,9 @@ export const GetCases = gql`
           name
           phone
         }
+      }
+      edges {
+        cursor
       }
     }
   }

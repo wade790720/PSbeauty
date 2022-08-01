@@ -3,6 +3,7 @@ import styled from "./CaseCard.module.scss"
 import Icon from "components/Icon"
 import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
+import useElementOnScreen from "hooks/useElementOnScreen"
 import {
   useCollectCaseMutation,
   useRemoveCollectedCaseMutation,
@@ -19,6 +20,7 @@ export type CaseCardProps = {
   amount?: number // 收藏人數
   caseId: string
   last: boolean
+  fetchMore?: () => void
 } & ReactProps.Component
 
 const CaseCard = ({ ...props }: CaseCardProps) => {
@@ -26,6 +28,11 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
   const auth = useAuth()
   const [isCollected, setIsCollected] = useState(false)
   const [amount, setAmount] = useState(props.amount)
+  const { containerRef, isVisible } = useElementOnScreen({})
+
+  useEffect(() => {
+    if (props.last && isVisible && props.fetchMore) props.fetchMore()
+  }, [props.last, props.fetchMore, isVisible])
 
   const [collectCaseMutation] = useCollectCaseMutation({
     variables: {
@@ -53,6 +60,7 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
 
   return (
     <div
+      ref={props.last ? (containerRef as unknown as React.RefObject<HTMLDivElement>) : null}
       className={styled.wrapper}
       style={props.style}
       onClick={() => go.toClinicCase({ clinicId: props.clinicId, caseId: props.caseId })}>

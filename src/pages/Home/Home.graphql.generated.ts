@@ -5,6 +5,7 @@ import * as Apollo from "@apollo/client"
 const defaultOptions = {} as const
 export type GetCasesQueryVariables = Types.Exact<{
   contains: Types.InputMaybe<Types.Scalars["String"]>
+  after: Types.InputMaybe<Types.Scalars["String"]>
 }>
 
 export type GetCasesQuery = {
@@ -38,6 +39,7 @@ export type GetCasesQuery = {
         phone: string | null
       } | null
     } | null> | null
+    edges: Array<{ __typename: "CasesEdge"; cursor: string }> | null
   } | null
 }
 
@@ -57,8 +59,13 @@ export type GetAdCardsQuery = {
 }
 
 export const GetCasesDocument = gql`
-  query GetCases($contains: String) {
-    cases(where: { title: { contains: $contains } }, first: 10, order: { id: DESC }) {
+  query GetCases($contains: String, $after: String) {
+    cases(
+      where: { title: { contains: $contains } }
+      first: 10
+      order: { id: DESC }
+      after: $after
+    ) {
       pageInfo {
         hasNextPage
         hasPreviousPage
@@ -83,6 +90,9 @@ export const GetCasesDocument = gql`
           phone
         }
       }
+      edges {
+        cursor
+      }
     }
   }
 `
@@ -100,6 +110,7 @@ export const GetCasesDocument = gql`
  * const { data, loading, error } = useGetCasesQuery({
  *   variables: {
  *      contains: // value for 'contains'
+ *      after: // value for 'after'
  *   },
  * });
  */

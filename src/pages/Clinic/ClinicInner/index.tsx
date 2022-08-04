@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import styled from "./ClinicInner.module.scss"
 import Icon from "components/Icon"
 import Button from "components/Button"
@@ -6,7 +7,7 @@ import Banner from "components/Banner"
 import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
 import { useClinicInnerContext } from "pages/Clinic/ClinicInnerWrapper"
-import { useGetCollectedCaseQuery } from "graphql/queries/getCollectedCase.graphql.generated"
+import { useGetCollectedCaseLazyQuery } from "graphql/queries/getCollectedCase.graphql.generated"
 import { useParams } from "react-router-dom"
 
 const ClinicInner = () => {
@@ -15,7 +16,9 @@ const ClinicInner = () => {
   const {
     query: { data },
   } = useClinicInnerContext()
-  const getCollectedCaseQuery = useGetCollectedCaseQuery()
+  const [loadGetCollectedCaseQuery, getCollectedCaseQuery] = useGetCollectedCaseLazyQuery({
+    fetchPolicy: "no-cache",
+  })
   const { id } = useParams()
 
   const adImages = data?.clinic?.images
@@ -27,6 +30,10 @@ const ClinicInner = () => {
       sort: el?.sort || 0,
     }))
     ?.sort((prev, next) => prev.sort - next.sort)
+
+  useEffect(() => {
+    if (auth.user.id) loadGetCollectedCaseQuery()
+  }, [auth.user.id, loadGetCollectedCaseQuery])
 
   return (
     <div className={styled.wrapper}>

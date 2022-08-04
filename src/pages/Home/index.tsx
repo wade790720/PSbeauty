@@ -6,14 +6,14 @@ import AdCard from "./AdCard"
 import Button from "components/Button"
 import CaseCard from "components/CaseCard"
 import Consulting from "./Consulting"
-import { useRef, useState, useCallback } from "react"
+import { useRef, useState, useCallback, useEffect } from "react"
 import Banner from "components/Banner"
 import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
 import { useGetAdCardsQuery } from "./Home.graphql.generated"
 import { useGetCasesQuery } from "graphql/queries/getCases.graphql.generated"
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
-import { useGetCollectedCaseQuery } from "graphql/queries/getCollectedCase.graphql.generated"
+import { useGetCollectedCaseLazyQuery } from "graphql/queries/getCollectedCase.graphql.generated"
 import { SortEnumType } from "types/schema"
 
 const Home = () => {
@@ -22,7 +22,9 @@ const Home = () => {
   const auth = useAuth()
   const cursorRef = useRef<string>("")
   const getCasesQuery = useGetCasesQuery({ variables: { after: null } })
-  const getCollectedCaseQuery = useGetCollectedCaseQuery({ fetchPolicy: "no-cache" })
+  const [loadGetCollectedCaseQuery, getCollectedCaseQuery] = useGetCollectedCaseLazyQuery({
+    fetchPolicy: "no-cache",
+  })
   const getAdCardsQuery = useGetAdCardsQuery()
   const getAdImagesQuery = useGetAdImagesQuery({
     variables: {
@@ -121,6 +123,10 @@ const Home = () => {
       )
     }
   }
+
+  useEffect(() => {
+    if (auth.user.id) loadGetCollectedCaseQuery()
+  }, [auth.user.id, loadGetCollectedCaseQuery])
 
   return (
     <>

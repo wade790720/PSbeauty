@@ -8,14 +8,15 @@ import CaseCard from "components/CaseCard"
 import SubjectFilter from "components/SubjectFilter"
 import Banner from "components/Banner"
 import useGo from "components/Router/useGo"
+import { useAuth } from "hooks/useAuth"
 import { useGetTopCategoriesLazyQuery } from "./ClinicalCaseList.graphql.generated"
 import { useGetCasesQuery } from "graphql/queries/getCases.graphql.generated"
-
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
-import { useGetCollectedCaseQuery } from "graphql/queries/getCollectedCase.graphql.generated"
+import { useGetCollectedCaseLazyQuery } from "graphql/queries/getCollectedCase.graphql.generated"
 import { SortEnumType } from "types/schema"
 
 const ClinicalCaseList = () => {
+  const auth = useAuth()
   const go = useGo()
   const [open, setOpen] = useState(false)
   const cursorRef = useRef<string>("")
@@ -23,7 +24,9 @@ const ClinicalCaseList = () => {
   const getCasesQuery = useGetCasesQuery()
   const edges = getCasesQuery?.data?.cases?.edges || []
 
-  const getCollectedCaseQuery = useGetCollectedCaseQuery()
+  const [loadGetCollectedCaseQuery, getCollectedCaseQuery] = useGetCollectedCaseLazyQuery({
+    fetchPolicy: "no-cache",
+  })
   const adImageCaseQuery = useGetAdImagesQuery({
     variables: {
       first: 5,
@@ -45,6 +48,10 @@ const ClinicalCaseList = () => {
     if (!open) return
     loadQuery()
   }, [open])
+
+  useEffect(() => {
+    if (auth.user.id) loadGetCollectedCaseQuery()
+  }, [auth.user.id, loadGetCollectedCaseQuery])
 
   const fetchMore = useCallback(() => {
     const after = edges?.[edges.length - 1]?.cursor || null

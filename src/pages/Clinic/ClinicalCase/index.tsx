@@ -4,17 +4,21 @@ import Header from "components/Layout/Header"
 import Icon from "components/Icon"
 import {
   useGetCaseQuery,
-  useGetCollectItemsQuery,
+  useGetCollectItemsLazyQuery,
   useCollectCaseMutation,
   useRemoveCollectedCaseMutation,
 } from "./ClinicalCase.graphql.generated"
 import { useEffect, useState } from "react"
+import { useAuth } from "hooks/useAuth"
 import { useParams } from "react-router-dom"
 import Loading from "components/QueryStatus/Loading"
 
 const ClinicalCase = () => {
+  const auth = useAuth()
   const { caseId } = useParams()
-  const getCollectItemsQuery = useGetCollectItemsQuery({ fetchPolicy: "no-cache" })
+  const [loadGetCollectItemsQuery, getCollectItemsQuery] = useGetCollectItemsLazyQuery({
+    fetchPolicy: "no-cache",
+  })
   const { data, loading } = useGetCaseQuery({
     variables: {
       id: caseId || "",
@@ -22,6 +26,10 @@ const ClinicalCase = () => {
   })
 
   const [isCollected, setIsCollected] = useState(false)
+
+  useEffect(() => {
+    if (auth.user.id) loadGetCollectItemsQuery()
+  }, [auth.user.id])
 
   useEffect(() => {
     setIsCollected(
@@ -42,7 +50,7 @@ const ClinicalCase = () => {
     variables: {
       caseId: caseId || "",
     },
-    update(cache, mutationResult) {
+    update(_, mutationResult) {
       if (mutationResult?.data?.removeCollectedCase) setIsCollected(false)
     },
   })

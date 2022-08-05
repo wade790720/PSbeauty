@@ -44,7 +44,6 @@ const Chatroom = () => {
   const [replyTopicMutation] = useReplyTopicMutation()
 
   const [readReply] = useReadReplyMutation()
-
   realtimesRef.current = realtimes
   const notify = useRealtime({
     chatroomId: id || "",
@@ -120,7 +119,6 @@ const Chatroom = () => {
 
   const consultAt = dayjs((consult?.consultAt || 0) * 1000)
   const endDay = consultAt.add(consult?.days || 0, "day")
-  // const today = dayjs("2022/7/15") // 測試
   const today = dayjs()
   const timeleft = endDay.diff(today, "day")
 
@@ -132,9 +130,7 @@ const Chatroom = () => {
     <>
       <Header leftArrow title={clinic?.name || ""} />
       <Backdrop className={styled.wrapper}>
-        <div className={cx(styled.row, styled.center)}>
-          {/* <div className={styled.time}>Yesterday 9:41</div> */}
-        </div>
+        <div className={cx(styled.row, styled.center)}></div>
         <div className={cx(styled.row, styled.center)}>
           <HistoryRecordCard
             id={consult?.id || ""}

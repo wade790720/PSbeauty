@@ -48,9 +48,17 @@ export type GetDoctorInboxQuery = {
   } | null
 }
 
+export type ReadClinicInboxMutationVariables = Types.Exact<{
+  input: Types.ReadClinicInboxInput
+}>
+
+export type ReadClinicInboxMutation = {
+  readClinicInbox: { __typename: "ReadClinicInboxPayload"; id: string | null } | null
+}
+
 export const GetDoctorInboxDocument = gql`
   query GetDoctorInbox($input: String) {
-    clinicInbox(first: 2, after: $input, order: { id: DESC }) {
+    clinicInbox(first: 15, after: $input, order: { id: DESC }) {
       pageInfo {
         hasNextPage
         hasPreviousPage
@@ -126,4 +134,51 @@ export type GetDoctorInboxLazyQueryHookResult = ReturnType<typeof useGetDoctorIn
 export type GetDoctorInboxQueryResult = Apollo.QueryResult<
   GetDoctorInboxQuery,
   GetDoctorInboxQueryVariables
+>
+export const ReadClinicInboxDocument = gql`
+  mutation readClinicInbox($input: ReadClinicInboxInput!) {
+    readClinicInbox(input: $input) {
+      id
+    }
+  }
+`
+export type ReadClinicInboxMutationFn = Apollo.MutationFunction<
+  ReadClinicInboxMutation,
+  ReadClinicInboxMutationVariables
+>
+
+/**
+ * __useReadClinicInboxMutation__
+ *
+ * To run a mutation, you first call `useReadClinicInboxMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useReadClinicInboxMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [readClinicInboxMutation, { data, loading, error }] = useReadClinicInboxMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useReadClinicInboxMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    ReadClinicInboxMutation,
+    ReadClinicInboxMutationVariables
+  >,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useMutation<ReadClinicInboxMutation, ReadClinicInboxMutationVariables>(
+    ReadClinicInboxDocument,
+    options,
+  )
+}
+export type ReadClinicInboxMutationHookResult = ReturnType<typeof useReadClinicInboxMutation>
+export type ReadClinicInboxMutationResult = Apollo.MutationResult<ReadClinicInboxMutation>
+export type ReadClinicInboxMutationOptions = Apollo.BaseMutationOptions<
+  ReadClinicInboxMutation,
+  ReadClinicInboxMutationVariables
 >

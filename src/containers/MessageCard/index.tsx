@@ -10,6 +10,7 @@ export type MessageCardProps = {
   message: string
   last?: boolean
   fetchMore?: () => void
+  click?: () => void
 } & ReactProps.Component
 
 const MessageCard = ({ ...props }: MessageCardProps) => {
@@ -17,17 +18,21 @@ const MessageCard = ({ ...props }: MessageCardProps) => {
   const { containerRef, isVisible } = useElementOnScreen({})
 
   useEffect(() => {
-    console.log("fetch more", props)
     if (props?.last && isVisible && props.fetchMore) {
       props?.fetchMore()
     }
   }, [props.last, props.fetchMore, isVisible])
 
+  const click = () => {
+    props?.click?.()
+    go.toChatroom({ id: props.topicId || "" })
+  }
+
   return (
     <div
       ref={props.last ? (containerRef as unknown as React.RefObject<HTMLDivElement>) : null}
       className={styled.wrapper}
-      onClick={() => go.toChatroom({ id: props.topicId || "" })}>
+      onClick={click}>
       <div className={styled.title}>{props.title}</div>
       <div className={styled.message}>{props.message}</div>
       {props.unread && <div className={styled.unread} />}

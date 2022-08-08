@@ -2,7 +2,7 @@ import { gql } from "@apollo/client"
 
 export const GetDoctorInbox = gql`
   query GetDoctorInbox($input: String) {
-    clinicInbox(first: 2, after: $input, order: { id: DESC }) {
+    clinicInbox(first: 15, after: $input, order: { id: DESC }) {
       pageInfo {
         hasNextPage
         hasPreviousPage
@@ -35,6 +35,14 @@ export const GetDoctorInbox = gql`
           }
         }
       }
+    }
+  }
+`
+
+export const readClinicInbox = gql`
+  mutation readClinicInbox($input: ReadClinicInboxInput!) {
+    readClinicInbox(input: $input) {
+      id
     }
   }
 `

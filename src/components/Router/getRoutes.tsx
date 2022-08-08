@@ -7,7 +7,6 @@ const NotFound = lazy(() => import("pages/NotFound"))
 const SignIn = lazy(() => import("pages/SignIn"))
 const Home = lazy(() => import("pages/Home"))
 const Advertisement = lazy(() => import("pages/Advertisement"))
-const CaseInner = lazy(() => import("pages/CaseInner"))
 const Register = lazy(() => import("pages/Register"))
 const ForgotPassword = lazy(() => import("pages/ForgotPassword"))
 const Survey = lazy(() => import("pages/Survey"))
@@ -131,15 +130,6 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
       element: (
         <Suspense>
           <Advertisement />
-        </Suspense>
-      ),
-    },
-    /* 案例內頁 */
-    {
-      path: "/case-inner",
-      element: (
-        <Suspense>
-          <CaseInner />
         </Suspense>
       ),
     },

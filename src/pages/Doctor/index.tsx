@@ -5,7 +5,7 @@ import Toolbars from "containers/Toolbars"
 import { useGo } from "components/Router"
 import { useAuth } from "hooks/useAuth"
 import Modal from "components/Modal"
-import SubjectFilter from "components/SubjectFilter"
+import SubjectFilter from "containers/SubjectFilter"
 import { sentResetPassword } from "firebaseClient"
 import styled from "./Doctor.module.scss"
 import {

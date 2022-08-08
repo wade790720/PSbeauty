@@ -5,7 +5,7 @@ import Button from "components/Button"
 import { useState, useEffect } from "react"
 import styled from "./Consulting.module.scss"
 import Icon from "components/Icon"
-import SubjectFilter from "components/SubjectFilter"
+import SubjectFilter from "containers/SubjectFilter"
 import Modal from "components/Modal"
 import { storage } from "firebaseClient"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
@@ -14,7 +14,7 @@ import {
   useGetTopCategoriesLazyQuery,
   useGetConsultClinicMutation,
 } from "./Consulting.graphql.generated"
-import { ChosenItemType } from "components/SubjectFilter/Member"
+import { ChosenItemType } from "containers/SubjectFilter/Member"
 
 type consultProps = {
   open: boolean

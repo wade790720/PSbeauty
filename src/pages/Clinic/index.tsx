@@ -1,7 +1,7 @@
 import styled from "./Clinic.module.scss"
 import Icon from "components/Icon"
 import Toolbars from "containers/Toolbars"
-import SearchBar from "components/SearchBar"
+import SearchBar from "containers/SearchBar"
 import Button from "components/Button"
 import ClinicCard from "./ClinicCard"
 import { useState, useRef } from "react"

@@ -2,7 +2,7 @@ import { useRef } from "react"
 import { Outlet, useSearchParams, useParams } from "react-router-dom"
 import Header from "components/Layout/Header"
 import styled from "./SearchWrapper.module.scss"
-import SearchBar from "components/SearchBar"
+import SearchBar from "containers/SearchBar"
 import { useGo } from "components/Router"
 
 const STORAGE_KEY = "search-history"

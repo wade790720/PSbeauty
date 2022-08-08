@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Button from "components/Button"
 import Profile from "components/Profile"
-import Toolbars from "components/Toolbars"
+import Toolbars from "containers/Toolbars"
 import { useGo } from "components/Router"
 import Modal from "components/Modal"
 import { useAuth } from "hooks/useAuth"

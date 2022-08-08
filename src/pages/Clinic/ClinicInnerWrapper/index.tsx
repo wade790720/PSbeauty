@@ -4,7 +4,7 @@ import { useAuth } from "hooks/useAuth"
 import Header from "components/Layout/Header"
 import Backdrop from "components/Layout/Backdrop"
 import ClinicSwitch from "../ClinicSwitch"
-import Toolbars from "components/Toolbars"
+import Toolbars from "containers/Toolbars"
 import {
   useGetClinicLazyQuery,
   GetClinicQueryHookResult,

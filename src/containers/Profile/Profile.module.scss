@@ -1,46 +1,47 @@
 .wrapper {
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   position: relative;
-  background-image: url(./svg/Background.svg);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  flex-shrink: 0;
+  justify-content: center;
+  height: 249px;
+  background-color: #7d82ff;
+  background-image: url(./svg/background.svg);
   background-position: center center;
   background-size: cover;
-  background-color: #7D82FF;
-  height: 249px;
-  justify-content: center;
 
   .avatar {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
     width: 89px;
     height: 89px;
     border-radius: 89px;
-    object-fit: cover;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 45px;
     color: #fff;
     font-weight: bold;
+    font-size: 45px;
+
+    object-fit: cover;
   }
 
   .username {
+    margin-top: 12px;
+    color: #fff;
     font-weight: 700;
     font-size: 20px;
     line-height: 24px;
-    color: #fff;
-    margin-top: 12px;
   }
 
   .hint {
-    margin-top: 8px;
     display: flex;
+    align-items: center;
     flex-direction: row;
+    margin-top: 8px;
+    color: #fff;
     font-size: 14px;
     line-height: 21px;
-    color: #fff;
-    align-items: center;
 
     svg {
       margin-right: 8px;

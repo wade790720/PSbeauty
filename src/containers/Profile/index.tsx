@@ -23,16 +23,11 @@ const Profile = () => {
 
   return (
     <div className={styled.wrapper}>
-      {/* <img className={styled.avatar} src="/img/avatar.png" /> */}
       <div className={styled.avatar} style={{ background: backgroundColor }}>
         {userEmail[0].toUpperCase()}
       </div>
       <div className={styled.username}>{userName}</div>
-      {/* <div className={styled.hint}>
-        <Mail />
-        <div>您的信箱尚未認證，</div>
-        <div className={styled.enhance}>現在驗證</div>
-      </div> */}
+
       <div
         className={styled.chat}
         onClick={() => {

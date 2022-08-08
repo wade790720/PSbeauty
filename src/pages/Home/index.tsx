@@ -1,6 +1,6 @@
 import styled from "./Home.module.scss"
 import Icon from "components/Icon"
-import BottomNavigation from "components/BottomNavigation"
+import Toolbars from "components/Toolbars"
 import SearchBar from "components/SearchBar"
 import AdCard from "./AdCard"
 import Button from "components/Button"
@@ -159,7 +159,7 @@ const Home = () => {
           </div>
         </div>
       </div>
-      {auth.user.clinic ? <BottomNavigation.Chat /> : <BottomNavigation />}
+      {auth.user.clinic ? <Toolbars.Clinic /> : <Toolbars />}
     </>
   )
 }

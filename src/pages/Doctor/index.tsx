@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import Button from "components/Button"
 import Profile from "components/Profile"
-import BottomNavigation from "components/BottomNavigation"
+import Toolbars from "components/Toolbars"
 import { useGo } from "components/Router"
 import { useAuth } from "hooks/useAuth"
 import Modal from "components/Modal"
@@ -117,7 +117,7 @@ const Doctor = () => {
           }
         />
       </div>
-      <BottomNavigation.Chat />
+      <Toolbars.Clinic />
     </>
   )
 }

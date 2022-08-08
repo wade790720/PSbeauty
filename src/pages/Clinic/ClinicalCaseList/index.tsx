@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from "react"
 import styled from "./ClinicalCaseList.module.scss"
 import Icon from "components/Icon"
-import BottomNavigation from "components/BottomNavigation"
+import Toolbars from "components/Toolbars"
 import SearchBar from "components/SearchBar"
 import Button from "components/Button"
 import CaseCard from "components/CaseCard"
@@ -134,7 +134,7 @@ const ClinicalCaseList = () => {
           </div>
         </div>
       </div>
-      <BottomNavigation />
+      <Toolbars />
     </>
   )
 }

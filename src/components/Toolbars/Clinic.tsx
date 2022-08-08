@@ -1,4 +1,4 @@
-import styled from "./BottomNavigation.module.scss"
+import styled from "./Toolbars.module.scss"
 import cx from "classnames"
 import { NavLink } from "react-router-dom"
 import { useAuth } from "hooks/useAuth"
@@ -11,7 +11,7 @@ import { ReactComponent as ChatFill } from "./svg/ChatFill.svg"
 import { ReactComponent as Person } from "./svg/Person.svg"
 import { ReactComponent as PersonFill } from "./svg/PersonFill.svg"
 
-const BottomNavigation = () => {
+const ToolbarsByClinic = () => {
   const auth = useAuth()
   const location = useLocation()
 
@@ -50,4 +50,4 @@ const BottomNavigation = () => {
   )
 }
 
-export default BottomNavigation
+export default ToolbarsByClinic

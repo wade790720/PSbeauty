@@ -4,7 +4,7 @@ import { useAuth } from "hooks/useAuth"
 import Header from "components/Layout/Header"
 import Backdrop from "components/Layout/Backdrop"
 import ClinicSwitch from "../ClinicSwitch"
-import BottomNavigation from "components/BottomNavigation"
+import Toolbars from "components/Toolbars"
 import {
   useGetClinicLazyQuery,
   GetClinicQueryHookResult,
@@ -43,7 +43,7 @@ const ClinicInnerWrapper = () => {
       <Backdrop style={{ paddingBottom: "49px" }}>
         <ClinicSwitch />
         <Outlet context={{ query }} />
-        {auth.user.clinic ? <BottomNavigation.Chat /> : <BottomNavigation />}
+        {auth.user.clinic ? <Toolbars.Clinic /> : <Toolbars />}
       </Backdrop>
     </>
   )

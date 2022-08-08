@@ -1,6 +1,6 @@
 import styled from "./Clinic.module.scss"
 import Icon from "components/Icon"
-import BottomNavigation from "components/BottomNavigation"
+import Toolbars from "components/Toolbars"
 import SearchBar from "components/SearchBar"
 import Button from "components/Button"
 import ClinicCard from "./ClinicCard"
@@ -96,7 +96,7 @@ const Clinic = () => {
           </div>
         </div>
       </div>
-      {auth.user.clinic ? <BottomNavigation.Chat /> : <BottomNavigation />}
+      {auth.user.clinic ? <Toolbars.Clinic /> : <Toolbars />}
     </>
   )
 }

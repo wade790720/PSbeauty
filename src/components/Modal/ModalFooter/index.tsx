@@ -1,4 +1,3 @@
-import Button from "components/Button"
 import cx from "classnames"
 import styled from "./ModalFooter.module.scss"
 

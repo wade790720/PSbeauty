@@ -1,6 +1,6 @@
 import styled from "./DoctorInbox.module.scss"
 import MessageCard from "components/MessageCard"
-import BottomNavigation from "components/BottomNavigation"
+import Toolbars from "components/Toolbars"
 import { useGetDoctorInboxQuery } from "./DoctorInbox.graphql.generated"
 
 const DoctorInbox = () => {
@@ -25,7 +25,7 @@ const DoctorInbox = () => {
           )
         })}
       </div>
-      <BottomNavigation.Chat />
+      <Toolbars.Clinic />
     </>
   )
 }

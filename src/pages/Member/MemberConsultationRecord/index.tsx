@@ -1,7 +1,7 @@
 import cx from "classnames"
 import styled from "./MemberConsultationRecord.module.scss"
 import Header from "components/Layout/Header"
-import HistoryRecordCard from "components/HistoryRecordCard"
+import HistoryRecordCard from "containers/HistoryRecordCard"
 import { useAuth } from "hooks/useAuth"
 import { useGo } from "components/Router"
 import {

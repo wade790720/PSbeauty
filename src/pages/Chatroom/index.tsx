@@ -1,5 +1,5 @@
 import cx from "classnames"
-import HistoryRecordCard from "components/HistoryRecordCard"
+import HistoryRecordCard from "containers/HistoryRecordCard"
 import Backdrop from "components/Layout/Backdrop"
 import Header from "components/Layout/Header"
 import dayjs from "dayjs"

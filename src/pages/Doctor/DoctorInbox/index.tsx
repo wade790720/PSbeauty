@@ -1,5 +1,5 @@
 import styled from "./DoctorInbox.module.scss"
-import MessageCard from "components/MessageCard"
+import MessageCard from "containers/MessageCard"
 import Toolbars from "containers/Toolbars"
 import { useGetDoctorInboxQuery } from "./DoctorInbox.graphql.generated"
 

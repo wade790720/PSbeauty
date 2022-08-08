@@ -1,7 +1,7 @@
 import cx from "classnames"
 import styled from "./MemberInbox.module.scss"
 import Header from "components/Layout/Header"
-import MessageCard from "components/MessageCard"
+import MessageCard from "containers/MessageCard"
 import { useGetMemberInboxQuery } from "./MemberInbox.graphql.generated"
 import Loading from "components/QueryStatus/Loading"
 

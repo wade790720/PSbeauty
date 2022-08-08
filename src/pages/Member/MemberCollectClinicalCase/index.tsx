@@ -1,7 +1,7 @@
 import cx from "classnames"
 import styled from "./MemberCollectClinicalCase.module.scss"
 import Header from "components/Layout/Header"
-import CaseCard from "components/CaseCard"
+import CaseCard from "containers/CaseCard"
 import { useGetMeQuery } from "./MemberCollectClinicalCase.graphql.generated"
 import Loading from "components/QueryStatus/Loading"
 

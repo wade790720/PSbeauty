@@ -1,6 +1,6 @@
 import { useState } from "react"
 import Button from "components/Button"
-import Profile from "components/Profile"
+import Profile from "containers/Profile"
 import Toolbars from "containers/Toolbars"
 import { useGo } from "components/Router"
 import Modal from "components/Modal"

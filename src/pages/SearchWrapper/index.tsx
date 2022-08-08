@@ -1,6 +1,8 @@
+import { useRef } from "react"
 import { Outlet, useSearchParams, useParams } from "react-router-dom"
 import Header from "components/Layout/Header"
-import SearchBox from "components/SearchBox"
+import styled from "./SearchWrapper.module.scss"
+import SearchBar from "components/SearchBar"
 import { useGo } from "components/Router"
 
 const STORAGE_KEY = "search-history"
@@ -26,6 +28,7 @@ const saveHistories = (list: string[]) => {
 const SearchWrapper = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const { text: originText } = useParams()
+  const ref = useRef<HTMLInputElement | null>(null)
   const tag = searchParams.get("tag")
   const go = useGo()
 
@@ -43,7 +46,16 @@ const SearchWrapper = () => {
   return (
     <>
       <Header leftArrow>
-        <SearchBox onSubmit={onSubmit} />
+        <div className={styled.wrapper}>
+          <SearchBar variant="white" ref={ref} />
+          <div
+            className={styled.submit}
+            onClick={() => {
+              if (ref.current) onSubmit(ref.current.value)
+            }}>
+            送出
+          </div>
+        </div>
       </Header>
       <Outlet />
     </>

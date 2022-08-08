@@ -1,26 +1,16 @@
 .wrapper {
+  flex: 1 0;
+  padding: 0 4px 0 18px;
   display: grid;
-  grid-gap: 24px;
-  grid-auto-rows: min-content;
-  position: relative;
+  grid-gap: 16px;
+  grid-template-columns: 1fr min-content;
+  align-items: center;
 
-  .title {
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 1.2;
-    color: #2B3A4B;
-  }
-
-  .delete {
-    position: absolute;
-    top: 24px;
-    right: 24px;
-  }
-
-  .text {
+  .submit {
     font-weight: 400;
     font-size: 16px;
-    line-height: 1.5;
-    color: #2B3A4B;
+    line-height: 16px;
+    color: #fff;
+    white-space: nowrap;
   }
 }

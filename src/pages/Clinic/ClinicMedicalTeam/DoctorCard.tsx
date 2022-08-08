@@ -6,7 +6,6 @@ export type DoctorCardProps = {
   name?: string
   jobTitle?: string
   photo?: string
-  // TODO: 2個欄位待確認型別
   resumes?: string
   expertise?: string
 }

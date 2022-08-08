@@ -29,12 +29,6 @@ const Search = () => {
   const go = useGo()
   const [list, setList] = useState(getHistories())
 
-  const onSubmit = (text: string) => {
-    list.unshift(text)
-    setList(saveHistories(list))
-    go.toSearchList(text)
-  }
-
   return (
     <Backdrop className={styled.wrapper}>
       <div className={styled.title}>

@@ -87,7 +87,7 @@ const Chatroom = () => {
     return <Loading />
   }
 
-  const newMessage = (msg: string) => {
+  const newMessage = (msg: string, consulteeId?: string) => {
     if (!msg) {
       return
     }
@@ -101,7 +101,7 @@ const Chatroom = () => {
         },
       },
       async onCompleted() {
-        await notify({ content: msg, userId: auth.user.id })
+        await notify({ content: msg, userId: auth.user.id, consulteeId })
         setMessage("")
         msgInputRef.current?.focus()
       },
@@ -127,6 +127,8 @@ const Chatroom = () => {
   const categories = (consult?.categories || []).map(v => v?.name || "")
 
   messages.push(...realtimes)
+
+  const consulteeId = messages.find(msg => msg.userId != auth.user.id)?.userId
   return (
     <>
       <Header leftArrow title={clinic?.name || ""} />
@@ -170,7 +172,7 @@ const Chatroom = () => {
               ref={msgInputRef}
               value={message}
               onChange={e => setMessage(e.target.value)}></input>
-            <div className={styled.submit} onClick={() => newMessage(message)}>
+            <div className={styled.submit} onClick={() => newMessage(message, consulteeId)}>
               送出
             </div>
           </div>

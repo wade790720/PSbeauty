@@ -1,16 +1,34 @@
 import MessageCard from "containers/MessageCard"
 import Toolbars from "containers/Toolbars"
-import { useRef } from "react"
+import { doc, onSnapshot } from "firebase/firestore"
+import { useAuth } from "hooks/useAuth"
+import { useEffect, useMemo, useRef } from "react"
 import { useGetDoctorInboxQuery, useReadClinicInboxMutation } from "./DoctorInbox.graphql.generated"
 import styled from "./DoctorInbox.module.scss"
+import { firestore } from "../../../firebaseClient"
 
 const DoctorInbox = () => {
-  const getDoctorInboxQuery = useGetDoctorInboxQuery()
+  const auth = useAuth()
+  const getDoctorInboxQuery = useGetDoctorInboxQuery({
+    fetchPolicy: "no-cache",
+  })
   const edges = getDoctorInboxQuery?.data?.clinicInbox?.edges || []
   const hasNextPage = getDoctorInboxQuery.data?.clinicInbox?.pageInfo.hasNextPage ?? false
   const cursorRef = useRef<string>("")
 
   const [readInbox] = useReadClinicInboxMutation()
+
+  const inboxRef = useMemo(() => {
+    return doc(firestore, "inbox", auth.user.id || "")
+  }, [])
+
+  useEffect(() => {
+    return onSnapshot(inboxRef, doc => {
+      if (doc.exists()) {
+        getDoctorInboxQuery.refetch()
+      }
+    })
+  }, [])
 
   const fetchMore = () => {
     const after = edges?.[edges.length - 1]?.cursor || null

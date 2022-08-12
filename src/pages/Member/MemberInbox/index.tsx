@@ -4,9 +4,28 @@ import Header from "components/Layout/Header"
 import MessageCard from "containers/MessageCard"
 import { useGetMemberInboxQuery } from "./MemberInbox.graphql.generated"
 import Loading from "components/QueryStatus/Loading"
+import { firestore } from "../../../firebaseClient"
+import { useEffect, useMemo } from "react"
+import { doc, onSnapshot } from "firebase/firestore"
+import { useAuth } from "hooks/useAuth"
 
 const MemberInbox = () => {
-  const getMemberInbox = useGetMemberInboxQuery()
+  const auth = useAuth()
+  const getMemberInbox = useGetMemberInboxQuery({
+    fetchPolicy: "no-cache",
+  })
+
+  const inboxRef = useMemo(() => {
+    return doc(firestore, "inbox", auth.user.id || "")
+  }, [])
+
+  useEffect(() => {
+    return onSnapshot(inboxRef, doc => {
+      if (doc.exists()) {
+        getMemberInbox.refetch()
+      }
+    })
+  }, [])
 
   if (getMemberInbox.loading) {
     return <Loading />

@@ -49,7 +49,12 @@ const Clinic = () => {
       <div className={styled.wrapper}>
         <div className={styled.header}>
           <SearchBar ref={ref} onInputClick={() => go.toSearchList("")} />
-          <Icon name="chat" className={styled["chat-icon"]} />
+          <div
+            onClick={() => {
+              auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
+            }}>
+            <Icon name="chat" className={styled["chat-icon"]} />
+          </div>
         </div>
         <div className={styled.inner}>
           {adImages && adImages?.length > 0 && (

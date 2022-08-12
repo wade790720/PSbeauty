@@ -90,7 +90,12 @@ const ClinicalCaseList = () => {
       <div className={styled.wrapper}>
         <div className={styled.header}>
           <SearchBar onInputClick={() => go.toSearchList("")} />
-          <Icon name="chat" className={styled["chat-icon"]} />
+          <div
+            onClick={() => {
+              auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
+            }}>
+            <Icon name="chat" className={styled["chat-icon"]} />
+          </div>
         </div>
         <div className={styled.inner}>
           <Banner images={adImages} />

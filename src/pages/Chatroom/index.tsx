@@ -39,6 +39,7 @@ const Chatroom = () => {
     variables: {
       input: id || "",
     },
+    fetchPolicy: "no-cache",
   })
 
   const [replyTopicMutation] = useReplyTopicMutation()

@@ -108,7 +108,7 @@ const Chatroom = () => {
         },
       },
       async onCompleted() {
-        await notify({ content: msg, userId: auth.user.id, consulteeId })
+        await notify({ content: msg, userId: auth.user.id, consultedId: consulteeId })
         setMessage("")
         msgInputRef.current?.focus()
       },

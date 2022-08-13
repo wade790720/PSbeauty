@@ -54,12 +54,16 @@
     display: -webkit-box;
     overflow: hidden;
     -webkit-box-orient: vertical;
-    margin-bottom: 24px;
-
     -webkit-line-clamp: 2;
+    margin-bottom: 24px;
 
     p {
       margin-block-start: 0;
+      display: inline;
+    }
+
+    :not(p) {
+      display: none;
     }
   }
 
@@ -126,7 +130,7 @@
       display: none;
     }
 
-    > div {
+    >div {
       padding: 4px 13px;
       border-radius: 15px;
       background-color: #fae8e3;
@@ -136,7 +140,7 @@
       font-size: 12px;
       line-height: 1.5;
 
-      > span {
+      >span {
         padding-right: 7.5px;
       }
     }

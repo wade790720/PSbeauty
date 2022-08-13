@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import styled from "./ClinicInner.module.scss"
 import Icon from "components/Icon"
 import Button from "components/Button"
@@ -21,15 +21,17 @@ const ClinicInner = () => {
   })
   const { id } = useParams()
 
-  const adImages = data?.clinic?.images
-    ?.map(el => ({
-      image: el?.image || "",
-      clinicId: el?.id || "",
-      targetId: el?.targetId || "",
-      redirectType: el?.redirectType,
-      sort: el?.sort || 0,
-    }))
-    ?.sort((prev, next) => prev.sort - next.sort)
+  const adImages = useMemo(() => {
+    return data?.clinic?.images
+      ?.map(el => ({
+        image: el?.image || "",
+        clinicId: el?.id || "",
+        targetId: el?.targetId || "",
+        redirectType: el?.redirectType,
+        sort: el?.sort || 0,
+      }))
+      ?.sort((prev, next) => prev.sort - next.sort)
+  }, [data])
 
   useEffect(() => {
     if (auth.user.id) loadGetCollectedCaseQuery()

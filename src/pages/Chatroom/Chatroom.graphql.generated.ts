@@ -19,6 +19,7 @@ export type GeTopicDetailQuery = {
       subject: string | null
       images: Array<string | null> | null
       content: string | null
+      oneOnOne: boolean
       poster: { __typename: "User"; id: string | null } | null
       categories: Array<{
         __typename: "Category"
@@ -68,6 +69,7 @@ export const GeTopicDetailDocument = gql`
         images
         consultAt
         content
+        oneOnOne
         poster {
           id
         }

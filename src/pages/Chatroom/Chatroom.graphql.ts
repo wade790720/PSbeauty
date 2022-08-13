@@ -15,6 +15,7 @@ export const GetTopicDetail = gql`
         images
         consultAt
         content
+        oneOnOne
         poster {
           id
         }

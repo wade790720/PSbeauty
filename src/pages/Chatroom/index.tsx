@@ -122,7 +122,7 @@ const Chatroom = () => {
   const endDay = consultAt.add(consult?.days || 0, "day")
   const today = dayjs()
   const timeleft = endDay.diff(today, "day")
-
+  const oneOnOne = consult?.oneOnOne
   const images = (consult?.images || []).map(v => v || "")
   const categories = (consult?.categories || []).map(v => v?.name || "")
 
@@ -133,19 +133,21 @@ const Chatroom = () => {
     <>
       <Header leftArrow title={clinic?.name || ""} />
       <Backdrop className={styled.wrapper}>
-        <div className={cx(styled.row, styled.center)}></div>
-        <div className={cx(styled.row, styled.center)}>
-          <HistoryRecordCard
-            id={consult?.id || ""}
-            title={consult?.subject || ""}
-            date={`起始日 ${f(consultAt)}｜到期日 ${f(endDay)}${
-              timeleft > 0 ? `(剩餘${timeleft}天)` : `(已過期)`
-            }`}
-            images={images}
-            introduction={consult?.content || ""}
-            tags={categories}
-          />
-        </div>
+        {/* <div className={cx(styled.row, styled.center)}></div> */}
+        {!oneOnOne && (
+          <div className={cx(styled.row, styled.center)}>
+            <HistoryRecordCard
+              id={consult?.id || ""}
+              title={consult?.subject || ""}
+              date={`起始日 ${f(consultAt)}｜到期日 ${f(endDay)}${
+                timeleft > 0 ? `(剩餘${timeleft}天)` : `(已過期)`
+              }`}
+              images={images}
+              introduction={consult?.content || ""}
+              tags={categories}
+            />
+          </div>
+        )}
         {messages.map(v => {
           if (v?.userId == auth.user.id) {
             return (

@@ -87,7 +87,7 @@ const Chatroom = () => {
     return <Loading />
   }
 
-  const newMessage = (msg: string, consulteeId?: string) => {
+  const newMessage = (msg: string, consultedId?: string) => {
     if (!msg) {
       return
     }
@@ -101,7 +101,7 @@ const Chatroom = () => {
         },
       },
       async onCompleted() {
-        await notify({ content: msg, userId: auth.user.id, consulteeId })
+        await notify({ content: msg, userId: auth.user.id, consultedId: consultedId })
         setMessage("")
         msgInputRef.current?.focus()
       },
@@ -121,14 +121,14 @@ const Chatroom = () => {
   const consultAt = dayjs((consult?.consultAt || 0) * 1000)
   const endDay = consultAt.add(consult?.days || 0, "day")
   const today = dayjs()
-  const timeleft = endDay.diff(today, "day")
+  const timeLeft = endDay.diff(today, "day")
 
   const images = (consult?.images || []).map(v => v || "")
   const categories = (consult?.categories || []).map(v => v?.name || "")
 
   messages.push(...realtimes)
 
-  const consulteeId = messages.find(msg => msg.userId != auth.user.id)?.userId
+  const consultedId = messages.find(msg => msg.userId != auth.user.id)?.userId
   return (
     <>
       <Header leftArrow title={clinic?.name || ""} />
@@ -139,7 +139,7 @@ const Chatroom = () => {
             id={consult?.id || ""}
             title={consult?.subject || ""}
             date={`起始日 ${f(consultAt)}｜到期日 ${f(endDay)}${
-              timeleft > 0 ? `(剩餘${timeleft}天)` : `(已過期)`
+              timeLeft > 0 ? `(剩餘${timeLeft}天)` : `(已過期)`
             }`}
             images={images}
             introduction={consult?.content || ""}
@@ -164,7 +164,7 @@ const Chatroom = () => {
         })}
         <div ref={messagesEndRef}></div>
       </Backdrop>
-      {timeleft > 0 && (
+      {timeLeft > 0 && (
         <div className={styled.input}>
           <div className={styled.control}>
             <UploadImage />
@@ -172,7 +172,7 @@ const Chatroom = () => {
               ref={msgInputRef}
               value={message}
               onChange={e => setMessage(e.target.value)}></input>
-            <div className={styled.submit} onClick={() => newMessage(message, consulteeId)}>
+            <div className={styled.submit} onClick={() => newMessage(message, consultedId)}>
               送出
             </div>
           </div>

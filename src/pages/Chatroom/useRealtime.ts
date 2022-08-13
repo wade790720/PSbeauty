@@ -44,9 +44,9 @@ const useRealtime = ({ chatroomId, onMessage }: useRealtimeProps) => {
     })
   }, [chatroomId])
 
-  return async (msg: Pick<RealTimeMessage, "content" | "userId"> & { consulteeId?: string }) => {
-    if (msg.consulteeId) {
-      const inboxRef = doc(firestore, "inbox", msg.consulteeId)
+  return async (msg: Pick<RealTimeMessage, "content" | "userId"> & { consultedId?: string }) => {
+    if (msg.consultedId) {
+      const inboxRef = doc(firestore, "inbox", msg.consultedId)
       await setDoc(inboxRef, {
         content: msg.content,
         timestamp: serverTimestamp(),

@@ -59,15 +59,16 @@ const Chatroom = () => {
         },
       ]
       setRealtimes(newRt)
+      readReply({
+        variables: {
+          input: {
+            topicId: id || "",
+          },
+        },
+      })
       scrollToBottom()
     },
   })
-
-  const scrollToBottom = () => {
-    setTimeout(() => {
-      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-    }, 100)
-  }
 
   useEffect(() => {
     readReply({
@@ -78,6 +79,12 @@ const Chatroom = () => {
       },
     })
   }, [])
+
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    }, 100)
+  }
 
   useEffect(() => {
     scrollToBottom()

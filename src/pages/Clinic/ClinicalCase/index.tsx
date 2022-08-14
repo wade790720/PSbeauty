@@ -9,11 +9,13 @@ import {
   useRemoveCollectedCaseMutation,
 } from "./ClinicalCase.graphql.generated"
 import { useEffect, useState } from "react"
+import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
 import { useParams } from "react-router-dom"
 import Loading from "components/QueryStatus/Loading"
 
 const ClinicalCase = () => {
+  const go = useGo()
   const auth = useAuth()
   const { caseId } = useParams()
   const [loadGetCollectItemsQuery, getCollectItemsQuery] = useGetCollectItemsLazyQuery({
@@ -88,7 +90,11 @@ const ClinicalCase = () => {
           </div>
           <div
             className={styled["collect-block"]}
-            onClick={() => (isCollected ? removeCollectedCaseMutation() : collectCaseMutation())}>
+            onClick={e => {
+              e.stopPropagation()
+              if (!auth.user.id) return go.toSignIn()
+              isCollected ? removeCollectedCaseMutation() : collectCaseMutation()
+            }}>
             <Icon
               name={isCollected ? "BookmarkFill" : "BookmarkSimple"}
               className={styled["bookmark-simple"]}

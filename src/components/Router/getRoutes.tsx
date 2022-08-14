@@ -175,28 +175,34 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
         /* 諮詢歷史紀錄 */
         {
           path: "consultation-record",
-          element: (
+          element: user.id ? (
             <Suspense>
               <MemberConsultationRecord />
             </Suspense>
+          ) : (
+            <Navigate to="/sign-in" />
           ),
         },
         /* 收藏案例紀錄頁 */
         {
           path: "collect-clinical-case",
-          element: (
+          element: user.id ? (
             <Suspense>
               <MemberCollectClinicalCase />
             </Suspense>
+          ) : (
+            <Navigate to="/sign-in" />
           ),
         },
         /* 收件夾 */
         {
           path: "inbox",
-          element: (
+          element: user.id ? (
             <Suspense>
               <MemberInbox />
             </Suspense>
+          ) : (
+            <Navigate to="/sign-in" />
           ),
         },
         /* 常見問答 */

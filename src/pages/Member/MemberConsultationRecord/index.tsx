@@ -2,8 +2,6 @@ import cx from "classnames"
 import styled from "./MemberConsultationRecord.module.scss"
 import Header from "components/Layout/Header"
 import HistoryRecordCard from "containers/HistoryRecordCard"
-import { useAuth } from "hooks/useAuth"
-import { useGo } from "components/Router"
 import {
   useGetMeQuery,
   useEnableConsultMutation,
@@ -13,15 +11,9 @@ import dayjs from "dayjs"
 
 const MemberConsultationRecord = () => {
   const { data, loading } = useGetMeQuery({ fetchPolicy: "no-cache" })
-  const auth = useAuth()
-  const go = useGo()
   const [enableConsultMutation] = useEnableConsultMutation()
 
   if (loading) return <Loading />
-  if (!auth?.user?.id) {
-    go.toSignIn()
-    return <></>
-  }
 
   return (
     <>

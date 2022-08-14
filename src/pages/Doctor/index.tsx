@@ -16,7 +16,7 @@ import {
 import Loading from "components/QueryStatus/Loading"
 
 const DEFAULT_MODAL_MSG = {
-  title: "2-1寄送認證郵件",
+  title: "寄送認證郵件",
   content: "將密碼認證信寄至註冊信箱",
   confirm: "發送",
   cancel: "取消",

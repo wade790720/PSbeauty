@@ -97,7 +97,7 @@ const Register = () => {
       </Form>
       <div className={styled.actions}>
         <div />
-        <div onClick={go.toForgotPassword}>忘記密碼</div>
+        <div onClick={go.toResendVerification}>重發驗證信</div>
         <div>|</div>
         <div onClick={go.toSignIn}>已有帳號</div>
         <div />

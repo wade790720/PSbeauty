@@ -4,6 +4,8 @@ import {
   sendEmailVerification,
   sendPasswordResetEmail,
   User,
+  getIdToken,
+  signInWithEmailAndPassword,
 } from "firebase/auth"
 import { getMessaging, getToken } from "firebase/messaging"
 import { initializeApp } from "firebase/app"
@@ -40,6 +42,11 @@ export const register = async (email: string, password: string) => {
   cachedUserCred.timeout = new Date().getTime() + 60000
   const idToken = await userCred.user.getIdToken(true)
   return idToken
+}
+
+export const resendEmailVerificationByLogin = async (email: string, password: string) => {
+  const userCred = await signInWithEmailAndPassword(auth, email, password)
+  await sendEmailVerification(userCred.user)
 }
 
 export const resendEmailVerification = async () => {

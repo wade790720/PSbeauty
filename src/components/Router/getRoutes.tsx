@@ -8,6 +8,7 @@ const SignIn = lazy(() => import("pages/SignIn"))
 const Home = lazy(() => import("pages/Home"))
 const Advertisement = lazy(() => import("pages/Advertisement"))
 const Register = lazy(() => import("pages/Register"))
+const ResendVerification = lazy(() => import("pages/ResendVerification"))
 const ForgotPassword = lazy(() => import("pages/ForgotPassword"))
 const Survey = lazy(() => import("pages/Survey"))
 const SearchWrapper = lazy(() => import("pages/SearchWrapper"))
@@ -65,6 +66,15 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
       element: (
         <Suspense>
           <Register />
+        </Suspense>
+      ),
+    },
+    /* 重發驗證信 */
+    {
+      path: "resend-verification",
+      element: (
+        <Suspense>
+          <ResendVerification />
         </Suspense>
       ),
     },

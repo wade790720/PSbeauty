@@ -8,6 +8,8 @@ type toTarget = {
   toSignIn: () => void
   /** 註冊 */
   toRegister: () => void
+  /** 重發驗證信 */
+  toResendVerification: () => void
   /** 診所頁 */
   toClinic: () => void
   /** 診所內頁 */
@@ -46,6 +48,7 @@ const useGo = (): toTarget => {
     toHome: () => navigate("/"),
     toSignIn: () => navigate("/sign-in"),
     toRegister: () => navigate("/register"),
+    toResendVerification: () => navigate("/resend-verification"),
     toClinic: () => navigate("/clinic"),
     toClinicInner: ({ id, tab }) => navigate(`/clinic/${id}/inner/${tab}`),
     toClinicActivity: ({ clinicId, activityId }) => navigate(`/clinic/${clinicId}/activity/${activityId}`),

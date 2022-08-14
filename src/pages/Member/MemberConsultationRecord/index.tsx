@@ -12,7 +12,7 @@ import Loading from "components/QueryStatus/Loading"
 import dayjs from "dayjs"
 
 const MemberConsultationRecord = () => {
-  const { data, loading } = useGetMeQuery()
+  const { data, loading } = useGetMeQuery({ fetchPolicy: "no-cache" })
   const auth = useAuth()
   const go = useGo()
   const [enableConsultMutation] = useEnableConsultMutation()
@@ -28,29 +28,34 @@ const MemberConsultationRecord = () => {
       <Header title="諮詢歷史紀錄件夾" leftArrow />
       <div className={cx(styled.wrapper, { [styled.empty]: !data?.me?.consults?.length })}>
         <div className={styled["empty-card"]}>尚無諮詢紀錄</div>
-        {data?.me?.consults?.map(el => {
-          const date = dayjs((el?.consultAt || 0) * 1000).format("YYYY-MM-DD")
-          return (
-            <HistoryRecordCard
-              key={el?.id}
-              id={el?.id || ""}
-              title={el?.subject || ""}
-              date={`${date}｜剩餘${el?.days}天`}
-              toggle={el?.enable}
-              images={el?.images?.map(el => el ?? "") || []}
-              introduction={el?.content || ""}
-              tags={el?.categories?.map(el => el?.name || "") || []}
-              onChange={({ id, enable }: { id: string; enable: boolean }) => {
-                enableConsultMutation({
-                  variables: {
-                    id,
-                    enable,
-                  },
-                })
-              }}
-            />
-          )
-        })}
+        {[...(data?.me?.consults || [])]
+          .sort((a, b) => {
+            if (!a || !b) return 0
+            return b.consultAt - a.consultAt
+          })
+          ?.map(el => {
+            const date = dayjs((el?.consultAt || 0) * 1000).format("YYYY-MM-DD")
+            return (
+              <HistoryRecordCard
+                key={el?.id}
+                id={el?.id || ""}
+                title={el?.subject || ""}
+                date={`${date}｜剩餘${el?.days}天`}
+                toggle={el?.enable}
+                images={el?.images?.map(el => el ?? "") || []}
+                introduction={el?.content || ""}
+                tags={el?.categories?.map(el => el?.name || "") || []}
+                onChange={({ id, enable }: { id: string; enable: boolean }) => {
+                  enableConsultMutation({
+                    variables: {
+                      id,
+                      enable,
+                    },
+                  })
+                }}
+              />
+            )
+          })}
       </div>
     </>
   )

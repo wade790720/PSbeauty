@@ -25,13 +25,13 @@ export const GetDoctorInbox = gql`
               subject
               content
             }
-          }
-          reply {
-            id
-            createdAt
-            contentType
-            content
-            readAt
+            replies {
+              id
+              createdAt
+              contentType
+              content
+              readAt
+            }
           }
         }
       }

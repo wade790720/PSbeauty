@@ -75,10 +75,10 @@ const DoctorInbox = () => {
       <div className={styled.wrapper}>
         {edges?.map((edge, idx) => {
           const key = edge.node?.id || ""
-          const reply = edge.node?.reply
+          const reply = edge.node?.topic?.replies
           const topic = edge.node?.topic
           const unread = edge.node?.readAt === 0
-          const message = reply?.content || topic?.consult?.content || ""
+          const message = reply?.[0]?.content || topic?.consult?.content || ""
           return (
             <MessageCard
               unread={unread}

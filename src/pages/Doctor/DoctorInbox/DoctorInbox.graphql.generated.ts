@@ -34,14 +34,14 @@ export type GetDoctorInboxQuery = {
             subject: string | null
             content: string | null
           } | null
-        } | null
-        reply: {
-          __typename: "ConsultTopicReply"
-          id: string | null
-          createdAt: number
-          contentType: string | null
-          content: string | null
-          readAt: number
+          replies: Array<{
+            __typename: "ConsultTopicReply"
+            id: string | null
+            createdAt: number
+            contentType: string | null
+            content: string | null
+            readAt: number
+          } | null> | null
         } | null
       } | null
     }> | null
@@ -81,13 +81,13 @@ export const GetDoctorInboxDocument = gql`
               subject
               content
             }
-          }
-          reply {
-            id
-            createdAt
-            contentType
-            content
-            readAt
+            replies {
+              id
+              createdAt
+              contentType
+              content
+              readAt
+            }
           }
         }
       }

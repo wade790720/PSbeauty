@@ -2,6 +2,7 @@ import styled from "./Header.module.scss"
 import cx from "classnames"
 import Icon from "components/Icon"
 import { useNavigate } from "react-router-dom"
+import { useParams } from "react-router-dom"
 
 export type HeaderProps = {
   leftArrow?: boolean
@@ -11,6 +12,8 @@ export type HeaderProps = {
 
 const Header = ({ style = {}, ...props }: HeaderProps) => {
   const navigate = useNavigate()
+  const { text } = useParams()
+
   return (
     <div
       className={cx(styled.wrapper, props.className, {
@@ -19,7 +22,7 @@ const Header = ({ style = {}, ...props }: HeaderProps) => {
       })}
       style={{ ...style }}>
       {props.leftArrow && (
-        <div onClick={() => (props.url ? navigate(props.url) : navigate(-1))}>
+        <div onClick={() => (props.url ? navigate(props.url) : text ? navigate(-2) : navigate(-1))}>
           <Icon className={styled["back"]} name="LeftArrow" />
         </div>
       )}

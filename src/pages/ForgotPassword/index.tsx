@@ -8,12 +8,14 @@ import Modal from "components/Modal"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { sentResetPassword } from "firebaseClient"
 import styled from "./ForgotPassword.module.scss"
+import { useNavigate } from "react-router-dom"
 
 type Inputs = {
   email: string
 }
 
 const ForgotPassword = () => {
+  const navigate = useNavigate()
   const [open, setOpen] = useState(false)
   const submitSuccessRef = useRef(false)
 
@@ -90,7 +92,10 @@ const ForgotPassword = () => {
             title={submitSuccessRef.current ? "發送成功" : "信箱錯誤"}
             open={open}
             confirmText="關閉"
-            onClose={() => setOpen(false)}>
+            onClose={() => {
+              setOpen(false)
+              navigate(-1)
+            }}>
             {submitSuccessRef.current ? "請至註冊信箱查收新密碼" : "錯誤提示文字"}
           </Modal>
         </Form>

@@ -4,15 +4,15 @@ import { gql } from "@apollo/client"
 import * as Apollo from "@apollo/client"
 const defaultOptions = {} as const
 export type AddUserMutationVariables = Types.Exact<{
-  phone: Types.InputMaybe<Types.Scalars["String"]>
-  clientToken: Types.InputMaybe<
+  phone?: Types.InputMaybe<Types.Scalars["String"]>
+  clientToken?: Types.InputMaybe<
     Array<Types.InputMaybe<Types.Scalars["String"]>> | Types.InputMaybe<Types.Scalars["String"]>
   >
-  name: Types.InputMaybe<Types.Scalars["String"]>
+  name?: Types.InputMaybe<Types.Scalars["String"]>
 }>
 
 export type AddUserMutation = {
-  addUser: { __typename: "AddUserPayload"; id: string | null } | null
+  addUser?: { __typename: "AddUserPayload"; id?: string | null } | null
 }
 
 export const AddUserDocument = gql`

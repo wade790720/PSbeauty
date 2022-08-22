@@ -6,10 +6,10 @@ const defaultOptions = {} as const
 export type GetRefreshTokenQueryVariables = Types.Exact<{ [key: string]: never }>
 
 export type GetRefreshTokenQuery = {
-  refreshToken: {
+  refreshToken?: {
     __typename: "CustomTokenPayload"
-    uid: string | null
-    customToken: string | null
+    uid?: string | null
+    customToken?: string | null
   } | null
 }
 

@@ -6,22 +6,22 @@ const defaultOptions = {} as const
 export type GetMeQueryVariables = Types.Exact<{ [key: string]: never }>
 
 export type GetMeQuery = {
-  me: {
+  me?: {
     __typename: "User"
-    consults: Array<{
+    consults?: Array<{
       __typename: "Consult"
-      id: string | null
-      images: Array<string | null> | null
+      id?: string | null
+      images?: Array<string | null> | null
       days: number
       oneOnOne: boolean
-      subject: string | null
-      content: string | null
+      subject?: string | null
+      content?: string | null
       consultAt: number
       enable: boolean
-      categories: Array<{
+      categories?: Array<{
         __typename: "Category"
-        name: string | null
-        id: string | null
+        name?: string | null
+        id?: string | null
       } | null> | null
     } | null> | null
   } | null
@@ -33,7 +33,7 @@ export type EnableConsultMutationVariables = Types.Exact<{
 }>
 
 export type EnableConsultMutation = {
-  enableConsult: { __typename: "EnableConsultPayload"; id: string | null; enable: boolean } | null
+  enableConsult?: { __typename: "EnableConsultPayload"; id?: string | null; enable: boolean } | null
 }
 
 export const GetMeDocument = gql`

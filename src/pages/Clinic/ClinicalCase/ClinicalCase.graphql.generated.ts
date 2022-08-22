@@ -8,28 +8,28 @@ export type GetCaseQueryVariables = Types.Exact<{
 }>
 
 export type GetCaseQuery = {
-  case: {
+  case?: {
     __typename: "ClinicCase"
-    id: string | null
-    title: string | null
-    description: string | null
-    beforeImage: string | null
-    afterImage: string | null
-    categories: Array<{
+    id?: string | null
+    title?: string | null
+    description?: string | null
+    beforeImage?: string | null
+    afterImage?: string | null
+    categories?: Array<{
       __typename: "Category"
-      id: string | null
-      name: string | null
+      id?: string | null
+      name?: string | null
     } | null> | null
-    clinic: { __typename: "Clinic"; id: string | null; name: string | null } | null
+    clinic?: { __typename: "Clinic"; id?: string | null; name?: string | null } | null
   } | null
 }
 
 export type GetCollectItemsQueryVariables = Types.Exact<{ [key: string]: never }>
 
 export type GetCollectItemsQuery = {
-  me: {
+  me?: {
     __typename: "User"
-    userCollectedCases: Array<{ __typename: "ClinicCase"; id: string | null } | null> | null
+    userCollectedCases?: Array<{ __typename: "ClinicCase"; id?: string | null } | null> | null
   } | null
 }
 
@@ -38,9 +38,9 @@ export type CollectCaseMutationVariables = Types.Exact<{
 }>
 
 export type CollectCaseMutation = {
-  collectCase: {
+  collectCase?: {
     __typename: "CollectCasePayload"
-    userId: string | null
+    userId?: string | null
     collectedCount: number
   } | null
 }
@@ -50,9 +50,9 @@ export type RemoveCollectedCaseMutationVariables = Types.Exact<{
 }>
 
 export type RemoveCollectedCaseMutation = {
-  removeCollectedCase: {
+  removeCollectedCase?: {
     __typename: "RemoveCollectedCasePayload"
-    userId: string | null
+    userId?: string | null
     collectedCount: number
   } | null
 }

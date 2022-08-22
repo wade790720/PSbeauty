@@ -4,41 +4,83 @@ import { gql } from "@apollo/client"
 import * as Apollo from "@apollo/client"
 const defaultOptions = {} as const
 export type GetCasesQueryVariables = Types.Exact<{
-  after: Types.InputMaybe<Types.Scalars["String"]>
+  after?: Types.InputMaybe<Types.Scalars["String"]>
 }>
 
 export type GetCasesQuery = {
-  cases: {
+  cases?: {
     __typename: "CasesConnection"
     totalCount: number
     pageInfo: {
       __typename: "PageInfo"
       hasNextPage: boolean
       hasPreviousPage: boolean
-      startCursor: string | null
-      endCursor: string | null
+      startCursor?: string | null
+      endCursor?: string | null
     }
-    nodes: Array<{
+    nodes?: Array<{
       __typename: "ClinicCase"
-      id: string | null
-      description: string | null
-      title: string | null
-      beforeImage: string | null
-      afterImage: string | null
+      id?: string | null
+      description?: string | null
+      title?: string | null
+      beforeImage?: string | null
+      afterImage?: string | null
       collectedCount: number
-      categories: Array<{
+      categories?: Array<{
         __typename: "Category"
-        id: string | null
-        name: string | null
+        id?: string | null
+        name?: string | null
       } | null> | null
-      clinic: {
+      clinic?: {
         __typename: "Clinic"
-        id: string | null
-        name: string | null
-        phone: string | null
+        id?: string | null
+        name?: string | null
+        phone?: string | null
       } | null
     } | null> | null
-    edges: Array<{ __typename: "CasesEdge"; cursor: string }> | null
+    edges?: Array<{ __typename: "CasesEdge"; cursor: string }> | null
+  } | null
+}
+
+export type GetSpecifyCasesQueryVariables = Types.Exact<{
+  after?: Types.InputMaybe<Types.Scalars["String"]>
+  searchKeys?: Types.InputMaybe<
+    Array<Types.StringOperationFilterInput> | Types.StringOperationFilterInput
+  >
+}>
+
+export type GetSpecifyCasesQuery = {
+  cases?: {
+    __typename: "CasesConnection"
+    totalCount: number
+    pageInfo: {
+      __typename: "PageInfo"
+      hasNextPage: boolean
+      hasPreviousPage: boolean
+      startCursor?: string | null
+      endCursor?: string | null
+    }
+    nodes?: Array<{
+      __typename: "ClinicCase"
+      id?: string | null
+      description?: string | null
+      title?: string | null
+      beforeImage?: string | null
+      afterImage?: string | null
+      collectedCount: number
+      categories?: Array<{
+        __typename: "Category"
+        id?: string | null
+        name?: string | null
+      } | null> | null
+      clinic?: {
+        __typename: "Clinic"
+        id?: string | null
+        name?: string | null
+        phone?: string | null
+      } | null
+    } | null> | null
+    edges?: Array<{ __typename: "CasesEdge"; cursor: string }> | null
   } | null
 }
 
@@ -107,3 +149,83 @@ export function useGetCasesLazyQuery(
 export type GetCasesQueryHookResult = ReturnType<typeof useGetCasesQuery>
 export type GetCasesLazyQueryHookResult = ReturnType<typeof useGetCasesLazyQuery>
 export type GetCasesQueryResult = Apollo.QueryResult<GetCasesQuery, GetCasesQueryVariables>
+export const GetSpecifyCasesDocument = gql`
+  query GetSpecifyCases($after: String, $searchKeys: [StringOperationFilterInput!]) {
+    cases(
+      first: 10
+      order: { id: DESC }
+      after: $after
+      where: { categories: { some: { or: $searchKeys } } }
+    ) {
+      pageInfo {
+        hasNextPage
+        hasPreviousPage
+        startCursor
+        endCursor
+      }
+      totalCount
+      nodes {
+        id
+        description
+        title
+        beforeImage
+        afterImage
+        collectedCount
+        categories {
+          id
+          name
+        }
+        clinic {
+          id
+          name
+          phone
+        }
+      }
+      edges {
+        cursor
+      }
+    }
+  }
+`
+
+/**
+ * __useGetSpecifyCasesQuery__
+ *
+ * To run a query within a React component, call `useGetSpecifyCasesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSpecifyCasesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSpecifyCasesQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      searchKeys: // value for 'searchKeys'
+ *   },
+ * });
+ */
+export function useGetSpecifyCasesQuery(
+  baseOptions?: Apollo.QueryHookOptions<GetSpecifyCasesQuery, GetSpecifyCasesQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useQuery<GetSpecifyCasesQuery, GetSpecifyCasesQueryVariables>(
+    GetSpecifyCasesDocument,
+    options,
+  )
+}
+export function useGetSpecifyCasesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GetSpecifyCasesQuery, GetSpecifyCasesQueryVariables>,
+) {
+  const options = { ...defaultOptions, ...baseOptions }
+  return Apollo.useLazyQuery<GetSpecifyCasesQuery, GetSpecifyCasesQueryVariables>(
+    GetSpecifyCasesDocument,
+    options,
+  )
+}
+export type GetSpecifyCasesQueryHookResult = ReturnType<typeof useGetSpecifyCasesQuery>
+export type GetSpecifyCasesLazyQueryHookResult = ReturnType<typeof useGetSpecifyCasesLazyQuery>
+export type GetSpecifyCasesQueryResult = Apollo.QueryResult<
+  GetSpecifyCasesQuery,
+  GetSpecifyCasesQueryVariables
+>

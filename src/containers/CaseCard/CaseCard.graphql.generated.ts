@@ -8,9 +8,9 @@ export type CollectCaseMutationVariables = Types.Exact<{
 }>
 
 export type CollectCaseMutation = {
-  collectCase: {
+  collectCase?: {
     __typename: "CollectCasePayload"
-    userId: string | null
+    userId?: string | null
     collectedCount: number
   } | null
 }
@@ -20,9 +20,9 @@ export type RemoveCollectedCaseMutationVariables = Types.Exact<{
 }>
 
 export type RemoveCollectedCaseMutation = {
-  removeCollectedCase: {
+  removeCollectedCase?: {
     __typename: "RemoveCollectedCasePayload"
-    userId: string | null
+    userId?: string | null
     collectedCount: number
   } | null
 }

@@ -4,42 +4,42 @@ import { gql } from "@apollo/client"
 import * as Apollo from "@apollo/client"
 const defaultOptions = {} as const
 export type GetDoctorInboxQueryVariables = Types.Exact<{
-  input: Types.InputMaybe<Types.Scalars["String"]>
+  input?: Types.InputMaybe<Types.Scalars["String"]>
 }>
 
 export type GetDoctorInboxQuery = {
-  clinicInbox: {
+  clinicInbox?: {
     __typename: "ClinicInboxConnection"
     pageInfo: {
       __typename: "PageInfo"
       hasNextPage: boolean
       hasPreviousPage: boolean
-      startCursor: string | null
-      endCursor: string | null
+      startCursor?: string | null
+      endCursor?: string | null
     }
-    edges: Array<{
+    edges?: Array<{
       __typename: "ClinicInboxEdge"
       cursor: string
-      node: {
+      node?: {
         __typename: "ClinicInbox"
-        id: string | null
+        id?: string | null
         readAt: number
-        user: { __typename: "User"; id: string | null; name: string | null } | null
-        topic: {
+        user?: { __typename: "User"; id?: string | null; name?: string | null } | null
+        topic?: {
           __typename: "ClinicConsultTopic"
-          id: string | null
-          consult: {
+          id?: string | null
+          consult?: {
             __typename: "Consult"
-            id: string | null
-            subject: string | null
-            content: string | null
+            id?: string | null
+            subject?: string | null
+            content?: string | null
           } | null
-          replies: Array<{
+          replies?: Array<{
             __typename: "ConsultTopicReply"
-            id: string | null
+            id?: string | null
             createdAt: number
-            contentType: string | null
-            content: string | null
+            contentType?: string | null
+            content?: string | null
             readAt: number
           } | null> | null
         } | null
@@ -53,7 +53,7 @@ export type ReadClinicInboxMutationVariables = Types.Exact<{
 }>
 
 export type ReadClinicInboxMutation = {
-  readClinicInbox: { __typename: "ReadClinicInboxPayload"; id: string | null } | null
+  readClinicInbox?: { __typename: "ReadClinicInboxPayload"; id?: string | null } | null
 }
 
 export const GetDoctorInboxDocument = gql`

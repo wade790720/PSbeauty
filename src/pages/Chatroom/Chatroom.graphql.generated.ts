@@ -4,54 +4,54 @@ import { gql } from "@apollo/client"
 import * as Apollo from "@apollo/client"
 const defaultOptions = {} as const
 export type GeTopicDetailQueryVariables = Types.Exact<{
-  input: Types.InputMaybe<Types.Scalars["String"]>
+  input?: Types.InputMaybe<Types.Scalars["String"]>
 }>
 
 export type GeTopicDetailQuery = {
-  topic: {
+  topic?: {
     __typename: "ClinicConsultTopic"
-    clinic: { __typename: "Clinic"; id: string | null; name: string | null } | null
-    consult: {
+    clinic?: { __typename: "Clinic"; id?: string | null; name?: string | null } | null
+    consult?: {
       __typename: "Consult"
-      id: string | null
+      id?: string | null
       consultAt: number
       days: number
-      subject: string | null
-      images: Array<string | null> | null
-      content: string | null
+      subject?: string | null
+      images?: Array<string | null> | null
+      content?: string | null
       oneOnOne: boolean
-      poster: { __typename: "User"; id: string | null } | null
-      categories: Array<{
+      poster?: { __typename: "User"; id?: string | null } | null
+      categories?: Array<{
         __typename: "Category"
-        id: string | null
-        name: string | null
+        id?: string | null
+        name?: string | null
       } | null> | null
     } | null
-    replies: Array<{
+    replies?: Array<{
       __typename: "ConsultTopicReply"
-      id: string | null
-      content: string | null
-      contentType: string | null
+      id?: string | null
+      content?: string | null
+      contentType?: string | null
       readAt: number
-      userId: string | null
+      userId?: string | null
     } | null> | null
   } | null
 }
 
 export type ReplyTopicMutationVariables = Types.Exact<{
-  input: Types.InputMaybe<Types.ReplyTopicInput>
+  input?: Types.InputMaybe<Types.ReplyTopicInput>
 }>
 
 export type ReplyTopicMutation = {
-  replyTopic: { __typename: "ReplyTopicPayload"; id: string | null } | null
+  replyTopic?: { __typename: "ReplyTopicPayload"; id?: string | null } | null
 }
 
 export type ReadReplyMutationVariables = Types.Exact<{
-  input: Types.InputMaybe<Types.ReadReplyInput>
+  input?: Types.InputMaybe<Types.ReadReplyInput>
 }>
 
 export type ReadReplyMutation = {
-  readReply: { __typename: "ReadReplyPayload"; replyId: Array<string | null> | null } | null
+  readReply?: { __typename: "ReadReplyPayload"; replyId?: Array<string | null> | null } | null
 }
 
 export const GeTopicDetailDocument = gql`

@@ -6,9 +6,9 @@ const defaultOptions = {} as const
 export type GetCollectedCaseQueryVariables = Types.Exact<{ [key: string]: never }>
 
 export type GetCollectedCaseQuery = {
-  me: {
+  me?: {
     __typename: "User"
-    userCollectedCases: Array<{ __typename: "ClinicCase"; id: string | null } | null> | null
+    userCollectedCases?: Array<{ __typename: "ClinicCase"; id?: string | null } | null> | null
   } | null
 }
 

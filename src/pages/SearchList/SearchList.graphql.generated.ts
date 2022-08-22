@@ -8,27 +8,27 @@ export type GetSearchListQueryVariables = Types.Exact<{
 }>
 
 export type GetSearchListQuery = {
-  cases: {
+  cases?: {
     __typename: "CasesConnection"
     pageInfo: {
       __typename: "PageInfo"
       hasNextPage: boolean
       hasPreviousPage: boolean
-      startCursor: string | null
-      endCursor: string | null
+      startCursor?: string | null
+      endCursor?: string | null
     }
-    edges: Array<{
+    edges?: Array<{
       __typename: "CasesEdge"
       cursor: string
-      node: {
+      node?: {
         __typename: "ClinicCase"
-        id: string | null
-        title: string | null
-        beforeImage: string | null
-        beforeImageText: string | null
-        afterImage: string | null
-        afterImageText: string | null
-        clinic: { __typename: "Clinic"; id: string | null } | null
+        id?: string | null
+        title?: string | null
+        beforeImage?: string | null
+        beforeImageText?: string | null
+        afterImage?: string | null
+        afterImageText?: string | null
+        clinic?: { __typename: "Clinic"; id?: string | null } | null
       } | null
     }> | null
   } | null
@@ -37,7 +37,7 @@ export type GetSearchListQuery = {
 export type GetPopularKeywordsQueryVariables = Types.Exact<{ [key: string]: never }>
 
 export type GetPopularKeywordsQuery = {
-  popularKeywords: { __typename: "PopularKeywords"; keywords: Array<string | null> | null } | null
+  popularKeywords?: { __typename: "PopularKeywords"; keywords?: Array<string | null> | null } | null
 }
 
 export const GetSearchListDocument = gql`

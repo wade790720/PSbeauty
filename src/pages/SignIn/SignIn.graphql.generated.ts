@@ -4,15 +4,15 @@ import { gql } from "@apollo/client"
 import * as Apollo from "@apollo/client"
 const defaultOptions = {} as const
 export type SignInWithEmailAndPasswordMutationVariables = Types.Exact<{
-  email: Types.InputMaybe<Types.Scalars["String"]>
-  password: Types.InputMaybe<Types.Scalars["String"]>
+  email?: Types.InputMaybe<Types.Scalars["String"]>
+  password?: Types.InputMaybe<Types.Scalars["String"]>
 }>
 
 export type SignInWithEmailAndPasswordMutation = {
-  signInWithEmailAndPassword: {
+  signInWithEmailAndPassword?: {
     __typename: "SignInWithEmailAndPasswordPayload"
-    customToken: string | null
-    firebaseToken: string | null
+    customToken?: string | null
+    firebaseToken?: string | null
   } | null
 }
 

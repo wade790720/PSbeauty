@@ -19,7 +19,7 @@ generates:
       - typescript-operations
       - typescript-react-apollo
 config:
-  avoidOptionals: true 
+  avoidOptionals: false 
   nonOptionalTypename: true
   skipTypeNameForRoot: true
   withHooks: true

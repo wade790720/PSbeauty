@@ -6,40 +6,40 @@ const defaultOptions = {} as const
 export type GetTopCategoriesQueryVariables = Types.Exact<{ [key: string]: never }>
 
 export type GetTopCategoriesQuery = {
-  topCategories: Array<{
+  topCategories?: Array<{
     __typename: "TopCategory"
-    name: string | null
-    secondCategories: Array<{
+    name?: string | null
+    secondCategories?: Array<{
       __typename: "SecondCategory"
-      name: string | null
-      categories: Array<{
+      name?: string | null
+      categories?: Array<{
         __typename: "Category"
-        id: string | null
-        name: string | null
+        id?: string | null
+        name?: string | null
       } | null> | null
     } | null> | null
   } | null> | null
 }
 
 export type UpdateClinicCategoryMutationVariables = Types.Exact<{
-  categories: Types.InputMaybe<
+  categories?: Types.InputMaybe<
     Array<Types.InputMaybe<Types.Scalars["String"]>> | Types.InputMaybe<Types.Scalars["String"]>
   >
 }>
 
 export type UpdateClinicCategoryMutation = {
-  updateClinicCategory: { __typename: "UpdateClinicCategoryPayload"; id: string | null } | null
+  updateClinicCategory?: { __typename: "UpdateClinicCategoryPayload"; id?: string | null } | null
 }
 
 export type GetMyClinicQueryVariables = Types.Exact<{ [key: string]: never }>
 
 export type GetMyClinicQuery = {
-  myClinic: {
+  myClinic?: {
     __typename: "Clinic"
-    categories: Array<{
+    categories?: Array<{
       __typename: "Category"
-      id: string | null
-      name: string | null
+      id?: string | null
+      name?: string | null
     } | null> | null
   } | null
 }

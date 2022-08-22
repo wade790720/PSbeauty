@@ -4,28 +4,28 @@ import { gql } from "@apollo/client"
 import * as Apollo from "@apollo/client"
 const defaultOptions = {} as const
 export type GetAdImagesQueryVariables = Types.Exact<{
-  first: Types.InputMaybe<Types.Scalars["Int"]>
-  orderId: Types.InputMaybe<Types.SortEnumType>
-  where: Types.InputMaybe<Types.Scalars["String"]>
+  first?: Types.InputMaybe<Types.Scalars["Int"]>
+  orderId?: Types.InputMaybe<Types.SortEnumType>
+  where?: Types.InputMaybe<Types.Scalars["String"]>
 }>
 
 export type GetAdImagesQuery = {
-  adImages: {
+  adImages?: {
     __typename: "AdImagesConnection"
-    edges: Array<{
+    edges?: Array<{
       __typename: "AdImagesEdge"
       cursor: string
-      node: {
+      node?: {
         __typename: "AdImage"
-        id: string | null
-        image: string | null
+        id?: string | null
+        image?: string | null
         sort: number
-        usageType: string | null
-        redirectType: string | null
-        targetId: string | null
-        clinicId: string | null
+        usageType?: string | null
+        redirectType?: string | null
+        targetId?: string | null
+        clinicId?: string | null
         status: boolean
-        title: string | null
+        title?: string | null
       } | null
     }> | null
   } | null

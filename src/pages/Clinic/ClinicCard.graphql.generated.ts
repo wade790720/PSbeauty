@@ -6,63 +6,63 @@ const defaultOptions = {} as const
 export type GetClinicsQueryVariables = Types.Exact<{ [key: string]: never }>
 
 export type GetClinicsQuery = {
-  clinics: {
+  clinics?: {
     __typename: "ClinicsConnection"
     totalCount: number
     pageInfo: {
       __typename: "PageInfo"
       hasNextPage: boolean
       hasPreviousPage: boolean
-      startCursor: string | null
-      endCursor: string | null
+      startCursor?: string | null
+      endCursor?: string | null
     }
-    edges: Array<{
+    edges?: Array<{
       __typename: "ClinicsEdge"
       cursor: string
-      node: {
+      node?: {
         __typename: "Clinic"
         consultReplyCount: number
         caseCount: number
-        county: string | null
-        town: string | null
-        name: string | null
-        id: string | null
+        county?: string | null
+        town?: string | null
+        name?: string | null
+        id?: string | null
       } | null
     }> | null
   } | null
 }
 
 export type GetClinicsSearchQueryVariables = Types.Exact<{
-  county: Types.InputMaybe<
+  county?: Types.InputMaybe<
     Array<Types.InputMaybe<Types.Scalars["String"]>> | Types.InputMaybe<Types.Scalars["String"]>
   >
-  town: Types.InputMaybe<
+  town?: Types.InputMaybe<
     Array<Types.InputMaybe<Types.Scalars["String"]>> | Types.InputMaybe<Types.Scalars["String"]>
   >
 }>
 
 export type GetClinicsSearchQuery = {
-  clinics: {
+  clinics?: {
     __typename: "ClinicsConnection"
     totalCount: number
     pageInfo: {
       __typename: "PageInfo"
       hasNextPage: boolean
       hasPreviousPage: boolean
-      startCursor: string | null
-      endCursor: string | null
+      startCursor?: string | null
+      endCursor?: string | null
     }
-    edges: Array<{
+    edges?: Array<{
       __typename: "ClinicsEdge"
       cursor: string
-      node: {
+      node?: {
         __typename: "Clinic"
         consultReplyCount: number
         caseCount: number
-        county: string | null
-        town: string | null
-        name: string | null
-        id: string | null
+        county?: string | null
+        town?: string | null
+        name?: string | null
+        id?: string | null
       } | null
     }> | null
   } | null

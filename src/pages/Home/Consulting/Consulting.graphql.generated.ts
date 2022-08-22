@@ -6,35 +6,35 @@ const defaultOptions = {} as const
 export type GetTopCategoriesQueryVariables = Types.Exact<{ [key: string]: never }>
 
 export type GetTopCategoriesQuery = {
-  topCategories: Array<{
+  topCategories?: Array<{
     __typename: "TopCategory"
-    name: string | null
-    secondCategories: Array<{
+    name?: string | null
+    secondCategories?: Array<{
       __typename: "SecondCategory"
-      name: string | null
-      categories: Array<{
+      name?: string | null
+      categories?: Array<{
         __typename: "Category"
-        id: string | null
-        name: string | null
+        id?: string | null
+        name?: string | null
       } | null> | null
     } | null> | null
   } | null> | null
 }
 
 export type GetConsultClinicMutationVariables = Types.Exact<{
-  categories: Types.InputMaybe<
+  categories?: Types.InputMaybe<
     Array<Types.InputMaybe<Types.Scalars["String"]>> | Types.InputMaybe<Types.Scalars["String"]>
   >
   days: Types.Scalars["Int"]
-  images: Types.InputMaybe<
+  images?: Types.InputMaybe<
     Array<Types.InputMaybe<Types.Scalars["String"]>> | Types.InputMaybe<Types.Scalars["String"]>
   >
   subject: Types.Scalars["String"]
-  content: Types.InputMaybe<Types.Scalars["String"]>
+  content?: Types.InputMaybe<Types.Scalars["String"]>
 }>
 
 export type GetConsultClinicMutation = {
-  addConsult: { __typename: "AddConsultPayload"; id: string | null } | null
+  addConsult?: { __typename: "AddConsultPayload"; id?: string | null } | null
 }
 
 export const GetTopCategoriesDocument = gql`

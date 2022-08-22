@@ -8,16 +8,16 @@ export type GetClinicQueryVariables = Types.Exact<{
 }>
 
 export type GetClinicQuery = {
-  clinic: {
+  clinic?: {
     __typename: "Clinic"
-    name: string | null
-    activities: Array<{
+    name?: string | null
+    activities?: Array<{
       __typename: "ClinicActivity"
-      id: string | null
-      subject: string | null
-      content: string | null
+      id?: string | null
+      subject?: string | null
+      content?: string | null
       createdAt: number
-      image: string | null
+      image?: string | null
     } | null> | null
   } | null
 }

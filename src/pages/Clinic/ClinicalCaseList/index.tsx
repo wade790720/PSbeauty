@@ -10,7 +10,10 @@ import Banner from "containers/Banner"
 import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
 import { useGetTopCategoriesLazyQuery } from "./ClinicalCaseList.graphql.generated"
-import { useGetCasesQuery } from "graphql/queries/getCases.graphql.generated"
+import {
+  useGetCasesQuery,
+  useGetSpecifyCasesLazyQuery,
+} from "graphql/queries/getCases.graphql.generated"
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
 import { useGetCollectedCaseLazyQuery } from "graphql/queries/getCollectedCase.graphql.generated"
 import { SortEnumType } from "types/schema"
@@ -19,14 +22,19 @@ const ClinicalCaseList = () => {
   const auth = useAuth()
   const go = useGo()
   const [open, setOpen] = useState(false)
+  const [filter, setFilter] = useState(false)
   const cursorRef = useRef<string>("")
   const [loadQuery, query] = useGetTopCategoriesLazyQuery()
   const getCasesQuery = useGetCasesQuery()
-  const edges = getCasesQuery?.data?.cases?.edges || []
 
   const [loadGetCollectedCaseQuery, getCollectedCaseQuery] = useGetCollectedCaseLazyQuery({
     fetchPolicy: "no-cache",
   })
+  const [loadGetSpecifyCasesLazy, getSpecifyCasesLazy] = useGetSpecifyCasesLazyQuery()
+  const edges = filter
+    ? getSpecifyCasesLazy?.data?.cases?.edges || []
+    : getCasesQuery?.data?.cases?.edges || []
+  const nodes = filter ? getSpecifyCasesLazy?.data?.cases?.nodes : getCasesQuery?.data?.cases?.nodes
   const adImageCaseQuery = useGetAdImagesQuery({
     variables: {
       first: 5,
@@ -55,8 +63,8 @@ const ClinicalCaseList = () => {
 
   const fetchMore = useCallback(() => {
     const after = edges?.[edges.length - 1]?.cursor || null
-
-    getCasesQuery.fetchMore({
+    const target = filter ? getSpecifyCasesLazy : getCasesQuery
+    target.fetchMore({
       variables: {
         after,
       },
@@ -83,7 +91,7 @@ const ClinicalCaseList = () => {
         return fetchMoreResult
       },
     })
-  }, [edges, getCasesQuery])
+  }, [edges, getCasesQuery, getSpecifyCasesLazy])
 
   return (
     <>
@@ -99,7 +107,7 @@ const ClinicalCaseList = () => {
         </div>
         <div className={styled.inner}>
           <Banner images={adImages} />
-          {getCasesQuery?.data?.cases?.nodes?.map((el, idx) => (
+          {nodes?.map((el, idx) => (
             <CaseCard
               key={el?.id}
               isCollected={
@@ -114,11 +122,7 @@ const ClinicalCaseList = () => {
               images={[el?.beforeImage || "", el?.afterImage || ""]}
               tags={el?.categories?.map(el => el?.name || "")}
               caseId={el?.id || ""}
-              last={
-                (getCasesQuery?.data?.cases?.nodes &&
-                  getCasesQuery?.data?.cases?.nodes?.length - 1 === idx) ||
-                false
-              }
+              last={(nodes && nodes?.length - 1 === idx) || false}
               fetchMore={() => {
                 getCasesQuery?.data?.cases?.pageInfo?.hasNextPage && fetchMore()
               }}
@@ -132,7 +136,15 @@ const ClinicalCaseList = () => {
             <SubjectFilter
               open={open}
               onClose={() => setOpen(false)}
-              getValue={value => console.log(value)}
+              getValue={value => {
+                if (value.length === 0) return setFilter(false)
+                loadGetSpecifyCasesLazy({
+                  variables: {
+                    searchKeys: value.map(el => ({ eq: el.id || "" })),
+                  },
+                })
+                setFilter(true)
+              }}
               topCategoriesQuery={query}
               defaultValue={[]}
             />

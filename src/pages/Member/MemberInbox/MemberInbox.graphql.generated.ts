@@ -6,17 +6,17 @@ const defaultOptions = {} as const
 export type GetMemberInboxQueryVariables = Types.Exact<{ [key: string]: never }>
 
 export type GetMemberInboxQuery = {
-  me: {
+  me?: {
     __typename: "User"
-    replyInbox: Array<{
+    replyInbox?: Array<{
       __typename: "ConsultTopicReply"
-      id: string | null
-      content: string | null
+      id?: string | null
+      content?: string | null
       readAt: number
-      topic: {
+      topic?: {
         __typename: "ClinicConsultTopic"
-        id: string | null
-        clinic: { __typename: "Clinic"; id: string | null; name: string | null } | null
+        id?: string | null
+        clinic?: { __typename: "Clinic"; id?: string | null; name?: string | null } | null
       } | null
     } | null> | null
   } | null

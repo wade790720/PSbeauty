@@ -53,6 +53,8 @@ const SubjectFilter = (props: consultProps) => {
   }, [handleFirstItem])
 
   useEffect(() => {
+    if (props.defaultValue.length === 0) setIsCheckAll([])
+
     setChosenItem(
       props.defaultValue?.map(el => ({
         id: el.id,

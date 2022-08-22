@@ -6,14 +6,14 @@ const defaultOptions = {} as const
 export type GetAdCardsQueryVariables = Types.Exact<{ [key: string]: never }>
 
 export type GetAdCardsQuery = {
-  adCards: {
+  adCards?: {
     __typename: "AdCardsConnection"
-    nodes: Array<{
+    nodes?: Array<{
       __typename: "AdCard"
-      id: string | null
-      image: string | null
-      title: string | null
-      content: string | null
+      id?: string | null
+      image?: string | null
+      title?: string | null
+      content?: string | null
     } | null> | null
   } | null
 }

@@ -8,55 +8,55 @@ export type GetClinicQueryVariables = Types.Exact<{
 }>
 
 export type GetClinicQuery = {
-  clinic: {
+  clinic?: {
     __typename: "Clinic"
-    name: string | null
-    county: string | null
-    town: string | null
-    address: string | null
-    phone: string | null
-    web: string | null
+    name?: string | null
+    county?: string | null
+    town?: string | null
+    address?: string | null
+    phone?: string | null
+    web?: string | null
     consultReplyCount: number
     caseCount: number
-    description: string | null
-    cases: Array<{
+    description?: string | null
+    cases?: Array<{
       __typename: "ClinicCase"
-      id: string | null
-      description: string | null
-      title: string | null
-      beforeImage: string | null
-      afterImage: string | null
+      id?: string | null
+      description?: string | null
+      title?: string | null
+      beforeImage?: string | null
+      afterImage?: string | null
       collectedCount: number
-      categories: Array<{
+      categories?: Array<{
         __typename: "Category"
-        id: string | null
-        name: string | null
+        id?: string | null
+        name?: string | null
       } | null> | null
     } | null> | null
-    images: Array<{
+    images?: Array<{
       __typename: "ClinicImage"
-      id: string | null
-      image: string | null
-      redirectType: string | null
-      targetId: string | null
+      id?: string | null
+      image?: string | null
+      redirectType?: string | null
+      targetId?: string | null
       sort: number
     } | null> | null
-    doctors: Array<{
+    doctors?: Array<{
       __typename: "ClinicDoctor"
-      id: string | null
-      name: string | null
-      resumes: string | null
-      photo: string | null
-      title: string | null
-      expertise: string | null
+      id?: string | null
+      name?: string | null
+      resumes?: string | null
+      photo?: string | null
+      title?: string | null
+      expertise?: string | null
     } | null> | null
-    activities: Array<{
+    activities?: Array<{
       __typename: "ClinicActivity"
-      id: string | null
-      subject: string | null
-      content: string | null
+      id?: string | null
+      subject?: string | null
+      content?: string | null
       createdAt: number
-      image: string | null
+      image?: string | null
     } | null> | null
   } | null
 }

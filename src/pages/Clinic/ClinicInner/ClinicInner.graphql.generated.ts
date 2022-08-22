@@ -4,11 +4,11 @@ import { gql } from "@apollo/client"
 import * as Apollo from "@apollo/client"
 const defaultOptions = {} as const
 export type ConsultClinicMutationVariables = Types.Exact<{
-  input: Types.InputMaybe<Types.Scalars["String"]>
+  input?: Types.InputMaybe<Types.Scalars["String"]>
 }>
 
 export type ConsultClinicMutation = {
-  consultClinic: { __typename: "ConsultClinicPayload"; topicId: string | null } | null
+  consultClinic?: { __typename: "ConsultClinicPayload"; topicId?: string | null } | null
 }
 
 export const ConsultClinicDocument = gql`

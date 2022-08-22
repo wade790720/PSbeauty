@@ -6,16 +6,16 @@ const defaultOptions = {} as const
 export type GetTopCategoriesQueryVariables = Types.Exact<{ [key: string]: never }>
 
 export type GetTopCategoriesQuery = {
-  topCategories: Array<{
+  topCategories?: Array<{
     __typename: "TopCategory"
-    name: string | null
-    secondCategories: Array<{
+    name?: string | null
+    secondCategories?: Array<{
       __typename: "SecondCategory"
-      name: string | null
-      categories: Array<{
+      name?: string | null
+      categories?: Array<{
         __typename: "Category"
-        id: string | null
-        name: string | null
+        id?: string | null
+        name?: string | null
       } | null> | null
     } | null> | null
   } | null> | null

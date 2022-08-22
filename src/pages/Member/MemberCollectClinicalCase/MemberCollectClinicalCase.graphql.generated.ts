@@ -6,20 +6,20 @@ const defaultOptions = {} as const
 export type GetMeQueryVariables = Types.Exact<{ [key: string]: never }>
 
 export type GetMeQuery = {
-  me: {
+  me?: {
     __typename: "User"
-    userCollectedCases: Array<{
+    userCollectedCases?: Array<{
       __typename: "ClinicCase"
-      id: string | null
-      title: string | null
-      description: string | null
-      beforeImage: string | null
-      afterImage: string | null
-      clinic: { __typename: "Clinic"; id: string | null; name: string | null } | null
-      categories: Array<{
+      id?: string | null
+      title?: string | null
+      description?: string | null
+      beforeImage?: string | null
+      afterImage?: string | null
+      clinic?: { __typename: "Clinic"; id?: string | null; name?: string | null } | null
+      categories?: Array<{
         __typename: "Category"
-        id: string | null
-        name: string | null
+        id?: string | null
+        name?: string | null
       } | null> | null
     } | null> | null
   } | null

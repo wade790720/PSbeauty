@@ -88,6 +88,7 @@ const Consulting = (props: consultProps) => {
             <Form.Label required>標題</Form.Label>
             <Form.Input
               placeholder="請輸入文字"
+              maxLength={20}
               className={styled.input}
               onChange={e => setSubject(e.target.value)}
             />

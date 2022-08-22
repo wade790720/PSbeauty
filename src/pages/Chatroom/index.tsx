@@ -165,7 +165,11 @@ const Chatroom = () => {
           } else {
             return (
               <div className={cx(styled.row, styled.left)} key={v?.key}>
-                <img className={styled.avatar} src="/img/chatroom-user.png" />
+                {auth.user.clinic ? (
+                  <div className={styled["user-avatar"]}>U</div>
+                ) : (
+                  <img className={styled.avatar} src="/img/chatroom-user.png" />
+                )}
                 <div className={styled.message}>{v?.content}</div>
               </div>
             )

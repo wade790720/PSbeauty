@@ -65,7 +65,11 @@ const ClinicalCase = () => {
       <Backdrop className={styled.wrapper}>
         <div className={styled.outer}>
           <div className={styled.title}>{data?.case?.title}</div>
-          <div className={styled.clinic}>{data?.case?.clinic?.name}</div>
+          <div
+            className={styled.clinic}
+            onClick={() => go.toClinicInner({ id: data?.case?.clinic?.id || "", tab: "info" })}>
+            {data?.case?.clinic?.name}
+          </div>
           <div className={styled.images}>
             <div className={styled.image}>
               <img src={data?.case?.beforeImage || ""} />

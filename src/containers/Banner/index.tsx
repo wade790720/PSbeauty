@@ -17,6 +17,9 @@ const Banner = ({ height = "132px", images = [] }: BannerProps) => {
 
   return (
     <div className={styled.banner}>
+      {images.length === 0 && (
+        <div className={styled.slide} style={{ height, background: "#aab0b233" }} />
+      )}
       <Carousel
         autoplay={true}
         autoplayInterval={5000}

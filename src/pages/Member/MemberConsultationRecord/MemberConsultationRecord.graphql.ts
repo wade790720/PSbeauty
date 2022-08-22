@@ -7,6 +7,7 @@ export const GetMe = gql`
         id
         images
         days
+        oneOnOne
         subject
         content
         consultAt

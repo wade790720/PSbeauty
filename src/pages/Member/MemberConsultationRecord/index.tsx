@@ -25,6 +25,7 @@ const MemberConsultationRecord = () => {
             if (!a || !b) return 0
             return b.consultAt - a.consultAt
           })
+          .filter(el => !el?.oneOnOne)
           ?.map(el => {
             const date = dayjs((el?.consultAt || 0) * 1000).format("YYYY-MM-DD")
             return (

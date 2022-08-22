@@ -152,7 +152,7 @@ const Consulting = (props: consultProps) => {
             />
           </Form.Group>
           <Form.Group layout="vertical" className={styled["input-group"]}>
-            <Form.Label required>附加檔案</Form.Label>
+            <Form.Label>附加檔案</Form.Label>
             <div className={styled.uploads}>
               {files.map((file, index) => {
                 return (
@@ -216,7 +216,7 @@ const Consulting = (props: consultProps) => {
                 file: file.raw,
               }
             })
-            if (!subject || !categories.length || !chosenCycle || !uploadImages.length) {
+            if (!subject || !categories.length || !chosenCycle) {
               setIsAlert(true)
               return
             }

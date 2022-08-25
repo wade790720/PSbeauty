@@ -78,7 +78,15 @@ const DoctorInbox = () => {
           const reply = edge.node?.topic?.replies
           const topic = edge.node?.topic
           const unread = edge.node?.readAt === 0
-          const message = reply?.[0]?.content || topic?.consult?.content || ""
+
+          const repliesCount = reply?.length || 0
+          if (repliesCount <= 0) {
+            return null
+          }
+          const message = reply?.[repliesCount - 1]?.content || topic?.consult?.content || ""
+          if (!message) {
+            return null
+          }
           return (
             <MessageCard
               unread={unread}

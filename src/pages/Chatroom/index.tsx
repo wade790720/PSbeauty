@@ -132,6 +132,7 @@ const Chatroom = () => {
   const oneOnOne = consult?.oneOnOne
   const images = (consult?.images || []).map(v => v || "")
   const categories = (consult?.categories || []).map(v => v?.name || "")
+  const isClinic = !!auth.user.clinic
 
   messages.push(...realtimes)
 
@@ -141,6 +142,13 @@ const Chatroom = () => {
       <Header leftArrow title={clinic?.name || ""} />
       <Backdrop className={styled.wrapper}>
         {/* <div className={cx(styled.row, styled.center)}></div> */}
+        {isClinic
+          ? null
+          : !clinic?.paid && (
+              <div className={cx(styled.row, styled.center)}>
+                (診所非付費會員，可能無法回覆訊息)
+              </div>
+            )}
         {!oneOnOne && (
           <div className={cx(styled.row, styled.center)}>
             <HistoryRecordCard
@@ -181,13 +189,31 @@ const Chatroom = () => {
         <div className={styled.input}>
           <div className={styled.control}>
             <UploadImage />
-            <input
-              ref={msgInputRef}
-              value={message}
-              onChange={e => setMessage(e.target.value)}></input>
-            <div className={styled.submit} onClick={() => newMessage(message, consulteeId)}>
-              送出
-            </div>
+            {isClinic ? (
+              <>
+                <input
+                  ref={msgInputRef}
+                  value={message}
+                  disabled={!clinic?.paid}
+                  placeholder={clinic?.paid ? "" : "付費會員即可回覆訊息"}
+                  onChange={e => setMessage(e.target.value)}></input>
+                {clinic?.paid ? (
+                  <div className={styled.submit} onClick={() => newMessage(message, consulteeId)}>
+                    送出
+                  </div>
+                ) : null}
+              </>
+            ) : (
+              <>
+                <input
+                  ref={msgInputRef}
+                  value={message}
+                  onChange={e => setMessage(e.target.value)}></input>
+                <div className={styled.submit} onClick={() => newMessage(message, consulteeId)}>
+                  送出
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}

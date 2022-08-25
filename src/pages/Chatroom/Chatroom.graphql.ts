@@ -6,6 +6,7 @@ export const GetTopicDetail = gql`
       clinic {
         id
         name
+        paid
       }
       consult {
         id

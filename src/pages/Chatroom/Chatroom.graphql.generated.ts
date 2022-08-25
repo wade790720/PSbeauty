@@ -10,7 +10,12 @@ export type GeTopicDetailQueryVariables = Types.Exact<{
 export type GeTopicDetailQuery = {
   topic?: {
     __typename: "ClinicConsultTopic"
-    clinic?: { __typename: "Clinic"; id?: string | null; name?: string | null } | null
+    clinic?: {
+      __typename: "Clinic"
+      id?: string | null
+      name?: string | null
+      paid: boolean
+    } | null
     consult?: {
       __typename: "Consult"
       id?: string | null
@@ -60,6 +65,7 @@ export const GeTopicDetailDocument = gql`
       clinic {
         id
         name
+        paid
       }
       consult {
         id

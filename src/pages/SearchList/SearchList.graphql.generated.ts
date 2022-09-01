@@ -24,10 +24,8 @@ export type GetSearchListQuery = {
         __typename: "ClinicCase"
         id?: string | null
         title?: string | null
-        beforeImage?: string | null
-        beforeImageText?: string | null
-        afterImage?: string | null
-        afterImageText?: string | null
+        image?: string | null
+        imageText?: string | null
         clinic?: { __typename: "Clinic"; id?: string | null } | null
       } | null
     }> | null
@@ -42,16 +40,7 @@ export type GetPopularKeywordsQuery = {
 
 export const GetSearchListDocument = gql`
   query getSearchList($contains: String!) {
-    cases(
-      where: {
-        or: [
-          { beforeImageText: { contains: $contains } }
-          { afterImageText: { contains: $contains } }
-        ]
-      }
-      first: 10
-      order: { id: DESC }
-    ) {
+    cases(where: { or: [{ imageText: { contains: $contains } }] }, first: 10, order: { id: DESC }) {
       pageInfo {
         hasNextPage
         hasPreviousPage
@@ -63,10 +52,8 @@ export const GetSearchListDocument = gql`
         node {
           id
           title
-          beforeImage
-          beforeImageText
-          afterImage
-          afterImageText
+          image
+          imageText
           clinic {
             id
           }

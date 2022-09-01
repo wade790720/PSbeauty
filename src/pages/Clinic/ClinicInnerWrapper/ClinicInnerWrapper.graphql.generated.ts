@@ -24,8 +24,7 @@ export type GetClinicQuery = {
       id?: string | null
       description?: string | null
       title?: string | null
-      beforeImage?: string | null
-      afterImage?: string | null
+      image?: string | null
       collectedCount: number
       categories?: Array<{
         __typename: "Category"
@@ -77,8 +76,7 @@ export const GetClinicDocument = gql`
         id
         description
         title
-        beforeImage
-        afterImage
+        image
         collectedCount
         categories {
           id

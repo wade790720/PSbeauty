@@ -14,8 +14,7 @@ export const GetCases = gql`
         id
         description
         title
-        beforeImage
-        afterImage
+        image
         collectedCount
         categories {
           id
@@ -53,8 +52,7 @@ export const GetSpecifyCases = gql`
         id
         description
         title
-        beforeImage
-        afterImage
+        image
         collectedCount
         categories {
           id

@@ -64,17 +64,11 @@ const SearchList = () => {
                 styled[["a-style", "b-style", "c-style", "d-style", "e-style", "f-style"][idx % 6]],
               )}>
               <img
-                src={
-                  (el.node?.beforeImageText?.includes(tag || text || "") && el.node?.beforeImage) ||
-                  (el.node?.afterImageText?.includes(tag || text || "") && el.node?.afterImage) ||
-                  ""
-                }
+                src={(el.node?.imageText?.includes(tag || text || "") && el.node?.imageText) || ""}
               />
               <div className={styled.cover} />
               <div className={styled.title}>
-                {(el.node?.beforeImageText?.includes(tag || text || "") &&
-                  el.node?.beforeImageText) ||
-                  (el.node?.afterImageText?.includes(tag || text || "") && el.node?.afterImageText)}
+                {el.node?.imageText?.includes(tag || text || "") && el.node?.imageText}
               </div>
             </div>
           ))

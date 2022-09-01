@@ -13,8 +13,7 @@ export type GetCaseQuery = {
     id?: string | null
     title?: string | null
     description?: string | null
-    beforeImage?: string | null
-    afterImage?: string | null
+    image?: string | null
     categories?: Array<{
       __typename: "Category"
       id?: string | null
@@ -63,8 +62,7 @@ export const GetCaseDocument = gql`
       id
       title
       description
-      beforeImage
-      afterImage
+      image
       categories {
         id
         name

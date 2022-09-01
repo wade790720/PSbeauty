@@ -6,8 +6,7 @@ export const GetCase = gql`
       id
       title
       description
-      beforeImage
-      afterImage
+      image
       categories {
         id
         name

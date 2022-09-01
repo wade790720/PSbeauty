@@ -23,8 +23,7 @@ export type GetCasesQuery = {
       id?: string | null
       description?: string | null
       title?: string | null
-      beforeImage?: string | null
-      afterImage?: string | null
+      image?: string | null
       collectedCount: number
       categories?: Array<{
         __typename: "Category"
@@ -65,8 +64,7 @@ export type GetSpecifyCasesQuery = {
       id?: string | null
       description?: string | null
       title?: string | null
-      beforeImage?: string | null
-      afterImage?: string | null
+      image?: string | null
       collectedCount: number
       categories?: Array<{
         __typename: "Category"
@@ -98,8 +96,7 @@ export const GetCasesDocument = gql`
         id
         description
         title
-        beforeImage
-        afterImage
+        image
         collectedCount
         categories {
           id
@@ -168,8 +165,7 @@ export const GetSpecifyCasesDocument = gql`
         id
         description
         title
-        beforeImage
-        afterImage
+        image
         collectedCount
         categories {
           id

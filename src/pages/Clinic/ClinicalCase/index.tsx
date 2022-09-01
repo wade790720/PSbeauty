@@ -72,12 +72,8 @@ const ClinicalCase = () => {
           </div>
           <div className={styled.images}>
             <div className={styled.image}>
-              <img src={data?.case?.beforeImage || ""} />
+              <img src={data?.case?.image || ""} />
               <div className={styled.label}>Before</div>
-            </div>
-            <div className={styled.image}>
-              <img src={data?.case?.afterImage || ""} />
-              <div className={styled.label}>After</div>
             </div>
           </div>
           <div

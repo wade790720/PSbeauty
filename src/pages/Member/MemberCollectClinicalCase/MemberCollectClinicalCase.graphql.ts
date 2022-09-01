@@ -7,8 +7,7 @@ export const GetMe = gql`
         id
         title
         description
-        beforeImage
-        afterImage
+        image
         clinic {
           id
           name

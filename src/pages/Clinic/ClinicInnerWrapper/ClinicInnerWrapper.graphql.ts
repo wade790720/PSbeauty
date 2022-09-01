@@ -16,8 +16,7 @@ export const GetClinic = gql`
         id
         description
         title
-        beforeImage
-        afterImage
+        image
         collectedCount
         categories {
           id

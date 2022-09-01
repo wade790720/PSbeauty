@@ -22,7 +22,7 @@ const MemberCollectClinicalCase = () => {
             clinic={el?.clinic?.name || ""}
             clinicId={el?.clinic?.id || ""}
             introduction={el?.description || ""}
-            images={[el?.beforeImage || "", el?.afterImage || ""]}
+            images={[el?.image || ""]}
             tags={el?.categories?.map(el => el?.name || "")}
             caseId={el?.id || ""}
             last={false}

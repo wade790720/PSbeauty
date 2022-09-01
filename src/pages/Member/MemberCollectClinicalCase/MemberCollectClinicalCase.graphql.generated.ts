@@ -13,8 +13,7 @@ export type GetMeQuery = {
       id?: string | null
       title?: string | null
       description?: string | null
-      beforeImage?: string | null
-      afterImage?: string | null
+      image?: string | null
       clinic?: { __typename: "Clinic"; id?: string | null; name?: string | null } | null
       categories?: Array<{
         __typename: "Category"
@@ -32,8 +31,7 @@ export const GetMeDocument = gql`
         id
         title
         description
-        beforeImage
-        afterImage
+        image
         clinic {
           id
           name

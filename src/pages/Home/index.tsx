@@ -99,7 +99,7 @@ const Home = () => {
             clinic={cases[idx]?.clinic?.name || "　"}
             clinicId={cases[idx]?.clinic?.id || ""}
             introduction={cases[idx]?.description || ""}
-            images={[cases[idx]?.beforeImage || "", cases[idx]?.afterImage || ""]}
+            images={[cases[idx]?.image || ""]}
             tags={cases[idx]?.categories?.map(tag => tag?.name || "")}
             caseId={cases[idx]?.id || ""}
             last={casesCount - 1 === idx}

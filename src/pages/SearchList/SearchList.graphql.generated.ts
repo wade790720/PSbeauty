@@ -32,12 +32,6 @@ export type GetSearchListQuery = {
   } | null
 }
 
-export type GetPopularKeywordsQueryVariables = Types.Exact<{ [key: string]: never }>
-
-export type GetPopularKeywordsQuery = {
-  popularKeywords?: { __typename: "PopularKeywords"; keywords?: Array<string | null> | null } | null
-}
-
 export const GetSearchListDocument = gql`
   query getSearchList($contains: String!) {
     cases(where: { or: [{ imageText: { contains: $contains } }] }, first: 10, order: { id: DESC }) {
@@ -102,56 +96,4 @@ export type GetSearchListLazyQueryHookResult = ReturnType<typeof useGetSearchLis
 export type GetSearchListQueryResult = Apollo.QueryResult<
   GetSearchListQuery,
   GetSearchListQueryVariables
->
-export const GetPopularKeywordsDocument = gql`
-  query getPopularKeywords {
-    popularKeywords {
-      keywords
-    }
-  }
-`
-
-/**
- * __useGetPopularKeywordsQuery__
- *
- * To run a query within a React component, call `useGetPopularKeywordsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetPopularKeywordsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGetPopularKeywordsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGetPopularKeywordsQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetPopularKeywordsQuery, GetPopularKeywordsQueryVariables>,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useQuery<GetPopularKeywordsQuery, GetPopularKeywordsQueryVariables>(
-    GetPopularKeywordsDocument,
-    options,
-  )
-}
-export function useGetPopularKeywordsLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetPopularKeywordsQuery,
-    GetPopularKeywordsQueryVariables
-  >,
-) {
-  const options = { ...defaultOptions, ...baseOptions }
-  return Apollo.useLazyQuery<GetPopularKeywordsQuery, GetPopularKeywordsQueryVariables>(
-    GetPopularKeywordsDocument,
-    options,
-  )
-}
-export type GetPopularKeywordsQueryHookResult = ReturnType<typeof useGetPopularKeywordsQuery>
-export type GetPopularKeywordsLazyQueryHookResult = ReturnType<
-  typeof useGetPopularKeywordsLazyQuery
->
-export type GetPopularKeywordsQueryResult = Apollo.QueryResult<
-  GetPopularKeywordsQuery,
-  GetPopularKeywordsQueryVariables
 >

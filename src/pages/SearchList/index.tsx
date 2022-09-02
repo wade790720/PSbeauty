@@ -2,10 +2,8 @@ import { useParams, useNavigate, useSearchParams } from "react-router-dom"
 import styled from "./SearchList.module.scss"
 import cx from "classnames"
 import Backdrop from "components/Layout/Backdrop"
-import {
-  useGetSearchListLazyQuery,
-  useGetPopularKeywordsQuery,
-} from "./SearchList.graphql.generated"
+import { useGetSearchListLazyQuery } from "./SearchList.graphql.generated"
+import { useGetPopularKeywordsQuery } from "graphql/queries/getPopularKeywords.graphql.generated"
 import { useEffect } from "react"
 import { useGo } from "components/Router"
 

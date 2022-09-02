@@ -24,11 +24,3 @@ export const getSearchList = gql`
     }
   }
 `
-
-export const getPopularKeywords = gql`
-  query getPopularKeywords {
-    popularKeywords {
-      keywords
-    }
-  }
-`

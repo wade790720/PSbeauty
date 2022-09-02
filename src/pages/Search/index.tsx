@@ -4,6 +4,7 @@ import Backdrop from "components/Layout/Backdrop"
 import { useGo } from "components/Router"
 import { ReactComponent as Delete } from "./Delete.svg"
 import Icon from "components/Icon"
+import { useGetPopularKeywordsQuery } from "graphql/queries/getPopularKeywords.graphql.generated"
 
 const STORAGE_KEY = "search-history"
 const getHistories = (): string[] => {
@@ -28,9 +29,22 @@ const saveHistories = (list: string[]) => {
 const Search = () => {
   const go = useGo()
   const [list, setList] = useState(getHistories())
+  const getPopularKeywords = useGetPopularKeywordsQuery()
 
   return (
     <Backdrop className={styled.wrapper}>
+      <div className={styled.filters}>
+        {getPopularKeywords?.data?.popularKeywords?.keywords?.map((el, idx) => (
+          <div
+            key={`keywords-${idx}`}
+            onClick={() => {
+              go.toSearchListWithQuery(el || "")
+            }}>
+            {el}
+          </div>
+        ))}
+      </div>
+
       <div className={styled.title}>
         <span>歷史搜尋</span>
         {list.length > 0 && (

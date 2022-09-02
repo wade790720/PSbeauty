@@ -1,6 +1,42 @@
 .wrapper {
   position: relative;
 
+  .filters {
+    display: grid;
+    overflow-x: auto;
+    flex-shrink: 0;
+    padding: 0 0 12px;
+
+    grid-auto-flow: column;
+    grid-gap: 12px;
+    grid-auto-columns: min-content;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    >div {
+      padding: 4px 13px;
+      border: 1px solid #7873e5;
+      border-radius: 100px;
+      color: #7873e5;
+      white-space: nowrap;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.5;
+
+      &:not(.active) {
+        border: 1px solid #7873e5;
+      }
+
+      &.active {
+        background: rgba(120, 115, 229, 0.2);
+      }
+    }
+  }
+
   .title {
     display: flex;
     align-items: center;

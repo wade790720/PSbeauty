@@ -94,7 +94,7 @@ const ClinicInner = () => {
           clinic={data?.clinic?.name || ""}
           clinicId={id || ""}
           introduction={el?.description || ""}
-          images={[el?.image || ""]}
+          image={el?.image || ""}
           tags={el?.categories?.map(tag => tag?.name || "")}
           caseId={el?.id || ""}
           last={false}

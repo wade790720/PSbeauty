@@ -8,7 +8,7 @@ import {
   useCollectCaseMutation,
   useRemoveCollectedCaseMutation,
 } from "./ClinicalCase.graphql.generated"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useLayoutEffect, useRef } from "react"
 import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
 import { useParams } from "react-router-dom"
@@ -17,6 +17,8 @@ import Loading from "components/QueryStatus/Loading"
 const ClinicalCase = () => {
   const go = useGo()
   const auth = useAuth()
+  const imageRef = useRef<HTMLDivElement>(null)
+  const [imageWidth, setImageWidth] = useState(0)
   const { caseId } = useParams()
   const [loadGetCollectItemsQuery, getCollectItemsQuery] = useGetCollectItemsLazyQuery({
     fetchPolicy: "no-cache",
@@ -28,6 +30,12 @@ const ClinicalCase = () => {
   })
 
   const [isCollected, setIsCollected] = useState(false)
+
+  useLayoutEffect(() => {
+    if (imageRef.current && !loading) {
+      setImageWidth(imageRef.current.clientWidth)
+    }
+  }, [loading])
 
   useEffect(() => {
     if (auth.user.id) loadGetCollectItemsQuery()
@@ -43,7 +51,7 @@ const ClinicalCase = () => {
     variables: {
       caseId: caseId || "",
     },
-    update(cache, mutationResult) {
+    update(_, mutationResult) {
       if (mutationResult?.data?.collectCase?.userId) setIsCollected(true)
     },
   })
@@ -70,11 +78,8 @@ const ClinicalCase = () => {
             onClick={() => go.toClinicInner({ id: data?.case?.clinic?.id || "", tab: "info" })}>
             {data?.case?.clinic?.name}
           </div>
-          <div className={styled.images}>
-            <div className={styled.image}>
-              <img src={data?.case?.image || ""} />
-              <div className={styled.label}>Before</div>
-            </div>
+          <div className={styled.image} style={{ height: imageWidth }} ref={imageRef}>
+            <img src={data?.case?.image || ""} />
           </div>
           <div
             className={styled.content}

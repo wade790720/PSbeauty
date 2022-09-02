@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useState, useRef } from "react"
 import styled from "./CaseCard.module.scss"
 import Icon from "components/Icon"
 import useGo from "components/Router/useGo"
@@ -14,7 +14,7 @@ export type CaseCardProps = {
   clinic: string
   clinicId: string
   introduction: string
-  images: string[]
+  image: string
   isCollected: boolean
   tags?: string[]
   amount?: number // 收藏人數
@@ -26,9 +26,17 @@ export type CaseCardProps = {
 const CaseCard = ({ ...props }: CaseCardProps) => {
   const go = useGo()
   const auth = useAuth()
+  const imageRef = useRef<HTMLDivElement>(null)
+  const [imageWidth, setImageWidth] = useState(0)
   const [isCollected, setIsCollected] = useState(false)
   const [amount, setAmount] = useState(props.amount)
   const { containerRef, isVisible } = useElementOnScreen({})
+
+  useLayoutEffect(() => {
+    if (imageRef.current) {
+      setImageWidth(imageRef.current.clientWidth)
+    }
+  }, [])
 
   useEffect(() => {
     if (props.last && isVisible && props.fetchMore) props.fetchMore()
@@ -70,16 +78,8 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
         className={styled.content}
         dangerouslySetInnerHTML={{ __html: props.introduction || "" }}
       />
-      <div className={styled.images}>
-        {props.images?.map((image, idx) => {
-          return (
-            <div key={`image-${idx}`} className={styled.image}>
-              <img src={image} />
-              {idx === 0 && <div className={styled.label}>Before</div>}
-              {idx === 1 && <div className={styled.label}>After</div>}
-            </div>
-          )
-        })}
+      <div className={styled.image} style={{ height: imageWidth }} ref={imageRef}>
+        <img src={props.image} />
       </div>
       <div className={styled.tags}>
         {props.tags?.map((tag, idx) => (

@@ -57,10 +57,7 @@ const SearchList = () => {
                   caseId: el.node?.id || "",
                 })
               }
-              className={cx(
-                styled.cell,
-                styled[["a-style", "b-style", "c-style", "d-style", "e-style", "f-style"][idx % 6]],
-              )}>
+              className={cx(styled.cell, styled[`${"axxxxxxaxxxx"[idx % 12]}-style`])}>
               <img
                 src={(el.node?.imageText?.includes(tag || text || "") && el.node?.imageText) || ""}
               />

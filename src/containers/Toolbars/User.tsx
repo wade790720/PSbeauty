@@ -10,6 +10,8 @@ import { ReactComponent as Case } from "./svg/Case.svg"
 import { ReactComponent as CaseFill } from "./svg/CaseFill.svg"
 import { ReactComponent as Person } from "./svg/Person.svg"
 import { ReactComponent as PersonFill } from "./svg/PersonFill.svg"
+import { ReactComponent as Search } from "./svg/Search.svg"
+import { ReactComponent as SearchFill } from "./svg/SearchFill.svg"
 
 const ToolbarsByUser = () => {
   return (
@@ -27,6 +29,14 @@ const ToolbarsByUser = () => {
           <div className={cx(styled.cell, { [styled.active]: isActive })}>
             <div className={styled.icon}>{isActive ? <ClinicFill /> : <Clinic />}</div>
             <div className={styled.title}>診所</div>
+          </div>
+        )}
+      </NavLink>
+      <NavLink to="/search/all">
+        {({ isActive }) => (
+          <div className={cx(styled.cell, { [styled.active]: isActive })}>
+            <div className={styled.icon}>{isActive ? <SearchFill /> : <Search />}</div>
+            <div className={styled.title}>搜索</div>
           </div>
         )}
       </NavLink>

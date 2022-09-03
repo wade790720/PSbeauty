@@ -32,11 +32,11 @@ const ToolbarsByUser = () => {
           </div>
         )}
       </NavLink>
-      <NavLink to="/search/all">
+      <NavLink to="/searchAll">
         {({ isActive }) => (
           <div className={cx(styled.cell, { [styled.active]: isActive })}>
             <div className={styled.icon}>{isActive ? <SearchFill /> : <Search />}</div>
-            <div className={styled.title}>搜索</div>
+            <div className={styled.title}>探索</div>
           </div>
         )}
       </NavLink>

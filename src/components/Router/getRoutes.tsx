@@ -13,6 +13,7 @@ const ForgotPassword = lazy(() => import("pages/ForgotPassword"))
 const Survey = lazy(() => import("pages/Survey"))
 const SearchWrapper = lazy(() => import("pages/SearchWrapper"))
 const Search = lazy(() => import("pages/Search"))
+const SearchAll = lazy(() => import("pages/SearchAll"))
 const SearchList = lazy(() => import("pages/SearchList"))
 const Chatroom = lazy(() => import("pages/Chatroom"))
 const ClinicalCaseList = lazy(() => import("pages/Clinic/ClinicalCaseList"))
@@ -93,6 +94,14 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
       element: (
         <Suspense>
           <Survey />
+        </Suspense>
+      ),
+    },
+    {
+      path: "searchAll",
+      element: (
+        <Suspense>
+          <SearchAll />
         </Suspense>
       ),
     },

@@ -58,9 +58,7 @@ const SearchList = () => {
                 })
               }
               className={cx(styled.cell, styled[`${"axxxxxxaxxxx"[idx % 12]}-style`])}>
-              <img
-                src={(el.node?.imageText?.includes(tag || text || "") && el.node?.imageText) || ""}
-              />
+              <img src={el.node?.image || ""} />
               <div className={styled.cover} />
               <div className={styled.title}>
                 {el.node?.imageText?.includes(tag || text || "") && el.node?.imageText}

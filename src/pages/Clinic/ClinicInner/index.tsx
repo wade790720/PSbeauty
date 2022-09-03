@@ -48,6 +48,11 @@ const ClinicInner = () => {
   }, [data])
 
   const oneOnOneConsult = useCallback(() => {
+    if (!auth.user.id) {
+      go.toSignIn()
+      return
+    }
+
     consultClinicMutation({
       variables: {
         input: id || "",

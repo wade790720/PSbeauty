@@ -22,6 +22,7 @@ export const GetConsultClinic = gql`
     $images: [String]
     $subject: String!
     $content: String
+    $county: String
   ) {
     addConsult(
       input: {
@@ -30,6 +31,7 @@ export const GetConsultClinic = gql`
         images: $images
         subject: $subject
         content: $content
+        county: $county
       }
     ) {
       id

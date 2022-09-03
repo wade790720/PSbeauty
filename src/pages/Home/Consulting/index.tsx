@@ -15,6 +15,7 @@ import {
   useGetConsultClinicMutation,
 } from "./Consulting.graphql.generated"
 import { ChosenItemType } from "containers/SubjectFilter/Member"
+import Districts from "pages/Clinic/DistrictsFilter/taiwan_districts.json"
 
 type consultProps = {
   open: boolean
@@ -54,6 +55,7 @@ const Consulting = (props: consultProps) => {
   const [subject, setSubject] = useState("")
   const [categories, setCategories] = useState<ChosenItemType>([])
   const [chosenCycle, setChosenCycle] = useState<number | "">("")
+  const [chosenDistrict, setChosenDistrict] = useState<string>("")
   const [content, setContent] = useState("")
   const [modalMsg, setModalMsg] = useState(DEFAULT_MODAL_MSG)
   const [open, setOpen] = useState(false)
@@ -76,6 +78,7 @@ const Consulting = (props: consultProps) => {
     setSubject("")
     setCategories([])
     setChosenCycle("")
+    setChosenDistrict("")
     setFiles([createFile(), createFile(), createFile()])
   }
 
@@ -138,6 +141,34 @@ const Consulting = (props: consultProps) => {
                 {DAYS.map(item => (
                   <Dropdown.Item key={item?.value} eventKey={item?.value}>
                     <p>{item?.name}</p>
+                  </Dropdown.Item>
+                ))}
+              </Dropdown.Menu>
+            </Dropdown>
+          </Form.Group>
+          <Form.Group layout="vertical" className={styled["input-group"]}>
+            <Form.Label>地區</Form.Label>
+            <Dropdown
+              className={styled.dropdown}
+              onSelect={(_, { eventKey }) => {
+                if (typeof eventKey === "string") setChosenDistrict(eventKey)
+              }}>
+              <Dropdown.Toggle>
+                <InputGroup className={styled.classify}>
+                  <Form.Input
+                    value={chosenDistrict}
+                    placeholder="請點擊選擇"
+                    className={styled.input}
+                  />
+                  <Append>
+                    <Icon name="caretDown" />
+                  </Append>
+                </InputGroup>
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                {Districts.map(item => (
+                  <Dropdown.Item key={item.name} eventKey={item.name}>
+                    <p>{item.name}</p>
                   </Dropdown.Item>
                 ))}
               </Dropdown.Menu>
@@ -233,6 +264,7 @@ const Consulting = (props: consultProps) => {
                     days: Number(chosenCycle),
                     images,
                     content,
+                    county: chosenDistrict,
                   },
                   onCompleted: handleInit,
                 })

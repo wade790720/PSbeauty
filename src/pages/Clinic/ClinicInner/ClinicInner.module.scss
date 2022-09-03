@@ -21,9 +21,10 @@
     }
 
     .information {
-      display: flex;
+      display: grid;
       margin: 12px 0;
-      height: 24px;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 12px 0;
       font-weight: bold;
 
       .block {
@@ -34,13 +35,42 @@
         background-color: #e58073;
       }
 
-      .case, .reply {
+      .case,
+      .reply {
         display: flex;
         align-items: center;
         flex: 1;
 
         span {
           padding-left: 14px;
+        }
+      }
+
+      .categories {
+        grid-column: span 2;
+        display: grid;
+        grid-template-columns: min-content min-content 1fr;
+
+        .title {
+          white-space: nowrap;
+        }
+
+        .content {
+          padding: 0 0 0 14px;
+          font-weight: 400;
+          overflow: hidden;
+          height: 40px;
+
+          &.more {
+            height: unset;
+          }
+        }
+
+        .show {
+          padding-left: 14px;
+          grid-area: 2 / 3 / span 1 / span 1;
+          font-weight: 400;
+          color: #7873E5;
         }
       }
     }

@@ -19,6 +19,7 @@ export type GetClinicQuery = {
     consultReplyCount: number
     caseCount: number
     description?: string | null
+    categories?: Array<{ __typename: "Category"; name?: string | null } | null> | null
     cases?: Array<{
       __typename: "ClinicCase"
       id?: string | null
@@ -72,6 +73,9 @@ export const GetClinicDocument = gql`
       consultReplyCount
       caseCount
       description
+      categories {
+        name
+      }
       cases {
         id
         description

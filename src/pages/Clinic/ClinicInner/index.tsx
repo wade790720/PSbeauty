@@ -1,5 +1,6 @@
-import { useCallback, useEffect, useMemo } from "react"
+import { useCallback, useEffect, useMemo, useState, useLayoutEffect, useRef } from "react"
 import styled from "./ClinicInner.module.scss"
+import cx from "classnames"
 import Icon from "components/Icon"
 import Button from "components/Button"
 import CaseCard from "containers/CaseCard"
@@ -22,6 +23,17 @@ const ClinicInner = () => {
   })
   const { id } = useParams()
   const [consultClinicMutation] = useConsultClinicMutation()
+  const [isCategoriesMore, setIsCategoriesMore] = useState(false)
+  const [over, setOver] = useState<boolean>(false)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useLayoutEffect(() => {
+    const clientHeight = ref.current?.clientHeight || 0
+    const scrollHeight = ref.current?.scrollHeight || 0
+    if (clientHeight && scrollHeight > clientHeight) {
+      setOver(true)
+    }
+  }, [])
 
   const adImages = useMemo(() => {
     return data?.clinic?.images
@@ -78,6 +90,18 @@ const ClinicInner = () => {
           <div className={styled.reply}>
             <div className={styled.block} />
             回覆數 <span>{data?.clinic?.consultReplyCount}</span>
+          </div>
+          <div className={styled.categories}>
+            <div className={styled.block} />
+            <div className={styled.title}>專長項目</div>
+            <div className={cx(styled.content, { [styled.more]: isCategoriesMore })} ref={ref}>
+              {data?.clinic?.categories?.map(el => el?.name || "").join("、")}
+            </div>
+            {over && (
+              <div className={styled.show} onClick={() => setIsCategoriesMore(!isCategoriesMore)}>
+                {isCategoriesMore ? "顯示更少" : "...顯示更多"}
+              </div>
+            )}
           </div>
         </div>
       </div>

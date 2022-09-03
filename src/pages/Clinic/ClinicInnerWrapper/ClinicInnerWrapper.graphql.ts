@@ -12,6 +12,9 @@ export const GetClinic = gql`
       consultReplyCount
       caseCount
       description
+      categories {
+        name
+      }
       cases {
         id
         description

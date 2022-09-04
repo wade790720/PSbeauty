@@ -14,7 +14,10 @@ export const refreshToken = async () => {
     const renewTime = new Date((payload.iat + ((payload.exp - payload.iat) * 5) / 10) * 1000)
     if (expiredTime > new Date() && renewTime <= new Date()) {
       try {
-        const res = await apolloClient.query({ query: GetRefreshTokenDocument })
+        const res = await apolloClient.query({
+          query: GetRefreshTokenDocument,
+          fetchPolicy: "no-cache",
+        })
         const newCustomToken = res.data.refreshToken?.customToken
         if (newCustomToken) {
           setStorageValue("customToken", newCustomToken)

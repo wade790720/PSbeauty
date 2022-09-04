@@ -18,6 +18,11 @@ export type GetMeQuery = {
       content?: string | null
       consultAt: number
       enable: boolean
+      topics?: Array<{
+        __typename: "ClinicConsultTopic"
+        id?: string | null
+        clinic?: { __typename: "Clinic"; id?: string | null } | null
+      } | null> | null
       categories?: Array<{
         __typename: "Category"
         name?: string | null
@@ -48,6 +53,12 @@ export const GetMeDocument = gql`
         content
         consultAt
         enable
+        topics {
+          id
+          clinic {
+            id
+          }
+        }
         categories {
           name
           id

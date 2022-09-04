@@ -80,11 +80,8 @@ const DoctorInbox = () => {
           const unread = edge.node?.readAt === 0
 
           const repliesCount = reply?.length || 0
-          if (repliesCount <= 0) {
-            return null
-          }
           const message = reply?.[repliesCount - 1]?.content || topic?.consult?.content || ""
-          if (!message) {
+          if (!message && repliesCount <= 0) {
             return null
           }
           return (

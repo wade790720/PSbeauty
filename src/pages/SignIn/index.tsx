@@ -59,10 +59,10 @@ const SignIn = () => {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Input type="text" placeholder="帳號" {...register("account")} />
         <Form.Input type="password" placeholder="密碼" {...register("password")} />
-        <Button variant="transparent" type="submit">
+        <Button variant="primary" type="submit">
           登入
         </Button>
-        <Button variant="transparent" type="button" onClick={go.toHome}>
+        <Button variant="text" type="button" onClick={go.toHome}>
           訪客登入
         </Button>
         <Modal title="登入失敗" open={open} confirmText="確定" onClose={() => setOpen(false)}>

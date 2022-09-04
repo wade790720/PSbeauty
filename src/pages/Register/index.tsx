@@ -71,7 +71,7 @@ const Register = () => {
         <Form.Input type="password" placeholder="密碼" {...register("password")} />
         <Form.Input type="text" placeholder="名稱" {...register("name")} />
         <Form.Input type="text" placeholder="電話" {...register("phone")} />
-        <Button type="submit" variant="transparent">
+        <Button type="submit" variant="primary">
           註冊
         </Button>
         <Modal

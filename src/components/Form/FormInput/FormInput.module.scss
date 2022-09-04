@@ -4,7 +4,7 @@
 .wrapper {
   -webkit-box-align: center;
   align-items: center;
-  border-color: #fff;
+  border-color: #F7F7F8;
   color: #45536c;
   cursor: text;
   border-radius: 15px;
@@ -23,13 +23,13 @@
   overflow-wrap: break-word;
   vertical-align: top;
   pointer-events: auto;
-  background-color: #fff;
+  background-color: #F7F7F8;
 
 
   &:not(.disabled) {
     &:focus-within {
       color: #181c32;
-      background-color: #fff;
+      background-color: #F7F7F8;
       // border-color: #b5b5c3;
       outline: 0;
     }
@@ -85,6 +85,7 @@
     font-family: $font-family;
     border-radius: 15px;
     line-height: 3;
+    background-color: #F7F7F8;
 
     &::placeholder,
     &::-webkit-input-placeholder {
@@ -97,7 +98,7 @@
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus,
     &:-webkit-autofill:active {
-      box-shadow: 0 0 0 50px #ffffff inset;
+      box-shadow: 0 0 0 50px #F7F7F8 inset;
     }
 
     &:-webkit-autofill::first-line {

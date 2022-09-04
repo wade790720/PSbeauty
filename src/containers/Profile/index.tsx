@@ -2,6 +2,8 @@ import styled from "./Profile.module.scss"
 import Icon from "components/Icon"
 import { useGo } from "components/Router"
 import { useAuth } from "hooks/useAuth"
+import { useEffect } from "react"
+import { useGetMemberInboxLazyQuery } from "pages/Member/MemberInbox/MemberInbox.graphql.generated"
 import Colors from "./colors.json"
 
 const getBackgroundColor = () => {
@@ -21,6 +23,13 @@ const Profile = () => {
   const userEmail = auth.user.email || "Unknown"
   const userName = auth.user.name || "未命名"
 
+  const [loadMemberInboxQuery, getMemberInboxQuery] = useGetMemberInboxLazyQuery()
+  useEffect(() => {
+    if (auth.user.id) {
+      loadMemberInboxQuery()
+    }
+  }, [auth.user.id, loadMemberInboxQuery])
+
   return (
     <div className={styled.wrapper}>
       <div className={styled.avatar} style={{ background: backgroundColor }}>
@@ -34,6 +43,9 @@ const Profile = () => {
           auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
         }}>
         <Icon name="Chat" />
+        {getMemberInboxQuery.data?.me?.replyInbox?.some(el => !el?.readAt) && (
+          <div className={styled["chat-unread"]} />
+        )}
       </div>
     </div>
   )

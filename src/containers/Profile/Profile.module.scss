@@ -52,5 +52,15 @@
     position: absolute;
     top: 24px;
     right: 24px;
+
+    .chat-unread {
+      width: 8px;
+      height: 8px;
+      background: #E58E73;
+      border-radius: 8px;
+      position: absolute;
+      top: -2px;
+      right: -4px;
+    }
   }
 }

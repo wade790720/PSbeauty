@@ -14,6 +14,7 @@ import { useGetAdCardsQuery } from "./Home.graphql.generated"
 import { useGetCasesQuery } from "graphql/queries/getCases.graphql.generated"
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
 import { useGetCollectedCaseLazyQuery } from "graphql/queries/getCollectedCase.graphql.generated"
+import { useGetMemberInboxLazyQuery } from "pages/Member/MemberInbox/MemberInbox.graphql.generated"
 import { SortEnumType } from "types/schema"
 
 const Home = () => {
@@ -123,10 +124,13 @@ const Home = () => {
       )
     }
   }
-
+  const [loadMemberInboxQuery, getMemberInboxQuery] = useGetMemberInboxLazyQuery()
   useEffect(() => {
-    if (auth.user.id) loadGetCollectedCaseQuery()
-  }, [auth.user.id, loadGetCollectedCaseQuery])
+    if (auth.user.id) {
+      loadGetCollectedCaseQuery()
+      loadMemberInboxQuery()
+    }
+  }, [auth.user.id, loadGetCollectedCaseQuery, loadMemberInboxQuery])
 
   return (
     <>
@@ -138,6 +142,9 @@ const Home = () => {
               auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
             }}>
             <Icon name="chat" className={styled["chat-icon"]} />
+            {getMemberInboxQuery.data?.me?.replyInbox?.some(el => !el?.readAt) && (
+              <div className={styled["chat-unread"]} />
+            )}
           </div>
         </div>
         <div className={styled.inner}>

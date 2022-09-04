@@ -4,11 +4,12 @@ import Toolbars from "containers/Toolbars"
 import SearchBar from "containers/SearchBar"
 import Button from "components/Button"
 import ClinicCard from "./ClinicCard"
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import { useAuth } from "hooks/useAuth"
 import DistrictsFilter from "./DistrictsFilter"
 import Banner from "containers/Banner"
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
+import { useGetMemberInboxLazyQuery } from "pages/Member/MemberInbox/MemberInbox.graphql.generated"
 import { SortEnumType } from "types/schema"
 import { useGetClinicsQuery, useGetClinicsSearchLazyQuery } from "./ClinicCard.graphql.generated"
 import useGo from "components/Router/useGo"
@@ -40,6 +41,13 @@ const Clinic = () => {
   const getClinicsQuery = useGetClinicsQuery()
   const [loadGetClinicsQuerySearch, getClinicsQuerySearch] = useGetClinicsSearchLazyQuery()
 
+  const [loadMemberInboxQuery, getMemberInboxQuery] = useGetMemberInboxLazyQuery()
+  useEffect(() => {
+    if (auth.user.id) {
+      loadMemberInboxQuery()
+    }
+  }, [auth.user.id, loadMemberInboxQuery])
+
   const data = isSearch
     ? getClinicsQuerySearch?.data?.clinics?.edges
     : getClinicsQuery?.data?.clinics?.edges
@@ -54,6 +62,9 @@ const Clinic = () => {
               auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
             }}>
             <Icon name="chat" className={styled["chat-icon"]} />
+            {getMemberInboxQuery.data?.me?.replyInbox?.some(el => !el?.readAt) && (
+              <div className={styled["chat-unread"]} />
+            )}
           </div>
         </div>
         <div className={styled.inner}>

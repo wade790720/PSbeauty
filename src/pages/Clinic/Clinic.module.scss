@@ -9,8 +9,22 @@
     align-items: center;
     padding: 12px 24px 12px 24px;
 
+    >div {
+      position: relative;
+    }
+
     .chat-icon {
       margin-left: 18px;
+    }
+
+    .chat-unread {
+      width: 8px;
+      height: 8px;
+      background: #E58E73;
+      border-radius: 8px;
+      position: absolute;
+      top: -2px;
+      right: -4px;
     }
   }
 
@@ -85,7 +99,8 @@
       background-color: #e58073;
     }
 
-    .case, .reply {
+    .case,
+    .reply {
       display: flex;
       align-items: center;
       flex: 1;

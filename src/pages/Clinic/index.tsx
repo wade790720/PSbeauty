@@ -85,8 +85,10 @@ const Clinic = () => {
               onClose={value => {
                 setOpenFilter(false)
 
-                if (value.length === 0) return
-
+                if (value.length === 0) {
+                  setIsSearch(false)
+                  return
+                }
                 loadGetClinicsQuerySearch({
                   variables: {
                     county: value

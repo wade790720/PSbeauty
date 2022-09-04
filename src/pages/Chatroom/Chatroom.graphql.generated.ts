@@ -15,6 +15,7 @@ export type GeTopicDetailQuery = {
       id?: string | null
       name?: string | null
       paid: boolean
+      owners?: Array<{ __typename: "User"; id?: string | null } | null> | null
     } | null
     consult?: {
       __typename: "Consult"
@@ -66,6 +67,9 @@ export const GeTopicDetailDocument = gql`
         id
         name
         paid
+        owners {
+          id
+        }
       }
       consult {
         id

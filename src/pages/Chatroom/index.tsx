@@ -136,7 +136,11 @@ const Chatroom = () => {
 
   messages.push(...realtimes)
 
-  const consulteeId = messages.find(msg => msg.userId != auth.user.id)?.userId
+  let consulteeId = messages.find(msg => msg.userId != auth.user.id)?.userId
+  if (oneOnOne) {
+    // 在一對一狀態下，會員提出剛諮詢時，需要直接通知診所。
+    consulteeId = clinic?.owners?.[0]?.id || undefined
+  }
   return (
     <>
       <Header leftArrow title={clinic?.name || ""} />

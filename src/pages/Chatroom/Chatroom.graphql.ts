@@ -7,6 +7,9 @@ export const GetTopicDetail = gql`
         id
         name
         paid
+        owners {
+          id
+        }
       }
       consult {
         id

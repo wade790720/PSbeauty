@@ -92,9 +92,9 @@ const DistrictsFilter = (props: DistrictsFilterProps) => {
                 return county.name === countyEventKey
               })
               .map(district => {
-                return district.districts.map(item => (
+                return district.districts.map((item, idx) => (
                   <Form.Checkbox
-                    key={item.zip}
+                    key={`${idx}-${item.zip}`}
                     className={styled.item}
                     value={item.name}
                     checked={region?.some(

@@ -4,7 +4,7 @@
 .wrapper {
   -webkit-box-align: center;
   align-items: center;
-  border-color: #F7F7F8;
+  border-color: #fff;
   color: #45536c;
   cursor: text;
   border-radius: 15px;
@@ -23,13 +23,13 @@
   overflow-wrap: break-word;
   vertical-align: top;
   pointer-events: auto;
-  background-color: #F7F7F8;
+  background-color: #fff;
 
 
   &:not(.disabled) {
     &:focus-within {
       color: #181c32;
-      background-color: #F7F7F8;
+      background-color: #fff;
       // border-color: #b5b5c3;
       outline: 0;
     }
@@ -68,6 +68,22 @@
     user-select: none;
   }
 
+  &.gray {
+    border-color: #F7F7F8;
+    background-color: #F7F7F8;
+
+    input.control {
+      background-color: #F7F7F8;
+
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus,
+      &:-webkit-autofill:active {
+        box-shadow: 0 0 0 50px #F7F7F8 inset;
+      }
+    }
+  }
+
   input.control {
     height: 48px;
     padding: 12px 17px;
@@ -85,7 +101,6 @@
     font-family: $font-family;
     border-radius: 15px;
     line-height: 3;
-    background-color: #F7F7F8;
 
     &::placeholder,
     &::-webkit-input-placeholder {
@@ -98,7 +113,7 @@
     &:-webkit-autofill:hover,
     &:-webkit-autofill:focus,
     &:-webkit-autofill:active {
-      box-shadow: 0 0 0 50px #F7F7F8 inset;
+      box-shadow: 0 0 0 50px #ffffff inset;
     }
 
     &:-webkit-autofill::first-line {

@@ -37,8 +37,8 @@ const SignIn = () => {
       <div className={styled.title}>重發驗證信件</div>
       <div className={styled.subtitle}>歡迎回來！請輸入你的資料</div>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Form.Input type="text" placeholder="帳號" {...register("account")} />
-        <Form.Input type="password" placeholder="密碼" {...register("password")} />
+        <Form.Input type="text" variant="gray" placeholder="帳號" {...register("account")} />
+        <Form.Input type="password" variant="gray" placeholder="密碼" {...register("password")} />
         <Button variant="transparent" type="submit">
           重新發送
         </Button>

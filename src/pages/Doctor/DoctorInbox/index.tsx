@@ -1,3 +1,4 @@
+import Header from "components/Layout/Header"
 import MessageCard from "containers/MessageCard"
 import Toolbars from "containers/Toolbars"
 import { doc, onSnapshot } from "firebase/firestore"
@@ -72,33 +73,38 @@ const DoctorInbox = () => {
 
   return (
     <>
+      <Header leftArrow title="收件夾" />
       <div className={styled.wrapper}>
-        {edges?.map((edge, idx) => {
-          const key = edge.node?.id || ""
-          const reply = edge.node?.topic?.replies
-          const topic = edge.node?.topic
-          const unread = edge.node?.readAt === 0
+        {edges.length ? (
+          edges?.map((edge, idx) => {
+            const key = edge.node?.id || ""
+            const reply = edge.node?.topic?.replies
+            const topic = edge.node?.topic
+            const unread = edge.node?.readAt === 0
 
-          const repliesCount = reply?.length || 0
-          const message = reply?.[repliesCount - 1]?.content || topic?.consult?.content || ""
-          if (!message && repliesCount <= 0) {
-            return null
-          }
-          return (
-            <MessageCard
-              unread={unread}
-              topicId={topic?.id || ""}
-              key={key}
-              title={topic?.consult?.subject || "來自會員的一對一諮詢"}
-              message={message}
-              last={edges.length - 1 === idx}
-              fetchMore={() => {
-                hasNextPage && fetchMore()
-              }}
-              click={() => readClinicInbox(key)}
-            />
-          )
-        })}
+            const repliesCount = reply?.length || 0
+            const message = reply?.[repliesCount - 1]?.content || topic?.consult?.content || ""
+            if (!message && repliesCount <= 0) {
+              return null
+            }
+            return (
+              <MessageCard
+                unread={unread}
+                topicId={topic?.id || ""}
+                key={key}
+                title={topic?.consult?.subject || "來自會員的一對一諮詢"}
+                message={message}
+                last={edges.length - 1 === idx}
+                fetchMore={() => {
+                  hasNextPage && fetchMore()
+                }}
+                click={() => readClinicInbox(key)}
+              />
+            )
+          })
+        ) : (
+          <div className={styled.hint}>尚未有任何信件</div>
+        )}
       </div>
       <Toolbars.Clinic />
     </>

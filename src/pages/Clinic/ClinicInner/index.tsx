@@ -61,7 +61,7 @@ const ClinicInner = () => {
         go.toChatroom({ id: data.consultClinic?.topicId || "" })
       },
     })
-  }, [])
+  }, [auth])
 
   useEffect(() => {
     if (auth.user.id) loadGetCollectedCaseQuery()

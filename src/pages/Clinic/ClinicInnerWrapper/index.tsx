@@ -40,7 +40,7 @@ const ClinicInnerWrapper = () => {
         title={query?.data?.clinic?.name || ""}
         url={`/clinic`}
       />
-      <Backdrop style={{ paddingBottom: "49px" }}>
+      <Backdrop style={{ paddingBottom: "120px" }}>
         <ClinicSwitch />
         <Outlet context={{ query }} />
         {auth.user.clinic ? <Toolbars.Clinic /> : <Toolbars />}

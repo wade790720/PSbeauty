@@ -14,7 +14,7 @@ const SearchListAll = () => {
     <>
       <Header title="探索" />
       <Backdrop className={styled.wrapper}>
-        <div className={styled.result}>
+        <div className={styled.result} style={{ paddingBottom: "80px" }}>
           {data?.cases?.edges && data?.cases?.edges?.length > 0 ? (
             data?.cases?.edges.map((el, idx) => (
               <div

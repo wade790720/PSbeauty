@@ -89,7 +89,7 @@ const DoctorInbox = () => {
               unread={unread}
               topicId={topic?.id || ""}
               key={key}
-              title={topic?.consult?.subject || ""}
+              title={topic?.consult?.subject || "來自會員的一對一諮詢"}
               message={message}
               last={edges.length - 1 === idx}
               fetchMore={() => {

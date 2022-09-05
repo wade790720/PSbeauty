@@ -16,6 +16,7 @@ import {
 } from "graphql/queries/getCases.graphql.generated"
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
 import { useGetCollectedCaseLazyQuery } from "graphql/queries/getCollectedCase.graphql.generated"
+import { useGetMemberInboxLazyQuery } from "pages/Member/MemberInbox/MemberInbox.graphql.generated"
 import { SortEnumType } from "types/schema"
 
 const ClinicalCaseList = () => {
@@ -26,6 +27,13 @@ const ClinicalCaseList = () => {
   const cursorRef = useRef<string>("")
   const [loadQuery, query] = useGetTopCategoriesLazyQuery()
   const getCasesQuery = useGetCasesQuery()
+
+  const [loadMemberInboxQuery, getMemberInboxQuery] = useGetMemberInboxLazyQuery()
+  useEffect(() => {
+    if (auth.user.id) {
+      loadMemberInboxQuery()
+    }
+  }, [auth.user.id, loadMemberInboxQuery])
 
   const [loadGetCollectedCaseQuery, getCollectedCaseQuery] = useGetCollectedCaseLazyQuery({
     fetchPolicy: "no-cache",
@@ -103,6 +111,9 @@ const ClinicalCaseList = () => {
               auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
             }}>
             <Icon name="chat" className={styled["chat-icon"]} />
+            {getMemberInboxQuery.data?.me?.replyInbox?.some(el => !el?.readAt) && (
+              <div className={styled["chat-unread"]} />
+            )}
           </div>
         </div>
         <div className={styled.inner}>

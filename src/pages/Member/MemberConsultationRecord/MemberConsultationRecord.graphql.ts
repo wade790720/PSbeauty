@@ -12,12 +12,6 @@ export const GetMe = gql`
         content
         consultAt
         enable
-        topics {
-          id
-          clinic {
-            id
-          }
-        }
         categories {
           name
           id

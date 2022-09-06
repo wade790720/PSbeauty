@@ -2,11 +2,9 @@ import { useState, useRef, useLayoutEffect, useEffect } from "react"
 import styled from "./HistoryRecordCard.module.scss"
 import cx from "classnames"
 import Switch from "react-switch"
-import useGo from "components/Router/useGo"
 
 export type HistoryRecordCardProps = {
   id: string
-  clinicId?: string
   title: string
   date: string
   toggle?: boolean
@@ -21,7 +19,6 @@ const HistoryRecordCard = ({ ...props }: HistoryRecordCardProps) => {
   const [open, setOpen] = useState<boolean>(false)
   const [toggle, setToggle] = useState<boolean>()
   const ref = useRef<HTMLDivElement>(null)
-  const go = useGo()
 
   useEffect(() => {
     setToggle(props.toggle)
@@ -36,12 +33,7 @@ const HistoryRecordCard = ({ ...props }: HistoryRecordCardProps) => {
   }, [])
 
   return (
-    <div
-      className={styled.wrapper}
-      onClick={() => {
-        if (!props.clinicId) return
-        go.toChatroom({ id: props.clinicId })
-      }}>
+    <div className={styled.wrapper}>
       <div className={styled.title}>{props.title}</div>
       <div className={styled.date}>{props.date}</div>
       {props.images.length > 0 && (

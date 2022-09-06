@@ -32,7 +32,6 @@ const MemberConsultationRecord = () => {
               <HistoryRecordCard
                 key={el?.id}
                 id={el?.id || ""}
-                clinicId={el?.topics?.[0]?.clinic?.id || ""}
                 title={el?.subject || ""}
                 date={`${date}｜剩餘${el?.days}天`}
                 toggle={el?.enable}

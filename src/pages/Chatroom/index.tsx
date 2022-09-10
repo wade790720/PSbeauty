@@ -15,11 +15,15 @@ import styled from "./Chatroom.module.scss"
 import { ReactComponent as UploadImage } from "./UploadImage.svg"
 import useRealtime from "./useRealtime"
 import Loading from "components/QueryStatus/Loading"
+import uuid from "utils/uuid"
+import { storage } from "firebaseClient"
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 
 interface MessageRow {
   content: string
   userId: string
   key: string
+  contentType: string
 }
 
 const f = (dayjs: dayjs.Dayjs) => {
@@ -34,6 +38,7 @@ const Chatroom = () => {
   const [realtimes, setRealtimes] = useState<MessageRow[]>([])
   const realtimesRef = useRef<MessageRow[]>()
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const imageRef = useRef<HTMLInputElement>(null)
 
   const topicDetail = useGeTopicDetailQuery({
     variables: {
@@ -56,6 +61,7 @@ const Chatroom = () => {
           content: msg.content || "",
           key: msg.timestampMillis + "",
           userId: msg.userId || "",
+          contentType: msg.contentType || "",
         },
       ]
       setRealtimes(newRt)
@@ -108,7 +114,12 @@ const Chatroom = () => {
         },
       },
       async onCompleted() {
-        await notify({ content: msg, userId: auth.user.id, consultedId: consulteeId })
+        await notify({
+          content: msg,
+          userId: auth.user.id,
+          contentType: "text",
+          consultedId: consulteeId,
+        })
         setMessage("")
         msgInputRef.current?.focus()
       },
@@ -123,6 +134,7 @@ const Chatroom = () => {
     content: r?.content || "",
     key: r?.id || "",
     userId: r?.userId || "",
+    contentType: r?.contentType || "",
   }))
 
   const consultAt = dayjs((consult?.consultAt || 0) * 1000)
@@ -171,7 +183,8 @@ const Chatroom = () => {
           if (v?.userId == auth.user.id) {
             return (
               <div className={cx(styled.row, styled.right)} key={v?.key}>
-                <div className={styled.message}>{v?.content}</div>
+                {v?.contentType === "text" && <div className={styled.message}>{v?.content}</div>}
+                {v?.contentType === "image" && <img className={styled.image} src={v?.content} />}
               </div>
             )
           } else {
@@ -182,7 +195,8 @@ const Chatroom = () => {
                 ) : (
                   <img className={styled.avatar} src="/img/chatroom-user.png" />
                 )}
-                <div className={styled.message}>{v?.content}</div>
+                {v?.contentType === "text" && <div className={styled.message}>{v?.content}</div>}
+                {v?.contentType === "image" && <img className={styled.image} src={v?.content} />}
               </div>
             )
           }
@@ -192,7 +206,48 @@ const Chatroom = () => {
       {timeleft > 0 && (
         <div className={styled.input}>
           <div className={styled.control}>
-            <UploadImage />
+            <UploadImage
+              onClick={() => {
+                imageRef.current?.click()
+              }}
+            />
+            <input
+              type="file"
+              accept="image/*"
+              style={{ display: "none" }}
+              ref={imageRef}
+              onChange={e => {
+                const file = e.target?.files?.[0]
+                if (file) {
+                  const storageRef = ref(storage, `image/${uuid()}/${file?.name || ""}`)
+                  uploadBytes(storageRef, file)
+                    .then(snapshot => getDownloadURL(snapshot.ref))
+                    .then(image => {
+                      replyTopicMutation({
+                        variables: {
+                          input: {
+                            topicId: id || "",
+                            content: image,
+                            contentType: "image",
+                          },
+                        },
+                        async onCompleted() {
+                          await notify({
+                            content: image,
+                            userId: auth.user.id,
+                            contentType: "image",
+                            consultedId: consulteeId,
+                          })
+                          if (imageRef.current) {
+                            imageRef.current.value = ""
+                          }
+                          msgInputRef.current?.focus()
+                        },
+                      })
+                    })
+                }
+              }}
+            />
             {isClinic ? (
               <>
                 <input

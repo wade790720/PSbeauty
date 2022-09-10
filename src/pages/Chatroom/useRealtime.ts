@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef } from "react"
 import { ConsultTopicReply } from "types/schema"
 import { firestore } from "../../firebaseClient"
 
-type RealTimeMessage = Pick<ConsultTopicReply, "content" | "userId"> & {
+type RealTimeMessage = Pick<ConsultTopicReply, "content" | "userId" | "contentType"> & {
   timestamp: Timestamp | ReturnType<typeof serverTimestamp>
   timestampMillis?: number
 }
@@ -44,7 +44,9 @@ const useRealtime = ({ chatroomId, onMessage }: useRealtimeProps) => {
     })
   }, [chatroomId])
 
-  return async (msg: Pick<RealTimeMessage, "content" | "userId"> & { consultedId?: string }) => {
+  return async (
+    msg: Pick<RealTimeMessage, "content" | "userId" | "contentType"> & { consultedId?: string },
+  ) => {
     if (msg.consultedId) {
       const inboxRef = doc(firestore, "inbox", msg.consultedId)
       await setDoc(inboxRef, {
@@ -56,6 +58,7 @@ const useRealtime = ({ chatroomId, onMessage }: useRealtimeProps) => {
       content: msg.content,
       userId: msg.userId,
       timestamp: serverTimestamp(),
+      contentType: msg.contentType,
     } as RealTimeMessage)
   }
 }

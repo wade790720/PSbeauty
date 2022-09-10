@@ -12,7 +12,6 @@ export default function App() {
 
   clearInterval(internal)
   internal = setInterval(() => {
-    console.log("refresh")
     refresh(auth)
   }, 10 * 1000) // every 10 seconds check again
 

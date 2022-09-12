@@ -377,7 +377,7 @@ export type AddConsultInput = {
    */
   categories?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
   /** 諮詢內容 */
-  content?: InputMaybe<Scalars["String"]>
+  content: Scalars["String"]
   /** 諮詢縣市範圍 */
   county?: InputMaybe<Scalars["String"]>
   /** 諮詢天數 */
@@ -387,7 +387,7 @@ export type AddConsultInput = {
   /** 諮詢圖片 */
   images?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
   /** 諮詢標題 */
-  subject?: InputMaybe<Scalars["String"]>
+  subject: Scalars["String"]
   /** 諮詢者識別碼，對應 User.Id */
   userId?: InputMaybe<Scalars["String"]>
 }
@@ -813,6 +813,10 @@ export type ClinicConsultTopic = {
   /** 物件識別碼 */
   id?: Maybe<Scalars["String"]>
   replies?: Maybe<Array<Maybe<ConsultTopicReply>>>
+  /** 討論串最後回覆時間 */
+  replyAt: Scalars["Long"]
+  /** 諮詢者是否已讀 */
+  userRead: Scalars["Boolean"]
 }
 
 /** 診所諮詢討論串。一間診所可以針對一個諮詢問題建立一個討論串 */
@@ -827,6 +831,10 @@ export type ClinicConsultTopicFilterInput = {
   or?: InputMaybe<Array<ClinicConsultTopicFilterInput>>
   parentField?: InputMaybe<StringOperationFilterInput>
   parentId?: InputMaybe<StringOperationFilterInput>
+  /** 討論串最後回覆時間 */
+  replyAt?: InputMaybe<ComparableInt64OperationFilterInput>
+  /** 諮詢者是否已讀 */
+  userRead?: InputMaybe<BooleanOperationFilterInput>
 }
 
 /** 診所諮詢討論串。一間診所可以針對一個諮詢問題建立一個討論串 */
@@ -839,6 +847,10 @@ export type ClinicConsultTopicSortInput = {
   id?: InputMaybe<SortEnumType>
   parentField?: InputMaybe<SortEnumType>
   parentId?: InputMaybe<SortEnumType>
+  /** 討論串最後回覆時間 */
+  replyAt?: InputMaybe<SortEnumType>
+  /** 諮詢者是否已讀 */
+  userRead?: InputMaybe<SortEnumType>
 }
 
 /** 駐院醫師 */
@@ -974,8 +986,12 @@ export type ClinicInbox = {
   id?: Maybe<Scalars["String"]>
   /** 會員最後發信時間 */
   lastReplyAt: Scalars["Long"]
+  /** 是否已被讀取 */
+  read: Scalars["Boolean"]
   /** 讀取時間 */
   readAt: Scalars["Long"]
+  /** 最後回覆是否為發文者，true 為發文者回 */
+  replyByPoster: Scalars["Boolean"]
   /** 取得討論串資訊 */
   topic?: Maybe<ClinicConsultTopic>
   /** 取得寄信人 */
@@ -1017,8 +1033,12 @@ export type ClinicInboxFilterInput = {
   or?: InputMaybe<Array<ClinicInboxFilterInput>>
   parentField?: InputMaybe<StringOperationFilterInput>
   parentId?: InputMaybe<StringOperationFilterInput>
+  /** 是否已被讀取 */
+  read?: InputMaybe<BooleanOperationFilterInput>
   /** 讀取時間 */
   readAt?: InputMaybe<ComparableInt64OperationFilterInput>
+  /** 最後回覆是否為發文者，true 為發文者回 */
+  replyByPoster?: InputMaybe<BooleanOperationFilterInput>
   /** 診所諮詢討論串識別碼 */
   topicId?: InputMaybe<StringOperationFilterInput>
   /** 寄件者識別碼 */
@@ -1035,8 +1055,12 @@ export type ClinicInboxSortInput = {
   lastReplyAt?: InputMaybe<SortEnumType>
   parentField?: InputMaybe<SortEnumType>
   parentId?: InputMaybe<SortEnumType>
+  /** 是否已被讀取 */
+  read?: InputMaybe<SortEnumType>
   /** 讀取時間 */
   readAt?: InputMaybe<SortEnumType>
+  /** 最後回覆是否為發文者，true 為發文者回 */
+  replyByPoster?: InputMaybe<SortEnumType>
   /** 診所諮詢討論串識別碼 */
   topicId?: InputMaybe<SortEnumType>
   /** 寄件者識別碼 */
@@ -1185,7 +1209,7 @@ export type ConsultClinicInput = {
   /** 診所識別碼 */
   clinicId?: InputMaybe<Scalars["String"]>
   /** 諮詢內容 */
-  content?: InputMaybe<Scalars["String"]>
+  content: Scalars["String"]
   /** 諮詢縣市範圍 */
   county?: InputMaybe<Scalars["String"]>
   /** 諮詢天數 */
@@ -1195,7 +1219,7 @@ export type ConsultClinicInput = {
   /** 諮詢圖片 */
   images?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
   /** 諮詢標題 */
-  subject?: InputMaybe<Scalars["String"]>
+  subject: Scalars["String"]
   /** 諮詢者識別碼，對應 User.Id */
   userId?: InputMaybe<Scalars["String"]>
 }
@@ -1205,6 +1229,38 @@ export type ConsultClinicPayload = {
   id?: Maybe<Scalars["String"]>
   /** 診所話題識別碼，對應 ClinicConsultTopic.Id */
   topicId?: Maybe<Scalars["String"]>
+}
+
+export type ConsultExt = {
+  __typename: "ConsultExt"
+  /** 取得所屬小分類 */
+  categories?: Maybe<Array<Maybe<Category>>>
+  /** 取得諮詢時間 */
+  consultAt: Scalars["Long"]
+  /** 諮詢內容 */
+  content?: Maybe<Scalars["String"]>
+  /** 諮詢縣市範圍 */
+  county?: Maybe<Scalars["String"]>
+  /** 諮詢天數 */
+  days: Scalars["Int"]
+  /** 是否開啟 */
+  enable: Scalars["Boolean"]
+  /** 開啟到期時間 */
+  expiresIn: Scalars["Long"]
+  /** 物件識別碼 */
+  id?: Maybe<Scalars["String"]>
+  /** 諮詢圖片 */
+  images?: Maybe<Array<Maybe<Scalars["String"]>>>
+  /** 是否為一對一諮詢 */
+  oneOnOne: Scalars["Boolean"]
+  /** 取得發文者 */
+  poster?: Maybe<User>
+  /** 諮詢標題 */
+  subject?: Maybe<Scalars["String"]>
+  /** 取得診所諮詢討論 */
+  topics?: Maybe<Array<Maybe<ClinicConsultTopic>>>
+  /** 使用者諮詢收件夾 */
+  userInboxes?: Maybe<Array<Maybe<UserInbox>>>
 }
 
 /** 討論串回覆 */
@@ -2011,6 +2067,8 @@ export type Query = {
   topicsByClinicId?: Maybe<TopicsByClinicIdConnection>
   /** 依識別碼取得取用者 */
   user?: Maybe<User>
+  /** 取得使用者收件夾 */
+  userInbox?: Maybe<Array<Maybe<UserInbox>>>
   /** 取得所有使用者 */
   users?: Maybe<UsersConnection>
 }
@@ -2174,6 +2232,11 @@ export type QueryTopicsByClinicIdArgs = {
 
 export type QueryUserArgs = {
   id?: InputMaybe<Scalars["String"]>
+}
+
+export type QueryUserInboxArgs = {
+  consultId?: InputMaybe<Scalars["String"]>
+  order?: InputMaybe<Array<UserInboxSortInput>>
 }
 
 export type QueryUsersArgs = {
@@ -2704,7 +2767,7 @@ export type User = {
   /** 使用者使用的裝置識別碼，接收 firebase message 用 */
   clientTokens?: Maybe<Array<Maybe<Scalars["String"]>>>
   /** 取得使用者諮詢 */
-  consults?: Maybe<Array<Maybe<Consult>>>
+  consults?: Maybe<Array<Maybe<ConsultExt>>>
   /** 使用者電子郵件信箱 */
   email?: Maybe<Scalars["String"]>
   /** 儲存搜尋條件 */
@@ -2715,7 +2778,6 @@ export type User = {
   name?: Maybe<Scalars["String"]>
   /** 使用者電話 */
   phone?: Maybe<Scalars["String"]>
-  replyInbox?: Maybe<Array<Maybe<ConsultTopicReply>>>
   /** GCP Firebase 中的識別碼 */
   uid?: Maybe<Scalars["String"]>
   /** 取得使用者蒐取病例 */
@@ -2744,6 +2806,58 @@ export type UserFilterInput = {
   phone?: InputMaybe<StringOperationFilterInput>
   /** GCP Firebase 中的識別碼 */
   uid?: InputMaybe<StringOperationFilterInput>
+}
+
+/** 診所信箱 */
+export type UserInbox = {
+  __typename: "UserInbox"
+  /** 取診所資訊 */
+  clinic?: Maybe<Clinic>
+  /** 取得討論串資訊 */
+  consult?: Maybe<Consult>
+  /** 所屬諮詢 */
+  consultId?: Maybe<Scalars["String"]>
+  /** 物件識別碼 */
+  id?: Maybe<Scalars["String"]>
+  /** 會員最後發信時間 */
+  lastReplyAt: Scalars["Long"]
+  /** 是否已被諮詢者讀取 */
+  read: Scalars["Boolean"]
+  /** 讀取時間 */
+  readAt: Scalars["Long"]
+  /** 取得信箱中的回覆內容 */
+  replies?: Maybe<Array<Maybe<ConsultTopicReply>>>
+  /** 最後回覆是否為診所，true 為診所回 */
+  replyByClinic: Scalars["Boolean"]
+  topic?: Maybe<ClinicConsultTopic>
+  /** 診所諮詢討論串識別碼 */
+  topicId?: Maybe<Scalars["String"]>
+  /** 諮詢者識別碼 */
+  userId?: Maybe<Scalars["String"]>
+}
+
+/** 診所信箱 */
+export type UserInboxSortInput = {
+  /** 診所識別碼 */
+  clinicId?: InputMaybe<SortEnumType>
+  /** 所屬諮詢 */
+  consultId?: InputMaybe<SortEnumType>
+  /** 物件識別碼 */
+  id?: InputMaybe<SortEnumType>
+  /** 會員最後發信時間 */
+  lastReplyAt?: InputMaybe<SortEnumType>
+  parentField?: InputMaybe<SortEnumType>
+  parentId?: InputMaybe<SortEnumType>
+  /** 是否已被諮詢者讀取 */
+  read?: InputMaybe<SortEnumType>
+  /** 讀取時間 */
+  readAt?: InputMaybe<SortEnumType>
+  /** 最後回覆是否為診所，true 為診所回 */
+  replyByClinic?: InputMaybe<SortEnumType>
+  /** 診所諮詢討論串識別碼 */
+  topicId?: InputMaybe<SortEnumType>
+  /** 諮詢者識別碼 */
+  userId?: InputMaybe<SortEnumType>
 }
 
 /** 使用者資料 */

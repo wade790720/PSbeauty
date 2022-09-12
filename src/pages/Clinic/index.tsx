@@ -62,9 +62,9 @@ const Clinic = () => {
               auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
             }}>
             <Icon name="chat" className={styled["chat-icon"]} />
-            {getMemberInboxQuery.data?.me?.replyInbox?.some(el => !el?.readAt) && (
+            {/* {getMemberInboxQuery.data?.me?.replyInbox?.some(el => !el?.readAt) && (
               <div className={styled["chat-unread"]} />
-            )}
+            )} */}
           </div>
         </div>
         <div className={styled.inner}>

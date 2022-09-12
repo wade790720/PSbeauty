@@ -30,7 +30,7 @@ export type GetConsultClinicMutationVariables = Types.Exact<{
     Array<Types.InputMaybe<Types.Scalars["String"]>> | Types.InputMaybe<Types.Scalars["String"]>
   >
   subject: Types.Scalars["String"]
-  content?: Types.InputMaybe<Types.Scalars["String"]>
+  content: Types.Scalars["String"]
   county?: Types.InputMaybe<Types.Scalars["String"]>
 }>
 
@@ -98,7 +98,7 @@ export const GetConsultClinicDocument = gql`
     $days: Int!
     $images: [String]
     $subject: String!
-    $content: String
+    $content: String!
     $county: String
   ) {
     addConsult(

@@ -9,14 +9,14 @@ export type GetMeQuery = {
   me?: {
     __typename: "User"
     consults?: Array<{
-      __typename: "Consult"
+      __typename: "ConsultExt"
       id?: string | null
       images?: Array<string | null> | null
       days: number
       oneOnOne: boolean
+      consultAt: number
       subject?: string | null
       content?: string | null
-      consultAt: number
       enable: boolean
       categories?: Array<{
         __typename: "Category"
@@ -44,9 +44,9 @@ export const GetMeDocument = gql`
         images
         days
         oneOnOne
+        consultAt
         subject
         content
-        consultAt
         enable
         categories {
           name

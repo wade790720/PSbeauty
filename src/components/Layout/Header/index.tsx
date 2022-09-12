@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom"
 export type HeaderProps = {
   leftArrow?: boolean
   title?: string
-  url?: string
+  redirect?: () => void
 } & ReactProps.Component
 
 const Header = ({ style = {}, ...props }: HeaderProps) => {
@@ -22,7 +22,8 @@ const Header = ({ style = {}, ...props }: HeaderProps) => {
       })}
       style={{ ...style }}>
       {props.leftArrow && (
-        <div onClick={() => (props.url ? navigate(props.url) : text ? navigate(-2) : navigate(-1))}>
+        <div
+          onClick={() => (props.redirect ? props.redirect() : text ? navigate(-2) : navigate(-1))}>
           <Icon className={styled["back"]} name="LeftArrow" />
         </div>
       )}

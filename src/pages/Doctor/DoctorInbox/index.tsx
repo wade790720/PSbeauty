@@ -7,8 +7,10 @@ import { useEffect, useMemo, useRef } from "react"
 import { useGetDoctorInboxQuery, useReadClinicInboxMutation } from "./DoctorInbox.graphql.generated"
 import styled from "./DoctorInbox.module.scss"
 import { firestore } from "../../../firebaseClient"
+import { useGo } from "components/Router"
 
 const DoctorInbox = () => {
+  const go = useGo()
   const auth = useAuth()
   const getDoctorInboxQuery = useGetDoctorInboxQuery({
     fetchPolicy: "no-cache",
@@ -90,7 +92,6 @@ const DoctorInbox = () => {
             return (
               <MessageCard
                 unread={unread}
-                topicId={topic?.id || ""}
                 key={key}
                 title={topic?.consult?.subject || "來自會員的一對一諮詢"}
                 message={message}
@@ -98,7 +99,10 @@ const DoctorInbox = () => {
                 fetchMore={() => {
                   hasNextPage && fetchMore()
                 }}
-                click={() => readClinicInbox(key)}
+                onClick={() => {
+                  readClinicInbox(key)
+                  go.toChatroom({ id: topic?.id || "" })
+                }}
               />
             )
           })

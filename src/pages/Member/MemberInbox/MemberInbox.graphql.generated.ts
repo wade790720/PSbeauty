@@ -3,42 +3,79 @@ import * as Types from "../../../types/schema"
 import { gql } from "@apollo/client"
 import * as Apollo from "@apollo/client"
 const defaultOptions = {} as const
+export type UserInboxesFragment = {
+  __typename: "ConsultExt"
+  userInboxes?: Array<{
+    __typename: "UserInbox"
+    id?: string | null
+    read: boolean
+    readAt: number
+    topicId?: string | null
+    replies?: Array<{ __typename: "ConsultTopicReply"; content?: string | null } | null> | null
+    clinic?: { __typename: "Clinic"; id?: string | null; name?: string | null } | null
+  } | null> | null
+}
+
 export type GetMemberInboxQueryVariables = Types.Exact<{ [key: string]: never }>
 
 export type GetMemberInboxQuery = {
   me?: {
     __typename: "User"
-    replyInbox?: Array<{
-      __typename: "ConsultTopicReply"
+    consults?: Array<{
+      __typename: "ConsultExt"
       id?: string | null
+      subject?: string | null
+      county?: string | null
       content?: string | null
-      readAt: number
-      topic?: {
-        __typename: "ClinicConsultTopic"
+      days: number
+      images?: Array<string | null> | null
+      oneOnOne: boolean
+      userInboxes?: Array<{
+        __typename: "UserInbox"
         id?: string | null
+        read: boolean
+        readAt: number
+        topicId?: string | null
+        replies?: Array<{ __typename: "ConsultTopicReply"; content?: string | null } | null> | null
         clinic?: { __typename: "Clinic"; id?: string | null; name?: string | null } | null
-      } | null
+      } | null> | null
     } | null> | null
   } | null
 }
 
-export const GetMemberInboxDocument = gql`
-  query GetMemberInbox {
-    me {
-      replyInbox {
-        id
+export const UserInboxesFragmentDoc = gql`
+  fragment UserInboxes on ConsultExt {
+    userInboxes {
+      id
+      read
+      readAt
+      topicId
+      replies {
         content
-        readAt
-        topic {
-          id
-          clinic {
-            id
-            name
-          }
-        }
+      }
+      clinic {
+        id
+        name
       }
     }
   }
+`
+export const GetMemberInboxDocument = gql`
+  query GetMemberInbox {
+    me {
+      consults {
+        id
+        subject
+        county
+        content
+        days
+        images
+        oneOnOne
+        ...UserInboxes
+      }
+    }
+  }
+  ${UserInboxesFragmentDoc}
 `
 
 /**

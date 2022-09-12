@@ -21,7 +21,7 @@ export const GetConsultClinic = gql`
     $days: Int!
     $images: [String]
     $subject: String!
-    $content: String
+    $content: String!
     $county: String
   ) {
     addConsult(

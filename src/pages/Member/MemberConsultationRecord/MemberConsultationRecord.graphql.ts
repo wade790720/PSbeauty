@@ -8,9 +8,9 @@ export const GetMe = gql`
         images
         days
         oneOnOne
+        consultAt
         subject
         content
-        consultAt
         enable
         categories {
           name

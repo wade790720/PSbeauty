@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { Outlet, useOutletContext, useMatch, useParams, useLocation } from "react-router-dom"
+import { Outlet, useOutletContext, useMatch, useParams, useNavigate } from "react-router-dom"
 import { useAuth } from "hooks/useAuth"
 import Header from "components/Layout/Header"
 import Backdrop from "components/Layout/Backdrop"
@@ -15,9 +15,9 @@ type ContextType = { query: { data: GetClinicQueryHookResult["data"] } }
 
 const ClinicInnerWrapper = () => {
   const auth = useAuth()
+  const navigate = useNavigate()
   const match = useMatch("/clinic/:id/activity/:activityId")
   const { id } = useParams()
-  const location = useLocation()
 
   const [loadQuery, query] = useGetClinicLazyQuery()
 
@@ -38,7 +38,7 @@ const ClinicInnerWrapper = () => {
       <Header
         leftArrow={!auth?.user?.clinic}
         title={query?.data?.clinic?.name || ""}
-        url={`/clinic`}
+        redirect={() => navigate("/clinic")}
       />
       <Backdrop style={{ paddingBottom: "120px" }}>
         <ClinicSwitch />

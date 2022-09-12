@@ -13,7 +13,7 @@ export type ConsultClinicMutation = {
 
 export const ConsultClinicDocument = gql`
   mutation consultClinic($input: String) {
-    consultClinic(input: { clinicId: $input, days: 7 }) {
+    consultClinic(input: { clinicId: $input, days: 90, subject: "OneOnOne", content: "OneOnOne" }) {
       topicId
     }
   }

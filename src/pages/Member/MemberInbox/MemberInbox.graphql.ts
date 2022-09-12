@@ -1,19 +1,35 @@
 import { gql } from "@apollo/client"
 
+export const UserInboxes = gql`
+  fragment UserInboxes on ConsultExt {
+    userInboxes {
+      id
+      read
+      readAt
+      topicId
+      replies {
+        content
+      }
+      clinic {
+        id
+        name
+      }
+    }
+  }
+`
+
 export const GetMemberInbox = gql`
   query GetMemberInbox {
     me {
-      replyInbox {
+      consults {
         id
+        subject
+        county
         content
-        readAt
-        topic {
-          id
-          clinic {
-            id
-            name
-          }
-        }
+        days
+        images
+        oneOnOne
+        ...UserInboxes
       }
     }
   }

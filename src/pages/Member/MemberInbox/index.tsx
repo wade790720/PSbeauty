@@ -28,6 +28,7 @@ const MemberInbox = () => {
 
   useEffect(() => {
     return onSnapshot(inboxRef, doc => {
+      console.log(doc)
       if (doc.exists()) {
         refetch()
       }
@@ -57,22 +58,29 @@ const MemberInbox = () => {
         })}>
         {(data?.me?.consults?.length || 0) <= 0 && <div className={styled.text}>尚無信件</div>}
 
-        {data?.me?.consults?.map(consult => (
-          <MessageCard
-            key={consult?.id}
-            title={consult?.subject || ""}
-            message={consult?.content || ""}
-            isOneOnOne={consult?.oneOnOne}
-            onClick={() => {
-              if (consult?.oneOnOne) {
-                go.toChatroom({ id: consult.userInboxes?.[0]?.topicId || "" })
-              } else {
-                setNext(true)
-                userInbox.current = consult?.userInboxes || []
-              }
-            }}
-          />
-        ))}
+        {data?.me?.consults?.map(consult => {
+          const tmp = consult?.userInboxes?.[0]
+          const last = (tmp?.replies && tmp?.replies[tmp?.replies.length - 1]?.content) || ""
+          const message = last.includes("https://firebasestorage") ? "圖片" : last
+
+          return (
+            <MessageCard
+              key={consult?.id}
+              title={(consult?.oneOnOne ? tmp?.clinic?.name || "" : consult?.subject) || ""}
+              message={consult?.oneOnOne ? message : consult?.content || ""}
+              isOneOnOne={consult?.oneOnOne}
+              unread={consult?.oneOnOne && (tmp?.readAt || 0) <= 0}
+              onClick={() => {
+                if (consult?.oneOnOne) {
+                  go.toChatroom({ id: tmp?.topicId || "" })
+                } else {
+                  setNext(true)
+                  userInbox.current = consult?.userInboxes || []
+                }
+              }}
+            />
+          )
+        })}
       </div>
       {/* 諮詢第二層 - 這個諮詢有哪些診所回覆 */}
       <div

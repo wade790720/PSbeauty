@@ -85,7 +85,6 @@
   }
 
   input.control {
-    height: 48px;
     padding: 12px 17px;
     background-clip: padding-box;
     appearance: none;
@@ -100,13 +99,13 @@
     width: 100%;
     font-family: $font-family;
     border-radius: 15px;
-    line-height: 3;
+    line-height: 24px;
 
     &::placeholder,
     &::-webkit-input-placeholder {
       color: #8B919C;
       font-family: $font-family;
-      line-height: 3;
+      line-height: 24px;
     }
 
     &:-webkit-autofill,

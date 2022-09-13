@@ -51,6 +51,7 @@ const Clinic = () => {
   const data = isSearch
     ? getClinicsQuerySearch?.data?.clinics?.edges
     : getClinicsQuery?.data?.clinics?.edges
+  const consults = getMemberInboxQuery.data?.me?.consults || []
 
   return (
     <>
@@ -62,9 +63,10 @@ const Clinic = () => {
               auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
             }}>
             <Icon name="chat" className={styled["chat-icon"]} />
-            {getMemberInboxQuery.data?.me?.consults?.map(consult =>
-              consult?.userInboxes?.some(el => !el?.read),
-            ) && <div className={styled["chat-unread"]} />}
+            {consults.length > 1 &&
+              consults.map(consult => consult?.userInboxes?.some(el => !el?.read)) && (
+                <div className={styled["chat-unread"]} />
+              )}
           </div>
         </div>
         <div className={styled.inner}>

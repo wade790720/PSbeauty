@@ -19,11 +19,12 @@ const getBackgroundColor = () => {
 const Profile = () => {
   const go = useGo()
   const auth = useAuth()
+  const [loadMemberInboxQuery, getMemberInboxQuery] = useGetMemberInboxLazyQuery()
   const backgroundColor = getBackgroundColor()
   const userEmail = auth.user.email || "Unknown"
   const userName = auth.user.name || "未命名"
+  const consults = getMemberInboxQuery.data?.me?.consults || []
 
-  const [loadMemberInboxQuery, getMemberInboxQuery] = useGetMemberInboxLazyQuery()
   useEffect(() => {
     if (auth.user.id) {
       loadMemberInboxQuery()
@@ -44,9 +45,10 @@ const Profile = () => {
             auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
           }}>
           <Icon name="Chat" />
-          {getMemberInboxQuery.data?.me?.consults?.map(consult =>
-            consult?.userInboxes?.some(el => !el?.read),
-          ) && <div className={styled["chat-unread"]} />}
+          {consults.length > 1 &&
+            consults?.map(consult => consult?.userInboxes?.some(el => !el?.read)) && (
+              <div className={styled["chat-unread"]} />
+            )}
         </div>
       )}
     </div>

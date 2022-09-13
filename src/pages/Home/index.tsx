@@ -131,6 +131,7 @@ const Home = () => {
       loadMemberInboxQuery()
     }
   }, [auth.user.id, loadGetCollectedCaseQuery, loadMemberInboxQuery])
+  const consults = getMemberInboxQuery.data?.me?.consults || []
 
   return (
     <>
@@ -142,9 +143,10 @@ const Home = () => {
               auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
             }}>
             <Icon name="chat" className={styled["chat-icon"]} />
-            {getMemberInboxQuery.data?.me?.consults?.map(consult =>
-              consult?.userInboxes?.some(el => !el?.read),
-            ) && <div className={styled["chat-unread"]} />}
+            {consults.length > 1 &&
+              consults.map(consult => consult?.userInboxes?.some(el => !el?.read)) && (
+                <div className={styled["chat-unread"]} />
+              )}
           </div>
         </div>
         <div className={styled.inner}>

@@ -85,7 +85,9 @@ const DoctorInbox = () => {
             const unread = edge.node?.readAt === 0
 
             const repliesCount = reply?.length || 0
-            const message = reply?.[repliesCount - 1]?.content || topic?.consult?.content || ""
+            const last = reply?.[repliesCount - 1]?.content || topic?.consult?.content || ""
+            const message = last.includes("https://firebasestorage") ? "圖片" : last
+
             if (!message && repliesCount <= 0) {
               return null
             }

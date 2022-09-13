@@ -69,7 +69,11 @@ const MemberInbox = () => {
               title={(consult?.oneOnOne ? tmp?.clinic?.name || "" : consult?.subject) || ""}
               message={consult?.oneOnOne ? message : consult?.content || ""}
               isOneOnOne={consult?.oneOnOne}
-              unread={consult?.oneOnOne && (tmp?.readAt || 0) <= 0}
+              unread={
+                consult?.oneOnOne
+                  ? (tmp?.readAt || 0) <= 0
+                  : consult?.userInboxes?.some(el => !el?.read)
+              }
               onClick={() => {
                 if (consult?.oneOnOne) {
                   go.toChatroom({ id: tmp?.topicId || "" })

@@ -51,7 +51,7 @@ const ForgotPassword = () => {
         <div className={styled.title}>忘記密碼</div>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group layout="vertical">
-            <Form.Label>Email</Form.Label>
+            <Form.Label>信箱</Form.Label>
             <InputGroup className={styled["input-box-group"]}>
               <Form.Input
                 className={styled["input-box"]}

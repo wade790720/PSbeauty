@@ -4,7 +4,6 @@ import Drawer from "components/Drawer"
 import Dropdown from "components/Dropdown"
 import Form, { InputGroup, Append } from "components/Form"
 import Icon from "components/Icon"
-import QueryStatus from "components/QueryStatus"
 import Modal from "components/Modal"
 
 import SubjectFilter from "containers/SubjectFilter"
@@ -83,9 +82,6 @@ const Consulting = (props: consultProps) => {
     setChosenDistrict("")
     setFiles([createFile(), createFile(), createFile()])
   }
-
-  if (query.loading) return <QueryStatus.Loading />
-  if (query.error) return <QueryStatus.Error />
 
   return (
     <Drawer open={props.open} onClose={() => props.onClose()} size="100%">

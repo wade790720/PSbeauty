@@ -92,7 +92,7 @@ const DoctorInbox = () => {
             const last = reply?.[repliesCount - 1]?.content || topic?.consult?.content || ""
             const message = last.includes("https://firebasestorage") ? "圖片" : last
 
-            if (!message && repliesCount <= 0) {
+            if (repliesCount === 0 && topic?.consult?.content === "OneOnOne") {
               return null
             }
             return (

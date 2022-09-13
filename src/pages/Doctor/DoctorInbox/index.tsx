@@ -8,15 +8,16 @@ import { useGetDoctorInboxQuery, useReadClinicInboxMutation } from "./DoctorInbo
 import styled from "./DoctorInbox.module.scss"
 import { firestore } from "../../../firebaseClient"
 import { useGo } from "components/Router"
+import QueryStatus from "components/QueryStatus"
 
 const DoctorInbox = () => {
   const go = useGo()
   const auth = useAuth()
-  const getDoctorInboxQuery = useGetDoctorInboxQuery({
+  const { data, loading, error, refetch, fetchMore } = useGetDoctorInboxQuery({
     fetchPolicy: "no-cache",
   })
-  const edges = getDoctorInboxQuery?.data?.clinicInbox?.edges || []
-  const hasNextPage = getDoctorInboxQuery.data?.clinicInbox?.pageInfo.hasNextPage ?? false
+  const edges = data?.clinicInbox?.edges || []
+  const hasNextPage = data?.clinicInbox?.pageInfo.hasNextPage ?? false
   const cursorRef = useRef<string>("")
 
   const [readInbox] = useReadClinicInboxMutation()
@@ -28,15 +29,15 @@ const DoctorInbox = () => {
   useEffect(() => {
     return onSnapshot(inboxRef, doc => {
       if (doc.exists()) {
-        getDoctorInboxQuery.refetch()
+        refetch()
       }
     })
   }, [])
 
-  const fetchMore = () => {
+  const handleFetchMore = () => {
     const after = edges?.[edges.length - 1]?.cursor || null
 
-    getDoctorInboxQuery.fetchMore({
+    fetchMore({
       variables: {
         input: after,
       },
@@ -70,8 +71,11 @@ const DoctorInbox = () => {
         },
       },
     })
-    getDoctorInboxQuery.refetch()
+    refetch()
   }
+
+  if (loading) return <QueryStatus.Loading />
+  if (error) return <QueryStatus.Error />
 
   return (
     <>
@@ -99,7 +103,7 @@ const DoctorInbox = () => {
                 message={message}
                 last={edges.length - 1 === idx}
                 fetchMore={() => {
-                  hasNextPage && fetchMore()
+                  hasNextPage && handleFetchMore()
                 }}
                 onClick={() => {
                   readClinicInbox(key)

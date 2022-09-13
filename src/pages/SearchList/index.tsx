@@ -6,6 +6,7 @@ import { useGetSearchListLazyQuery } from "./SearchList.graphql.generated"
 import { useGetPopularKeywordsQuery } from "graphql/queries/getPopularKeywords.graphql.generated"
 import { useEffect } from "react"
 import { useGo } from "components/Router"
+import QueryStatus from "components/QueryStatus"
 
 const SearchList = () => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -14,7 +15,7 @@ const SearchList = () => {
   const go = useGo()
   const tag = searchParams.get("tag")
 
-  const [loadQuery, query] = useGetSearchListLazyQuery()
+  const [loadQuery, { data, loading, error }] = useGetSearchListLazyQuery()
   const getPopularKeywords = useGetPopularKeywordsQuery()
 
   useEffect(() => {
@@ -25,6 +26,9 @@ const SearchList = () => {
       },
     })
   }, [text, searchParams, loadQuery])
+
+  if (loading) return <QueryStatus.Loading />
+  if (error) return <QueryStatus.Error />
 
   return (
     <Backdrop className={styled.wrapper}>
@@ -47,8 +51,8 @@ const SearchList = () => {
         ))}
       </div>
       <div className={styled.result}>
-        {query?.data?.cases?.edges && query?.data?.cases?.edges?.length > 0 ? (
-          query?.data?.cases?.edges.map((el, idx) => (
+        {data?.cases?.edges && data?.cases?.edges?.length > 0 ? (
+          data?.cases?.edges.map((el, idx) => (
             <div
               key={el.node?.id}
               onClick={() =>

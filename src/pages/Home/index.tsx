@@ -9,6 +9,7 @@ import Consulting from "./Consulting"
 import { useRef, useState, useCallback, useEffect } from "react"
 import Banner from "containers/Banner"
 import useGo from "components/Router/useGo"
+import QueryStatus from "components/QueryStatus"
 import { useAuth } from "hooks/useAuth"
 import { useGetAdCardsQuery } from "./Home.graphql.generated"
 import { useGetCasesQuery } from "graphql/queries/getCases.graphql.generated"
@@ -22,11 +23,11 @@ const Home = () => {
   const go = useGo()
   const auth = useAuth()
   const cursorRef = useRef<string>("")
-  const getCasesQuery = useGetCasesQuery({ variables: { after: null } })
+
   const [loadGetCollectedCaseQuery, getCollectedCaseQuery] = useGetCollectedCaseLazyQuery({
     fetchPolicy: "no-cache",
   })
-  const getAdCardsQuery = useGetAdCardsQuery()
+  const [loadMemberInboxQuery, getMemberInboxQuery] = useGetMemberInboxLazyQuery()
   const getAdImagesQuery = useGetAdImagesQuery({
     variables: {
       first: 5,
@@ -34,6 +35,8 @@ const Home = () => {
       where: "首頁輪播",
     },
   })
+  const getAdCardsQuery = useGetAdCardsQuery()
+  const getCasesQuery = useGetCasesQuery({ variables: { after: null } })
   const cases = getCasesQuery?.data?.cases?.nodes
   const edges = getCasesQuery?.data?.cases?.edges || []
   const adCards = getAdCardsQuery?.data?.adCards?.nodes
@@ -79,6 +82,7 @@ const Home = () => {
     })
   }, [edges, getCasesQuery])
 
+  const consults = getMemberInboxQuery.data?.me?.consults || []
   const list = []
   const casesCount = cases?.length || 0
   const adCount = adCards?.length || 0
@@ -124,14 +128,16 @@ const Home = () => {
       )
     }
   }
-  const [loadMemberInboxQuery, getMemberInboxQuery] = useGetMemberInboxLazyQuery()
+
   useEffect(() => {
     if (auth.user.id) {
       loadGetCollectedCaseQuery()
       loadMemberInboxQuery()
     }
   }, [auth.user.id, loadGetCollectedCaseQuery, loadMemberInboxQuery])
-  const consults = getMemberInboxQuery.data?.me?.consults || []
+
+  if (getCasesQuery.loading && getAdCardsQuery.loading) return <QueryStatus.Loading />
+  if (getCasesQuery.error && getAdCardsQuery.error) return <QueryStatus.Error />
 
   return (
     <>

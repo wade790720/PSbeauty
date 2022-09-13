@@ -6,6 +6,7 @@ import Button from "components/Button"
 import CaseCard from "containers/CaseCard"
 import Banner from "containers/Banner"
 import useGo from "components/Router/useGo"
+import QueryStatus from "components/QueryStatus"
 import { useAuth } from "hooks/useAuth"
 import { useClinicInnerContext } from "pages/Clinic/ClinicInnerWrapper"
 import { useGetCollectedCaseLazyQuery } from "graphql/queries/getCollectedCase.graphql.generated"
@@ -66,6 +67,9 @@ const ClinicInner = () => {
   useEffect(() => {
     if (auth.user.id) loadGetCollectedCaseQuery()
   }, [auth.user.id, loadGetCollectedCaseQuery])
+
+  if (getCollectedCaseQuery.loading) return <QueryStatus.Loading />
+  if (getCollectedCaseQuery.error) return <QueryStatus.Error />
 
   return (
     <div className={styled.wrapper}>

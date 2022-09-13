@@ -8,6 +8,7 @@ import { useState, useRef, useEffect } from "react"
 import { useAuth } from "hooks/useAuth"
 import DistrictsFilter from "./DistrictsFilter"
 import Banner from "containers/Banner"
+import QueryStatus from "components/QueryStatus"
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
 import { useGetMemberInboxLazyQuery } from "pages/Member/MemberInbox/MemberInbox.graphql.generated"
 import { SortEnumType } from "types/schema"
@@ -39,19 +40,22 @@ const Clinic = () => {
     ?.sort((prev, next) => prev.sort - next.sort)
 
   const getClinicsQuery = useGetClinicsQuery()
+  const [loadMemberInboxQuery, getMemberInboxQuery] = useGetMemberInboxLazyQuery()
   const [loadGetClinicsQuerySearch, getClinicsQuerySearch] = useGetClinicsSearchLazyQuery()
 
-  const [loadMemberInboxQuery, getMemberInboxQuery] = useGetMemberInboxLazyQuery()
+  const data = isSearch
+    ? getClinicsQuerySearch?.data?.clinics?.edges
+    : getClinicsQuery?.data?.clinics?.edges
+  const consults = getMemberInboxQuery.data?.me?.consults || []
+
   useEffect(() => {
     if (auth.user.id) {
       loadMemberInboxQuery()
     }
   }, [auth.user.id, loadMemberInboxQuery])
 
-  const data = isSearch
-    ? getClinicsQuerySearch?.data?.clinics?.edges
-    : getClinicsQuery?.data?.clinics?.edges
-  const consults = getMemberInboxQuery.data?.me?.consults || []
+  if (getClinicsQuery.loading && getAdImagesQuery.loading) return <QueryStatus.Loading />
+  if (getClinicsQuery.error && getAdImagesQuery.error) return <QueryStatus.Error />
 
   return (
     <>

@@ -1,12 +1,13 @@
-import Drawer from "components/Drawer"
-import Form, { InputGroup, Append } from "components/Form"
-import Dropdown from "components/Dropdown"
-import Button from "components/Button"
 import { useState, useEffect } from "react"
-import styled from "./Consulting.module.scss"
+import Button from "components/Button"
+import Drawer from "components/Drawer"
+import Dropdown from "components/Dropdown"
+import Form, { InputGroup, Append } from "components/Form"
 import Icon from "components/Icon"
-import SubjectFilter from "containers/SubjectFilter"
+import QueryStatus from "components/QueryStatus"
 import Modal from "components/Modal"
+
+import SubjectFilter from "containers/SubjectFilter"
 import { storage } from "firebaseClient"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import uuid from "utils/uuid"
@@ -16,6 +17,7 @@ import {
 } from "./Consulting.graphql.generated"
 import { ChosenItemType } from "containers/SubjectFilter/Member"
 import Districts from "pages/Clinic/DistrictsFilter/taiwan_districts.json"
+import styled from "./Consulting.module.scss"
 
 type consultProps = {
   open: boolean
@@ -81,6 +83,9 @@ const Consulting = (props: consultProps) => {
     setChosenDistrict("")
     setFiles([createFile(), createFile(), createFile()])
   }
+
+  if (query.loading) return <QueryStatus.Loading />
+  if (query.error) return <QueryStatus.Error />
 
   return (
     <Drawer open={props.open} onClose={() => props.onClose()} size="100%">

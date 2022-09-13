@@ -7,7 +7,7 @@ const ClinicMedicalTeam = () => {
     query: { data },
   } = useClinicInnerContext()
 
-  if (data?.clinic?.activities?.length === 0)
+  if (data?.clinic?.doctors?.length === 0)
     return <div className={styled.empty}>相關資訊即將上線</div>
 
   return (

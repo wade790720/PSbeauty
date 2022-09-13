@@ -119,7 +119,7 @@ const ClinicInner = () => {
               item => item?.id === el?.id,
             ) || false
           }
-          title={el?.title || "　"}
+          title={el?.title || ""}
           clinic={data?.clinic?.name || ""}
           clinicId={id || ""}
           introduction={el?.description || ""}

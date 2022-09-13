@@ -37,16 +37,18 @@ const Profile = () => {
       </div>
       <div className={styled.username}>{userName}</div>
 
-      <div
-        className={styled.chat}
-        onClick={() => {
-          auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
-        }}>
-        <Icon name="Chat" />
-        {/* {getMemberInboxQuery.data?.me?.replyInbox?.some(el => !el?.readAt) && (
-          <div className={styled["chat-unread"]} />
-        )} */}
-      </div>
+      {!auth.user.clinic && (
+        <div
+          className={styled.chat}
+          onClick={() => {
+            auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
+          }}>
+          <Icon name="Chat" />
+          {getMemberInboxQuery.data?.me?.consults?.map(consult =>
+            consult?.userInboxes?.some(el => !el?.read),
+          ) && <div className={styled["chat-unread"]} />}
+        </div>
+      )}
     </div>
   )
 }

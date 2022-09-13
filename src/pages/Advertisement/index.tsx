@@ -3,13 +3,14 @@ import Backdrop from "components/Layout/Backdrop"
 import Header from "components/Layout/Header"
 import { useGetAdCardsQuery } from "./Advertisement.graphql.generated"
 import { useParams } from "react-router-dom"
-import Loading from "components/QueryStatus/Loading"
+import QueryStatus from "components/QueryStatus"
 
 const Advertisement = () => {
   const { id } = useParams()
-  const { data, loading } = useGetAdCardsQuery({ variables: { id: id || "" } })
+  const { data, loading, error } = useGetAdCardsQuery({ variables: { id: id || "" } })
 
-  if (loading) return <Loading />
+  if (loading) return <QueryStatus.Loading />
+  if (error) return <QueryStatus.Error />
   return (
     <>
       <Header leftArrow />

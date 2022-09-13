@@ -3,12 +3,12 @@ import { useParams } from "react-router-dom"
 import styled from "./ClinicActivity.module.scss"
 import Backdrop from "components/Layout/Backdrop"
 import Header from "components/Layout/Header"
+import QueryStatus from "components/QueryStatus"
 import { useGetClinicLazyQuery } from "./ClinicActivity.graphql.generated"
-import Loading from "components/QueryStatus/Loading"
 
 const ClinicActivity = () => {
   const { id, activityId } = useParams()
-  const [loadQuery, query] = useGetClinicLazyQuery()
+  const [loadQuery, { data, loading, error }] = useGetClinicLazyQuery()
 
   useEffect(() => {
     loadQuery({
@@ -18,17 +18,22 @@ const ClinicActivity = () => {
     })
   }, [loadQuery, id])
 
-  const data = query?.data?.clinic?.activities?.filter(el => el?.id === activityId)[0]
+  if (loading) return <QueryStatus.Loading />
+  if (error) return <QueryStatus.Error />
 
-  if (!data) return <Loading />
+  const activities = data?.clinic?.activities?.filter(el => el?.id === activityId)[0]
+
   return (
     <>
-      <Header leftArrow title={query?.data?.clinic?.name || ""} />
+      <Header leftArrow title={data?.clinic?.name || ""} />
       <Backdrop className={styled.wrapper}>
         <h2>診所活動</h2>
-        <img className={styled.pic} src={data?.image || ""} />
-        <div className={styled.title}>{data?.subject}</div>
-        <div className={styled.content} dangerouslySetInnerHTML={{ __html: data?.content || "" }} />
+        <img className={styled.pic} src={activities?.image || ""} />
+        <div className={styled.title}>{activities?.subject}</div>
+        <div
+          className={styled.content}
+          dangerouslySetInnerHTML={{ __html: activities?.content || "" }}
+        />
       </Backdrop>
     </>
   )

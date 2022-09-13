@@ -6,14 +6,15 @@ import {
   useGetMeQuery,
   useEnableConsultMutation,
 } from "./MemberConsultationRecord.graphql.generated"
-import Loading from "components/QueryStatus/Loading"
+import QueryStatus from "components/QueryStatus"
 import dayjs from "dayjs"
 
 const MemberConsultationRecord = () => {
-  const { data, loading } = useGetMeQuery({ fetchPolicy: "no-cache" })
+  const { data, loading, error } = useGetMeQuery({ fetchPolicy: "no-cache" })
   const [enableConsultMutation] = useEnableConsultMutation()
 
-  if (loading) return <Loading />
+  if (loading) return <QueryStatus.Loading />
+  if (error) return <QueryStatus.Error />
 
   return (
     <>

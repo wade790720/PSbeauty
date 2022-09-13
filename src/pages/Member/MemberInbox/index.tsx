@@ -4,7 +4,7 @@ import styled from "./MemberInbox.module.scss"
 import Header from "components/Layout/Header"
 import MessageCard from "containers/MessageCard"
 import { useGetMemberInboxQuery, UserInboxesFragment } from "./MemberInbox.graphql.generated"
-import Loading from "components/QueryStatus/Loading"
+import QueryStatus from "components/QueryStatus"
 import { firestore } from "../../../firebaseClient"
 import { useEffect, useMemo } from "react"
 import { doc, onSnapshot } from "firebase/firestore"
@@ -17,7 +17,7 @@ const MemberInbox = () => {
   const auth = useAuth()
   const navigate = useNavigate()
   const [next, setNext] = useState(false)
-  const { data, loading, refetch } = useGetMemberInboxQuery({
+  const { data, loading, error, refetch } = useGetMemberInboxQuery({
     fetchPolicy: "no-cache",
   })
   const userInbox = useRef<UserInboxesFragment["userInboxes"] | null>(null)
@@ -35,7 +35,8 @@ const MemberInbox = () => {
     })
   }, [])
 
-  if (loading) return <Loading />
+  if (loading) return <QueryStatus.Loading />
+  if (error) return <QueryStatus.Error />
 
   return (
     <>

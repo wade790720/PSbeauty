@@ -12,7 +12,7 @@ import { useEffect, useState, useLayoutEffect, useRef } from "react"
 import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
 import { useParams } from "react-router-dom"
-import Loading from "components/QueryStatus/Loading"
+import QueryStatus from "components/QueryStatus"
 
 const ClinicalCase = () => {
   const go = useGo()
@@ -23,7 +23,7 @@ const ClinicalCase = () => {
   const [loadGetCollectItemsQuery, getCollectItemsQuery] = useGetCollectItemsLazyQuery({
     fetchPolicy: "no-cache",
   })
-  const { data, loading } = useGetCaseQuery({
+  const { data, loading, error } = useGetCaseQuery({
     variables: {
       id: caseId || "",
     },
@@ -65,7 +65,8 @@ const ClinicalCase = () => {
     },
   })
 
-  if (loading) return <Loading />
+  if (loading) return <QueryStatus.Loading />
+  if (error) return <QueryStatus.Error />
 
   return (
     <>

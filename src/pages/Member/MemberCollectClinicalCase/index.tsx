@@ -3,11 +3,13 @@ import styled from "./MemberCollectClinicalCase.module.scss"
 import Header from "components/Layout/Header"
 import CaseCard from "containers/CaseCard"
 import { useGetMeQuery } from "./MemberCollectClinicalCase.graphql.generated"
-import Loading from "components/QueryStatus/Loading"
+import QueryStatus from "components/QueryStatus"
 
 const MemberCollectClinicalCase = () => {
-  const { data, loading } = useGetMeQuery({ fetchPolicy: "no-cache" })
-  if (loading) return <Loading />
+  const { data, loading, error } = useGetMeQuery({ fetchPolicy: "no-cache" })
+
+  if (loading) return <QueryStatus.Loading />
+  if (error) return <QueryStatus.Error />
   return (
     <>
       <Header title="收藏案例" leftArrow />

@@ -9,7 +9,7 @@ import {
   useGetClinicLazyQuery,
   GetClinicQueryHookResult,
 } from "./ClinicInnerWrapper.graphql.generated"
-import Loading from "components/QueryStatus/Loading"
+import QueryStatus from "components/QueryStatus"
 
 type ContextType = { query: { data: GetClinicQueryHookResult["data"] } }
 
@@ -30,7 +30,9 @@ const ClinicInnerWrapper = () => {
     })
   }, [match?.params.activityId, loadQuery, id])
 
-  if (query?.loading || !query?.data) return <Loading />
+  if (query?.loading || !query?.data) return <QueryStatus.Loading />
+  if (query.error) return <QueryStatus.Error />
+
   return match?.params.activityId ? (
     <Outlet />
   ) : (

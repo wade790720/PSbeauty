@@ -14,7 +14,7 @@ import {
 import styled from "./Chatroom.module.scss"
 import { ReactComponent as UploadImage } from "./UploadImage.svg"
 import useRealtime from "./useRealtime"
-import Loading from "components/QueryStatus/Loading"
+import QueryStatus from "components/QueryStatus"
 import uuid from "utils/uuid"
 import { storage } from "firebaseClient"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
@@ -96,9 +96,8 @@ const Chatroom = () => {
     scrollToBottom()
   }, [topicDetail.loading])
 
-  if (topicDetail.loading) {
-    return <Loading />
-  }
+  if (topicDetail.loading) return <QueryStatus.Loading />
+  if (topicDetail.error) return <QueryStatus.Error />
 
   const newMessage = (msg: string, consulteeId?: string) => {
     if (!msg) {

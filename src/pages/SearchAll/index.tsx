@@ -5,10 +5,14 @@ import { useGetSearchListAllQuery } from "./SearchAll.graphql.generated"
 import { useGo } from "components/Router"
 import Header from "components/Layout/Header"
 import Toolbars from "containers/Toolbars"
+import QueryStatus from "components/QueryStatus"
 
 const SearchListAll = () => {
   const go = useGo()
-  const { data } = useGetSearchListAllQuery()
+  const { data, loading, error } = useGetSearchListAllQuery()
+
+  if (loading) return <QueryStatus.Loading />
+  if (error) return <QueryStatus.Error />
 
   return (
     <>

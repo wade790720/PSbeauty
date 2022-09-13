@@ -5,6 +5,7 @@ import Toolbars from "containers/Toolbars"
 import { useGo } from "components/Router"
 import { useAuth } from "hooks/useAuth"
 import Modal from "components/Modal"
+import QueryStatus from "components/QueryStatus"
 import SubjectFilter from "containers/SubjectFilter"
 import { sentResetPassword } from "firebaseClient"
 import styled from "./Doctor.module.scss"
@@ -13,7 +14,6 @@ import {
   useUpdateClinicCategoryMutation,
   useGetMyClinicLazyQuery,
 } from "./Doctor.graphql.generated"
-import Loading from "components/QueryStatus/Loading"
 
 const DEFAULT_MODAL_MSG = {
   title: "寄送認證郵件",
@@ -37,7 +37,8 @@ const Doctor = () => {
     loadQuery()
   }, [filterOpen])
 
-  if (query.loading) return <Loading />
+  if (query.loading) return <QueryStatus.Loading />
+  if (query.error) return <QueryStatus.Error />
   return (
     <>
       <Profile />

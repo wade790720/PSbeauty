@@ -74,48 +74,53 @@ const DoctorInbox = () => {
     refetch()
   }
 
-  if (loading) return <QueryStatus.Loading />
   if (error) return <QueryStatus.Error />
 
   return (
     <>
-      <Header leftArrow title="收件夾" />
-      <div className={styled.wrapper}>
-        {edges.length ? (
-          edges?.map((edge, idx) => {
-            const key = edge.node?.id || ""
-            const reply = edge.node?.topic?.replies
-            const topic = edge.node?.topic
-            const unread = edge.node?.readAt === 0
+      {loading ? (
+        <QueryStatus.Loading />
+      ) : (
+        <>
+          <Header leftArrow title="收件夾" />
+          <div className={styled.wrapper}>
+            {edges.length ? (
+              edges?.map((edge, idx) => {
+                const key = edge.node?.id || ""
+                const reply = edge.node?.topic?.replies
+                const topic = edge.node?.topic
+                const unread = edge.node?.readAt === 0
 
-            const repliesCount = reply?.length || 0
-            const last = reply?.[repliesCount - 1]?.content || topic?.consult?.content || ""
-            const message = last.includes("https://firebasestorage") ? "圖片" : last
+                const repliesCount = reply?.length || 0
+                const last = reply?.[repliesCount - 1]?.content || topic?.consult?.content || ""
+                const message = last.includes("https://firebasestorage") ? "圖片" : last
 
-            if (repliesCount === 0 && topic?.consult?.content === "OneOnOne") {
-              return null
-            }
-            return (
-              <MessageCard
-                unread={unread}
-                key={key}
-                title={topic?.consult?.subject || "來自會員的一對一諮詢"}
-                message={message}
-                last={edges.length - 1 === idx}
-                fetchMore={() => {
-                  hasNextPage && handleFetchMore()
-                }}
-                onClick={() => {
-                  readClinicInbox(key)
-                  go.toChatroom({ id: topic?.id || "" })
-                }}
-              />
-            )
-          })
-        ) : (
-          <div className={styled.hint}>尚未有任何信件</div>
-        )}
-      </div>
+                if (repliesCount === 0 && topic?.consult?.content === "OneOnOne") {
+                  return null
+                }
+                return (
+                  <MessageCard
+                    unread={unread}
+                    key={key}
+                    title={topic?.consult?.subject || "來自會員的一對一諮詢"}
+                    message={message}
+                    last={edges.length - 1 === idx}
+                    fetchMore={() => {
+                      hasNextPage && handleFetchMore()
+                    }}
+                    onClick={() => {
+                      readClinicInbox(key)
+                      go.toChatroom({ id: topic?.id || "" })
+                    }}
+                  />
+                )
+              })
+            ) : (
+              <div className={styled.hint}>尚未有任何信件</div>
+            )}
+          </div>
+        </>
+      )}
       <Toolbars.Clinic />
     </>
   )

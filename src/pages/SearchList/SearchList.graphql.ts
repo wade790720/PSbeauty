@@ -2,7 +2,7 @@ import { gql } from "@apollo/client"
 
 export const getSearchList = gql`
   query getSearchList($contains: String!) {
-    cases(where: { or: [{ imageText: { contains: $contains } }] }, first: 10, order: { id: DESC }) {
+    cases(where: { or: [{ imageText: { contains: $contains } }] }, first: 50, order: { id: DESC }) {
       pageInfo {
         hasNextPage
         hasPreviousPage

@@ -136,44 +136,47 @@ const Home = () => {
     }
   }, [auth.user.id, loadGetCollectedCaseQuery, loadMemberInboxQuery])
 
-  if (getCasesQuery.loading && getAdCardsQuery.loading) return <QueryStatus.Loading />
   if (getCasesQuery.error && getAdCardsQuery.error) return <QueryStatus.Error />
 
   return (
     <>
-      <div className={styled.wrapper}>
-        <div className={styled.header}>
-          <SearchBar onInputClick={() => go.toSearchList("")} />
-          <div
-            onClick={() => {
-              auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
-            }}>
-            <Icon name="chat" className={styled["chat-icon"]} />
-            {consults.length > 1 &&
-              consults.map(consult => consult?.userInboxes?.some(el => !el?.read)) && (
-                <div className={styled["chat-unread"]} />
-              )}
+      {getCasesQuery.loading && getAdCardsQuery.loading ? (
+        <QueryStatus.Loading />
+      ) : (
+        <div className={styled.wrapper}>
+          <div className={styled.header}>
+            <SearchBar onInputClick={() => go.toSearchList("")} />
+            <div
+              onClick={() => {
+                auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
+              }}>
+              <Icon name="chat" className={styled["chat-icon"]} />
+              {consults.length > 1 &&
+                consults.map(consult => consult?.userInboxes?.some(el => !el?.read)) && (
+                  <div className={styled["chat-unread"]} />
+                )}
+            </div>
+          </div>
+          <div className={styled.inner}>
+            <Banner images={adImages} />
+            {list}
+            <div className={styled.filter}>
+              <Button
+                className={styled.button}
+                onClick={() => (auth?.user?.id ? setConsult(true) : go.toSignIn())}>
+                <Icon name="notePencil" className={styled.notePencil} />
+                匿名諮詢
+              </Button>
+              <Consulting
+                open={consult}
+                onClose={() => {
+                  setConsult(false)
+                }}
+              />
+            </div>
           </div>
         </div>
-        <div className={styled.inner}>
-          <Banner images={adImages} />
-          {list}
-          <div className={styled.filter}>
-            <Button
-              className={styled.button}
-              onClick={() => (auth?.user?.id ? setConsult(true) : go.toSignIn())}>
-              <Icon name="notePencil" className={styled.notePencil} />
-              匿名諮詢
-            </Button>
-            <Consulting
-              open={consult}
-              onClose={() => {
-                setConsult(false)
-              }}
-            />
-          </div>
-        </div>
-      </div>
+      )}
       {auth.user.clinic ? <Toolbars.Clinic /> : <Toolbars />}
     </>
   )

@@ -54,72 +54,76 @@ const Clinic = () => {
     }
   }, [auth.user.id, loadMemberInboxQuery])
 
-  if (getClinicsQuery.loading && getAdImagesQuery.loading) return <QueryStatus.Loading />
   if (getClinicsQuery.error && getAdImagesQuery.error) return <QueryStatus.Error />
 
   return (
     <>
-      <div className={styled.wrapper}>
-        <div className={styled.header}>
-          <SearchBar ref={ref} onInputClick={() => go.toSearchList("")} />
-          <div
-            onClick={() => {
-              auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
-            }}>
-            <Icon name="chat" className={styled["chat-icon"]} />
-            {consults.length > 1 &&
-              consults.map(consult => consult?.userInboxes?.some(el => !el?.read)) && (
-                <div className={styled["chat-unread"]} />
-              )}
-          </div>
-        </div>
-        <div className={styled.inner}>
-          {adImages && adImages?.length > 0 && (
-            <div className={styled.banner}>
-              <Banner images={adImages} />
+      {getClinicsQuery.loading && getAdImagesQuery.loading ? (
+        <QueryStatus.Loading />
+      ) : (
+        <div className={styled.wrapper}>
+          <div className={styled.header}>
+            <SearchBar ref={ref} onInputClick={() => go.toSearchList("")} />
+            <div
+              onClick={() => {
+                auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()
+              }}>
+              <Icon name="chat" className={styled["chat-icon"]} />
+              {consults.length > 1 &&
+                consults.map(consult => consult?.userInboxes?.some(el => !el?.read)) && (
+                  <div className={styled["chat-unread"]} />
+                )}
             </div>
-          )}
-          <div className={styled.card}>
-            {data?.map(el => (
-              <ClinicCard
-                key={el.node?.id || ""}
-                id={el.node?.id || ""}
-                name={el.node?.name || ""}
-                county={el.node?.county || ""}
-                town={el.node?.town || ""}
-                caseCount={el.node?.caseCount || 0}
-                consultReplyCount={el.node?.consultReplyCount || 0}
-              />
-            ))}
           </div>
-          <div className={styled.filter}>
-            <Button className={styled.button} onClick={() => setOpenFilter(true)}>
-              <Icon name="funnel" className={styled.funnel} />
-              地區篩選
-            </Button>
-            <DistrictsFilter
-              open={openFilter}
-              onClose={value => {
-                setOpenFilter(false)
+          <div className={styled.inner}>
+            {adImages && adImages?.length > 0 && (
+              <div className={styled.banner}>
+                <Banner images={adImages} />
+              </div>
+            )}
+            <div className={styled.card}>
+              {data?.map(el => (
+                <ClinicCard
+                  key={el.node?.id || ""}
+                  id={el.node?.id || ""}
+                  name={el.node?.name || ""}
+                  county={el.node?.county || ""}
+                  town={el.node?.town || ""}
+                  caseCount={el.node?.caseCount || 0}
+                  consultReplyCount={el.node?.consultReplyCount || 0}
+                />
+              ))}
+            </div>
+            <div className={styled.filter}>
+              <Button className={styled.button} onClick={() => setOpenFilter(true)}>
+                <Icon name="funnel" className={styled.funnel} />
+                地區篩選
+              </Button>
+              <DistrictsFilter
+                open={openFilter}
+                onClose={value => {
+                  setOpenFilter(false)
 
-                if (value.length === 0) {
-                  setIsSearch(false)
-                  return
-                }
-                loadGetClinicsQuerySearch({
-                  variables: {
-                    county: value
-                      .map(el => el.county)
-                      .filter((value, index, self) => self.indexOf(value) === index),
-                    town: value.map(el => el.town),
-                  },
-                })
-                setIsSearch(true)
-              }}
-            />
+                  if (value.length === 0) {
+                    setIsSearch(false)
+                    return
+                  }
+                  loadGetClinicsQuerySearch({
+                    variables: {
+                      county: value
+                        .map(el => el.county)
+                        .filter((value, index, self) => self.indexOf(value) === index),
+                      town: value.map(el => el.town),
+                    },
+                  })
+                  setIsSearch(true)
+                }}
+              />
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
       {auth.user.clinic ? <Toolbars.Clinic /> : <Toolbars />}
     </>
   )

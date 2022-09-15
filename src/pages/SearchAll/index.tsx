@@ -11,35 +11,40 @@ const SearchListAll = () => {
   const go = useGo()
   const { data, loading, error } = useGetSearchListAllQuery()
 
-  if (loading) return <QueryStatus.Loading />
   if (error) return <QueryStatus.Error />
 
   return (
     <>
-      <Header title="探索" />
-      <Backdrop className={styled.wrapper}>
-        <div className={styled.result} style={{ paddingBottom: "80px" }}>
-          {data?.cases?.edges && data?.cases?.edges?.length > 0 ? (
-            data?.cases?.edges.map((el, idx) => (
-              <div
-                key={el.node?.id}
-                onClick={() =>
-                  go.toClinicCase({
-                    clinicId: el.node?.clinic?.id || "",
-                    caseId: el.node?.id || "",
-                  })
-                }
-                className={cx(styled.cell, styled[`${"axxxxxxaxxxx"[idx % 12]}-style`])}>
-                <img src={el.node?.image || ""} />
-                <div className={styled.cover} />
-                <div className={styled.title}>{el.node?.imageText}</div>
-              </div>
-            ))
-          ) : (
-            <div className={styled.empty}>暫無資料顯示</div>
-          )}
-        </div>
-      </Backdrop>
+      {loading ? (
+        <QueryStatus.Loading />
+      ) : (
+        <>
+          <Header title="探索" />
+          <Backdrop className={styled.wrapper}>
+            <div className={styled.result} style={{ paddingBottom: "80px" }}>
+              {data?.cases?.edges && data?.cases?.edges?.length > 0 ? (
+                data?.cases?.edges.map((el, idx) => (
+                  <div
+                    key={el.node?.id}
+                    onClick={() =>
+                      go.toClinicCase({
+                        clinicId: el.node?.clinic?.id || "",
+                        caseId: el.node?.id || "",
+                      })
+                    }
+                    className={cx(styled.cell, styled[`${"axxxxxxaxxxx"[idx % 12]}-style`])}>
+                    <img src={el.node?.image || ""} />
+                    <div className={styled.cover} />
+                    <div className={styled.title}>{el.node?.imageText}</div>
+                  </div>
+                ))
+              ) : (
+                <div className={styled.empty}>暫無資料顯示</div>
+              )}
+            </div>
+          </Backdrop>
+        </>
+      )}
       <Toolbars />
     </>
   )

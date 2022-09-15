@@ -32,7 +32,7 @@ export type GetSearchListAllQuery = {
 
 export const GetSearchListAllDocument = gql`
   query getSearchListAll {
-    cases(first: 10, order: { id: DESC }) {
+    cases(first: 50, order: { id: DESC }) {
       pageInfo {
         hasNextPage
         hasPreviousPage

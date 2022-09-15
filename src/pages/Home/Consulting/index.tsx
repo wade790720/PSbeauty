@@ -176,7 +176,7 @@ const Consulting = (props: consultProps) => {
             </Dropdown>
           </Form.Group>
           <Form.Group layout="vertical" className={styled["input-group"]}>
-            <Form.Label>諮詢問題</Form.Label>
+            <Form.Label required>諮詢問題</Form.Label>
             <Form.Textarea
               placeholder="請輸入文字"
               className={styled.textarea}
@@ -248,7 +248,7 @@ const Consulting = (props: consultProps) => {
                 file: file.raw,
               }
             })
-            if (!subject || !categories.length || !chosenCycle) {
+            if (!subject || !categories.length || !chosenCycle || !content) {
               setIsAlert(true)
               return
             }

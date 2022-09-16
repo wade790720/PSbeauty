@@ -41,6 +41,14 @@
       display: flex;
       justify-content: center;
     }
+
+    .onlineCount {
+      padding: 12px 24px;
+      border: 1px solid rgba(170, 176, 178, 0.2);
+      border-radius: 15px;
+      background: #fff;
+      font-size: 14px;
+    }
   }
 
   .button {

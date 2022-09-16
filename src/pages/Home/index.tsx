@@ -20,6 +20,7 @@ import { SortEnumType } from "types/schema"
 
 const Home = () => {
   const [consult, setConsult] = useState(false)
+  const [onlineCount, setOnlineCount] = useState(Math.floor(((Math.random() * 1000) % 126) + 25))
   const go = useGo()
   const auth = useAuth()
   const cursorRef = useRef<string>("")
@@ -130,6 +131,24 @@ const Home = () => {
   }
 
   useEffect(() => {
+    let timeoutId: ReturnType<typeof setInterval> | null = null
+
+    timeoutId = setInterval(() => {
+      const summand = Math.floor(((Math.random() * 1000) % 21) - 10)
+      setOnlineCount(prev => {
+        if (prev + summand < 10) {
+          return prev + summand + 11
+        }
+        return prev + summand
+      })
+    }, 10000)
+
+    return () => {
+      timeoutId && clearInterval(timeoutId)
+    }
+  }, [])
+
+  useEffect(() => {
     if (auth.user.id) {
       loadGetCollectedCaseQuery()
       loadMemberInboxQuery()
@@ -159,6 +178,7 @@ const Home = () => {
           </div>
           <div className={styled.inner}>
             <Banner images={adImages} />
+            <div className={styled.onlineCount}>{`在線人數 ${onlineCount} 人`}</div>
             {list}
             <div className={styled.filter}>
               <Button

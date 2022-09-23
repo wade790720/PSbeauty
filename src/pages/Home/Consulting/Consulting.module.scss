@@ -1,25 +1,23 @@
 .wrapper {
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  grid-gap: 24px;
   height: calc(100vh - 62px);
 
-  grid-gap: 24px;
-
   h1 {
-    margin: 0;
     width: 100%;
-    color: #2b3a4b;
     text-align: center;
     font-size: 20px;
     line-height: 24px;
+    margin: 0;
+    color: #2B3A4B;
   }
 
   .form {
     display: grid;
-    overflow: scroll;
-
     grid-gap: 24px;
+    overflow: scroll;
 
     &::-webkit-scrollbar {
       display: none;
@@ -30,18 +28,18 @@
 
       .input {
         margin-top: 4px;
-        padding: 0 13px;
-        border: 1px solid #ebeef2;
+        border: 1px solid #EBEEF2;
         border-radius: 4px;
-        color: #2b3a4b;
+        padding: 0 13px;
         line-height: 36px;
+        color: #2B3A4B;
         cursor: pointer;
       }
 
       .dropdown {
         width: 100%;
 
-        > div {
+        >div {
           width: 100%;
         }
       }
@@ -50,7 +48,7 @@
         background: #fff;
 
         &:focus-within {
-          border-color: #ebeef2;
+          border-color: #EBEEF2;
         }
 
         .textarea {
@@ -62,45 +60,44 @@
 
     .classify {
       width: 100%;
-      height: 38px;
-      border: 1px solid #ebeef2;
       border-radius: 4px;
+      height: 38px;
       cursor: pointer;
+      border: 1px solid #EBEEF2;
 
       .input {
-        margin-top: 0;
+        margin-top: 0px;
         border: none;
-
         user-select: none;
       }
     }
 
     .uploads {
-      display: flex;
       margin-top: 4px;
+      display: flex;
+      gap: 8px;
       height: 100px;
 
-      gap: 8px;
-
       .upload {
-        position: relative;
         display: flex;
-        align-items: center;
         justify-content: center;
+        align-items: center;
         width: 100px;
         height: 100px;
-//border
+        color: #7873E5;
+        font-weight: bold;
+        background-color: #F4F6F9;
+        position: relative;
+
+        //border
         border-radius: 2px;
-        background-color: #f4f6f9;
-        background-image: repeating-linear-gradient(30deg, #7873e5, #7873e5 10px, transparent 10px, transparent 20px), // left
-        repeating-linear-gradient(120deg, #7873e5, #7873e5 10px, transparent 10px, transparent 20px), // top
-        repeating-linear-gradient(210deg, #7873e5, #7873e5 10px, transparent 10px, transparent 20px), // right
-        repeating-linear-gradient(300deg, #7873e5, #7873e5 10px, transparent 10px, transparent 20px); // bottom
         background-position: 0 0, 0 0, 100% 0, 0 100%;
         background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1.2px;
         background-repeat: no-repeat;
-        color: #7873e5;
-        font-weight: bold;
+        background-image: repeating-linear-gradient(30deg, #7873E5, #7873E5 10px, transparent 10px, transparent 20px), // left
+          repeating-linear-gradient(120deg, #7873E5, #7873E5 10px, transparent 10px, transparent 20px), // top
+          repeating-linear-gradient(210deg, #7873E5, #7873E5 10px, transparent 10px, transparent 20px), // right
+          repeating-linear-gradient(300deg, #7873E5, #7873E5 10px, transparent 10px, transparent 20px); // bottom
       }
 
       .add {
@@ -121,36 +118,38 @@
 
         img {
           position: absolute;
-          width: 100%;
           height: 100%;
-
+          width: 100%;
           object-fit: cover;
         }
 
         .delete {
           position: absolute;
+          color: rgba(white, 0.8);
           top: 8px;
           right: 12px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
           width: 16px;
           height: 16px;
           border-radius: 50%;
           background-color: rgba(black, 0.2);
-          color: rgba(white, 0.8);
+          display: flex;
+          align-items: center;
+          justify-content: center;
           font-size: 8px;
         }
       }
     }
+
   }
 }
 
 .buttons {
   display: flex;
-  padding: 0 24px;
-
   gap: 8px;
+  width: calc(100% - 48px);
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
 
   button {
     height: 38px;

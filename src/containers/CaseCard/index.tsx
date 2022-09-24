@@ -23,11 +23,15 @@ export type CaseCardProps = {
   fetchMore?: () => void
 } & ReactProps.Component
 
+const WIDTH_SESSION_KEY = "case-card-width"
+
 const CaseCard = ({ ...props }: CaseCardProps) => {
   const go = useGo()
   const auth = useAuth()
   const imageRef = useRef<HTMLDivElement>(null)
-  const [imageWidth, setImageWidth] = useState(0)
+  const [imageWidth, setImageWidth] = useState(
+    parseInt(sessionStorage.getItem(WIDTH_SESSION_KEY) || "", 10) || 0,
+  )
   const [isCollected, setIsCollected] = useState(false)
   const [amount, setAmount] = useState(props.amount)
   const { containerRef, isVisible } = useElementOnScreen({})
@@ -35,6 +39,7 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
   useLayoutEffect(() => {
     if (imageRef.current) {
       setImageWidth(imageRef.current.clientWidth)
+      sessionStorage.setItem(WIDTH_SESSION_KEY, `${imageRef.current.clientWidth}`)
     }
   }, [])
 

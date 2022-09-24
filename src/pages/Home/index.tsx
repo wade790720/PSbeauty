@@ -6,7 +6,7 @@ import AdCard from "./AdCard"
 import Button from "components/Button"
 import CaseCard from "containers/CaseCard"
 import Consulting from "./Consulting"
-import { useRef, useState, useCallback, useEffect } from "react"
+import { useRef, useState, useCallback, useEffect, useLayoutEffect } from "react"
 import Banner from "containers/Banner"
 import useGo from "components/Router/useGo"
 import QueryStatus from "components/QueryStatus"
@@ -17,6 +17,7 @@ import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generate
 import { useGetCollectedCaseLazyQuery } from "graphql/queries/getCollectedCase.graphql.generated"
 import { useGetMemberInboxLazyQuery } from "pages/Member/MemberInbox/MemberInbox.graphql.generated"
 import { SortEnumType } from "types/schema"
+import { saveState, getState } from "utils/stateSaver"
 
 const Home = () => {
   const [consult, setConsult] = useState(false)
@@ -24,6 +25,7 @@ const Home = () => {
   const go = useGo()
   const auth = useAuth()
   const cursorRef = useRef<string>("")
+  const innerRef = useRef<HTMLDivElement>(null)
 
   const [loadGetCollectedCaseQuery, getCollectedCaseQuery] = useGetCollectedCaseLazyQuery({
     fetchPolicy: "no-cache",
@@ -157,6 +159,21 @@ const Home = () => {
 
   if (getCasesQuery.error && getAdCardsQuery.error) return <QueryStatus.Error />
 
+  useLayoutEffect(() => {
+    if (getState("Feed")) {
+      const { scrollY = 0 } = getState("Feed")
+      innerRef?.current?.scrollTo(0, scrollY)
+    }
+  }, [innerRef?.current])
+
+  useLayoutEffect(() => {
+    const save = () => {
+      saveState("Feed", { scrollY: innerRef?.current?.scrollTop || 0 })
+    }
+    innerRef?.current?.addEventListener("scroll", save)
+    return () => innerRef?.current?.removeEventListener("scroll", save)
+  }, [innerRef?.current])
+
   return (
     <>
       {getCasesQuery.loading && getAdCardsQuery.loading ? (
@@ -176,7 +193,7 @@ const Home = () => {
                 )}
             </div>
           </div>
-          <div className={styled.inner}>
+          <div className={styled.inner} ref={innerRef}>
             <Banner images={adImages} />
             <div className={styled.onlineCount}>{`在線人數 ${onlineCount} 人`}</div>
             {list}

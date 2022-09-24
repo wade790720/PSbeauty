@@ -120,7 +120,7 @@ const Consulting = (props: consultProps) => {
             />
           </Form.Group>
           <Form.Group layout="vertical" className={styled["input-group"]}>
-            <Form.Label required>諮詢週期</Form.Label>
+            <Form.Label required>可接收資訊天數</Form.Label>
             <Dropdown
               className={styled.dropdown}
               onSelect={(_, { eventKey }) => {

@@ -25,7 +25,8 @@ const Banner = ({ height = "132px", images = [] }: BannerProps) => {
         autoplayInterval={5000}
         wrapAround={true}
         withoutControls={true}
-        cellSpacing={12}>
+        cellSpacing={12}
+        dragThreshold={0.1}>
         {images?.map(item => (
           <div
             key={item.clinicId}

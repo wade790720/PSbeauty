@@ -10,16 +10,19 @@ import { useAuth } from "hooks/useAuth"
 import jwt_decode from "jwt-decode"
 import { AuthContextProps } from "hooks/useAuth/AuthContext"
 import { useSignInWithEmailAndPasswordMutation } from "./SignIn.graphql.generated"
+import GitInfo from "react-git-info/macro"
 
 type Inputs = {
   account: string
   password: string
 }
 
+const gitInfo = GitInfo()
 const SignIn = () => {
   const go = useGo()
   const auth = useAuth()
   const [open, setOpen] = useState(false)
+  const [show, setShow] = useState(false)
   const { register, handleSubmit } = useForm<Inputs>({
     mode: "all",
   })
@@ -74,7 +77,10 @@ const SignIn = () => {
         <div onClick={go.toForgotPassword}>忘記密碼</div>
         <div>|</div>
         <div onClick={go.toRegister}>註冊帳號</div>
-        <div />
+      </div>
+      <div className={styled.version}>
+        <button onClick={() => setShow(!show)}>show</button>
+        {show && <span>version：{gitInfo.commit.hash.substring(0, 7)}</span>}
       </div>
     </div>
   )

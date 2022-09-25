@@ -73,6 +73,7 @@
     "eslint-plugin-react-hooks": "4.3.0",
     "node-sass": "^7.0.1",
     "prettier": "^2.3.0",
+    "react-git-info": "^2.0.1",
     "sass-loader": "^13.0.0"
   }
 }

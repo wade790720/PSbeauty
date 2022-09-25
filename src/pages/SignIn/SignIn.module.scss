@@ -1,11 +1,12 @@
 .wrapper {
-  flex: 1 0;
-  padding: 0 24px 72px;
   position: relative;
   display: flex;
+  overflow: auto;
+  flex: 1 0;
   flex-direction: column;
   justify-content: center;
-  overflow: auto;
+  padding: 0 24px 72px;
+
   -ms-overflow-style: none;
   scrollbar-width: none;
 
@@ -14,38 +15,57 @@
   }
 
   .title {
+    margin-bottom: 12px;
+    color: #2b3a4b;
+    text-align: center;
     font-weight: 700;
     font-size: 30px;
     line-height: 42px;
-    text-align: center;
-    color: #2B3A4B;
-    margin-bottom: 12px;
   }
 
   .subtitle {
+    margin-bottom: 32px;
+    color: #2b3a4b;
+    text-align: center;
     font-size: 14px;
     line-height: 14px;
-    text-align: center;
-    color: #2B3A4B;
-    margin-bottom: 32px;
   }
 
   form {
     display: grid;
+
     grid-gap: 24px;
     grid-template-rows: repeat(5, min-content);
   }
 
   .actions {
     position: absolute;
-    bottom: 24px;
+    bottom: 48px;
     left: 0;
+    display: flex;
+    justify-content: center;
     width: 100%;
-    display: grid;
-    grid-template-columns: 1fr repeat(3, min-content) 1fr;
-    grid-gap: 16px;
-    font-size: 16px;
-    color: #7873E5;
+    color: #7873e5;
     word-break: keep-all;
+    font-size: 16px;
+
+    grid-gap: 16px;
+  }
+
+  .version {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+    button {
+      opacity: 0;
+    }
+
+    span {
+      margin: 0 5px;
+    }
   }
 }

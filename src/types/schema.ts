@@ -379,7 +379,7 @@ export type AddConsultInput = {
   /** 諮詢內容 */
   content: Scalars["String"]
   /** 諮詢縣市範圍 */
-  county?: InputMaybe<Scalars["String"]>
+  counties?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
   /** 諮詢天數 */
   days: Scalars["Int"]
   enable?: InputMaybe<Scalars["Boolean"]>
@@ -1179,7 +1179,7 @@ export type Consult = {
   /** 諮詢內容 */
   content?: Maybe<Scalars["String"]>
   /** 諮詢縣市範圍 */
-  county?: Maybe<Scalars["String"]>
+  counties?: Maybe<Array<Maybe<Scalars["String"]>>>
   /** 諮詢天數 */
   days: Scalars["Int"]
   /** 是否開啟 */
@@ -1211,7 +1211,7 @@ export type ConsultClinicInput = {
   /** 諮詢內容 */
   content: Scalars["String"]
   /** 諮詢縣市範圍 */
-  county?: InputMaybe<Scalars["String"]>
+  counties?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
   /** 諮詢天數 */
   days: Scalars["Int"]
   enable?: InputMaybe<Scalars["Boolean"]>
@@ -1240,7 +1240,7 @@ export type ConsultExt = {
   /** 諮詢內容 */
   content?: Maybe<Scalars["String"]>
   /** 諮詢縣市範圍 */
-  county?: Maybe<Scalars["String"]>
+  counties?: Maybe<Array<Maybe<Scalars["String"]>>>
   /** 諮詢天數 */
   days: Scalars["Int"]
   /** 是否開啟 */

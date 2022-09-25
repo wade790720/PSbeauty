@@ -31,7 +31,9 @@ export type GetConsultClinicMutationVariables = Types.Exact<{
   >
   subject: Types.Scalars["String"]
   content: Types.Scalars["String"]
-  county?: Types.InputMaybe<Types.Scalars["String"]>
+  counties?: Types.InputMaybe<
+    Array<Types.InputMaybe<Types.Scalars["String"]>> | Types.InputMaybe<Types.Scalars["String"]>
+  >
 }>
 
 export type GetConsultClinicMutation = {
@@ -99,7 +101,7 @@ export const GetConsultClinicDocument = gql`
     $images: [String]
     $subject: String!
     $content: String!
-    $county: String
+    $counties: [String]
   ) {
     addConsult(
       input: {
@@ -108,7 +110,7 @@ export const GetConsultClinicDocument = gql`
         images: $images
         subject: $subject
         content: $content
-        county: $county
+        counties: $counties
       }
     ) {
       id
@@ -138,7 +140,7 @@ export type GetConsultClinicMutationFn = Apollo.MutationFunction<
  *      images: // value for 'images'
  *      subject: // value for 'subject'
  *      content: // value for 'content'
- *      county: // value for 'county'
+ *      counties: // value for 'counties'
  *   },
  * });
  */

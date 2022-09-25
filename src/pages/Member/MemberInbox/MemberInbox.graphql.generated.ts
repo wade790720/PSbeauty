@@ -25,7 +25,6 @@ export type GetMemberInboxQuery = {
       __typename: "ConsultExt"
       id?: string | null
       subject?: string | null
-      county?: string | null
       content?: string | null
       days: number
       images?: Array<string | null> | null
@@ -66,7 +65,6 @@ export const GetMemberInboxDocument = gql`
       consults {
         id
         subject
-        county
         content
         days
         images

@@ -56,7 +56,7 @@ const Consulting = (props: consultProps) => {
   const [subject, setSubject] = useState("")
   const [categories, setCategories] = useState<ChosenItemType>([])
   const [chosenCycle, setChosenCycle] = useState<number | "">("")
-  const [chosenDistrict, setChosenDistrict] = useState<string>("")
+  const [chosenDistrict, setChosenDistrict] = useState<string[]>([])
   const [content, setContent] = useState("")
   const [modalMsg, setModalMsg] = useState(DEFAULT_MODAL_MSG)
   const [open, setOpen] = useState(false)
@@ -79,7 +79,7 @@ const Consulting = (props: consultProps) => {
     setSubject("")
     setCategories([])
     setChosenCycle("")
-    setChosenDistrict("")
+    setChosenDistrict([])
     setFiles([createFile(), createFile(), createFile()])
   }
 
@@ -148,16 +148,26 @@ const Consulting = (props: consultProps) => {
             </Dropdown>
           </Form.Group>
           <Form.Group layout="vertical" className={styled["input-group"]}>
-            <Form.Label>地區</Form.Label>
+            <Form.Label required>地區</Form.Label>
             <Dropdown
               className={styled.dropdown}
+              autoClose={false}
               onSelect={(_, { eventKey }) => {
-                if (typeof eventKey === "string") setChosenDistrict(eventKey)
+                if (typeof eventKey === "string") {
+                  if (chosenDistrict.includes(eventKey)) {
+                    setChosenDistrict(chosenDistrict.filter(value => eventKey !== value))
+                  } else {
+                    const array = [...chosenDistrict, `${eventKey}`].slice(0, 3)
+                    setChosenDistrict(
+                      Districts.flatMap(item => (array.includes(item.name) ? item.name : [])),
+                    )
+                  }
+                }
               }}>
               <Dropdown.Toggle>
                 <InputGroup className={styled.classify}>
                   <Form.Input
-                    value={chosenDistrict}
+                    value={chosenDistrict.join("、")}
                     placeholder="請點擊選擇"
                     className={styled.input}
                   />
@@ -169,6 +179,7 @@ const Consulting = (props: consultProps) => {
               <Dropdown.Menu>
                 {Districts.map(item => (
                   <Dropdown.Item key={item.name} eventKey={item.name}>
+                    <input type="checkbox" checked={chosenDistrict.includes(item.name)} readOnly />
                     <p>{item.name}</p>
                   </Dropdown.Item>
                 ))}
@@ -248,7 +259,13 @@ const Consulting = (props: consultProps) => {
                 file: file.raw,
               }
             })
-            if (!subject || !categories.length || !chosenCycle || !content) {
+            if (
+              !subject ||
+              !categories.length ||
+              !chosenCycle ||
+              !content ||
+              !chosenDistrict.length
+            ) {
               setIsAlert(true)
               return
             }
@@ -265,7 +282,7 @@ const Consulting = (props: consultProps) => {
                     days: Number(chosenCycle),
                     images,
                     content,
-                    county: chosenDistrict,
+                    counties: chosenDistrict,
                   },
                   onCompleted: handleInit,
                 })

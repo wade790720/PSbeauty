@@ -24,7 +24,6 @@ export const GetMemberInbox = gql`
       consults {
         id
         subject
-        county
         content
         days
         images

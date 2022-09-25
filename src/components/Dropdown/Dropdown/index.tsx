@@ -43,10 +43,14 @@ export type DropdownProps = {
     e: React.MouseEvent<Element, MouseEvent>,
     { eventKey }: DropdownSelectEventProps,
   ) => void
+  /**
+   * Disable close on select event
+   */
+  autoClose?: boolean
 } & ReactProps.Component
 
 const Dropdown = forwardRef<DropdownActions, DropdownProps>(function Dropdown(
-  { position = ["bottom left"], ...props },
+  { position = ["bottom left"], autoClose = true, ...props },
   ref,
 ) {
   const [clientWidth, setClientWidth] = useState(100)
@@ -82,7 +86,7 @@ const Dropdown = forwardRef<DropdownActions, DropdownProps>(function Dropdown(
     if (!eventKey) return
     setEventKay(eventKey)
     props.onSelect && props.onSelect(e, { eventKey })
-    popupRef.current?.close()
+    autoClose && popupRef.current?.close()
   }
 
   useLayoutEffect(() => {

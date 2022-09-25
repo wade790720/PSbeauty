@@ -195,7 +195,13 @@ const Home = () => {
           </div>
           <div className={styled.inner} ref={innerRef}>
             <Banner images={adImages} />
-            <div className={styled.onlineCount}>{`在線人數 ${onlineCount} 人`}</div>
+            <div className={styled.onlineCount}>
+              <div>在線人數</div>
+              <div>
+                <span className={styled.text}>{onlineCount}</span>
+                <span>人</span>
+              </div>
+            </div>
             {list}
             <div className={styled.filter}>
               <Button

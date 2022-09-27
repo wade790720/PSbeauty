@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Button from "components/Button"
 import React from "react"
 import { forwardRef } from "react"
@@ -12,7 +13,7 @@ const DropdownToggleForButton = forwardRef<Ref, DropdownToggleProps>(
           if (child.type === Button) {
             return React.cloneElement(child, {
               selected: props.open,
-            })
+            } as any)
           }
           return child
         })}

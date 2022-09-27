@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, {
   useMemo,
   useRef,
@@ -69,7 +70,7 @@ const Dropdown = forwardRef<DropdownActions, DropdownProps>(function Dropdown(
       if (child.type === DropdownMenu) {
         menuElement = React.cloneElement(child, {
           style: { ...child.props.style, minWidth: clientWidth },
-        })
+        } as any)
       }
     })
 

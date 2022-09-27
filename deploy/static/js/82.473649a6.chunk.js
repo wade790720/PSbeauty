@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkpsbeauty=self.webpackChunkpsbeauty||[]).push([[82],{1082:function(e,u,n){n.r(u);var s=n(184);u.default=function(){return(0,s.jsx)("div",{children:"Survey"})}}}]);
-//# sourceMappingURL=82.473649a6.chunk.js.map

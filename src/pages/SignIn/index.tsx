@@ -60,7 +60,7 @@ const SignIn = () => {
       <div className={styled.title}>登入你的帳戶</div>
       <div className={styled.subtitle}>歡迎回來！請輸入你的資料</div>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Form.Input type="text" variant="gray" placeholder="帳號" {...register("account")} />
+        <Form.Input type="text" variant="gray" placeholder="註冊郵箱" {...register("account")} />
         <Form.Input type="password" variant="gray" placeholder="密碼" {...register("password")} />
         <Button variant="primary" type="submit">
           登入

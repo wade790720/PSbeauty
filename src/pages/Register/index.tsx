@@ -67,15 +67,15 @@ const Register = () => {
       <div className={styled.title}>註冊你的帳戶</div>
       <div className={styled.subtitle}>歡迎加入！請輸入你的資料</div>
       <Form onSubmit={handleSubmit(onSubmit)}>
-        <Form.Input type="text" variant="gray" placeholder="帳號" {...register("account")} />
+        <Form.Input type="text" variant="gray" placeholder="註冊郵箱" {...register("account")} />
         <Form.Input type="password" variant="gray" placeholder="密碼" {...register("password")} />
         <Form.Input type="text" variant="gray" placeholder="名稱" {...register("name")} />
-        <Form.Input type="text" variant="gray" placeholder="電話" {...register("phone")} />
+        <Form.Input type="text" variant="gray" placeholder="手機號" {...register("phone")} />
         <Button type="submit" variant="primary">
           註冊
         </Button>
         <Modal
-          title="帳號已存在"
+          title="註冊郵箱已存在"
           open={openError}
           confirmText="確定"
           onClose={() => setOpenError(false)}>

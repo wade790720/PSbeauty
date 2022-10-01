@@ -40,7 +40,7 @@ const ClinicInnerWrapper = () => {
       <Header
         leftArrow={!auth?.user?.clinic}
         title={query?.data?.clinic?.name || ""}
-        redirect={() => navigate("/clinic")}
+        redirect={() => navigate(-1)}
       />
       <Backdrop style={{ paddingBottom: "120px" }}>
         <ClinicSwitch />

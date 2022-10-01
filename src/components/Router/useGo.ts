@@ -13,7 +13,7 @@ type toTarget = {
   /** 診所頁 */
   toClinic: () => void
   /** 診所內頁 */
-  toClinicInner: ({ id, tab }: { id: string; tab: string }) => void
+  toClinicInner: ({ id, tab }: { id: string; tab: string }, options?: { replace: boolean }) => void
   /** 診所活動內頁 */
   toClinicActivity: ({ clinicId, activityId }: { clinicId: string; activityId: string }) => void
   /** 案例 */
@@ -52,7 +52,7 @@ const useGo = (): toTarget => {
     toRegister: () => navigate("/register"),
     toResendVerification: () => navigate("/resend-verification"),
     toClinic: () => navigate("/clinic"),
-    toClinicInner: ({ id, tab }) => navigate(`/clinic/${id}/inner/${tab}`),
+    toClinicInner: ({ id, tab }, options) => navigate(`/clinic/${id}/inner/${tab}`, options),
     toClinicActivity: ({ clinicId, activityId }) => navigate(`/clinic/${clinicId}/activity/${activityId}`),
     toClinicCaseList: () => navigate("/cases"),
     toClinicCase: ({ caseId, clinicId }) => navigate(`/clinic/${clinicId}/case/${caseId}`),

@@ -81,10 +81,11 @@
       font-size: 12px;
       line-height: 1.5;
       padding: 5px 12px;
-      border-radius: 100px;
       white-space: nowrap;
-      color: #E58E73;
-      background: #E58E7333;
+      border-radius: 5px;
+      border: 1px solid #18a0cb;
+      background-color: #fff;
+      color: #18a0cb;
 
       span {
         margin-right: 7px;

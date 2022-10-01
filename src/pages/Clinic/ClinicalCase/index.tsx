@@ -77,7 +77,7 @@ const ClinicalCase = () => {
           <div
             className={styled.clinic}
             onClick={() => go.toClinicInner({ id: data?.case?.clinic?.id || "", tab: "info" })}>
-            {data?.case?.clinic?.name}
+            診所介紹：{data?.case?.clinic?.name}
           </div>
           <div className={styled.image} style={{ height: imageWidth }} ref={imageRef}>
             <img src={data?.case?.image || ""} />

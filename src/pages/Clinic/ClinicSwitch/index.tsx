@@ -16,7 +16,7 @@ const ClinicSwitch = () => {
       <ButtonGroup
         defaultActiveKey={match?.params.tab || DEFAULT_TAB}
         onSelect={(_, { eventKey }) => {
-          go.toClinicInner({ id: match.params.id || "", tab: `${eventKey}` })
+          go.toClinicInner({ id: match.params.id || "", tab: `${eventKey}` }, { replace: true })
         }}>
         <Button eventKey="info">診所</Button>
         <Button eventKey="introduction">介紹</Button>

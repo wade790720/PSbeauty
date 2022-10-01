@@ -7,7 +7,8 @@
 
   &.primary {
     font-weight: 700;
-    background: #7873E5;
+    background: #18a0cb;
+    opacity: 0.9;
     color: #fff;
     font-size: 20px;
     line-height: 30px;
@@ -15,8 +16,8 @@
 
   &.secondary {
     font-weight: 400;
-    background: #E4E3FA;
-    color: #7873E5;
+    background: #ebf5f9;
+    color: #18a0cb;
     font-size: 16px;
     line-height: 16px;
 
@@ -35,10 +36,10 @@
   &.text {
     font-weight: 700;
     background: #fff;
-    color: #7873E5;
+    color: #18a0cb;
     font-size: 16px;
     line-height: 24px;
-    border: 1px solid #7873E5;
+    border: 1px solid #18a0cb;
   }
 
   &.transparent {
@@ -46,7 +47,7 @@
     color: #fff;
     font-size: 20px;
     line-height: 30px;
-    background-color:rgba(255, 255, 255, 0);
+    background-color: rgba(255, 255, 255, 0);
     border: 1px solid #fff;
   }
 }

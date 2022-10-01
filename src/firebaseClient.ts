@@ -1,14 +1,12 @@
+import { initializeApp } from "firebase/app"
 import {
   createUserWithEmailAndPassword,
   getAuth,
   sendEmailVerification,
   sendPasswordResetEmail,
-  User,
-  getIdToken,
   signInWithEmailAndPassword,
+  User,
 } from "firebase/auth"
-import { getMessaging, getToken } from "firebase/messaging"
-import { initializeApp } from "firebase/app"
 import { getFirestore } from "firebase/firestore"
 import { getStorage } from "firebase/storage"
 
@@ -24,16 +22,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 // This browser doesn't support the API's required to use the Firebase SDK.
-const messaging = getMessaging(app)
+// const messaging = getMessaging(app)
 const firestore = getFirestore(app)
 const storage = getStorage(app)
 const cachedUserCred: { user: User | null; timeout: number | null } = { user: null, timeout: null }
 
 export { firestore, storage, cachedUserCred }
 
-export const getClientToken = () => {
-  return getToken(messaging)
-}
+// export const getClientToken = () => {
+//   return getToken(messaging)
+// }
 
 export const register = async (email: string, password: string) => {
   const userCred = await createUserWithEmailAndPassword(auth, email, password)

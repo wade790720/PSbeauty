@@ -85,7 +85,7 @@
         align-items: center;
         width: 100px;
         height: 100px;
-        color: #7873E5;
+        color: #18a0cb;
         font-weight: bold;
         background-color: #F4F6F9;
         position: relative;
@@ -95,10 +95,10 @@
         background-position: 0 0, 0 0, 100% 0, 0 100%;
         background-size: 1px 100%, 100% 1px, 1px 100%, 100% 1.2px;
         background-repeat: no-repeat;
-        background-image: repeating-linear-gradient(30deg, #7873E5, #7873E5 10px, transparent 10px, transparent 20px), // left
-          repeating-linear-gradient(120deg, #7873E5, #7873E5 10px, transparent 10px, transparent 20px), // top
-          repeating-linear-gradient(210deg, #7873E5, #7873E5 10px, transparent 10px, transparent 20px), // right
-          repeating-linear-gradient(300deg, #7873E5, #7873E5 10px, transparent 10px, transparent 20px); // bottom
+        background-image: repeating-linear-gradient(30deg, #18a0cb, #18a0cb 10px, transparent 10px, transparent 20px), // left
+          repeating-linear-gradient(120deg, #18a0cb, #18a0cb 10px, transparent 10px, transparent 20px), // top
+          repeating-linear-gradient(210deg, #18a0cb, #18a0cb 10px, transparent 10px, transparent 20px), // right
+          repeating-linear-gradient(300deg, #18a0cb, #18a0cb 10px, transparent 10px, transparent 20px); // bottom
       }
 
       .add {

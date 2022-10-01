@@ -19,16 +19,16 @@
 
     >div {
       padding: 4px 13px;
-      border: 1px solid #7873e5;
+      border: 1px solid #18a0cb;
       border-radius: 100px;
-      color: #7873e5;
+      color: #18a0cb;
       white-space: nowrap;
       font-weight: 700;
       font-size: 16px;
       line-height: 1.5;
 
       &:not(.active) {
-        border: 1px solid #7873e5;
+        border: 1px solid #18a0cb;
       }
 
       &.active {
@@ -100,7 +100,7 @@
     }
 
     .empty {
-      color: #7873e5;
+      color: #18a0cb;
     }
   }
 }

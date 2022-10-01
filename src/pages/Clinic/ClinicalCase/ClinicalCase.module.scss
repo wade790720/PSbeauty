@@ -82,10 +82,11 @@
         font-size: 12px;
         line-height: 1.5;
         padding: 4px 13px;
-        border-radius: 15px;
-        background-color: rgba(229, 142, 115, 0.2);
         white-space: nowrap;
-        color: #E58E73;
+        border-radius: 5px;
+        border: 1px solid #18a0cb;
+        background-color: #fff;
+        color: #18a0cb;
 
         >span {
           padding-right: 7.5px;

@@ -66,9 +66,9 @@ const HistoryRecordCard = ({ ...props }: HistoryRecordCardProps) => {
             uncheckedIcon={false}
             width={51}
             height={31}
-            onColor="#7873E5"
+            onColor="#18a0cb"
             offColor="#CBCBCD"
-            activeBoxShadow="0 0 2px 3px #7873E533"
+            activeBoxShadow="0 0 2px 3px #18a0cb33"
             checked={toggle || false}
             onChange={() => {
               if (props.onChange) {

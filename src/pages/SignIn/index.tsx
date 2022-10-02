@@ -46,6 +46,16 @@ const SignIn = () => {
       if (customToken && email) {
         auth.signIn(customToken, info.account)
         const parserCustomToken: { claims: AuthContextProps["user"] } = jwt_decode(customToken)
+
+        // 註冊推播。
+        window.ReactNativeWebView?.postMessage(
+          JSON.stringify({
+            cmd: "register",
+            id: parserCustomToken.claims.id,
+            email: info.account,
+          }),
+        )
+
         parserCustomToken?.claims?.clinic
           ? go.toClinicInner({ id: parserCustomToken?.claims?.clinic, tab: "" })
           : go.toHome()

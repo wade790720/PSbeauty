@@ -53,7 +53,17 @@ const useRealtime = ({ chatroomId, onMessage }: useRealtimeProps) => {
         content: msg.content,
         timestamp: serverTimestamp(),
       })
+
+      window.ReactNativeWebView?.postMessage(
+        JSON.stringify({
+          cmd: "push",
+          id: msg.consultedId,
+          title: null,
+          body: msg.contentType === "image" ? "您收到了一張圖片" : msg.content,
+        }),
+      )
     }
+
     return setDoc(chatroomRef, {
       content: msg.content,
       userId: msg.userId,

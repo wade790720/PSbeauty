@@ -2,6 +2,10 @@ import React from "react"
 
 declare global {
   interface Window {
+    ReactNativeWebView?: {
+      postMessage: (cmd: string) => void
+    }
+
     version: {
       env?: string
       api?: string

@@ -33,6 +33,9 @@ const Search = () => {
 
   return (
     <Backdrop className={styled.wrapper}>
+      <div className={styled.title}>
+        <span>熱門關鍵字</span>
+      </div>
       <div className={styled.filters}>
         {getPopularKeywords?.data?.popularKeywords?.keywords?.map((el, idx) => (
           <div

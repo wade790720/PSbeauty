@@ -112,11 +112,7 @@ const SubjectFilter = (props: consultProps) => {
                     if (e.target.checked)
                       setChosenItem([...chosenItem, { id: subject.id, name: subject.name }])
                     else {
-                      chosenItem.splice(
-                        chosenItem.findIndex(el => el === subject),
-                        1,
-                      )
-                      setChosenItem(chosenItem)
+                      setChosenItem(chosenItem.filter(el => el.id !== subject.id))
                     }
                     setErrorState(false)
                   }}>

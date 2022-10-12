@@ -147,12 +147,9 @@ const Chatroom = () => {
 
   messages.push(...realtimes)
 
-  let consulteeId = messages.find(msg => msg.userId != auth.user.id)?.userId
-
-  // 在啟始始一對一時，應該都是會員啟動，所以直接通知診所 inbox。
-  if (oneOnOne && !consulteeId) {
-    consulteeId = clinic?.owners?.[0]?.id || undefined
-  }
+  const consulteeId =
+    (auth.user.id == consult?.poster?.id ? clinic?.owners?.[0]?.id : consult?.poster?.id) ||
+    undefined
 
   return (
     <>

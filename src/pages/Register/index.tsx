@@ -69,7 +69,7 @@ const Register = () => {
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Form.Input type="text" variant="gray" placeholder="註冊郵箱" {...register("account")} />
         <Form.Input type="password" variant="gray" placeholder="密碼" {...register("password")} />
-        <Form.Input type="text" variant="gray" placeholder="名稱" {...register("name")} />
+        <Form.Input type="text" variant="gray" placeholder="暱稱" {...register("name")} />
         <Form.Input type="text" variant="gray" placeholder="手機號" {...register("phone")} />
         <Button type="submit" variant="primary">
           註冊

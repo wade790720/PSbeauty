@@ -18,6 +18,7 @@ import QueryStatus from "components/QueryStatus"
 import uuid from "utils/uuid"
 import { storage } from "firebaseClient"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
+import ImageViewer from "./ImageViewer"
 
 interface MessageRow {
   content: string
@@ -36,6 +37,7 @@ const Chatroom = () => {
   const msgInputRef = useRef<HTMLInputElement>(null)
   const [message, setMessage] = useState("")
   const [realtimes, setRealtimes] = useState<MessageRow[]>([])
+  const [viewerUrl, setViewerUrl] = useState("")
   const realtimesRef = useRef<MessageRow[]>()
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const imageRef = useRef<HTMLInputElement>(null)
@@ -182,7 +184,15 @@ const Chatroom = () => {
             return (
               <div className={cx(styled.row, styled.right)} key={v?.key}>
                 {v?.contentType === "text" && <div className={styled.message}>{v?.content}</div>}
-                {v?.contentType === "image" && <img className={styled.image} src={v?.content} />}
+                {v?.contentType === "image" && (
+                  <img
+                    className={styled.image}
+                    src={v?.content}
+                    onClick={() => {
+                      setViewerUrl(v?.content)
+                    }}
+                  />
+                )}
               </div>
             )
           } else {
@@ -194,7 +204,15 @@ const Chatroom = () => {
                   <img className={styled.avatar} src="/img/chatroom-user.png" />
                 )}
                 {v?.contentType === "text" && <div className={styled.message}>{v?.content}</div>}
-                {v?.contentType === "image" && <img className={styled.image} src={v?.content} />}
+                {v?.contentType === "image" && (
+                  <img
+                    className={styled.image}
+                    src={v?.content}
+                    onClick={() => {
+                      setViewerUrl(v?.content)
+                    }}
+                  />
+                )}
               </div>
             )
           }
@@ -274,6 +292,7 @@ const Chatroom = () => {
           </div>
         </div>
       )}
+      <ImageViewer url={viewerUrl} clickClose={() => setViewerUrl("")} />
     </>
   )
 }

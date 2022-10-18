@@ -58,7 +58,7 @@ const Clinic = () => {
     }
   }, [auth.user.id, loadMemberInboxQuery])
 
-  if (getClinicsQuery.error && getAdImagesQuery.error) return <QueryStatus.Error />
+  if (getClinicsQuery.error || getAdImagesQuery.error) return <QueryStatus.Error />
 
   return (
     <>

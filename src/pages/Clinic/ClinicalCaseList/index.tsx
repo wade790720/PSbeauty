@@ -108,7 +108,7 @@ const ClinicalCaseList = () => {
   }, [edges, getCasesQuery, getSpecifyCasesLazy])
   const consults = getMemberInboxQuery.data?.me?.consults || []
 
-  if (getSpecifyCasesLazy.error && getCasesQuery.error) return <QueryStatus.Error />
+  if (getSpecifyCasesLazy.error || getCasesQuery.error) return <QueryStatus.Error />
 
   return (
     <>

@@ -157,7 +157,7 @@ const Home = () => {
     }
   }, [auth.user.id, loadGetCollectedCaseQuery, loadMemberInboxQuery])
 
-  if (getCasesQuery.error && getAdCardsQuery.error) return <QueryStatus.Error />
+  if (getCasesQuery.error || getAdCardsQuery.error) return <QueryStatus.Error />
 
   useLayoutEffect(() => {
     if (getState("Feed")) {

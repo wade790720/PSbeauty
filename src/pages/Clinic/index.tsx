@@ -45,7 +45,11 @@ const Clinic = () => {
 
   const data = isSearch
     ? getClinicsQuerySearch?.data?.clinics?.edges
-    : getClinicsQuery?.data?.clinics?.edges
+    : (() => {
+        const array = [...(getClinicsQuery?.data?.clinics?.edges || [])]
+        array.sort(() => Math.random() - 0.5)
+        return array
+      })()
   const consults = getMemberInboxQuery.data?.me?.consults || []
 
   useEffect(() => {

@@ -49,10 +49,16 @@
     scrollbar-width: none;
     grid-gap: 12px;
     grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 130px;
     grid-auto-rows: $unit-height;
 
     &::-webkit-scrollbar {
       display: none;
+    }
+
+    .banner {
+      grid-column: span 3;
+      margin: 0 -5px;
     }
 
     .cell {

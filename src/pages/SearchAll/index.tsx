@@ -6,12 +6,32 @@ import { useGo } from "components/Router"
 import Header from "components/Layout/Header"
 import Toolbars from "containers/Toolbars"
 import QueryStatus from "components/QueryStatus"
+import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
+import { SortEnumType } from "types/schema"
+import Banner from "containers/Banner"
 
 const SearchListAll = () => {
   const go = useGo()
+  const getAdImagesQuery = useGetAdImagesQuery({
+    variables: {
+      first: 10,
+      orderId: SortEnumType.Desc,
+      where: "案例輪播",
+    },
+  })
+  const adImages = getAdImagesQuery?.data?.adImages?.edges
+    ?.map(el => ({
+      image: el.node?.image || "",
+      clinicId: el.node?.clinicId || "",
+      targetId: el.node?.targetId || "",
+      redirectType: el.node?.redirectType,
+      sort: el.node?.sort || 0,
+    }))
+    ?.sort((prev, next) => prev.sort - next.sort)
+
   const { data, loading, error } = useGetSearchListAllQuery()
 
-  if (error) return <QueryStatus.Error />
+  if (error || getAdImagesQuery.error) return <QueryStatus.Error />
 
   return (
     <>
@@ -22,6 +42,11 @@ const SearchListAll = () => {
           <Header title="探索" />
           <Backdrop className={styled.wrapper}>
             <div className={styled.result} style={{ paddingBottom: "80px" }}>
+              {adImages && adImages?.length > 0 && (
+                <div className={styled.banner}>
+                  <Banner images={adImages} />
+                </div>
+              )}
               {data?.cases?.edges && data?.cases?.edges?.length > 0 ? (
                 data?.cases?.edges.map((el, idx) => (
                   <div

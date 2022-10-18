@@ -12,6 +12,7 @@ export type SignInWithEmailAndPasswordMutation = {
   signInWithEmailAndPassword?: {
     __typename: "SignInWithEmailAndPasswordPayload"
     customToken?: string | null
+    refreshToken?: string | null
     firebaseToken?: string | null
   } | null
 }
@@ -20,6 +21,7 @@ export const SignInWithEmailAndPasswordDocument = gql`
   mutation SignInWithEmailAndPassword($email: String, $password: String) {
     signInWithEmailAndPassword(input: { email: $email, password: $password }) {
       customToken
+      refreshToken
       firebaseToken
     }
   }

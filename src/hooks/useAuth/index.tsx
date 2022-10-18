@@ -7,9 +7,9 @@ import { getStorageValue, setStorageValue } from "../useLocalStorage"
 import { GetRefreshTokenDocument } from "graphql/queries/getRefreshToken.graphql.generated"
 
 export const refresh = async (auth: AuthContextProps) => {
-  const customToken = getStorageValue("customToken", "")
-  if (customToken) {
-    const payload: { exp: number; iat: number } = jwt_decode(customToken)
+  const refreshToken = getStorageValue("refreshToken", "")
+  if (refreshToken) {
+    const payload: { exp: number; iat: number } = jwt_decode(refreshToken)
     const expiredTime = new Date(payload.exp * 1000)
     const renewTime = new Date((payload.iat + ((payload.exp - payload.iat) * 5) / 10) * 1000)
     if (new Date() >= expiredTime) {
@@ -19,10 +19,15 @@ export const refresh = async (auth: AuthContextProps) => {
         const res = await apolloClient.query({
           query: GetRefreshTokenDocument,
           fetchPolicy: "no-cache",
+          context: { headers: { authorization: `Bearer ${refreshToken}` } },
         })
         const newCustomToken = res.data.refreshToken?.customToken
         if (newCustomToken) {
           setStorageValue("customToken", newCustomToken)
+        }
+        const newRefreshToken = res.data.refreshToken?.refreshToken
+        if (newRefreshToken) {
+          setStorageValue("refreshToken", newRefreshToken)
         }
       } catch (e) {
         console.log(e)

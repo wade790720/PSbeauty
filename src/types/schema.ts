@@ -1306,6 +1306,8 @@ export type CustomTokenPayload = {
   __typename: "CustomTokenPayload"
   /** 客製完成 token 字串 */
   customToken?: Maybe<Scalars["String"]>
+  /** RefreshToken */
+  refreshToken?: Maybe<Scalars["String"]>
   /** Firebase uid */
   uid?: Maybe<Scalars["String"]>
 }
@@ -2416,6 +2418,8 @@ export type SignInWithEmailAndPasswordPayload = {
   customToken?: Maybe<Scalars["String"]>
   /** Firebase Auth 憑證 */
   firebaseToken?: Maybe<Scalars["String"]>
+  /** 更新用憑證 */
+  refreshToken?: Maybe<Scalars["String"]>
 }
 
 export enum SortEnumType {

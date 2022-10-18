@@ -5,6 +5,7 @@ export const GetRefreshToken = gql`
     refreshToken {
       uid
       customToken
+      refreshToken
     }
   }
 `

@@ -10,6 +10,7 @@ export type GetRefreshTokenQuery = {
     __typename: "CustomTokenPayload"
     uid?: string | null
     customToken?: string | null
+    refreshToken?: string | null
   } | null
 }
 
@@ -18,6 +19,7 @@ export const GetRefreshTokenDocument = gql`
     refreshToken {
       uid
       customToken
+      refreshToken
     }
   }
 `

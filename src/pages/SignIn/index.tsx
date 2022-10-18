@@ -39,8 +39,10 @@ const SignIn = () => {
       })
       const email = info.account
       const customToken = res?.data?.signInWithEmailAndPassword?.customToken || ""
+      const refreshToken = res?.data?.signInWithEmailAndPassword?.refreshToken || ""
       const firebaseToken = res?.data?.signInWithEmailAndPassword?.firebaseToken || ""
       setStorageValue("customToken", customToken)
+      setStorageValue("refreshToken", refreshToken)
       setStorageValue("firebaseToken", firebaseToken)
       setStorageValue("email", email)
       if (customToken && email) {

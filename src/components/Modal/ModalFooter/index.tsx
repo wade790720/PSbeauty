@@ -30,6 +30,7 @@ export type ModalFooterProps = {
    * A callback triggered whenever the modal is closed.
    */
   onClose?: () => void
+  footerClassName?: string
 } & ReactProps.Component
 
 const ModalFooter = (props: ModalFooterProps) => {

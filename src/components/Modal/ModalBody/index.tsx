@@ -6,6 +6,7 @@ export type ModalBodyProps = {
    * The Modal content. (props.children > props.content)
    */
   content?: string
+  bodyClassName?: string
 } & ReactProps.Component
 
 const ModalBody = (props: ModalBodyProps) => {

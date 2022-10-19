@@ -15,6 +15,7 @@ import { ReactComponent as Phone } from "./Phone.svg"
 import { ReactComponent as GlobeSimple } from "./GlobeSimple.svg"
 import { ReactComponent as CaretDown } from "./CaretDown.svg"
 import { ReactComponent as Info } from "./Info.svg"
+import { ReactComponent as Edit } from "./Edit.svg"
 
 const Image = Object.assign(
   {},
@@ -36,6 +37,7 @@ const Image = Object.assign(
     PurpleCross,
     CaretDown,
     Info,
+    Edit,
   },
 )
 

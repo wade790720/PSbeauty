@@ -19,9 +19,12 @@ const Modal = (props: ModalProps) => {
   return (
     <ModalPopup open={props.open} closeOnDocumentClick={props.backdrop} onClose={props.onClose}>
       <ModalDialog>
-        <Header title={props.title} />
-        <Body content={props.content}>{props.children}</Body>
+        <Header className={props.headerClassName} title={props.title} />
+        <Body className={props.bodyClassName} content={props.content}>
+          {props.children}
+        </Body>
         <Footer
+          className={props.footerClassName}
           confirmText={props.confirmText}
           confirmButtonProps={props.confirmButtonProps}
           cancelText={props.cancelText}

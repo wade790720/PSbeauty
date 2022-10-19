@@ -6,6 +6,7 @@ export type ModalHeaderProps = {
    * The Modal header.
    */
   title?: string
+  headerClassName?: string
 } & ReactProps.Component
 
 const ModalHeader = (props: ModalHeaderProps) => {

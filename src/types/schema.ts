@@ -593,6 +593,27 @@ export type BooleanOperationFilterInput = {
 }
 
 /** A connection to a list of items. */
+export type CasesByCategoryConnection = {
+  __typename: "CasesByCategoryConnection"
+  /** A list of edges. */
+  edges?: Maybe<Array<CasesByCategoryEdge>>
+  /** A flattened list of the nodes. */
+  nodes?: Maybe<Array<Maybe<ClinicCase>>>
+  /** Information to aid in pagination. */
+  pageInfo: PageInfo
+  totalCount: Scalars["Int"]
+}
+
+/** An edge in a connection. */
+export type CasesByCategoryEdge = {
+  __typename: "CasesByCategoryEdge"
+  /** A cursor for use in pagination. */
+  cursor: Scalars["String"]
+  /** The item at the end of the edge. */
+  node?: Maybe<ClinicCase>
+}
+
+/** A connection to a list of items. */
 export type CasesConnection = {
   __typename: "CasesConnection"
   /** A list of edges. */
@@ -622,6 +643,8 @@ export type Category = {
   name?: Maybe<Scalars["String"]>
   /** 所屬中分類 */
   secondCategoryId?: Maybe<Scalars["String"]>
+  /** 排序 */
+  sort: Scalars["Int"]
   /** 大分類 */
   topCategoryId?: Maybe<Scalars["String"]>
   /** 由 id 取出之唯一數字值 */
@@ -1511,6 +1534,11 @@ export type EnableConsultPayload = {
   id?: Maybe<Scalars["String"]>
 }
 
+export type IdProvider = {
+  __typename: "IdProvider"
+  id?: Maybe<Scalars["String"]>
+}
+
 export type ListStringOperationFilterInput = {
   all?: InputMaybe<StringOperationFilterInput>
   any?: InputMaybe<Scalars["Boolean"]>
@@ -1628,8 +1656,14 @@ export type Mutation = {
    * 若失敗會回傳 code 5001
    */
   sendPasswordResetEmail?: Maybe<SendPasswordResetEmailPayload>
+  /** [廠商] 調整小分類順序 */
+  setCategoryOrder?: Maybe<SetCategoryOrderPayload>
   /** [廠商]設定熱門關鍵字 */
   setPopularKeywords?: Maybe<SetPopularKeywordsPayload>
+  /** [廠商]調整中分類順序 */
+  setSecondCategoryOrder?: Maybe<SetSecondCategoryOrderPayload>
+  /** [廠商]調整大分類順序 */
+  setTopCategoryOrder?: Maybe<SetTopCategoryOrderPayload>
   /**
    * 以 Email + Password 來登入使用者
    *
@@ -1638,6 +1672,7 @@ export type Mutation = {
    * 登入成功之 Token
    */
   signInWithEmailAndPassword?: Maybe<SignInWithEmailAndPasswordPayload>
+  testEmail: TestEmailPayload
   /** [廠商]更新診所活動頁 */
   updateActivity?: Maybe<UpdateActivityPayload>
   /** [廠商]更新廠商廣告卡 */
@@ -1844,8 +1879,20 @@ export type MutationSendPasswordResetEmailArgs = {
   input?: InputMaybe<SendPasswordResetEmailInput>
 }
 
+export type MutationSetCategoryOrderArgs = {
+  input?: InputMaybe<SetCategoryOrderInput>
+}
+
 export type MutationSetPopularKeywordsArgs = {
   input?: InputMaybe<SetPopularKeywordsInput>
+}
+
+export type MutationSetSecondCategoryOrderArgs = {
+  input?: InputMaybe<SetSecondCategoryOrderInput>
+}
+
+export type MutationSetTopCategoryOrderArgs = {
+  input?: InputMaybe<SetTopCategoryOrderInput>
 }
 
 export type MutationSignInWithEmailAndPasswordArgs = {
@@ -2016,6 +2063,8 @@ export type Query = {
   caseByClinicId?: Maybe<Array<Maybe<ClinicCase>>>
   /** 取得所有病例 */
   cases?: Maybe<CasesConnection>
+  /** 依分類取得案例 */
+  casesByCategory?: Maybe<CasesByCategoryConnection>
   /** 取得小分類 */
   categories?: Maybe<Array<Maybe<Category>>>
   /** 依識別碼取得診所 */
@@ -2139,6 +2188,15 @@ export type QueryCasesArgs = {
   last?: InputMaybe<Scalars["Int"]>
   order?: InputMaybe<Array<ClinicCaseSortInput>>
   where?: InputMaybe<ClinicCaseFilterInput>
+}
+
+export type QueryCasesByCategoryArgs = {
+  after?: InputMaybe<Scalars["String"]>
+  before?: InputMaybe<Scalars["String"]>
+  categoryId?: InputMaybe<Scalars["String"]>
+  first?: InputMaybe<Scalars["Int"]>
+  last?: InputMaybe<Scalars["Int"]>
+  order?: InputMaybe<Array<ClinicCaseSortInput>>
 }
 
 export type QueryClinicArgs = {
@@ -2370,6 +2428,8 @@ export type SecondCategory = {
   id?: Maybe<Scalars["String"]>
   /** 中分類名稱 */
   name?: Maybe<Scalars["String"]>
+  /** 排序 */
+  sort: Scalars["Int"]
   /** 所屬大分類識別碼 */
   topCategoryId?: Maybe<Scalars["String"]>
 }
@@ -2394,6 +2454,20 @@ export type SendPasswordResetEmailPayload = {
   succeed: Scalars["Boolean"]
 }
 
+/** 排序小分類輸入值 */
+export type SetCategoryOrderInput = {
+  /** 所屬中分類識別碼 */
+  secondCategoryId?: InputMaybe<Scalars["String"]>
+  /** 排序後之中分類識別碼 */
+  sorted?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
+}
+
+/** 排序後該中分類中小分類排序結果 */
+export type SetCategoryOrderPayload = {
+  __typename: "SetCategoryOrderPayload"
+  categories?: Maybe<Array<Maybe<Category>>>
+}
+
 /** 設定熱門搜尋資料 */
 export type SetPopularKeywordsInput = {
   /** 關鍵字 */
@@ -2404,6 +2478,31 @@ export type SetPopularKeywordsInput = {
 export type SetPopularKeywordsPayload = {
   __typename: "SetPopularKeywordsPayload"
   keywords?: Maybe<Array<Maybe<Scalars["String"]>>>
+}
+
+/** 排序中分類輸入值 */
+export type SetSecondCategoryOrderInput = {
+  /** 排序後之中分類識別碼 */
+  sorted?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
+  /** 所屬大分類識別碼 */
+  topCategoryId?: InputMaybe<Scalars["String"]>
+}
+
+/** 排序後結果 */
+export type SetSecondCategoryOrderPayload = {
+  __typename: "SetSecondCategoryOrderPayload"
+  secondCategories?: Maybe<Array<Maybe<SecondCategory>>>
+}
+
+/** 排序大分類 */
+export type SetTopCategoryOrderInput = {
+  sorted?: InputMaybe<Array<InputMaybe<Scalars["String"]>>>
+}
+
+/** 排序後結果 */
+export type SetTopCategoryOrderPayload = {
+  __typename: "SetTopCategoryOrderPayload"
+  topCategories?: Maybe<Array<Maybe<TopCategory>>>
 }
 
 export type SignInWithEmailAndPasswordInput = {
@@ -2442,6 +2541,11 @@ export type StringOperationFilterInput = {
   startsWith?: InputMaybe<Scalars["String"]>
 }
 
+export type TestEmailPayload = {
+  __typename: "TestEmailPayload"
+  idProvider?: Maybe<IdProvider>
+}
+
 /** 小分類 */
 export type TopCategory = {
   __typename: "TopCategory"
@@ -2451,6 +2555,8 @@ export type TopCategory = {
   name?: Maybe<Scalars["String"]>
   /** 取得第二層 */
   secondCategories?: Maybe<Array<Maybe<SecondCategory>>>
+  /** 排序 */
+  sort: Scalars["Int"]
 }
 
 /** A connection to a list of items. */

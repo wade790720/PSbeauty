@@ -16,7 +16,7 @@ const Search = lazy(() => import("pages/Search"))
 const SearchAll = lazy(() => import("pages/SearchAll"))
 const SearchList = lazy(() => import("pages/SearchList"))
 const Chatroom = lazy(() => import("pages/Chatroom"))
-const ClinicalCaseList = lazy(() => import("pages/Clinic/ClinicalCaseList"))
+const ClinicalActivityList = lazy(() => import("pages/Clinic/ClinicalActivityList"))
 const ClinicalCase = lazy(() => import("pages/Clinic/ClinicalCase"))
 const Clinic = lazy(() => import("pages/Clinic"))
 const ClinicInner = lazy(() => import("pages/Clinic/ClinicInner"))
@@ -154,10 +154,10 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
     },
     /* 臨床案例頁 */
     {
-      path: "cases",
+      path: "activities",
       element: (
         <Suspense>
-          <ClinicalCaseList />
+          <ClinicalActivityList />
         </Suspense>
       ),
     },

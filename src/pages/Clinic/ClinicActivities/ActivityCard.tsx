@@ -6,6 +6,7 @@ import useElementOnScreen from "hooks/useElementOnScreen"
 
 export type ActivityCardProps = {
   activityId: string
+  clinicId?: string
   subject?: string
   content?: string
   image?: string
@@ -28,7 +29,7 @@ const ActivityCard = ({ activityId, ...props }: ActivityCardProps) => {
       className={styled["activity-card"]}
       onClick={() =>
         go.toClinicActivity({
-          clinicId: match?.params.id || "",
+          clinicId: match?.params.id || props.clinicId || "",
           activityId,
         })
       }>

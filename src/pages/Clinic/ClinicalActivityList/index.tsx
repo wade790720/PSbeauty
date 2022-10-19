@@ -13,7 +13,6 @@ import QueryStatus from "components/QueryStatus"
 import { useAuth } from "hooks/useAuth"
 import { useGetActivitiesQuery } from "./ClinicalActivityList.graphql.generated"
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
-import { useGetCollectedCaseLazyQuery } from "graphql/queries/getCollectedCase.graphql.generated"
 import { useGetMemberInboxLazyQuery } from "pages/Member/MemberInbox/MemberInbox.graphql.generated"
 import { SortEnumType } from "types/schema"
 
@@ -23,9 +22,6 @@ const ClinicalActivityList = () => {
   const cursorRef = useRef<string>("")
 
   const [loadMemberInboxQuery, getMemberInboxQuery] = useGetMemberInboxLazyQuery()
-  const [loadGetCollectedCaseQuery, getCollectedCaseQuery] = useGetCollectedCaseLazyQuery({
-    fetchPolicy: "no-cache",
-  })
   const getActivitiesQuery = useGetActivitiesQuery()
   const adImageCaseQuery = useGetAdImagesQuery({
     variables: {
@@ -53,10 +49,6 @@ const ClinicalActivityList = () => {
       loadMemberInboxQuery()
     }
   }, [auth.user.id, loadMemberInboxQuery])
-
-  useEffect(() => {
-    if (auth.user.id) loadGetCollectedCaseQuery()
-  }, [auth.user.id, loadGetCollectedCaseQuery])
 
   const fetchMore = useCallback(() => {
     const after = edges?.[edges.length - 1]?.cursor || null
@@ -118,6 +110,7 @@ const ClinicalActivityList = () => {
               <ActivityCard
                 key={el?.id}
                 activityId={el?.id || ""}
+                clinicId={el?.clinic?.id || ""}
                 subject={el?.subject || ""}
                 content={el?.content || ""}
                 image={el?.image || ""}

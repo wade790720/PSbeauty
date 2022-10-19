@@ -12,7 +12,10 @@ import QueryStatus from "components/QueryStatus"
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
 import { useGetMemberInboxLazyQuery } from "pages/Member/MemberInbox/MemberInbox.graphql.generated"
 import { SortEnumType } from "types/schema"
-import { useGetClinicsQuery, useGetClinicsSearchLazyQuery } from "./ClinicCard.graphql.generated"
+import {
+  useGetClinicsLazyQuery,
+  useGetClinicsSearchLazyQuery,
+} from "./ClinicCard.graphql.generated"
 import useGo from "components/Router/useGo"
 
 const Clinic = () => {
@@ -39,18 +42,19 @@ const Clinic = () => {
     }))
     ?.sort((prev, next) => prev.sort - next.sort)
 
-  const getClinicsQuery = useGetClinicsQuery()
+  const [loadClinicsQuery, getClinicsQuery] = useGetClinicsLazyQuery()
   const [loadMemberInboxQuery, getMemberInboxQuery] = useGetMemberInboxLazyQuery()
   const [loadGetClinicsQuerySearch, getClinicsQuerySearch] = useGetClinicsSearchLazyQuery()
 
   const data = isSearch
-    ? getClinicsQuerySearch?.data?.clinics?.edges
-    : (() => {
-        const array = [...(getClinicsQuery?.data?.clinics?.edges || [])]
-        array.sort(() => Math.random() - 0.5)
-        return array
-      })()
+    ? [...(getClinicsQuerySearch?.data?.clinics?.edges || [])]
+    : [...(getClinicsQuery?.data?.clinics?.edges || [])]
+  data.sort(() => Math.random() - 0.5)
   const consults = getMemberInboxQuery.data?.me?.consults || []
+
+  useEffect(() => {
+    loadClinicsQuery()
+  }, [])
 
   useEffect(() => {
     if (auth.user.id) {

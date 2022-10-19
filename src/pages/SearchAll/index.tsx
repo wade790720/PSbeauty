@@ -2,6 +2,7 @@ import styled from "./SearchAll.module.scss"
 import cx from "classnames"
 import Backdrop from "components/Layout/Backdrop"
 import { useGetSearchListAllQuery } from "./SearchAll.graphql.generated"
+import { useCallback, useRef, useEffect } from "react"
 import { useGo } from "components/Router"
 import Header from "components/Layout/Header"
 import Toolbars from "containers/Toolbars"
@@ -9,6 +10,7 @@ import QueryStatus from "components/QueryStatus"
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
 import { SortEnumType } from "types/schema"
 import Banner from "containers/Banner"
+import useElementOnScreen from "hooks/useElementOnScreen"
 
 const SearchListAll = () => {
   const go = useGo()
@@ -29,7 +31,43 @@ const SearchListAll = () => {
     }))
     ?.sort((prev, next) => prev.sort - next.sort)
 
-  const { data, loading, error } = useGetSearchListAllQuery()
+  const getSearchListAllQuery = useGetSearchListAllQuery({ variables: { after: null } })
+  const { data, loading, error } = getSearchListAllQuery
+  const edges = data?.cases?.edges || []
+  const cursorRef = useRef<string>("")
+  const { containerRef, isVisible } = useElementOnScreen({})
+
+  const fetchMore = useCallback(() => {
+    const after = edges?.[edges.length - 1]?.cursor || null
+
+    getSearchListAllQuery.fetchMore({
+      variables: {
+        after,
+      },
+      updateQuery: (prevResult, { fetchMoreResult }) => {
+        if (
+          !after ||
+          after === cursorRef?.current ||
+          !fetchMoreResult?.cases?.edges ||
+          !prevResult?.cases?.edges ||
+          prevResult?.cases?.edges.length > edges.length
+        )
+          return prevResult
+
+        fetchMoreResult.cases.edges = [
+          ...(prevResult?.cases?.edges || []),
+          ...(fetchMoreResult?.cases?.edges || []),
+        ]
+
+        cursorRef.current = after
+        return fetchMoreResult
+      },
+    })
+  }, [edges, getSearchListAllQuery])
+
+  useEffect(() => {
+    if (isVisible) fetchMore()
+  }, [fetchMore, isVisible])
 
   if (error || getAdImagesQuery.error) return <QueryStatus.Error />
 
@@ -50,6 +88,11 @@ const SearchListAll = () => {
               {data?.cases?.edges && data?.cases?.edges?.length > 0 ? (
                 data?.cases?.edges.map((el, idx) => (
                   <div
+                    ref={
+                      data?.cases?.edges?.length === idx + 1
+                        ? (containerRef as unknown as React.RefObject<HTMLDivElement>)
+                        : null
+                    }
                     key={el.node?.id}
                     onClick={() =>
                       go.toClinicCase({

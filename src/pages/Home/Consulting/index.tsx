@@ -58,7 +58,7 @@ const Consulting = (props: consultProps) => {
   const [chosenCycle, setChosenCycle] = useState<number | "">("")
   const [chosenDistrict, setChosenDistrict] = useState<string[]>([])
   const [content, setContent] = useState("")
-  const [modalMsg, setModalMsg] = useState(DEFAULT_MODAL_MSG)
+  const [modalMsg] = useState(DEFAULT_MODAL_MSG)
   const [open, setOpen] = useState(false)
   const [isAlert, setIsAlert] = useState(false)
   const [files, setFiles] = useState<{ raw: File | null; url: string }[]>([

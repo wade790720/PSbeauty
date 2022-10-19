@@ -3,7 +3,9 @@ import * as Types from "../../types/schema"
 import { gql } from "@apollo/client"
 import * as Apollo from "@apollo/client"
 const defaultOptions = {} as const
-export type GetSearchListAllQueryVariables = Types.Exact<{ [key: string]: never }>
+export type GetSearchListAllQueryVariables = Types.Exact<{
+  after?: Types.InputMaybe<Types.Scalars["String"]>
+}>
 
 export type GetSearchListAllQuery = {
   cases?: {
@@ -31,8 +33,8 @@ export type GetSearchListAllQuery = {
 }
 
 export const GetSearchListAllDocument = gql`
-  query getSearchListAll {
-    cases(first: 50, order: { id: DESC }) {
+  query getSearchListAll($after: String) {
+    cases(first: 10, order: { id: DESC }, after: $after) {
       pageInfo {
         hasNextPage
         hasPreviousPage
@@ -67,6 +69,7 @@ export const GetSearchListAllDocument = gql`
  * @example
  * const { data, loading, error } = useGetSearchListAllQuery({
  *   variables: {
+ *      after: // value for 'after'
  *   },
  * });
  */

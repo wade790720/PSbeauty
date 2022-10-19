@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client"
 
 export const getSearchListAll = gql`
-  query getSearchListAll {
-    cases(first: 50, order: { id: DESC }) {
+  query getSearchListAll($after: String) {
+    cases(first: 10, order: { id: DESC }, after: $after) {
       pageInfo {
         hasNextPage
         hasPreviousPage

@@ -32,7 +32,8 @@ const ClinicalActivityList = () => {
   })
 
   const edges = getActivitiesQuery?.data?.activities?.edges || []
-  const nodes = getActivitiesQuery?.data?.activities?.nodes
+  const nodes = [...(getActivitiesQuery?.data?.activities?.nodes || [])]
+  nodes.sort(() => Math.random() - 0.5)
 
   const adImages = adImageCaseQuery?.data?.adImages?.edges
     ?.map(el => ({

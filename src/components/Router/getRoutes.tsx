@@ -15,6 +15,7 @@ const SearchWrapper = lazy(() => import("pages/SearchWrapper"))
 const Search = lazy(() => import("pages/Search"))
 const SearchAll = lazy(() => import("pages/SearchAll"))
 const SearchList = lazy(() => import("pages/SearchList"))
+const SearchTag = lazy(() => import("pages/SearchTag"))
 const Chatroom = lazy(() => import("pages/Chatroom"))
 const ClinicalActivityList = lazy(() => import("pages/Clinic/ClinicalActivityList"))
 const ClinicalCase = lazy(() => import("pages/Clinic/ClinicalCase"))
@@ -158,6 +159,15 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
       element: (
         <Suspense>
           <ClinicalActivityList />
+        </Suspense>
+      ),
+    },
+    /* 指定標籤內頁 */
+    {
+      path: "searchTag/:id/:text",
+      element: (
+        <Suspense>
+          <SearchTag />
         </Suspense>
       ),
     },

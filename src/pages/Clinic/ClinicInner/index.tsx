@@ -128,7 +128,10 @@ const ClinicInner = () => {
           clinicId={id || ""}
           introduction={el?.description || ""}
           image={el?.image || ""}
-          tags={el?.categories?.map(tag => tag?.name || "")}
+          tags={el?.categories?.map(tag => ({
+            id: tag?.id || "",
+            name: tag?.name || "",
+          }))}
           caseId={el?.id || ""}
           last={false}
         />

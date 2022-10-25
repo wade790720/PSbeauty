@@ -38,6 +38,8 @@ type toTarget = {
   toSearchList: (text: string, options?: { replace: boolean }) => void
   /** 搜尋結果列表帶參數 */
   toSearchListWithQuery: (text: string, options?: { replace: boolean }) => void
+  /** 指定搜尋標籤 */
+  toSearchTag: (id: string, text: string) => void
   /** 醫生信箱 */
   toDoctorInbox: () => void
   /** 個人信箱 */
@@ -64,6 +66,7 @@ const useGo = (): toTarget => {
     toChatroom: ({ id }) => navigate(`/chatroom/${id}`),
     toDoctorUpdatePassword: () => navigate("/doctor/update-password"),
     toSearchList: (text, options) => navigate(`/search/${text}`, options),
+    toSearchTag: (id, text) => navigate(`/searchTag/${id}/${text}`),
     toSearchListWithQuery: (text, options) => navigate(`/search/${text}?tag=${text}`, options),
     toDoctorInbox: () => navigate("/doctor/inbox"),
     toMemberInbox: () => navigate("/member/inbox"),

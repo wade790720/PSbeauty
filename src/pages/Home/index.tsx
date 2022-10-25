@@ -108,7 +108,10 @@ const Home = () => {
             clinicId={cases[idx]?.clinic?.id || ""}
             introduction={cases[idx]?.description || ""}
             image={cases[idx]?.image || ""}
-            tags={cases[idx]?.categories?.map(tag => tag?.name || "")}
+            tags={cases[idx]?.categories?.map(tag => ({
+              id: tag?.id || "",
+              name: tag?.name || "",
+            }))}
             caseId={cases[idx]?.id || ""}
             last={casesCount - 1 === idx}
             fetchMore={() => {

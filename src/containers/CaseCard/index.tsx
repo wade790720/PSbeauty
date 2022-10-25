@@ -16,7 +16,10 @@ export type CaseCardProps = {
   introduction: string
   image: string
   isCollected: boolean
-  tags?: string[]
+  tags?: {
+    id: string
+    name: string
+  }[]
   amount?: number // 收藏人數
   caseId: string
   last: boolean
@@ -88,9 +91,14 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
       </div>
       <div className={styled.tags}>
         {props.tags?.map((tag, idx) => (
-          <div key={`tag-${idx}`}>
+          <div
+            key={`tag-${idx}`}
+            onClick={e => {
+              e.stopPropagation()
+              go.toSearchTag(tag.id, tag.name)
+            }}>
             <span>#</span>
-            {tag}
+            {tag?.name}
           </div>
         ))}
       </div>

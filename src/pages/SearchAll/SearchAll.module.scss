@@ -1,6 +1,26 @@
 .wrapper {
   padding: 0 !important;
 
+  .filter {
+    display: flex;
+    justify-content: center;
+
+    .button {
+      position: fixed;
+      bottom: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: calc(100% - 48px);
+      height: 42px;
+      font-size: 16px !important;
+
+      > div {
+        margin-right: 8px;
+      }
+    }
+  }
+
   .filters {
     display: grid;
     overflow-x: auto;

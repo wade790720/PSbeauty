@@ -1,13 +1,20 @@
 import styled from "./SearchAll.module.scss"
 import cx from "classnames"
 import Backdrop from "components/Layout/Backdrop"
-import { useGetSearchListAllQuery } from "./SearchAll.graphql.generated"
-import { useCallback, useRef, useEffect } from "react"
+import {
+  useGetSearchListAllQuery,
+  useGetSpecifyCasesLazyQuery,
+} from "./SearchAll.graphql.generated"
+import { useCallback, useRef, useEffect, useState } from "react"
 import { useGo } from "components/Router"
 import Header from "components/Layout/Header"
 import Toolbars from "containers/Toolbars"
+import SubjectFilter from "containers/SubjectFilter"
+import Icon from "components/Icon"
+import Button from "components/Button"
 import QueryStatus from "components/QueryStatus"
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
+import { useGetTopCategoriesLazyQuery } from "pages/Home/Consulting/Consulting.graphql.generated"
 import { SortEnumType } from "types/schema"
 import Banner from "containers/Banner"
 import useElementOnScreen from "hooks/useElementOnScreen"
@@ -31,16 +38,22 @@ const SearchListAll = () => {
     }))
     ?.sort((prev, next) => prev.sort - next.sort)
 
-  const getSearchListAllQuery = useGetSearchListAllQuery({ variables: { after: null } })
-  const { data, loading, error } = getSearchListAllQuery
+  const [open, setOpen] = useState(false)
+  const [filter, setFilter] = useState(false)
+  const getSearchListAllQuery = useGetSearchListAllQuery({
+    variables: { after: null },
+  })
+  const [loadGetSpecifyCasesLazy, getSpecifyCasesLazy] = useGetSpecifyCasesLazyQuery()
+  const { data, loading, error } = filter ? getSpecifyCasesLazy : getSearchListAllQuery
   const edges = data?.cases?.edges || []
   const cursorRef = useRef<string>("")
+  const [loadQuery, query] = useGetTopCategoriesLazyQuery()
   const { containerRef, isVisible } = useElementOnScreen({})
 
   const fetchMore = useCallback(() => {
     const after = edges?.[edges.length - 1]?.cursor || null
-
-    getSearchListAllQuery.fetchMore({
+    const target = filter ? getSpecifyCasesLazy : getSearchListAllQuery
+    target.fetchMore({
       variables: {
         after,
       },
@@ -63,7 +76,12 @@ const SearchListAll = () => {
         return fetchMoreResult
       },
     })
-  }, [edges, getSearchListAllQuery])
+  }, [filter, edges, getSearchListAllQuery])
+
+  useEffect(() => {
+    if (!open) return
+    loadQuery()
+  }, [open])
 
   useEffect(() => {
     if (isVisible) fetchMore()
@@ -109,6 +127,27 @@ const SearchListAll = () => {
               ) : (
                 <div className={styled.empty}>暫無資料顯示</div>
               )}
+            </div>
+            <div className={styled.filter}>
+              <Button className={styled.button} onClick={() => setOpen(true)}>
+                <Icon name="funnel" className={styled.funnel} />
+                分類篩選
+              </Button>
+              <SubjectFilter
+                open={open}
+                onClose={() => setOpen(false)}
+                getValue={value => {
+                  if (value.length === 0) return setFilter(false)
+                  loadGetSpecifyCasesLazy({
+                    variables: {
+                      searchKeys: value.map(el => ({ eq: el.id || "" })),
+                    },
+                  })
+                  setFilter(true)
+                }}
+                topCategoriesQuery={query}
+                defaultValue={[]}
+              />
             </div>
           </Backdrop>
         </>

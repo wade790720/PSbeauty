@@ -53,6 +53,7 @@ const useProvideAuth = () => {
 
   const signOut = () => {
     removeStorageValue("customToken")
+    removeStorageValue("refreshToken")
     removeStorageValue("email")
     setUser(DEFAULT_USER)
     firebaseSignOut()

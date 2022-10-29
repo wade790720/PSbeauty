@@ -2,6 +2,7 @@ import { useState, useRef, useLayoutEffect, useEffect } from "react"
 import styled from "./HistoryRecordCard.module.scss"
 import cx from "classnames"
 import Switch from "react-switch"
+import useGo from "components/Router/useGo"
 
 export type HistoryRecordCardProps = {
   id: string
@@ -10,7 +11,7 @@ export type HistoryRecordCardProps = {
   toggle?: boolean
   images: string[]
   introduction: string
-  tags?: string[]
+  tags?: { id: string; name: string }[]
   onChange?: ({ id, enable }: { id: string; enable: boolean }) => void
 } & ReactProps.Component
 
@@ -19,6 +20,7 @@ const HistoryRecordCard = ({ ...props }: HistoryRecordCardProps) => {
   const [open, setOpen] = useState<boolean>(false)
   const [toggle, setToggle] = useState<boolean>()
   const ref = useRef<HTMLDivElement>(null)
+  const go = useGo()
 
   useEffect(() => {
     setToggle(props.toggle)
@@ -53,9 +55,14 @@ const HistoryRecordCard = ({ ...props }: HistoryRecordCardProps) => {
       )}
       <div className={styled.tags}>
         {props.tags?.map((tag, idx) => (
-          <div key={`tag-${idx}`}>
+          <div
+            key={`tag-${idx}`}
+            onClick={e => {
+              e.stopPropagation()
+              go.toSearchTag(tag.id, tag.name)
+            }}>
             <span>#</span>
-            {tag}
+            {tag.name}
           </div>
         ))}
       </div>

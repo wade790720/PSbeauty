@@ -88,7 +88,12 @@ const ClinicalCase = () => {
           />
           <div className={styled.tags}>
             {data?.case?.categories?.map(el => (
-              <div key={el?.id}>
+              <div
+                key={el?.id}
+                onClick={e => {
+                  e.stopPropagation()
+                  go.toSearchTag(el?.id || "", el?.name || "")
+                }}>
                 <span>#</span>
                 {el?.name}
               </div>

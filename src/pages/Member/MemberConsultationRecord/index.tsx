@@ -38,7 +38,7 @@ const MemberConsultationRecord = () => {
                 toggle={el?.enable}
                 images={el?.images?.map(el => el ?? "") || []}
                 introduction={el?.content || ""}
-                tags={el?.categories?.map(el => el?.name || "") || []}
+                tags={el?.categories?.map(el => ({ id: el?.id || "", name: el?.name || "" })) || []}
                 onChange={({ id, enable }: { id: string; enable: boolean }) => {
                   enableConsultMutation({
                     variables: {

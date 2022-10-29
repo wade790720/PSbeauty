@@ -144,7 +144,10 @@ const Chatroom = () => {
   const timeleft = endDay.diff(today, "day")
   const oneOnOne = consult?.oneOnOne
   const images = (consult?.images || []).map(v => v || "")
-  const categories = (consult?.categories || []).map(v => v?.name || "")
+  const categories = (consult?.categories || []).map(v => ({
+    id: v?.id || "",
+    name: v?.name || "",
+  }))
   const isClinic = !!auth.user.clinic
 
   messages.push(...realtimes)

@@ -2,6 +2,7 @@ import styled from "./ClinicalCase.module.scss"
 import Backdrop from "components/Layout/Backdrop"
 import Header from "components/Layout/Header"
 import Icon from "components/Icon"
+import Tag from "containers/Tag"
 import {
   useGetCaseQuery,
   useGetCollectItemsLazyQuery,
@@ -86,19 +87,9 @@ const ClinicalCase = () => {
             className={styled.content}
             dangerouslySetInnerHTML={{ __html: data?.case?.description || "" }}
           />
-          <div className={styled.tags}>
-            {data?.case?.categories?.map(el => (
-              <div
-                key={el?.id}
-                onClick={e => {
-                  e.stopPropagation()
-                  go.toSearchTag(el?.id || "", el?.name || "")
-                }}>
-                <span>#</span>
-                {el?.name}
-              </div>
-            ))}
-          </div>
+          <Tag
+            tags={data?.case?.categories?.map(el => ({ id: el?.id || "", name: el?.name || "" }))}
+          />
           <div
             className={styled["collect-block"]}
             onClick={e => {

@@ -2,7 +2,7 @@ import { useState, useRef, useLayoutEffect, useEffect } from "react"
 import styled from "./HistoryRecordCard.module.scss"
 import cx from "classnames"
 import Switch from "react-switch"
-import useGo from "components/Router/useGo"
+import Tag from "containers/Tag"
 
 export type HistoryRecordCardProps = {
   id: string
@@ -20,7 +20,6 @@ const HistoryRecordCard = ({ ...props }: HistoryRecordCardProps) => {
   const [open, setOpen] = useState<boolean>(false)
   const [toggle, setToggle] = useState<boolean>()
   const ref = useRef<HTMLDivElement>(null)
-  const go = useGo()
 
   useEffect(() => {
     setToggle(props.toggle)
@@ -53,19 +52,7 @@ const HistoryRecordCard = ({ ...props }: HistoryRecordCardProps) => {
           顯示更多
         </span>
       )}
-      <div className={styled.tags}>
-        {props.tags?.map((tag, idx) => (
-          <div
-            key={`tag-${idx}`}
-            onClick={e => {
-              e.stopPropagation()
-              go.toSearchTag(tag.id, tag.name)
-            }}>
-            <span>#</span>
-            {tag.name}
-          </div>
-        ))}
-      </div>
+      <Tag tags={props.tags} style={{ marginTop: "24px" }} />
       {typeof props.toggle === "boolean" && (
         <div className={styled.toggle}>
           <Switch

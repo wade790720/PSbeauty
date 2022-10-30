@@ -62,37 +62,6 @@
     color: #B4BABB;
   }
 
-  .tags {
-    margin-top: 24px;
-    display: grid;
-    grid-auto-flow: column;
-    grid-gap: 12px;
-    grid-auto-columns: min-content;
-    overflow-x: auto;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    >div {
-      font-weight: 400;
-      font-size: 12px;
-      line-height: 1.5;
-      padding: 5px 12px;
-      white-space: nowrap;
-      border-radius: 5px;
-      border: 1px solid #18a0cb;
-      background-color: #fff;
-      color: #18a0cb;
-
-      span {
-        margin-right: 7px;
-      }
-    }
-  }
-
   .toggle {
     position: absolute;
     top: 24px;

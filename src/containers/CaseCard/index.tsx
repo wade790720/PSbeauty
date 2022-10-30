@@ -1,6 +1,7 @@
 import { useEffect, useLayoutEffect, useState, useRef } from "react"
 import styled from "./CaseCard.module.scss"
 import Icon from "components/Icon"
+import Tag from "containers/Tag"
 import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
 import useElementOnScreen from "hooks/useElementOnScreen"
@@ -89,19 +90,7 @@ const CaseCard = ({ ...props }: CaseCardProps) => {
       <div className={styled.image} style={{ height: imageWidth }} ref={imageRef}>
         <img src={props.image} />
       </div>
-      <div className={styled.tags}>
-        {props.tags?.map((tag, idx) => (
-          <div
-            key={`tag-${idx}`}
-            onClick={e => {
-              e.stopPropagation()
-              go.toSearchTag(tag.id, tag.name)
-            }}>
-            <span>#</span>
-            {tag?.name}
-          </div>
-        ))}
-      </div>
+      <Tag tags={props.tags} />
       <div
         className={styled["collect-block"]}
         onClick={e => {

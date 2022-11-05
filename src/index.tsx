@@ -7,17 +7,20 @@ import App from "./App"
 import apolloClient from "./graphql/apolloClient"
 import { ApolloProvider } from "@apollo/client"
 import { AuthProvider } from "hooks/useAuth"
+import { init } from "hooks/useLocalStorage"
 
-const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
-root.render(
-  <React.StrictMode>
-    <ApolloProvider client={apolloClient}>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
-    </ApolloProvider>
-  </React.StrictMode>,
-)
+init().then(() => {
+  const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
+  root.render(
+    <React.StrictMode>
+      <ApolloProvider client={apolloClient}>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </ApolloProvider>
+    </React.StrictMode>,
+  )
+})
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

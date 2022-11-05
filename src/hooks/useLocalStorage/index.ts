@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import {
+  init,
   getStorageValue,
   setStorageValue,
   removeStorageValue,
@@ -22,5 +23,5 @@ const useLocalStorage = (key: LocalStorageKey, defaultValue: LocalStorageValue) 
 }
 
 export default useLocalStorage
-export { getStorageValue, setStorageValue, removeStorageValue }
+export { init, getStorageValue, setStorageValue, removeStorageValue }
 export type { LocalStorageKey, LocalStorageValue }

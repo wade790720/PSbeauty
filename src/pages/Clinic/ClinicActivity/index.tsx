@@ -5,10 +5,12 @@ import Backdrop from "components/Layout/Backdrop"
 import Header from "components/Layout/Header"
 import QueryStatus from "components/QueryStatus"
 import { useGetClinicLazyQuery } from "./ClinicActivity.graphql.generated"
+import useGo from "components/Router/useGo"
 
 const ClinicActivity = () => {
   const { id, activityId } = useParams()
   const [loadQuery, { data, loading, error }] = useGetClinicLazyQuery()
+  const go = useGo()
 
   useEffect(() => {
     loadQuery({
@@ -30,6 +32,11 @@ const ClinicActivity = () => {
         <h2>診所活動</h2>
         <img className={styled.pic} src={activities?.image || ""} />
         <div className={styled.title}>{activities?.subject}</div>
+        <div
+          className={styled.clinic}
+          onClick={() => go.toClinicInner({ id: id || "", tab: "info" })}>
+          進入活動診所：{data?.clinic?.name}
+        </div>
         <div
           className={styled.content}
           dangerouslySetInnerHTML={{ __html: activities?.content || "" }}

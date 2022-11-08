@@ -17,6 +17,7 @@ type consultProps = {
   getValue: (value: ChosenItemType) => void
   topCategoriesQuery: GetTopCategoriesQueryHookResult
   defaultValue?: ChosenItemType
+  disableClose?: boolean
 }
 
 const SubjectFilter = (props: consultProps) => {
@@ -40,19 +41,21 @@ const SubjectFilter = (props: consultProps) => {
     <Drawer open={props.open} onClose={props.onClose} size="100%">
       <div className={styled.wrapper}>
         <div className={styled.header}>
-          {level === 1 && (
-            <div
-              className={styled.close}
-              onClick={() => {
-                props.getValue([])
-                props.onClose()
-                setLevel(1)
-                setSecondary([])
-                setChosenItem([])
-              }}>
-              <Icon name="Close" />
-            </div>
-          )}
+          {level === 1 &&
+            (!props.disableClose ? (
+              <div
+                className={styled.close}
+                onClick={() => {
+                  props.onClose()
+                  setLevel(1)
+                  setSecondary([])
+                  setChosenItem([])
+                }}>
+                <Icon name="Close" />
+              </div>
+            ) : (
+              <div />
+            ))}
           {level === 2 && (
             <div
               className={styled.back}

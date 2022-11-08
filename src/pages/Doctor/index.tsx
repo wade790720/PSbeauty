@@ -119,6 +119,7 @@ const Doctor = () => {
                   name: el?.name || "",
                 })) || []
               }
+              disableClose
             />
           </div>
         </>

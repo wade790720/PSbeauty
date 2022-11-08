@@ -1,10 +1,10 @@
-import { useState, useEffect, useCallback } from "react"
+import React, { useState, useEffect } from "react"
 import Drawer from "components/Drawer"
-import Form from "components/Form"
-import Button from "components/Button"
 import styled from "./SubjectFilter.module.scss"
-import { GetTopCategoriesQueryHookResult } from "pages/Doctor/Doctor.graphql.generated"
 import cx from "classnames"
+import Icon from "components/Icon"
+import { ReactComponent as CheckIcon } from "./check.svg"
+import { GetTopCategoriesQueryHookResult } from "pages/Doctor/Doctor.graphql.generated"
 
 type ChosenItemType = {
   id?: string
@@ -16,185 +16,214 @@ type consultProps = {
   onClose: () => void
   getValue: (value: ChosenItemType) => void
   topCategoriesQuery: GetTopCategoriesQueryHookResult
-  defaultValue: ChosenItemType
-}
-
-type CategoryType = {
-  top?: string
-  second?: string
+  defaultValue?: ChosenItemType
 }
 
 const SubjectFilter = (props: consultProps) => {
-  const [isCheckAll, setIsCheckAll] = useState<string[]>([])
-  const [category, setCategory] = useState<CategoryType>()
+  const [level, setLevel] = useState<number>(1)
+  const [category, setCategory] = useState<string>("")
+  const [secondary, setSecondary] = useState<string[]>([])
   const [chosenItem, setChosenItem] = useState<ChosenItemType>([])
   const topCategories = props?.topCategoriesQuery?.data?.topCategories
-  const secondCategories = topCategories?.find(el => el?.name === category?.top)?.secondCategories
-  const bottomCategories = secondCategories
-    ?.filter(el => el?.name === category?.second)?.[0]
-    ?.categories?.map(el => {
-      return {
-        id: el?.id || "",
-        name: el?.name || "",
-      }
-    })
-  const handleFirstItem = useCallback(() => {
-    if (topCategories && topCategories?.length > 0 && !category?.top) {
-      setCategory({
-        top: topCategories[0]?.name || "",
-        second:
-          (topCategories[0]?.secondCategories && topCategories[0]?.secondCategories[0]?.name) || "",
-      })
-    }
-  }, [topCategories])
+  const secondCategories = topCategories?.find(el => el?.name === category)?.secondCategories
 
   useEffect(() => {
-    handleFirstItem()
-  }, [handleFirstItem])
-
-  useEffect(() => {
-    if (props.defaultValue.length === 0) setIsCheckAll([])
-
     setChosenItem(
       props.defaultValue?.map(el => ({
         id: el.id,
         name: el.name,
-      })),
+      })) || [],
     )
   }, [props.defaultValue])
 
   return (
-    <Drawer
-      open={props.open}
-      onClose={() => {
-        props.onClose
-        handleFirstItem()
-      }}
-      size="100%">
+    <Drawer open={props.open} onClose={props.onClose} size="100%">
       <div className={styled.wrapper}>
-        <div className={styled.title}>{`分類(${chosenItem.length})`}</div>
-        <div className={styled["medical-type"]}>
-          {topCategories
-            ?.map(el => el?.name || "")
-            ?.map((item, idx) => (
-              <Button
-                variant="text"
-                key={`topCategories-${idx}`}
-                className={cx({ [styled.category]: item === category?.top })}
-                onClick={() => {
-                  const second =
-                    topCategories?.filter(el => el?.name === item)?.[0]?.secondCategories?.[0]
-                      ?.name || ""
-                  setCategory({
-                    top: item || "",
-                    second,
-                  })
-                }}>
-                {`${item}(${
-                  topCategories?.filter(el => el?.name === item)?.[0]?.secondCategories?.length || 0
-                })`}
-              </Button>
-            ))}
-        </div>
-        <div className={styled.content}>
-          <div className={styled.part}>
-            {secondCategories?.map((item, idx) => {
-              return (
-                <button
-                  key={`secondCategories-${idx}`}
-                  onClick={() => {
-                    setCategory({
-                      ...category,
-                      second: item?.name || "",
-                    })
-                  }}
-                  className={cx(styled.item, {
-                    [styled.select]: item?.name === category?.second,
-                  })}>
-                  {`${item?.name}(${item?.categories?.length || "0"})` || ""}
-                </button>
-              )
-            })}
+        <div className={styled.header}>
+          {level === 1 && (
+            <div
+              className={styled.close}
+              onClick={() => {
+                props.getValue([])
+                props.onClose()
+                setLevel(1)
+                setSecondary([])
+                setChosenItem([])
+              }}>
+              <Icon name="Close" />
+            </div>
+          )}
+          {level === 2 && (
+            <div
+              className={styled.back}
+              onClick={() => {
+                setLevel(1)
+              }}>
+              <Icon name="CaretDown" />
+            </div>
+          )}
+          <div className={styled.title}>分類 ({chosenItem?.length})</div>
+          <div
+            className={styled.finish}
+            onClick={() => {
+              props.getValue(chosenItem)
+              props.onClose()
+              setLevel(1)
+            }}>
+            完成
           </div>
-          <div className={styled.subjects}>
-            {bottomCategories && bottomCategories?.length > 0 && (
-              <Form.Checkbox
-                className={styled.item}
-                checked={isCheckAll?.some(el => el === category?.second)}
-                onChange={e => {
-                  const categories =
-                    secondCategories
-                      ?.filter(el => el?.name === category?.second)?.[0]
-                      ?.categories?.map(el => {
-                        return {
-                          id: el?.id || "",
-                          name: el?.name || "",
+        </div>
+        {level === 1 && (
+          <div className={styled.content}>
+            {topCategories
+              ?.map(el => el?.name || "")
+              ?.map(
+                item =>
+                  (topCategories
+                    ?.find(el => el?.name === item)
+                    ?.secondCategories?.flatMap(el => el?.categories)?.length && (
+                    <button
+                      key={`topCategories-${item}`}
+                      className={styled.row}
+                      onClick={() => {
+                        setCategory(item)
+                        setLevel(2)
+                      }}>
+                      <div className={styled.title}>
+                        {item} (
+                        {
+                          topCategories
+                            ?.find(el => el?.name === item)
+                            ?.secondCategories?.flatMap(el => el?.categories)
+                            ?.filter(el => chosenItem.map(el => el.id).includes(el?.id || ""))
+                            .length
                         }
-                      }) || []
-                  if (e.target.checked) {
-                    setIsCheckAll([...isCheckAll, category?.second || ""])
-                    setChosenItem([...chosenItem, ...categories])
-                  } else {
-                    isCheckAll.splice(
-                      isCheckAll.findIndex(el => el === category?.top),
-                      1,
-                    )
-                    setIsCheckAll(isCheckAll)
-                    setChosenItem(chosenItem.filter(x => !categories.some(el => el?.id === x.id)))
-                  }
-                }}>
-                全選
-              </Form.Checkbox>
-            )}
-            {bottomCategories?.map(subject => (
-              <Form.Checkbox
-                key={subject?.id}
-                className={styled.item}
-                checked={chosenItem.some(el => el.id === subject.id)}
-                value={subject?.name}
-                onChange={e => {
-                  if (e.target.checked) {
-                    setChosenItem([...chosenItem, subject])
-                    const target = secondCategories
-                      ?.filter(el => el?.name === category?.second)?.[0]
-                      ?.categories?.map(el => el?.name || "")
-
-                    const intersection = [...chosenItem, subject].filter(x =>
-                      target?.includes(x?.name || ""),
-                    )
-
-                    if (intersection.length === target?.length) {
-                      setIsCheckAll([...isCheckAll, category?.second || ""])
+                        /
+                        {
+                          topCategories
+                            ?.find(el => el?.name === item)
+                            ?.secondCategories?.flatMap(el => el?.categories)?.length
+                        }
+                        )
+                      </div>
+                      <div className={styled.next}>
+                        <Icon name="CaretDown" />
+                      </div>
+                    </button>
+                  )) || <React.Fragment key={`topCategories-${item}`} />,
+              )}
+          </div>
+        )}
+        {level === 2 && (
+          <div className={styled.content}>
+            {secondCategories?.map(item => (
+              <React.Fragment key={`secondCategories-${item?.name}`}>
+                <button
+                  key={`secondCategories-${item?.name}`}
+                  className={styled.row}
+                  onClick={() => {
+                    if (item?.name && item?.categories?.length) {
+                      if (secondary.includes(item.name)) {
+                        setSecondary(secondary.filter(row => row !== item.name))
+                      } else {
+                        setSecondary([...secondary, item?.name])
+                      }
                     }
-                  } else {
-                    setChosenItem(chosenItem.filter(el => el?.id !== subject?.id))
-                    setIsCheckAll(isCheckAll.filter(el => el !== category?.second))
-                  }
-                }}>
-                {subject?.name || ""}
-              </Form.Checkbox>
+                  }}>
+                  <div className={styled.title}>
+                    {item?.name || ""} (
+                    {
+                      item?.categories?.filter(el =>
+                        chosenItem.map(el => el.id).includes(el?.id || ""),
+                      ).length
+                    }
+                    /{item?.categories?.length})
+                  </div>
+                  {(item?.categories?.length && (
+                    <div
+                      className={cx([
+                        styled.collapse,
+                        secondary.includes(item?.name || "") && styled.open,
+                      ])}>
+                      <Icon name="CaretDown" />
+                    </div>
+                  )) || <React.Fragment />}
+                </button>
+                {secondary.includes(item?.name || "") && (
+                  <>
+                    <label
+                      key={`all-${item?.name}`}
+                      className={cx([styled.row, styled.subject])}
+                      htmlFor={`all-${item?.name}`}>
+                      <input
+                        type="checkbox"
+                        id={`all-${item?.name}`}
+                        checked={item?.categories?.every(
+                          el => el?.id && chosenItem.find(choose => choose?.id === el?.id),
+                        )}
+                        onChange={e => {
+                          if (e.target.checked) {
+                            const adds =
+                              item?.categories
+                                ?.filter(el => !chosenItem.find(choose => choose?.id === el?.id))
+                                .map(el => ({ id: el?.id || "", name: el?.name || "" })) || []
+                            setChosenItem([...chosenItem, ...adds])
+                          } else {
+                            setChosenItem(
+                              chosenItem.filter(
+                                choose => !item?.categories?.find(el => el?.id === choose?.id),
+                              ),
+                            )
+                          }
+                        }}
+                      />
+                      <CheckIcon
+                        className={cx([
+                          styled.checkbox,
+                          item?.categories?.every(
+                            el => el?.id && chosenItem.find(choose => choose?.id === el?.id),
+                          ) && styled.check,
+                        ])}
+                      />
+                      <div className={styled.title}>全選</div>
+                    </label>
+                    {item?.categories
+                      ?.map(el => ({ id: el?.id || "", name: el?.name || "" }))
+                      ?.map(subject => (
+                        <label
+                          key={subject.id}
+                          className={cx([styled.row, styled.subject])}
+                          htmlFor={subject.id}>
+                          <input
+                            type="checkbox"
+                            id={subject.id}
+                            checked={chosenItem.some(el => el.id === subject.id)}
+                            onChange={e => {
+                              if (e.target.checked)
+                                setChosenItem([
+                                  ...chosenItem,
+                                  { id: subject.id, name: subject.name },
+                                ])
+                              else {
+                                setChosenItem(chosenItem.filter(el => el.id !== subject.id))
+                              }
+                            }}
+                          />
+                          <CheckIcon
+                            className={cx([
+                              styled.checkbox,
+                              chosenItem.some(el => el.id === subject.id) && styled.check,
+                            ])}
+                          />
+                          <div className={styled.title}>{subject.name}</div>
+                        </label>
+                      ))}
+                  </>
+                )}
+              </React.Fragment>
             ))}
           </div>
-        </div>
-      </div>
-      <div className={styled.buttons}>
-        <Button
-          variant="text"
-          onClick={() => {
-            setChosenItem([])
-            setIsCheckAll([])
-          }}>
-          清除
-        </Button>
-        <Button
-          variant="primary"
-          onClick={() => {
-            props.getValue(chosenItem)
-            props.onClose()
-            handleFirstItem()
-          }}>
-          完成
-        </Button>
+        )}
       </div>
     </Drawer>
   )

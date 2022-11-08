@@ -21,6 +21,7 @@ export const Icon = (props: IconProps) => {
     EyeSlash: <Svg.EyeSlash />,
     EyeFill: <Svg.EyeFill />,
     Check: <Svg.Check />,
+    Close: <Svg.Close />,
     Cross: <Svg.Cross />,
     PurpleCross: <Svg.PurpleCross />,
     LeftArrow: <Svg.LeftArrow />,

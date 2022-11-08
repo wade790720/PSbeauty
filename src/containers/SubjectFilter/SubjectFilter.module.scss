@@ -1,118 +1,150 @@
 .wrapper {
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  height: calc(100vh - 62px);
+  height: 100vh;
 
-  .title {
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-    height: 24px;
-    color: #2b3a4b;
-    font-weight: bold;
-    font-size: 17px;
+  >.header {
+    height: 60px;
+    flex-shrink: 0;
+    display: grid;
+    grid-template-columns: 60px 1fr 70px;
+    border-bottom: 1px solid #DDD;
 
-    .error {
+    >div {
       display: flex;
       align-items: center;
-      margin-left: 12px;
-      color: #dc3545;
-      font-weight: normal;
-      font-size: 12px;
-      line-height: 12px;
-
-      gap: 4px;
-    }
-  }
-
-  .category {
-    border: none;
-    background: #ebf5f9;
-    font-weight: 400;
-  }
-
-  .medical-type {
-    display: grid;
-    overflow-x: auto;
-    flex-shrink: 0;
-
-    grid-auto-flow: column;
-    grid-gap: 8px;
-    grid-auto-columns: min-content;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-
-    &::-webkit-scrollbar {
-      display: none;
+      justify-content: center;
     }
 
-    button {
-      padding: 0 10px;
-      height: 32px;
-      white-space: nowrap;
-      font-weight: 400;
-    }
-  }
+    >.close {
+      >div {
+        width: 18px;
+        height: 18px;
 
-  .content {
-    display: flex;
-    overflow: hidden;
-    margin-top: 24px;
-
-    .part {
-      display: flex;
-      overflow: scroll;
-      align-items: flex-start;
-      flex-direction: column;
-      width: 127px;
-      border-right: 1px solid rgba(#aab0b2, 0.2);
-
-      &::-webkit-scrollbar {
-        display: none;
+        >svg>g:nth-child(2) {
+          fill: #18a0cb;
+          stroke: #18a0cb;
+        }
       }
     }
 
-    .item {
-      padding: 12px 0;
-      border: none;
-      background: none;
+    >.back {
+      >div {
+        width: 24px;
+        height: 24px;
+        transform: rotate(90deg);
+
+        >svg path {
+          stroke: #18a0cb;
+        }
+      }
+    }
+
+    >.finish {
+      font-size: 18px;
+      color: #18a0cb;
+      font-weight: bold;
+    }
+
+    >.title {
+      padding-left: 10px;
+      font-size: 17px;
       color: #2b3a4b;
-      font-size: 16px;
-      line-height: 24px;
+      font-weight: bold;
+      position: relative;
+
+      .error {
+        display: flex;
+        align-items: center;
+        color: #dc3545;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 12px;
+        margin-left: -5px;
+        position: absolute;
+        bottom: 2px;
+      }
+    }
+  }
+
+  >.content {
+    flex: 1 0;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+
+    >.row {
+      display: flex;
+      flex-direction: row;
+      height: 60px;
+      flex-shrink: 0;
+      align-items: center;
+      border: none;
+      border-bottom: 1px solid #EEE;
+      background: #fff;
       cursor: pointer;
 
-      &.select {
-        color: #18a0cb;
-        font-weight: bold;
+      &.subject {
+        margin-left: 20px;
       }
-    }
 
-    .subjects {
-      display: flex;
-      overflow: scroll;
-      flex: 1;
-      flex-direction: column;
-      padding-left: 19px;
+      >.title {
+        flex: 1 0;
+        font-size: 16px;
+        text-align: left;
+        color: #2b3a4b;
+      }
 
-      &::-webkit-scrollbar {
+      >.next {
+        height: 100%;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        svg {
+          transform: rotate(-90deg);
+        }
+      }
+
+      >.collapse {
+        height: 100%;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        &.open {
+          svg {
+            transform: rotate(180deg);
+          }
+        }
+      }
+
+      >.checkbox {
+        overflow: hidden;
+        pointer-events: none;
+        fill: #fff;
+        height: 25px;
+        width: 25px;
+
+        rect {
+          fill: #fff;
+          stroke: #2b3a4b;
+        }
+
+        &.check {
+          rect {
+            fill: #18a0cb;
+            stroke: #18a0cb;
+          }
+        }
+      }
+
+      >input[type=checkbox] {
         display: none;
       }
     }
-  }
-}
-
-.buttons {
-  position: fixed;
-  bottom: 24px;
-  left: 24px;
-  display: flex;
-  width: calc(100% - 48px);
-
-  gap: 8px;
-
-  button {
-    height: 38px;
-    font-size: 16px !important;
   }
 }

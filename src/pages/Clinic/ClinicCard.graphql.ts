@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client"
 
 export const GetClinics = gql`
-  query GetClinics {
-    clinics(order: { consultReplyCount: DESC }, first: 10) {
+  query GetClinics($after: String) {
+    clinics(order: { consultReplyCount: DESC }, first: 10, after: $after) {
       totalCount
       pageInfo {
         hasNextPage
@@ -26,11 +26,12 @@ export const GetClinics = gql`
 `
 
 export const GetClinicsSearch = gql`
-  query GetClinicsSearch($county: [String], $town: [String]) {
+  query GetClinicsSearch($county: [String], $town: [String], $after: String) {
     clinics(
       where: { county: { in: $county }, town: { in: $town } }
       order: { consultReplyCount: DESC }
       first: 10
+      after: $after
     ) {
       totalCount
       pageInfo {

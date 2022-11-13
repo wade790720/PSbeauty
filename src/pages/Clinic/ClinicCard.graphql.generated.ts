@@ -3,7 +3,9 @@ import * as Types from "../../types/schema"
 import { gql } from "@apollo/client"
 import * as Apollo from "@apollo/client"
 const defaultOptions = {} as const
-export type GetClinicsQueryVariables = Types.Exact<{ [key: string]: never }>
+export type GetClinicsQueryVariables = Types.Exact<{
+  after?: Types.InputMaybe<Types.Scalars["String"]>
+}>
 
 export type GetClinicsQuery = {
   clinics?: {
@@ -39,6 +41,7 @@ export type GetClinicsSearchQueryVariables = Types.Exact<{
   town?: Types.InputMaybe<
     Array<Types.InputMaybe<Types.Scalars["String"]>> | Types.InputMaybe<Types.Scalars["String"]>
   >
+  after?: Types.InputMaybe<Types.Scalars["String"]>
 }>
 
 export type GetClinicsSearchQuery = {
@@ -69,8 +72,8 @@ export type GetClinicsSearchQuery = {
 }
 
 export const GetClinicsDocument = gql`
-  query GetClinics {
-    clinics(order: { consultReplyCount: DESC }, first: 10) {
+  query GetClinics($after: String) {
+    clinics(order: { consultReplyCount: DESC }, first: 10, after: $after) {
       totalCount
       pageInfo {
         hasNextPage
@@ -105,6 +108,7 @@ export const GetClinicsDocument = gql`
  * @example
  * const { data, loading, error } = useGetClinicsQuery({
  *   variables: {
+ *      after: // value for 'after'
  *   },
  * });
  */
@@ -124,11 +128,12 @@ export type GetClinicsQueryHookResult = ReturnType<typeof useGetClinicsQuery>
 export type GetClinicsLazyQueryHookResult = ReturnType<typeof useGetClinicsLazyQuery>
 export type GetClinicsQueryResult = Apollo.QueryResult<GetClinicsQuery, GetClinicsQueryVariables>
 export const GetClinicsSearchDocument = gql`
-  query GetClinicsSearch($county: [String], $town: [String]) {
+  query GetClinicsSearch($county: [String], $town: [String], $after: String) {
     clinics(
       where: { county: { in: $county }, town: { in: $town } }
       order: { consultReplyCount: DESC }
       first: 10
+      after: $after
     ) {
       totalCount
       pageInfo {
@@ -166,6 +171,7 @@ export const GetClinicsSearchDocument = gql`
  *   variables: {
  *      county: // value for 'county'
  *      town: // value for 'town'
+ *      after: // value for 'after'
  *   },
  * });
  */

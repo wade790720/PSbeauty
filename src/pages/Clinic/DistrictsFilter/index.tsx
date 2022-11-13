@@ -11,7 +11,7 @@ type DistrictsFilterProps = {
   onClose: (value: RegionProps) => void
 }
 
-type RegionProps = {
+export type RegionProps = {
   county: string
   town: string
 }[]

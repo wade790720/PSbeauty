@@ -1147,6 +1147,21 @@ export type ClinicsEdge = {
   node?: Maybe<Clinic>
 }
 
+/** 使用者蒐集活動輸入內容 */
+export type CollectActivityInput = {
+  /** 蒐集活動識別碼 */
+  activityId?: InputMaybe<Scalars["String"]>
+}
+
+/** 使用者蒐集活動回覆 */
+export type CollectActivityPayload = {
+  __typename: "CollectActivityPayload"
+  /** 蒐集活動識別碼 */
+  activityId?: Maybe<Scalars["String"]>
+  /** 使用者識別碼 */
+  userId?: Maybe<Scalars["String"]>
+}
+
 /** 使用者蒐集案例輸入內容 */
 export type CollectCaseInput = {
   /** 蒐集案例識別碼 */
@@ -1588,6 +1603,8 @@ export type Mutation = {
   addTopCategory?: Maybe<AddTopCategoryPayload>
   /** [會員註冊]新增使用者，在 firebase 新增完後呼叫此 API 新增 */
   addUser?: Maybe<AddUserPayload>
+  /** [會員] 使用者將指定活動加入蒐藏 */
+  collectActivity?: Maybe<CollectActivityPayload>
   /** [會員]使用者將指定病例加入蒐藏 */
   collectCase?: Maybe<CollectCasePayload>
   /** [會員]一對一諮詢，由使用者直接諮詢診所 */
@@ -1642,6 +1659,8 @@ export type Mutation = {
   readClinicInbox?: Maybe<ReadClinicInboxPayload>
   /** [會員/診所管理員]讀取諮詢回覆 */
   readReply?: Maybe<ReadReplyPayload>
+  /** [會員]移除已蒐集活動 */
+  removeCollectedActivity?: Maybe<RemoveCollectedActivityPayload>
   /** [會員]移除已蒐集病例 */
   removeCollectedCase?: Maybe<RemoveCollectedCasePayload>
   /** [會員]回覆話題 */
@@ -1779,6 +1798,10 @@ export type MutationAddUserArgs = {
   input?: InputMaybe<AddUserInput>
 }
 
+export type MutationCollectActivityArgs = {
+  input?: InputMaybe<CollectActivityInput>
+}
+
 export type MutationCollectCaseArgs = {
   input?: InputMaybe<CollectCaseInput>
 }
@@ -1861,6 +1884,10 @@ export type MutationReadClinicInboxArgs = {
 
 export type MutationReadReplyArgs = {
   input?: InputMaybe<ReadReplyInput>
+}
+
+export type MutationRemoveCollectedActivityArgs = {
+  input?: InputMaybe<RemoveCollectedActivityInput>
 }
 
 export type MutationRemoveCollectedCaseArgs = {
@@ -2385,6 +2412,21 @@ export type ReadReplyPayloadAddArgs = {
   replyId?: InputMaybe<Scalars["String"]>
 }
 
+/** 移除活動輸入資料 */
+export type RemoveCollectedActivityInput = {
+  /** 蒐集活動識別碼 */
+  activityId?: InputMaybe<Scalars["String"]>
+}
+
+/** 移除活動輸出資料 */
+export type RemoveCollectedActivityPayload = {
+  __typename: "RemoveCollectedActivityPayload"
+  /** 蒐集活動識別碼 */
+  activityId?: Maybe<Scalars["String"]>
+  /** 使用者識別碼 */
+  userId?: Maybe<Scalars["String"]>
+}
+
 /** 移除病例輸入資料 */
 export type RemoveCollectedCaseInput = {
   /** 蒐集案例識別碼 */
@@ -2876,6 +2918,8 @@ export type User = {
   categories?: Maybe<Array<Maybe<Category>>>
   /** 使用者使用的裝置識別碼，接收 firebase message 用 */
   clientTokens?: Maybe<Array<Maybe<Scalars["String"]>>>
+  /** 蒐集的活動識別碼，對應 Activity.id */
+  collectedActivities?: Maybe<Array<Maybe<Scalars["String"]>>>
   /** 取得使用者諮詢 */
   consults?: Maybe<Array<Maybe<ConsultExt>>>
   /** 使用者電子郵件信箱 */
@@ -2890,6 +2934,8 @@ export type User = {
   phone?: Maybe<Scalars["String"]>
   /** GCP Firebase 中的識別碼 */
   uid?: Maybe<Scalars["String"]>
+  /** 取得使用者蒐集活動 */
+  userCollectedActivities?: Maybe<Array<Maybe<ClinicActivity>>>
   /** 取得使用者蒐取病例 */
   userCollectedCases?: Maybe<Array<Maybe<ClinicCase>>>
 }
@@ -2901,6 +2947,8 @@ export type UserFilterInput = {
   categories?: InputMaybe<ListStringOperationFilterInput>
   /** 使用者使用的裝置識別碼，接收 firebase message 用 */
   clientTokens?: InputMaybe<ListStringOperationFilterInput>
+  /** 蒐集的活動識別碼，對應 Activity.id */
+  collectedActivities?: InputMaybe<ListStringOperationFilterInput>
   /** 蒐集的病症案例編號，對應 ClinicCase.id */
   collectedCases?: InputMaybe<ListStringOperationFilterInput>
   /** 使用者電子郵件信箱 */

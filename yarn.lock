@@ -10624,6 +10624,11 @@ react-scripts@5.0.1:
   optionalDependencies:
     fsevents "^2.3.2"
 
+react-simple-pull-to-refresh@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/react-simple-pull-to-refresh/-/react-simple-pull-to-refresh-1.3.3.tgz#118afe0d8ba6cade87094786b3889fb2ffd5b9bc"
+  integrity sha512-6qXsa5RtNVmKJhLWvDLIX8UK51HFtCEGjdqQGf+M1Qjrcc4qH4fki97sgVpGEFBRwbY7DiVDA5N5p97kF16DTw==
+
 react-switch@^6.0.0:
   version "6.0.0"
   resolved "https://registry.npmjs.org/react-switch/-/react-switch-6.0.0.tgz"

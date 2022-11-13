@@ -18,6 +18,7 @@ import { useGetCollectedCaseLazyQuery } from "graphql/queries/getCollectedCase.g
 import { useGetMemberInboxLazyQuery } from "pages/Member/MemberInbox/MemberInbox.graphql.generated"
 import { SortEnumType } from "types/schema"
 import { saveState, getState } from "utils/stateSaver"
+import PullToRefresh from "react-simple-pull-to-refresh"
 
 const Home = () => {
   const [consult, setConsult] = useState(false)
@@ -84,6 +85,16 @@ const Home = () => {
       },
     })
   }, [edges, getCasesQuery])
+
+  const refresh = useCallback(() => {
+    getAdImagesQuery.refetch({
+      first: 5,
+      orderId: SortEnumType.Desc,
+      where: "首頁輪播",
+    })
+    cursorRef.current = ""
+    getCasesQuery.refetch({ after: null })
+  }, [getAdImagesQuery, getCasesQuery])
 
   const consults = getMemberInboxQuery.data?.me?.consults || []
   const list = []
@@ -196,31 +207,33 @@ const Home = () => {
                 )}
             </div>
           </div>
-          <div className={styled.inner} ref={innerRef}>
-            <Banner images={adImages} />
-            <div className={styled.onlineCount}>
-              <div>在線人數</div>
-              <div>
-                <span className={styled.text}>{onlineCount}</span>
-                <span>人</span>
+          <PullToRefresh onRefresh={async () => refresh()}>
+            <div className={styled.inner} ref={innerRef}>
+              <Banner images={adImages} />
+              <div className={styled.onlineCount}>
+                <div>在線人數</div>
+                <div>
+                  <span className={styled.text}>{onlineCount}</span>
+                  <span>人</span>
+                </div>
+              </div>
+              {list}
+              <div className={styled.filter}>
+                <Button
+                  className={styled.button}
+                  onClick={() => (auth?.user?.id ? setConsult(true) : go.toSignIn())}>
+                  <Icon name="notePencil" className={styled.notePencil} />
+                  匿名諮詢
+                </Button>
+                <Consulting
+                  open={consult}
+                  onClose={() => {
+                    setConsult(false)
+                  }}
+                />
               </div>
             </div>
-            {list}
-            <div className={styled.filter}>
-              <Button
-                className={styled.button}
-                onClick={() => (auth?.user?.id ? setConsult(true) : go.toSignIn())}>
-                <Icon name="notePencil" className={styled.notePencil} />
-                匿名諮詢
-              </Button>
-              <Consulting
-                open={consult}
-                onClose={() => {
-                  setConsult(false)
-                }}
-              />
-            </div>
-          </div>
+          </PullToRefresh>
         </div>
       )}
       {auth.user.clinic ? <Toolbars.Clinic /> : <Toolbars />}

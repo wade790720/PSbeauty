@@ -31,6 +31,9 @@ const Member = () => {
         <Button variant="secondary" onClick={go.toCollectClinicalCase}>
           收藏案例
         </Button>
+        <Button variant="secondary" onClick={go.toCollectActivities}>
+          收藏活動
+        </Button>
         <Button variant="secondary" onClick={() => setOpen(true)}>
           修改密碼
         </Button>

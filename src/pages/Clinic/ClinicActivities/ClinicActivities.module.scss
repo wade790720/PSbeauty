@@ -1,7 +1,6 @@
 .wrapper {
   display: grid;
   padding-bottom: 6px;
-
   grid-gap: 12px;
 }
 
@@ -17,6 +16,7 @@
 }
 
 .activity-card {
+  position: relative;
   padding: 24px;
   height: 180px;
   border: 1px solid rgba(170, 176, 178, 0.2);
@@ -60,6 +60,34 @@
       line-height: 21px;
 
       -webkit-line-clamp: 4;
+    }
+  }
+
+  .collect-block {
+    position: absolute;
+    top: 27px;
+    right: 30px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 32px;
+
+    .bookmark-fill {
+      width: 20px;
+      height: 26px;
+    }
+
+    .bookmark-simple {
+      width: 18px;
+      height: 24px;
+    }
+
+    .amount {
+      margin-top: 4px;
+      color: #aab0b2;
+      font-weight: 700;
+      font-size: 10px;
+      line-height: 15px;
     }
   }
 }

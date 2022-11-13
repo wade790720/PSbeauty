@@ -29,6 +29,7 @@ const ClinicActivity = lazy(() => import("pages/Clinic/ClinicActivity"))
 const Member = lazy(() => import("pages/Member"))
 const MemberConsultationRecord = lazy(() => import("pages/Member/MemberConsultationRecord"))
 const MemberCollectClinicalCase = lazy(() => import("pages/Member/MemberCollectClinicalCase"))
+const MemberCollectActivities = lazy(() => import("pages/Member/MemberCollectActivities"))
 const MemberInbox = lazy(() => import("pages/Member/MemberInbox"))
 const MemberQuestions = lazy(() => import("pages/Member/MemberQuestions"))
 const Doctor = lazy(() => import("pages/Doctor"))
@@ -218,6 +219,16 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
           element: user.id ? (
             <Suspense>
               <MemberCollectClinicalCase />
+            </Suspense>
+          ) : (
+            <Navigate to="/sign-in" />
+          ),
+        },
+        {
+          path: "collect-activities",
+          element: user.id ? (
+            <Suspense>
+              <MemberCollectActivities />
             </Suspense>
           ) : (
             <Navigate to="/sign-in" />

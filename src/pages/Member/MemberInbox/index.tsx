@@ -54,7 +54,7 @@ const MemberInbox = () => {
       />
       {/* inbox第一層 - 諮詢 + 1對1 */}
       <PullToRefresh onRefresh={() => refetch()}>
-        <div style={{ height: "100%", overflow: "auto" }}>
+        <div className={styled["pull-to-refresh-wrapper"]}>
           <div
             className={cx(styled.wrapper, {
               [styled.empty]: (data?.me?.consults?.length || 0) <= 0,

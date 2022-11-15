@@ -13,11 +13,7 @@ import QueryStatus from "components/QueryStatus"
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
 import { useGetMemberInboxLazyQuery } from "pages/Member/MemberInbox/MemberInbox.graphql.generated"
 import { SortEnumType } from "types/schema"
-import {
-  useGetClinicsQuery,
-  useGetClinicsSearchLazyQuery,
-  GetClinicsQuery,
-} from "./ClinicCard.graphql.generated"
+import { useGetClinicsQuery, useGetClinicsSearchLazyQuery } from "./ClinicCard.graphql.generated"
 import useGo from "components/Router/useGo"
 import PullToRefresh from "react-simple-pull-to-refresh"
 
@@ -64,7 +60,7 @@ const Clinic = () => {
     },
   })
 
-  const refreshClinicsQuery = useCallback(() => {
+  const refetchClinicsQuery = useCallback(() => {
     getClinicsQuery.refetch().then(res => {
       setSortClinicQuery([])
       const edges = [...(res?.data?.clinics?.edges || [])]
@@ -135,7 +131,7 @@ const Clinic = () => {
         })
       }
     }
-  }, [getClinicsQuerySearch, getClinicsQuery])
+  }, [searchValue, getClinicsQuerySearch, getClinicsQuery])
 
   const refresh = useCallback(() => {
     getAdImagesQuery.refetch({
@@ -146,15 +142,17 @@ const Clinic = () => {
     if (searchValue) {
       refetchClinicsQuerySearch()
     } else {
-      refreshClinicsQuery()
+      refetchClinicsQuery()
     }
-  }, [searchValue, getAdImagesQuery, refetchClinicsQuerySearch, refreshClinicsQuery])
+  }, [searchValue, getAdImagesQuery, refetchClinicsQuerySearch, refetchClinicsQuery])
 
-  if (getClinicsQuery.error || getAdImagesQuery.error) return <QueryStatus.Error />
+  if (getClinicsQuerySearch.error || getClinicsQuery.error || getAdImagesQuery.error) {
+    return <QueryStatus.Error />
+  }
 
   return (
     <>
-      {getClinicsQuery.loading && getAdImagesQuery.loading ? (
+      {getClinicsQuerySearch.loading && getClinicsQuery.loading && getAdImagesQuery.loading ? (
         <QueryStatus.Loading />
       ) : (
         <div className={styled.wrapper}>

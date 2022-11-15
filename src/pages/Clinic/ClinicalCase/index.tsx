@@ -14,6 +14,7 @@ import useGo from "components/Router/useGo"
 import { useAuth } from "hooks/useAuth"
 import { useParams } from "react-router-dom"
 import QueryStatus from "components/QueryStatus"
+import PullToRefresh from "react-simple-pull-to-refresh"
 
 const ClinicalCase = () => {
   const go = useGo()
@@ -24,7 +25,7 @@ const ClinicalCase = () => {
   const [loadGetCollectItemsQuery, getCollectItemsQuery] = useGetCollectItemsLazyQuery({
     fetchPolicy: "no-cache",
   })
-  const { data, loading, error } = useGetCaseQuery({
+  const { data, loading, error, refetch } = useGetCaseQuery({
     variables: {
       id: caseId || "",
     },
@@ -73,36 +74,38 @@ const ClinicalCase = () => {
     <>
       <Header leftArrow />
       <Backdrop className={styled.wrapper}>
-        <div className={styled.outer}>
-          <div className={styled.title}>{data?.case?.title}</div>
-          <div
-            className={styled.clinic}
-            onClick={() => go.toClinicInner({ id: data?.case?.clinic?.id || "", tab: "info" })}>
-            診所介紹：{data?.case?.clinic?.name}
-          </div>
-          <div className={styled.image} style={{ height: imageWidth }} ref={imageRef}>
-            <img src={data?.case?.image || ""} />
-          </div>
-          <div
-            className={styled.content}
-            dangerouslySetInnerHTML={{ __html: data?.case?.description || "" }}
-          />
-          <Tag
-            tags={data?.case?.categories?.map(el => ({ id: el?.id || "", name: el?.name || "" }))}
-          />
-          <div
-            className={styled["collect-block"]}
-            onClick={e => {
-              e.stopPropagation()
-              if (!auth.user.id) return go.toSignIn()
-              isCollected ? removeCollectedCaseMutation() : collectCaseMutation()
-            }}>
-            <Icon
-              name={isCollected ? "BookmarkFill" : "BookmarkSimple"}
-              className={styled["bookmark-simple"]}
+        <PullToRefresh onRefresh={async () => refetch()}>
+          <div className={styled.outer}>
+            <div className={styled.title}>{data?.case?.title}</div>
+            <div
+              className={styled.clinic}
+              onClick={() => go.toClinicInner({ id: data?.case?.clinic?.id || "", tab: "info" })}>
+              診所介紹：{data?.case?.clinic?.name}
+            </div>
+            <div className={styled.image} style={{ height: imageWidth }} ref={imageRef}>
+              <img src={data?.case?.image || ""} />
+            </div>
+            <div
+              className={styled.content}
+              dangerouslySetInnerHTML={{ __html: data?.case?.description || "" }}
             />
+            <Tag
+              tags={data?.case?.categories?.map(el => ({ id: el?.id || "", name: el?.name || "" }))}
+            />
+            <div
+              className={styled["collect-block"]}
+              onClick={e => {
+                e.stopPropagation()
+                if (!auth.user.id) return go.toSignIn()
+                isCollected ? removeCollectedCaseMutation() : collectCaseMutation()
+              }}>
+              <Icon
+                name={isCollected ? "BookmarkFill" : "BookmarkSimple"}
+                className={styled["bookmark-simple"]}
+              />
+            </div>
           </div>
-        </div>
+        </PullToRefresh>
       </Backdrop>
     </>
   )

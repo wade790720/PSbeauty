@@ -1,39 +1,35 @@
-import cx from "classnames"
-import styled from "./MemberCollectActivities.module.scss"
 import Header from "components/Layout/Header"
-import CaseCard from "containers/CaseCard"
-// import { useGetMeQuery } from "./MemberCollectActivities.graphql.generated"
+import ActivityCard from "pages/Clinic/ClinicActivities/ActivityCard"
+import { useGetCollectedActivitiesQuery } from "graphql/queries/collectActivities.graphql.generated"
 import QueryStatus from "components/QueryStatus"
+import styled from "./MemberCollectActivities.module.scss"
+import cx from "classnames"
 
 const MemberCollectActivities = () => {
-  // const { data, loading, error } = useGetMeQuery({ fetchPolicy: "no-cache" })
+  const { data, loading, error } = useGetCollectedActivitiesQuery({ fetchPolicy: "no-cache" })
 
-  // if (loading) return <QueryStatus.Loading />
-  // if (error) return <QueryStatus.Error />
+  if (loading) return <QueryStatus.Loading />
+  if (error) return <QueryStatus.Error />
+
   return (
     <>
       <Header title="收藏活動" leftArrow />
-      {/* <div
-        className={cx(styled.wrapper, { [styled.empty]: !data?.me?.userCollectedCases?.length })}>
-        <div className={styled["empty-card"]}>尚無收藏案例</div>
-        {data?.me?.userCollectedCases?.map(el => (
-          <CaseCard
+      <div
+        className={cx(styled.wrapper, {
+          [styled.empty]: !data?.me?.userCollectedActivities?.length,
+        })}>
+        <div className={styled["empty-card"]}>尚無收藏活動</div>
+        {data?.me?.userCollectedActivities?.map(el => (
+          <ActivityCard
             key={el?.id}
-            isCollected
-            title={el?.title || ""}
-            clinic={el?.clinic?.name || ""}
+            activityId={el?.id || ""}
             clinicId={el?.clinic?.id || ""}
-            introduction={el?.description || ""}
+            subject={el?.subject || ""}
+            content={el?.content || ""}
             image={el?.image || ""}
-            tags={el?.categories?.map(tag => ({
-              id: tag?.id || "",
-              name: tag?.name || "",
-            }))}
-            caseId={el?.id || ""}
-            last={false}
           />
         ))}
-      </div> */}
+      </div>
     </>
   )
 }

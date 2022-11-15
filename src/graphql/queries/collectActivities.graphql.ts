@@ -8,6 +8,7 @@ export const GetCollectedActivities = gql`
         subject
         content
         createdAt
+        image
         clinic {
           id
           name

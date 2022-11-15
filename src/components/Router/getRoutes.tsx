@@ -224,6 +224,7 @@ const getRoutes = ({ user }: AuthContextProps): RouteObject[] => {
             <Navigate to="/sign-in" />
           ),
         },
+        /* 收藏活動 */
         {
           path: "collect-activities",
           element: user.id ? (

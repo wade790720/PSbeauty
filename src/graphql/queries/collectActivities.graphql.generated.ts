@@ -14,6 +14,7 @@ export type GetCollectedActivitiesQuery = {
       subject?: string | null
       content?: string | null
       createdAt: number
+      image?: string | null
       clinic?: { __typename: "Clinic"; id?: string | null; name?: string | null } | null
     } | null> | null
   } | null
@@ -47,6 +48,7 @@ export const GetCollectedActivitiesDocument = gql`
         subject
         content
         createdAt
+        image
         clinic {
           id
           name

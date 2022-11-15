@@ -6,12 +6,12 @@ import Icon from "components/Icon"
 import { ReactComponent as CheckIcon } from "./check.svg"
 import { GetTopCategoriesQueryHookResult } from "pages/Doctor/Doctor.graphql.generated"
 
-type ChosenItemType = {
+export type ChosenItemType = {
   id?: string
   name?: string
 }[]
 
-type consultProps = {
+export type ConsultProps = {
   open: boolean
   onClose: () => void
   getValue: (value: ChosenItemType) => void
@@ -20,7 +20,7 @@ type consultProps = {
   disableClose?: boolean
 }
 
-const SubjectFilter = (props: consultProps) => {
+const SubjectFilter = (props: ConsultProps) => {
   const [level, setLevel] = useState<number>(1)
   const [category, setCategory] = useState<string>("")
   const [secondary, setSecondary] = useState<string[]>([])
@@ -46,6 +46,7 @@ const SubjectFilter = (props: consultProps) => {
               <div
                 className={styled.close}
                 onClick={() => {
+                  props.getValue([])
                   props.onClose()
                   setLevel(1)
                   setSecondary([])

@@ -11,7 +11,7 @@ export type ChosenItemType = {
   name: string
 }[]
 
-type consultProps = {
+export type ConsultProps = {
   open: boolean
   onClose: () => void
   getValue: (value: ChosenItemType) => void
@@ -19,7 +19,7 @@ type consultProps = {
   query: GetTopCategoriesQueryHookResult
 }
 
-const SubjectFilter = (props: consultProps) => {
+const SubjectFilter = (props: ConsultProps) => {
   const [level, setLevel] = useState<number>(1)
   const [category, setCategory] = useState<string>("")
   const [secondary, setSecondary] = useState<string[]>([])

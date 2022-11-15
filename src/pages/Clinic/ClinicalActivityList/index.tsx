@@ -1,41 +1,77 @@
-import { useEffect, useCallback, useRef } from "react"
+import useState from "react-usestateref"
+import { useEffect, useCallback } from "react"
 import styled from "./ClinicalActivityList.module.scss"
-
 import Banner from "containers/Banner"
 import ActivityCard from "pages/Clinic/ClinicActivities/ActivityCard"
 import Toolbars from "containers/Toolbars"
 import SearchBar from "containers/SearchBar"
-
 import Icon from "components/Icon"
 import useGo from "components/Router/useGo"
 import QueryStatus from "components/QueryStatus"
-
 import { useAuth } from "hooks/useAuth"
 import { useGetActivitiesQuery } from "./ClinicalActivityList.graphql.generated"
 import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generated"
 import { useGetMemberInboxLazyQuery } from "pages/Member/MemberInbox/MemberInbox.graphql.generated"
 import { SortEnumType } from "types/schema"
+import PullToRefresh from "react-simple-pull-to-refresh"
+
+export type ActivitiesArray = Array<{
+  cursor: string
+  node?: {
+    id?: string | null
+    image?: string | null
+    subject?: string | null
+    content?: string | null
+    clinic?: { id?: string | null } | null
+  } | null
+}> | null
 
 const ClinicalActivityList = () => {
+  const [activities, setActivities, activitiesRef] = useState<ActivitiesArray>([])
   const auth = useAuth()
   const go = useGo()
-  const cursorRef = useRef<string>("")
 
-  const [loadMemberInboxQuery, getMemberInboxQuery] = useGetMemberInboxLazyQuery()
-  const getActivitiesQuery = useGetActivitiesQuery()
-  const adImageCaseQuery = useGetAdImagesQuery({
+  const getAdImagesQuery = useGetAdImagesQuery({
     variables: {
       first: 5,
       orderId: SortEnumType.Desc,
       where: "案例輪播",
     },
   })
+  const getActivitiesQuery = useGetActivitiesQuery({
+    onCompleted: data => {
+      const edges = [
+        ...(data?.activities?.edges || []).map((el, idx) => {
+          return {
+            cursor: el.cursor,
+            node: data?.activities?.nodes?.[idx],
+          }
+        }),
+      ]
+      edges.sort(() => Math.random() - 0.5)
+      setActivities([...(activitiesRef?.current || []), ...edges])
+    },
+  })
+  const [loadMemberInboxQuery, getMemberInboxQuery] = useGetMemberInboxLazyQuery()
 
-  const edges = getActivitiesQuery?.data?.activities?.edges || []
-  const nodes = [...(getActivitiesQuery?.data?.activities?.nodes || [])]
-  nodes.sort(() => Math.random() - 0.5)
+  const refetchActivitiesQuery = useCallback(() => {
+    getActivitiesQuery.refetch().then(res => {
+      setActivities([])
+      const edges = [
+        ...(res?.data?.activities?.edges || []).map((el, idx) => {
+          return {
+            cursor: el.cursor,
+            node: res?.data?.activities?.nodes?.[idx],
+          }
+        }),
+      ]
+      edges.sort(() => Math.random() - 0.5)
+      setActivities([...edges])
+    })
+  }, [getActivitiesQuery])
 
-  const adImages = adImageCaseQuery?.data?.adImages?.edges
+  const count = activities?.length || 0
+  const adImages = getAdImagesQuery?.data?.adImages?.edges
     ?.map(el => ({
       image: el.node?.image || "",
       clinicId: el.node?.clinicId || "",
@@ -52,43 +88,35 @@ const ClinicalActivityList = () => {
   }, [auth.user.id, loadMemberInboxQuery])
 
   const fetchMore = useCallback(() => {
-    const after = edges?.[edges.length - 1]?.cursor || null
-    const target = getActivitiesQuery
-    target.fetchMore({
-      variables: {
-        after,
-      },
-      updateQuery: (prevResult, { fetchMoreResult }) => {
-        if (
-          !after ||
-          after === cursorRef?.current ||
-          !fetchMoreResult?.activities?.edges ||
-          !prevResult?.activities?.edges ||
-          prevResult?.activities?.edges.length > edges.length
-        )
-          return prevResult
-
-        fetchMoreResult.activities.edges = [
-          ...(prevResult?.activities?.edges || []),
-          ...(fetchMoreResult?.activities?.edges || []),
-        ]
-
-        fetchMoreResult.activities.nodes = [
-          ...(prevResult.activities?.nodes || []),
-          ...(fetchMoreResult?.activities?.nodes || []),
-        ]
-        cursorRef.current = after
-        return fetchMoreResult
-      },
-    })
-  }, [edges, getActivitiesQuery])
+    if (getActivitiesQuery?.data?.activities?.pageInfo?.hasNextPage) {
+      const edges = getActivitiesQuery?.data?.activities?.edges
+      const after = edges?.[edges.length - 1]?.cursor || null
+      getActivitiesQuery.fetchMore({
+        variables: {
+          after,
+        },
+        updateQuery: (__, { fetchMoreResult }) => {
+          return fetchMoreResult
+        },
+      })
+    }
+  }, [getActivitiesQuery])
   const consults = getMemberInboxQuery.data?.me?.consults || []
 
-  if (getActivitiesQuery.error) return <QueryStatus.Error />
+  const refresh = useCallback(() => {
+    getAdImagesQuery.refetch({
+      first: 5,
+      orderId: SortEnumType.Desc,
+      where: "案例輪播",
+    })
+    refetchActivitiesQuery()
+  }, [getAdImagesQuery, refetchActivitiesQuery])
+
+  if (getActivitiesQuery.error || getAdImagesQuery.error) return <QueryStatus.Error />
 
   return (
     <>
-      {getActivitiesQuery.loading ? (
+      {getActivitiesQuery.loading && getAdImagesQuery.loading ? (
         <QueryStatus.Loading />
       ) : (
         <div className={styled.wrapper}>
@@ -105,26 +133,25 @@ const ClinicalActivityList = () => {
                 )}
             </div>
           </div>
-          <div className={styled.inner}>
-            <Banner images={adImages} />
-            {nodes?.map((el, idx) => (
-              <ActivityCard
-                key={el?.id}
-                activityId={el?.id || ""}
-                clinicId={el?.clinic?.id || ""}
-                subject={el?.subject || ""}
-                content={el?.content || ""}
-                image={el?.image || ""}
-                last={(nodes && nodes?.length - 1 === idx) || false}
-                fetchMore={() => {
-                  getActivitiesQuery?.data?.activities?.pageInfo?.hasNextPage && fetchMore()
-                }}
-              />
-            ))}
-          </div>
+          <PullToRefresh onRefresh={async () => refresh()}>
+            <div className={styled.inner}>
+              <Banner images={adImages} />
+              {activities?.map((el, idx) => (
+                <ActivityCard
+                  key={el?.node?.id}
+                  activityId={el?.node?.id || ""}
+                  clinicId={el?.node?.clinic?.id || ""}
+                  subject={el?.node?.subject || ""}
+                  content={el?.node?.content || ""}
+                  image={el?.node?.image || ""}
+                  last={count === idx + 1}
+                  fetchMore={() => fetchMore()}
+                />
+              ))}
+            </div>
+          </PullToRefresh>
         </div>
       )}
-
       <Toolbars />
     </>
   )

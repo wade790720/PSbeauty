@@ -30,6 +30,7 @@
   .inner {
     position: relative;
     display: grid;
+    grid-auto-rows: min-content;
     overflow-y: auto;
     padding: 0 24px 128px;
     width: 100%;

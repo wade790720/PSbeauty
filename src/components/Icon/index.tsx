@@ -37,6 +37,7 @@ export const Icon = (props: IconProps) => {
     CaretDown: <Svg.CaretDown />,
     Info: <Svg.Info />,
     Edit: <Svg.Edit />,
+    Share: <Svg.Share />,
   }
 
   return (

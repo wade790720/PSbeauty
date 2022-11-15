@@ -20,6 +20,7 @@ const ClinicActivity = () => {
   const go = useGo()
   const auth = useAuth()
   const [isCollected, setIsCollected] = useState(false)
+  const [showCopy, setShowCopy] = useState(false)
   const [loadGetCollectedActivitiesQuery, getCollectedActivitiesQuery] =
     useGetCollectedActivitiesLazyQuery({
       fetchPolicy: "no-cache",
@@ -57,6 +58,18 @@ const ClinicActivity = () => {
     if (auth.user.id) loadGetCollectedActivitiesQuery()
   }, [auth.user.id])
 
+  useEffect(() => {
+    let timeoutID: ReturnType<typeof setTimeout> | null = null
+    if (showCopy) {
+      timeoutID = setTimeout(() => {
+        setShowCopy(false)
+      }, 500)
+    }
+    return () => {
+      timeoutID && clearTimeout(timeoutID)
+    }
+  }, [showCopy])
+
   if (loading) return <QueryStatus.Loading />
   if (error) return <QueryStatus.Error />
 
@@ -67,7 +80,10 @@ const ClinicActivity = () => {
       <Header leftArrow title={data?.clinic?.name || ""} />
       <Backdrop className={styled.wrapper}>
         <h2>診所活動</h2>
-        <img className={styled.pic} src={activities?.image || ""} />
+        <div className={styled.picBlock}>
+          {showCopy && <span className={styled.copy}>已複製連結</span>}
+          <img className={styled.pic} src={activities?.image || ""} />
+        </div>
         <div className={styled.title}>{activities?.subject}</div>
         <div
           className={styled.clinic}
@@ -78,6 +94,13 @@ const ClinicActivity = () => {
           className={styled.content}
           dangerouslySetInnerHTML={{ __html: activities?.content || "" }}
         />
+        <div
+          onClick={() => {
+            navigator.clipboard.writeText(window.location.href)
+            setShowCopy(true)
+          }}>
+          <Icon className={styled.share} name="Share" />
+        </div>
         <div
           className={styled["collect-block"]}
           onClick={e => {

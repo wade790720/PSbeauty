@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useCallback } from "react"
 import { Outlet, useOutletContext, useMatch, useParams, useNavigate } from "react-router-dom"
 import { useAuth } from "hooks/useAuth"
 import Header from "components/Layout/Header"
@@ -10,6 +10,8 @@ import {
   GetClinicQueryHookResult,
 } from "./ClinicInnerWrapper.graphql.generated"
 import QueryStatus from "components/QueryStatus"
+import styled from "./ClinicInnerWrapper.module.scss"
+import PullToRefresh from "react-simple-pull-to-refresh"
 
 type ContextType = { query: { data: GetClinicQueryHookResult["data"] } }
 
@@ -21,6 +23,15 @@ const ClinicInnerWrapper = () => {
 
   const [loadQuery, query] = useGetClinicLazyQuery()
 
+  const refresh = useCallback(() => {
+    loadQuery({
+      fetchPolicy: "no-cache",
+      variables: {
+        id: id || "",
+      },
+    })
+  }, [loadQuery])
+
   useEffect(() => {
     if (match?.params.activityId) return
     loadQuery({
@@ -30,7 +41,7 @@ const ClinicInnerWrapper = () => {
     })
   }, [match?.params.activityId, loadQuery, id])
 
-  if (query?.loading || !query?.data) return <QueryStatus.Loading />
+  if (query?.loading && !query?.data) return <QueryStatus.Loading />
   if (query.error) return <QueryStatus.Error />
 
   return match?.params.activityId ? (
@@ -42,9 +53,13 @@ const ClinicInnerWrapper = () => {
         title={query?.data?.clinic?.name || ""}
         redirect={() => navigate(-1)}
       />
-      <Backdrop style={{ paddingBottom: "120px" }}>
+      <Backdrop>
         <ClinicSwitch />
-        <Outlet context={{ query }} />
+        <PullToRefresh onRefresh={async () => refresh()}>
+          <div className={styled["pull-to-refresh-wrapper"]}>
+            <Outlet context={{ query }} />
+          </div>
+        </PullToRefresh>
         {auth.user.clinic ? <Toolbars.Clinic /> : <Toolbars />}
       </Backdrop>
     </>

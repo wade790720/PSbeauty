@@ -5,7 +5,7 @@ import SearchBar from "containers/SearchBar"
 import Button from "components/Button"
 import ClinicCard from "./ClinicCard"
 import useState from "react-usestateref"
-import { useRef, useEffect, useCallback } from "react"
+import { useEffect, useCallback } from "react"
 import { useAuth } from "hooks/useAuth"
 import DistrictsFilter, { RegionProps } from "./DistrictsFilter"
 import Banner from "containers/Banner"
@@ -30,11 +30,10 @@ export type ClinicEdgeArray = Array<{
 }> | null
 
 const Clinic = () => {
-  const ref = useRef<HTMLInputElement | null>(null)
   const [openFilter, setOpenFilter] = useState(false)
   const [searchValue, setSearchValue, searchValueRef] = useState<RegionProps | null>(null)
-  const [sortClinicQuery, setSortClinicQuery, sortClinicRef] = useState<ClinicEdgeArray>([])
-  const [searchClinicQuery, setSearchClinicQuery, searchClinicRef] = useState<ClinicEdgeArray>([])
+  const [sortClinics, setSortClinics, sortClinicsRef] = useState<ClinicEdgeArray>([])
+  const [searchClinics, setSearchClinics, searchClinicsRef] = useState<ClinicEdgeArray>([])
   const auth = useAuth()
   const go = useGo()
 
@@ -49,28 +48,28 @@ const Clinic = () => {
     onCompleted: data => {
       const edges = [...(data?.clinics?.edges || [])]
       edges.sort(() => Math.random() - 0.5)
-      setSortClinicQuery([...(sortClinicRef?.current || []), ...edges])
+      setSortClinics([...(sortClinicsRef?.current || []), ...edges])
     },
   })
   const [loadGetClinicsQuerySearch, getClinicsQuerySearch] = useGetClinicsSearchLazyQuery({
     fetchPolicy: "no-cache",
     onCompleted: data => {
       const edges = [...(data?.clinics?.edges || [])]
-      setSearchClinicQuery([...(searchClinicRef?.current || []), ...edges])
+      setSearchClinics([...(searchClinicsRef?.current || []), ...edges])
     },
   })
 
   const refetchClinicsQuery = useCallback(() => {
     getClinicsQuery.refetch().then(res => {
-      setSortClinicQuery([])
+      setSortClinics([])
       const edges = [...(res?.data?.clinics?.edges || [])]
       edges.sort(() => Math.random() - 0.5)
-      setSortClinicQuery([...edges])
+      setSortClinics([...edges])
     })
   }, [getClinicsQuery])
   const refetchClinicsQuerySearch = useCallback(() => {
     if (searchValueRef.current) {
-      setSearchClinicQuery([])
+      setSearchClinics([])
       loadGetClinicsQuerySearch({
         variables: {
           county: searchValueRef.current
@@ -83,7 +82,7 @@ const Clinic = () => {
   }, [searchValueRef, loadGetClinicsQuerySearch])
   const [loadMemberInboxQuery, getMemberInboxQuery] = useGetMemberInboxLazyQuery()
 
-  const data = searchValue ? searchClinicQuery : sortClinicQuery
+  const data = searchValue ? searchClinics : sortClinics
   const count = data?.length || 0
   const consults = getMemberInboxQuery.data?.me?.consults || []
   const adImages = getAdImagesQuery?.data?.adImages?.edges
@@ -157,7 +156,7 @@ const Clinic = () => {
       ) : (
         <div className={styled.wrapper}>
           <div className={styled.header}>
-            <SearchBar ref={ref} onInputClick={() => go.toSearchList("")} />
+            <SearchBar onInputClick={() => go.toSearchList("")} />
             <div
               onClick={() => {
                 auth.user.clinic ? go.toDoctorInbox() : go.toMemberInbox()

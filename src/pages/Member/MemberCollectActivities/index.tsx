@@ -5,6 +5,7 @@ import QueryStatus from "components/QueryStatus"
 import styled from "./MemberCollectActivities.module.scss"
 import cx from "classnames"
 import PullToRefresh from "react-simple-pull-to-refresh"
+import Loading from "components/Loading"
 
 const MemberCollectActivities = () => {
   const { data, loading, error, refetch } = useGetCollectedActivitiesQuery({
@@ -17,7 +18,7 @@ const MemberCollectActivities = () => {
   return (
     <>
       <Header title="收藏活動" leftArrow />
-      <PullToRefresh onRefresh={() => refetch()}>
+      <PullToRefresh onRefresh={() => refetch()} refreshingContent={Loading()}>
         <div className={styled["pull-to-refresh-wrapper"]}>
           <div
             className={cx(styled.wrapper, {

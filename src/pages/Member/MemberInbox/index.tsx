@@ -12,6 +12,7 @@ import { useAuth } from "hooks/useAuth"
 import { useGo } from "components/Router"
 import { useNavigate } from "react-router-dom"
 import PullToRefresh from "react-simple-pull-to-refresh"
+import Loading from "components/Loading"
 
 const MemberInbox = () => {
   const go = useGo()
@@ -53,7 +54,7 @@ const MemberInbox = () => {
         }}
       />
       {/* inbox第一層 - 諮詢 + 1對1 */}
-      <PullToRefresh onRefresh={() => refetch()}>
+      <PullToRefresh onRefresh={() => refetch()} refreshingContent={Loading()}>
         <div className={styled["pull-to-refresh-wrapper"]}>
           <div
             className={cx(styled.wrapper, {

@@ -14,6 +14,7 @@ import { useGetAdImagesQuery } from "graphql/queries/getAdImage.graphql.generate
 import { useGetMemberInboxLazyQuery } from "pages/Member/MemberInbox/MemberInbox.graphql.generated"
 import { SortEnumType } from "types/schema"
 import PullToRefresh from "react-simple-pull-to-refresh"
+import Loading from "components/Loading"
 
 export type ActivitiesArray = Array<{
   cursor: string
@@ -133,7 +134,7 @@ const ClinicalActivityList = () => {
                 )}
             </div>
           </div>
-          <PullToRefresh onRefresh={async () => refresh()}>
+          <PullToRefresh onRefresh={async () => refresh()} refreshingContent={Loading()}>
             <div className={styled.inner}>
               <Banner images={adImages} />
               {activities?.map((el, idx) => (

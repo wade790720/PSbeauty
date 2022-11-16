@@ -18,6 +18,7 @@ import { useGetTopCategoriesLazyQuery } from "pages/Home/Consulting/Consulting.g
 import { SortEnumType } from "types/schema"
 import Banner from "containers/Banner"
 import PullToRefresh from "react-simple-pull-to-refresh"
+import Loading from "components/Loading"
 import SearchResultCard from "./SearchResultCard"
 
 export type SearchEdgeArray = Array<{
@@ -150,7 +151,7 @@ const SearchListAll = () => {
           <Header title="探索" />
           <Backdrop className={styled.wrapper}>
             <div style={{ paddingBottom: "105px" }}>
-              <PullToRefresh onRefresh={async () => refresh()}>
+              <PullToRefresh onRefresh={async () => refresh()} refreshingContent={Loading()}>
                 <div className={styled.result}>
                   {adImages && adImages?.length > 0 && (
                     <div className={styled.banner}>

@@ -9,6 +9,7 @@ import {
 import QueryStatus from "components/QueryStatus"
 import dayjs from "dayjs"
 import PullToRefresh from "react-simple-pull-to-refresh"
+import Loading from "components/Loading"
 
 const MemberConsultationRecord = () => {
   const { data, loading, error, refetch } = useGetMeQuery({ fetchPolicy: "no-cache" })
@@ -20,7 +21,7 @@ const MemberConsultationRecord = () => {
   return (
     <>
       <Header title="諮詢歷史紀錄件夾" leftArrow />
-      <PullToRefresh onRefresh={() => refetch()}>
+      <PullToRefresh onRefresh={() => refetch()} refreshingContent={Loading()}>
         <div className={styled["pull-to-refresh-wrapper"]}>
           <div className={cx(styled.wrapper, { [styled.empty]: !data?.me?.consults?.length })}>
             <div className={styled["empty-card"]}>尚無諮詢紀錄</div>

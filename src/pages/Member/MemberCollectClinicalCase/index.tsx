@@ -5,6 +5,7 @@ import CaseCard from "containers/CaseCard"
 import { useGetMeQuery } from "./MemberCollectClinicalCase.graphql.generated"
 import QueryStatus from "components/QueryStatus"
 import PullToRefresh from "react-simple-pull-to-refresh"
+import Loading from "components/Loading"
 
 const MemberCollectClinicalCase = () => {
   const { data, loading, error, refetch } = useGetMeQuery({ fetchPolicy: "no-cache" })
@@ -14,7 +15,7 @@ const MemberCollectClinicalCase = () => {
   return (
     <>
       <Header title="收藏案例" leftArrow />
-      <PullToRefresh onRefresh={() => refetch()}>
+      <PullToRefresh onRefresh={() => refetch()} refreshingContent={Loading()}>
         <div className={styled["pull-to-refresh-wrapper"]}>
           <div
             className={cx(styled.wrapper, {

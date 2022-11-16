@@ -19,6 +19,7 @@ import { useGetMemberInboxLazyQuery } from "pages/Member/MemberInbox/MemberInbox
 import { SortEnumType } from "types/schema"
 import { saveState, getState } from "utils/stateSaver"
 import PullToRefresh from "react-simple-pull-to-refresh"
+import Loading from "components/Loading"
 
 const Home = () => {
   const [consult, setConsult] = useState(false)
@@ -207,7 +208,7 @@ const Home = () => {
                 )}
             </div>
           </div>
-          <PullToRefresh onRefresh={async () => refresh()}>
+          <PullToRefresh onRefresh={async () => refresh()} refreshingContent={Loading()}>
             <div className={styled.inner} ref={innerRef}>
               <Banner images={adImages} />
               <div className={styled.onlineCount}>

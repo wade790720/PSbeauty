@@ -12,6 +12,7 @@ import {
 import QueryStatus from "components/QueryStatus"
 import styled from "./ClinicInnerWrapper.module.scss"
 import PullToRefresh from "react-simple-pull-to-refresh"
+import Loading from "components/Loading"
 
 type ContextType = { query: { data: GetClinicQueryHookResult["data"] } }
 
@@ -55,7 +56,7 @@ const ClinicInnerWrapper = () => {
       />
       <Backdrop>
         <ClinicSwitch />
-        <PullToRefresh onRefresh={async () => refresh()}>
+        <PullToRefresh onRefresh={async () => refresh()} refreshingContent={Loading()}>
           <div className={styled["pull-to-refresh-wrapper"]}>
             <Outlet context={{ query }} />
           </div>

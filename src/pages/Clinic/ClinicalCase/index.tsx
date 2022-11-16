@@ -15,6 +15,7 @@ import { useAuth } from "hooks/useAuth"
 import { useParams } from "react-router-dom"
 import QueryStatus from "components/QueryStatus"
 import PullToRefresh from "react-simple-pull-to-refresh"
+import Loading from "components/Loading"
 
 const ClinicalCase = () => {
   const go = useGo()
@@ -87,7 +88,7 @@ const ClinicalCase = () => {
     <>
       <Header leftArrow />
       <Backdrop className={styled.wrapper}>
-        <PullToRefresh onRefresh={async () => refetch()}>
+        <PullToRefresh onRefresh={async () => refetch()} refreshingContent={Loading()}>
           <div className={styled.outer}>
             <div className={styled.title}>{data?.case?.title}</div>
             <div

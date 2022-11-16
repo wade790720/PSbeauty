@@ -16,6 +16,7 @@ import { SortEnumType } from "types/schema"
 import { useGetClinicsQuery, useGetClinicsSearchLazyQuery } from "./ClinicCard.graphql.generated"
 import useGo from "components/Router/useGo"
 import PullToRefresh from "react-simple-pull-to-refresh"
+import Loading from "components/Loading"
 
 export type ClinicEdgeArray = Array<{
   cursor: string
@@ -168,7 +169,7 @@ const Clinic = () => {
                 )}
             </div>
           </div>
-          <PullToRefresh onRefresh={async () => refresh()}>
+          <PullToRefresh onRefresh={async () => refresh()} refreshingContent={Loading()}>
             <div className={styled.inner}>
               {adImages && adImages?.length > 0 && (
                 <div className={styled.banner}>

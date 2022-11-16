@@ -27,9 +27,20 @@
       flex: 1;
       align-items: center;
       justify-content: center;
-      color: #18a0cb;;
+      color: #18a0cb;
       background: rgba(255, 255, 255, 0.2);
       border-radius: 15px;
     }
+  }
+}
+
+.pull-to-refresh-wrapper {
+  height: 100%;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 }

@@ -4,9 +4,12 @@ import { useGetCollectedActivitiesQuery } from "graphql/queries/collectActivitie
 import QueryStatus from "components/QueryStatus"
 import styled from "./MemberCollectActivities.module.scss"
 import cx from "classnames"
+import PullToRefresh from "react-simple-pull-to-refresh"
 
 const MemberCollectActivities = () => {
-  const { data, loading, error } = useGetCollectedActivitiesQuery({ fetchPolicy: "no-cache" })
+  const { data, loading, error, refetch } = useGetCollectedActivitiesQuery({
+    fetchPolicy: "no-cache",
+  })
 
   if (loading) return <QueryStatus.Loading />
   if (error) return <QueryStatus.Error />
@@ -14,22 +17,26 @@ const MemberCollectActivities = () => {
   return (
     <>
       <Header title="收藏活動" leftArrow />
-      <div
-        className={cx(styled.wrapper, {
-          [styled.empty]: !data?.me?.userCollectedActivities?.length,
-        })}>
-        <div className={styled["empty-card"]}>尚無收藏活動</div>
-        {data?.me?.userCollectedActivities?.map(el => (
-          <ActivityCard
-            key={el?.id}
-            activityId={el?.id || ""}
-            clinicId={el?.clinic?.id || ""}
-            subject={el?.subject || ""}
-            content={el?.content || ""}
-            image={el?.image || ""}
-          />
-        ))}
-      </div>
+      <PullToRefresh onRefresh={() => refetch()}>
+        <div className={styled["pull-to-refresh-wrapper"]}>
+          <div
+            className={cx(styled.wrapper, {
+              [styled.empty]: !data?.me?.userCollectedActivities?.length,
+            })}>
+            <div className={styled["empty-card"]}>尚無收藏活動</div>
+            {data?.me?.userCollectedActivities?.map(el => (
+              <ActivityCard
+                key={el?.id}
+                activityId={el?.id || ""}
+                clinicId={el?.clinic?.id || ""}
+                subject={el?.subject || ""}
+                content={el?.content || ""}
+                image={el?.image || ""}
+              />
+            ))}
+          </div>
+        </div>
+      </PullToRefresh>
     </>
   )
 }

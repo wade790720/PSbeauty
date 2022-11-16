@@ -8,9 +8,10 @@ import {
 } from "./MemberConsultationRecord.graphql.generated"
 import QueryStatus from "components/QueryStatus"
 import dayjs from "dayjs"
+import PullToRefresh from "react-simple-pull-to-refresh"
 
 const MemberConsultationRecord = () => {
-  const { data, loading, error } = useGetMeQuery({ fetchPolicy: "no-cache" })
+  const { data, loading, error, refetch } = useGetMeQuery({ fetchPolicy: "no-cache" })
   const [enableConsultMutation] = useEnableConsultMutation()
 
   if (loading) return <QueryStatus.Loading />
@@ -19,38 +20,44 @@ const MemberConsultationRecord = () => {
   return (
     <>
       <Header title="諮詢歷史紀錄件夾" leftArrow />
-      <div className={cx(styled.wrapper, { [styled.empty]: !data?.me?.consults?.length })}>
-        <div className={styled["empty-card"]}>尚無諮詢紀錄</div>
-        {[...(data?.me?.consults || [])]
-          .sort((a, b) => {
-            if (!a || !b) return 0
-            return b.consultAt - a.consultAt
-          })
-          .filter(el => !el?.oneOnOne)
-          ?.map(el => {
-            const date = dayjs((el?.consultAt || 0) * 1000).format("YYYY-MM-DD")
-            return (
-              <HistoryRecordCard
-                key={el?.id}
-                id={el?.id || ""}
-                title={el?.subject || ""}
-                date={`${date}｜剩餘${el?.days}天`}
-                toggle={el?.enable}
-                images={el?.images?.map(el => el ?? "") || []}
-                introduction={el?.content || ""}
-                tags={el?.categories?.map(el => ({ id: el?.id || "", name: el?.name || "" })) || []}
-                onChange={({ id, enable }: { id: string; enable: boolean }) => {
-                  enableConsultMutation({
-                    variables: {
-                      id,
-                      enable,
-                    },
-                  })
-                }}
-              />
-            )
-          })}
-      </div>
+      <PullToRefresh onRefresh={() => refetch()}>
+        <div className={styled["pull-to-refresh-wrapper"]}>
+          <div className={cx(styled.wrapper, { [styled.empty]: !data?.me?.consults?.length })}>
+            <div className={styled["empty-card"]}>尚無諮詢紀錄</div>
+            {[...(data?.me?.consults || [])]
+              .sort((a, b) => {
+                if (!a || !b) return 0
+                return b.consultAt - a.consultAt
+              })
+              .filter(el => !el?.oneOnOne)
+              ?.map(el => {
+                const date = dayjs((el?.consultAt || 0) * 1000).format("YYYY-MM-DD")
+                return (
+                  <HistoryRecordCard
+                    key={el?.id}
+                    id={el?.id || ""}
+                    title={el?.subject || ""}
+                    date={`${date}｜剩餘${el?.days}天`}
+                    toggle={el?.enable}
+                    images={el?.images?.map(el => el ?? "") || []}
+                    introduction={el?.content || ""}
+                    tags={
+                      el?.categories?.map(el => ({ id: el?.id || "", name: el?.name || "" })) || []
+                    }
+                    onChange={({ id, enable }: { id: string; enable: boolean }) => {
+                      enableConsultMutation({
+                        variables: {
+                          id,
+                          enable,
+                        },
+                      })
+                    }}
+                  />
+                )
+              })}
+          </div>
+        </div>
+      </PullToRefresh>
     </>
   )
 }

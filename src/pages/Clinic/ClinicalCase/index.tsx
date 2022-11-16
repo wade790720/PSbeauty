@@ -113,7 +113,7 @@ const ClinicalCase = () => {
               onClick={() => {
                 if (navigator.share) {
                   navigator.share({ url: window.location.href })
-                } else if (navigator.clipboard) {
+                } else if (navigator.clipboard?.writeText) {
                   navigator.clipboard.writeText(window.location.href)
                   setShowCopy(true)
                 } else {

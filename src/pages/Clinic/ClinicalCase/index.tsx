@@ -114,8 +114,13 @@ const ClinicalCase = () => {
                 if (navigator.share) {
                   navigator.share({ url: window.location.href })
                 } else {
-                  const url = `https://line.me/R/share?text=${encodeURI(window.location.href)}`
-                  window.open(url, "_blank")
+                  try {
+                    navigator.clipboard.writeText(window.location.href)
+                    setShowCopy(true)
+                  } catch {
+                    const url = `https://line.me/R/share?text=${encodeURI(window.location.href)}`
+                    window.open(url, "_blank")
+                  }
                 }
               }}>
               <Icon className={styled.share} name="Share" />

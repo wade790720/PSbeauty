@@ -54,7 +54,10 @@ const MemberInbox = () => {
         }}
       />
       {/* inbox第一層 - 諮詢 + 1對1 */}
-      <PullToRefresh onRefresh={() => refetch()} refreshingContent={Loading()}>
+      <PullToRefresh
+        onRefresh={() => refetch()}
+        pullingContent={Loading.Static()}
+        refreshingContent={Loading()}>
         <div className={styled["pull-to-refresh-wrapper"]}>
           <div
             className={cx(styled.wrapper, {

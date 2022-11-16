@@ -21,7 +21,10 @@ const MemberConsultationRecord = () => {
   return (
     <>
       <Header title="諮詢歷史紀錄件夾" leftArrow />
-      <PullToRefresh onRefresh={() => refetch()} refreshingContent={Loading()}>
+      <PullToRefresh
+        onRefresh={() => refetch()}
+        pullingContent={Loading.Static()}
+        refreshingContent={Loading()}>
         <div className={styled["pull-to-refresh-wrapper"]}>
           <div className={cx(styled.wrapper, { [styled.empty]: !data?.me?.consults?.length })}>
             <div className={styled["empty-card"]}>尚無諮詢紀錄</div>

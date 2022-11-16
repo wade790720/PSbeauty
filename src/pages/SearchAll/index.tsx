@@ -151,7 +151,10 @@ const SearchListAll = () => {
           <Header title="探索" />
           <Backdrop className={styled.wrapper}>
             <div style={{ paddingBottom: "105px" }}>
-              <PullToRefresh onRefresh={async () => refresh()} refreshingContent={Loading()}>
+              <PullToRefresh
+                onRefresh={async () => refresh()}
+                pullingContent={Loading.Static()}
+                refreshingContent={Loading()}>
                 <div className={styled.result}>
                   {adImages && adImages?.length > 0 && (
                     <div className={styled.banner}>

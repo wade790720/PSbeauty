@@ -134,7 +134,10 @@ const ClinicalActivityList = () => {
                 )}
             </div>
           </div>
-          <PullToRefresh onRefresh={async () => refresh()} refreshingContent={Loading()}>
+          <PullToRefresh
+            onRefresh={async () => refresh()}
+            pullingContent={Loading.Static()}
+            refreshingContent={Loading()}>
             <div className={styled.inner}>
               <Banner images={adImages} />
               {activities?.map((el, idx) => (

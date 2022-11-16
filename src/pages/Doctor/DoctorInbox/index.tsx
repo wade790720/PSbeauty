@@ -85,7 +85,10 @@ const DoctorInbox = () => {
       ) : (
         <>
           <Header leftArrow title="收件夾" />
-          <PullToRefresh onRefresh={() => refetch()} refreshingContent={Loading()}>
+          <PullToRefresh
+            onRefresh={() => refetch()}
+            pullingContent={Loading.Static()}
+            refreshingContent={Loading()}>
             <div className={styled["pull-to-refresh-wrapper"]}>
               <div className={styled.wrapper}>
                 {edges.length ? (

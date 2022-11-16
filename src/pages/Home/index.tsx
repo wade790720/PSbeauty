@@ -208,7 +208,10 @@ const Home = () => {
                 )}
             </div>
           </div>
-          <PullToRefresh onRefresh={async () => refresh()} refreshingContent={Loading()}>
+          <PullToRefresh
+            onRefresh={async () => refresh()}
+            pullingContent={Loading.Static()}
+            refreshingContent={Loading()}>
             <div className={styled.inner} ref={innerRef}>
               <Banner images={adImages} />
               <div className={styled.onlineCount}>

@@ -169,7 +169,10 @@ const Clinic = () => {
                 )}
             </div>
           </div>
-          <PullToRefresh onRefresh={async () => refresh()} refreshingContent={Loading()}>
+          <PullToRefresh
+            onRefresh={async () => refresh()}
+            pullingContent={Loading.Static()}
+            refreshingContent={Loading()}>
             <div className={styled.inner}>
               {adImages && adImages?.length > 0 && (
                 <div className={styled.banner}>

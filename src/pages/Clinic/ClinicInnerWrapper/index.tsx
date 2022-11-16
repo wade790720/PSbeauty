@@ -56,7 +56,10 @@ const ClinicInnerWrapper = () => {
       />
       <Backdrop>
         <ClinicSwitch />
-        <PullToRefresh onRefresh={async () => refresh()} refreshingContent={Loading()}>
+        <PullToRefresh
+          onRefresh={async () => refresh()}
+          pullingContent={Loading.Static()}
+          refreshingContent={Loading()}>
           <div className={styled["pull-to-refresh-wrapper"]}>
             <Outlet context={{ query }} />
           </div>

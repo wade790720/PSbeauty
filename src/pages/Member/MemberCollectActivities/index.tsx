@@ -18,7 +18,10 @@ const MemberCollectActivities = () => {
   return (
     <>
       <Header title="收藏活動" leftArrow />
-      <PullToRefresh onRefresh={() => refetch()} refreshingContent={Loading()}>
+      <PullToRefresh
+        onRefresh={() => refetch()}
+        pullingContent={Loading.Static()}
+        refreshingContent={Loading()}>
         <div className={styled["pull-to-refresh-wrapper"]}>
           <div
             className={cx(styled.wrapper, {

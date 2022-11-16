@@ -15,7 +15,10 @@ const MemberCollectClinicalCase = () => {
   return (
     <>
       <Header title="收藏案例" leftArrow />
-      <PullToRefresh onRefresh={() => refetch()} refreshingContent={Loading()}>
+      <PullToRefresh
+        onRefresh={() => refetch()}
+        pullingContent={Loading.Static()}
+        refreshingContent={Loading()}>
         <div className={styled["pull-to-refresh-wrapper"]}>
           <div
             className={cx(styled.wrapper, {

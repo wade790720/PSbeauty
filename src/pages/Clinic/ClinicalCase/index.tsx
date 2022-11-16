@@ -88,7 +88,10 @@ const ClinicalCase = () => {
     <>
       <Header leftArrow />
       <Backdrop className={styled.wrapper}>
-        <PullToRefresh onRefresh={async () => refetch()} refreshingContent={Loading()}>
+        <PullToRefresh
+          onRefresh={async () => refetch()}
+          pullingContent={Loading.Static()}
+          refreshingContent={Loading()}>
           <div className={styled.outer}>
             <div className={styled.title}>{data?.case?.title}</div>
             <div

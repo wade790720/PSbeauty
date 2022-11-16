@@ -1,12 +1,20 @@
 .wrapper {
   height: 50px;
   padding: 10px 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:not(.static) {
+    img {
+      animation: rotation 2s infinite linear;
+    }
+  }
 
   img {
     height: 100%;
     overflow: hidden;
     object-fit: contain;
-    animation: rotation 2s infinite linear;
   }
 }
 

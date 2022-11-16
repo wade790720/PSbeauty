@@ -96,8 +96,12 @@ const ClinicActivity = () => {
         />
         <div
           onClick={() => {
-            navigator.clipboard.writeText(window.location.href)
-            setShowCopy(true)
+            if (navigator.share) {
+              navigator.share({ url: window.location.href })
+            } else {
+              navigator.clipboard.writeText(window.location.href)
+              setShowCopy(true)
+            }
           }}>
           <Icon className={styled.share} name="Share" />
         </div>

@@ -21,7 +21,7 @@
       margin: 24px 0;
       object-fit: cover;
     }
-  
+
     .copy {
       position: absolute;
       top: 45%;
@@ -55,19 +55,19 @@
     text-decoration: underline;
   }
 
-  .share {    
-    top: 20px;
-    right: 60px;
-    position: absolute;  
-    width: 33px;
-    height: 33px;
+  .share {
+    top: 24px;
+    right: 50px;
+    position: absolute;
+    width: 24px;
+    height: 24px;
     fill: #18a0cb;
   }
 
   .collect-block {
-    top: 20px;
+    top: 24px;
     right: 20px;
-    width: 32px;
+    width: 18px;
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -80,8 +80,8 @@
 
     .bookmark-simple {
       svg {
-        width: 24px;
-        height: 32px;
+        width: 18px;
+        height: 24px;
       }
     }
   }

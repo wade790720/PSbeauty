@@ -32,6 +32,7 @@ const ClinicalCase = () => {
   })
 
   const [isCollected, setIsCollected] = useState(false)
+  const [showCopy, setShowCopy] = useState(false)
 
   useLayoutEffect(() => {
     if (imageRef.current && !loading) {
@@ -42,6 +43,18 @@ const ClinicalCase = () => {
   useEffect(() => {
     if (auth.user.id) loadGetCollectItemsQuery()
   }, [auth.user.id])
+
+  useEffect(() => {
+    let timeoutID: ReturnType<typeof setTimeout> | null = null
+    if (showCopy) {
+      timeoutID = setTimeout(() => {
+        setShowCopy(false)
+      }, 500)
+    }
+    return () => {
+      timeoutID && clearTimeout(timeoutID)
+    }
+  }, [showCopy])
 
   useEffect(() => {
     setIsCollected(
@@ -82,15 +95,32 @@ const ClinicalCase = () => {
               onClick={() => go.toClinicInner({ id: data?.case?.clinic?.id || "", tab: "info" })}>
               診所介紹：{data?.case?.clinic?.name}
             </div>
-            <div className={styled.image} style={{ height: imageWidth }} ref={imageRef}>
-              <img src={data?.case?.image || ""} />
+            <div className={styled.picBlock}>
+              {showCopy && <span className={styled.copy}>已複製連結</span>}
+              <div className={styled.image} style={{ height: imageWidth }} ref={imageRef}>
+                <img src={data?.case?.image || ""} />
+              </div>
             </div>
             <div
               className={styled.content}
               dangerouslySetInnerHTML={{ __html: data?.case?.description || "" }}
             />
+            <div
+              onClick={() => {
+                if (navigator.share) {
+                  navigator.share({ url: window.location.href })
+                } else {
+                  navigator.clipboard.writeText(window.location.href)
+                  setShowCopy(true)
+                }
+              }}>
+              <Icon className={styled.share} name="Share" />
+            </div>
             <Tag
-              tags={data?.case?.categories?.map(el => ({ id: el?.id || "", name: el?.name || "" }))}
+              tags={data?.case?.categories?.map(el => ({
+                id: el?.id || "",
+                name: el?.name || "",
+              }))}
             />
             <div
               className={styled["collect-block"]}

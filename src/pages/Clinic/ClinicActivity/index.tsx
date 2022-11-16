@@ -98,9 +98,6 @@ const ClinicActivity = () => {
           onClick={() => {
             if (navigator.share) {
               navigator.share({ url: window.location.href })
-            } else if (navigator.clipboard?.writeText) {
-              navigator.clipboard.writeText(window.location.href)
-              setShowCopy(true)
             } else {
               const url = `https://line.me/R/share?text=${encodeURI(window.location.href)}`
               window.open(url, "_blank")

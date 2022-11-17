@@ -13,10 +13,12 @@ import {
 } from "graphql/queries/collectActivities.graphql.generated"
 import useGo from "components/Router/useGo"
 import Icon from "components/Icon"
+import PullToRefresh from "react-simple-pull-to-refresh"
+import Loading from "components/Loading"
 
 const ClinicActivity = () => {
   const { id, activityId } = useParams()
-  const [loadQuery, { data, loading, error }] = useGetClinicLazyQuery()
+  const [loadQuery, { data, loading, error, refetch }] = useGetClinicLazyQuery()
   const go = useGo()
   const auth = useAuth()
   const [isCollected, setIsCollected] = useState(false)
@@ -79,61 +81,68 @@ const ClinicActivity = () => {
     <>
       <Header leftArrow title={data?.clinic?.name || ""} />
       <Backdrop className={styled.wrapper}>
-        <h2>診所活動</h2>
-        <div className={styled.picBlock}>
-          {showCopy && <span className={styled.copy}>已複製連結</span>}
-          <img className={styled.pic} src={activities?.image || ""} />
-        </div>
-        <div className={styled.title}>{activities?.subject}</div>
-        <div
-          className={styled.clinic}
-          onClick={() => go.toClinicInner({ id: id || "", tab: "info" })}>
-          進入活動診所：{data?.clinic?.name}
-        </div>
-        <div
-          className={styled.content}
-          dangerouslySetInnerHTML={{ __html: activities?.content || "" }}
-        />
-        <div
-          onClick={() => {
-            if (navigator.share) {
-              navigator.share({ url: window.location.href })
-            } else {
-              navigator.clipboard
-                .writeText(window.location.href)
-                .then(() => {
-                  setShowCopy(true)
-                })
-                .catch(() => {
-                  const url = `https://line.me/R/share?text=${encodeURI(window.location.href)}`
-                  window.open(url, "_blank")
-                })
-            }
-          }}>
-          <Icon className={styled.share} name="Share" />
-        </div>
-        <div
-          className={styled["collect-block"]}
-          onClick={e => {
-            e.stopPropagation()
-            if (!auth.user.id) return go.toSignIn()
-            isCollected
-              ? removeCollectedActivityMutation({
-                  variables: {
-                    activityId: activityId || "",
-                  },
-                })
-              : collectActivityMutation({
-                  variables: {
-                    activityId: activityId || "",
-                  },
-                })
-          }}>
-          <Icon
-            name={isCollected ? "BookmarkFill" : "BookmarkSimple"}
-            className={styled["bookmark-simple"]}
-          />
-        </div>
+        <PullToRefresh
+          onRefresh={async () => refetch()}
+          pullingContent={Loading.Static()}
+          refreshingContent={Loading()}>
+          <div>
+            <h2>診所活動</h2>
+            <div className={styled.picBlock}>
+              {showCopy && <span className={styled.copy}>已複製連結</span>}
+              <img className={styled.pic} src={activities?.image || ""} />
+            </div>
+            <div className={styled.title}>{activities?.subject}</div>
+            <div
+              className={styled.clinic}
+              onClick={() => go.toClinicInner({ id: id || "", tab: "info" })}>
+              進入活動診所：{data?.clinic?.name}
+            </div>
+            <div
+              className={styled.content}
+              dangerouslySetInnerHTML={{ __html: activities?.content || "" }}
+            />
+            <div
+              onClick={() => {
+                if (navigator.share) {
+                  navigator.share({ url: window.location.href })
+                } else {
+                  navigator.clipboard
+                    .writeText(window.location.href)
+                    .then(() => {
+                      setShowCopy(true)
+                    })
+                    .catch(() => {
+                      const url = `https://line.me/R/share?text=${encodeURI(window.location.href)}`
+                      window.open(url, "_blank")
+                    })
+                }
+              }}>
+              <Icon className={styled.share} name="Share" />
+            </div>
+            <div
+              className={styled["collect-block"]}
+              onClick={e => {
+                e.stopPropagation()
+                if (!auth.user.id) return go.toSignIn()
+                isCollected
+                  ? removeCollectedActivityMutation({
+                      variables: {
+                        activityId: activityId || "",
+                      },
+                    })
+                  : collectActivityMutation({
+                      variables: {
+                        activityId: activityId || "",
+                      },
+                    })
+              }}>
+              <Icon
+                name={isCollected ? "BookmarkFill" : "BookmarkSimple"}
+                className={styled["bookmark-simple"]}
+              />
+            </div>
+          </div>
+        </PullToRefresh>
       </Backdrop>
     </>
   )

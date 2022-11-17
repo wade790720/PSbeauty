@@ -85,7 +85,7 @@ const ClinicActivity = () => {
           onRefresh={async () => refetch()}
           pullingContent={Loading.Static()}
           refreshingContent={Loading()}>
-          <div>
+          <div className={styled["pull-to-refresh-wrapper"]}>
             <h2>診所活動</h2>
             <div className={styled.picBlock}>
               {showCopy && <span className={styled.copy}>已複製連結</span>}

@@ -2,7 +2,6 @@
   padding: 24px 0px !important;
   color: #2B3A4B;
   line-height: 24px;
-  position: relative;
 
   h2 {
     display: block;
@@ -84,5 +83,20 @@
         height: 24px;
       }
     }
+  }
+
+  .pull-to-refresh-wrapper {
+    position: relative;
+  }
+}
+
+.pull-to-refresh-wrapper {
+  height: 100%;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
   }
 }

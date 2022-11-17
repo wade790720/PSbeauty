@@ -109,24 +109,6 @@ const ClinicalCase = () => {
               className={styled.content}
               dangerouslySetInnerHTML={{ __html: data?.case?.description || "" }}
             />
-            <div
-              onClick={() => {
-                if (navigator.share) {
-                  navigator.share({ url: window.location.href })
-                } else {
-                  navigator.clipboard
-                    .writeText(window.location.href)
-                    .then(() => {
-                      setShowCopy(true)
-                    })
-                    .catch(() => {
-                      const url = `https://line.me/R/share?text=${encodeURI(window.location.href)}`
-                      window.open(url, "_blank")
-                    })
-                }
-              }}>
-              <Icon className={styled.share} name="Share" />
-            </div>
             <Tag
               tags={data?.case?.categories?.map(el => ({
                 id: el?.id || "",
@@ -144,6 +126,25 @@ const ClinicalCase = () => {
                 name={isCollected ? "BookmarkFill" : "BookmarkSimple"}
                 className={styled["bookmark-simple"]}
               />
+            </div>
+            <div
+              className={styled.share}
+              onClick={() => {
+                if (navigator.share) {
+                  navigator.share({ url: window.location.href })
+                } else {
+                  navigator.clipboard
+                    .writeText(window.location.href)
+                    .then(() => {
+                      setShowCopy(true)
+                    })
+                    .catch(() => {
+                      const url = `https://line.me/R/share?text=${encodeURI(window.location.href)}`
+                      window.open(url, "_blank")
+                    })
+                }
+              }}>
+              <Icon name="Share" />
             </div>
           </div>
         </PullToRefresh>

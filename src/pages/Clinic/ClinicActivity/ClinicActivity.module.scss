@@ -55,12 +55,15 @@
   }
 
   .share {
+    position: absolute;
     top: 0px;
     right: 50px;
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    fill: #18a0cb;
+
+    > div > svg {
+      width: 24px;
+      height: 24px;
+      fill: #18a0cb;
+    }
   }
 
   .collect-block {

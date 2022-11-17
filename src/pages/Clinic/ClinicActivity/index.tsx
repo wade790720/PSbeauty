@@ -102,24 +102,6 @@ const ClinicActivity = () => {
               dangerouslySetInnerHTML={{ __html: activities?.content || "" }}
             />
             <div
-              onClick={() => {
-                if (navigator.share) {
-                  navigator.share({ url: window.location.href })
-                } else {
-                  navigator.clipboard
-                    .writeText(window.location.href)
-                    .then(() => {
-                      setShowCopy(true)
-                    })
-                    .catch(() => {
-                      const url = `https://line.me/R/share?text=${encodeURI(window.location.href)}`
-                      window.open(url, "_blank")
-                    })
-                }
-              }}>
-              <Icon className={styled.share} name="Share" />
-            </div>
-            <div
               className={styled["collect-block"]}
               onClick={e => {
                 e.stopPropagation()
@@ -140,6 +122,25 @@ const ClinicActivity = () => {
                 name={isCollected ? "BookmarkFill" : "BookmarkSimple"}
                 className={styled["bookmark-simple"]}
               />
+            </div>
+            <div
+              className={styled.share}
+              onClick={() => {
+                if (navigator.share) {
+                  navigator.share({ url: window.location.href })
+                } else {
+                  navigator.clipboard
+                    .writeText(window.location.href)
+                    .then(() => {
+                      setShowCopy(true)
+                    })
+                    .catch(() => {
+                      const url = `https://line.me/R/share?text=${encodeURI(window.location.href)}`
+                      window.open(url, "_blank")
+                    })
+                }
+              }}>
+              <Icon name="Share" />
             </div>
           </div>
         </PullToRefresh>

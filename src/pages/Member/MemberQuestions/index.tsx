@@ -8,26 +8,10 @@ const MemberQuestions = () => {
       <Header title="常見問題" leftArrow />
       <Backdrop>
         <div className={styled.paragraph}>
-          <div>1. 可列舉常見問題與情境範例文字？</div>
+          <div>台灣NO.1醫美整形App謝謝您的下載與使用</div>
           <div>
-            A.
-            回答問題與情境範例文字，回答問題與情境範例文字，回答問題與情境範例文字，回答問題與情境範例文字，回答問題與情境範例文字，回答問題與情境範例文字。
-          </div>
-        </div>
-
-        <div className={styled.paragraph}>
-          <div>2. 可列舉常見問題與情境範例文字？</div>
-          <div>
-            A.
-            回答問題與情境範例文字，回答問題與情境範例文字，回答問題與情境範例文字，回答問題與情境範例文字，回答問題與情境範例文字，回答問題與情境範例文字。
-          </div>
-        </div>
-
-        <div className={styled.paragraph}>
-          <div>3. 可列舉常見問題與情境範例文字？</div>
-          <div>
-            A.
-            回答問題與情境範例文字，回答問題與情境範例文字，回答問題與情境範例文字，回答問題與情境範例文字，回答問題與情境範例文字，回答問題與情境範例文字。
+            我們打造最佳醫美整形平台，目的使求美者能更方便快速找到適合的診所與療程，我們也希望有任何建議或想加入的您給予我們更多的訊息。歡迎與我們聯繫。
+            聯繫方式：psmaker@psbeauty.com.tw
           </div>
         </div>
       </Backdrop>
